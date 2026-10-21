@@ -1,0 +1,6 @@
+# 原始資料太大，不放上 GitHub（保留在本機）
+raw/
+# 系統與暫存檔
+.DS_Store
+node_modules/
+*.tmp
