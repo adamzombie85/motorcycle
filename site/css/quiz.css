@@ -1,0 +1,37 @@
+/* 答題畫面版面微調（取自 design/screen-quiz.html，只用 tokens 變數） */
+.quiz-container {
+  max-width: var(--container-max-tablet);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.quiz-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  margin-bottom: var(--space-3);
+}
+
+.level-title-chip {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-900);
+  background-color: var(--color-primary-50);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-primary-200);
+  border-radius: var(--radius-lg);
+  line-height: var(--line-height-tight);
+  min-width: 0;
+}
+
+.quiz-pause-btn {
+  min-height: 44px;
+  padding: 6px 14px;
+  font-size: var(--font-size-sm);
+  flex-shrink: 0;
+}
+
+.quiz-next-btn { width: 100%; }
+.quiz-message { text-align: center; padding: var(--space-6) 0; }

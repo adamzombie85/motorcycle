@@ -14,12 +14,12 @@
 - 可以同時進行：Claude Code 做 C3→C4→C5→C6（一次一個）；Antigravity 做 D2（只改 design/，不衝突）
 
 ### 階段 1 規則（Claude 建議，Jim 可推翻）
-- 關卡：依小類切，照題庫原順序每 10 題一關，共 97 關；影片題 126 題留到階段 4
+- 關卡：依小類切，照題庫原順序每 10 題一關；最後一關少於 5 題就併進前一關，共 92 關（2026-10-22 改）；影片題 126 題留到階段 4
 - 不鎖關，學生可以自由選；一關 85 分以上算過關
 - 錯題：答錯就進錯題庫，之後連續答對 2 次才移出
 - 選項不打亂（有「以上皆是」選項）
 - 回饋只顯示對錯和正確答案，**不顯示解析、口訣**：題庫沒有這些資料，不能讓 AI 自己編（法規內容要 Jim 審核，留到階段 3 概念卡）
-- 學習紀錄先存在瀏覽器（localStorage），透過 store.js 統一存取，之後換 GAS 只改一個檔案
+- 學習紀錄先存在瀏覽器（localStorage），透過 store.js 統一存取，之後接 Firebase 只改這個檔案
 
 ### D1 審查結果（Claude，2026-10-22）
 - ✅ 色彩、元件、答題與結算畫面足夠開始做 C3～C6
@@ -48,8 +48,13 @@
 3. ✅ 概念卡等核心功能穩定後再做
 4. ✅ 原始資料已移進 raw/
 5. ✅ 分工調整：Gemini 負責視覺定調和插圖；題庫正確性改用程式交叉比對加 Jim 抽查
-6. ⏳ 後端確定用 GAS ＋ Google 試算表嗎？（影響 C10；C3～C9 不受影響）
-7. ⏳ 首頁頁尾寫著「國立玉井工商輔導室」，這是 Gemini 自己加的。要保留、改成其他文字，還是拿掉？
+6. ✅ **範圍變更（2026-10-22）：給全校學生使用，採通用設計**。已改 AGENTS.md、任務單
+   - 後端：Firebase；登入：**任何 Google 帳號**（2026-10-22 改為不限學校網域），一定要登入才能練習；只有管理者能看全部資料
+   - 首次登入可填班級、座號（選填）
+   - 學生可以下載自己的學習成果報告圖片分享給老師（C12、D2）
+9. ✅ 管理者帳號：`adamzombie85@gmail.com`
+10. ⏳ 上線前請向教務處／資訊組確認：學生用 Google 帳號登入、作答紀錄存在 Firebase，是否符合學校個資規定
+7. ✅ 拿掉校名，頁尾改成「© 2026 41 研究室｜版權所有」（已寫進 D2）。頁首是否也要拿掉，待 Jim 確認（頁首有朗讀、注音、字級按鈕）
 8. ⏳ 階段 1 規則（上方）有沒有要改的？
 
 ## 階段進度
@@ -57,8 +62,8 @@
 |---|---|---|---|
 | 0 資料化 | 題庫轉 JSON、抽圖、影片壓縮、加標籤、程式交叉比對 | Claude → Jim 抽查 | ✅ 完成 |
 | 1a 視覺定調 | tokens.css、首頁和答題畫面樣板 | Antigravity（Gemini） | ✅ D1 完成；D2 補畫面 ⏳ |
-| 1 練習核心 | 小關卡、回饋、錯題重練、圖表 | Claude Code（照 design/ 實作，任務 C3～C10） | ⏳ C3 待執行 |
-| 2 特教輔助 | 朗讀、注音、字級、反向題提醒 | Claude Code | ⬜ |
+| 1 練習核心 | 小關卡、回饋、錯題重練、圖表 | Claude Code（照 design/ 實作，任務 C3～C12） | 🔄 C3 ✅，C4 待執行 |
+| 2 閱讀與學習設定 | 朗讀、注音、字級、反向題提醒（通用設計，每個人都可開關） | Claude Code | ⬜ |
 | 3 概念卡 | 概念歸類、概念卡、數字記憶卡 | Claude（內容）＋ Claude Code（介面） | ⬜ |
 | 4 危險感知與模擬考 | 影片模式、50 題模擬考、趨勢分析 | Claude Code | ⬜ |
 
@@ -80,6 +85,12 @@
 | 2026-10-22 | Claude Code | 代為存檔 Antigravity 的 D1 中途成果（design/tokens.css、components.css）；D1 尚缺 components.html、三個畫面樣板、README.md | Antigravity：完成 D1 剩餘項目 |
 | 2026-10-22 | Claude | 審查 D1；開 D2（補畫面）；寫階段 1 任務單 C3～C10 | Claude Code：C3；Antigravity：D2 |
 | 2026-10-22 | Claude Code | C3 完成：site/js/data.js（排除影片題、每 10 題一關，共 97 關）、site/js/store.js（localStorage，依代號分開存） | Jim：確認；Claude Code：C4 |
+| 2026-10-22 | Claude | 範圍改為全校＋通用設計；後端改 Firebase、學校 Google 登入；更新 AGENTS.md、C8/C10/C11、D2 | Claude Code：C3；Antigravity：D2 |
+| 2026-10-22 | Claude | 登入改為不限網域的 Google 帳號；新增 C12 學習成果報告、D2 報告樣板 | Claude Code：C3；Antigravity：D2 |
+| 2026-10-22 | Claude | 管理者帳號確定，寫入 AGENTS.md、C10 | Claude Code：C3；Antigravity：D2 |
+| 2026-10-22 | Claude | 審查 C3 通過（97 關、926 題、代號分開存，Node 實測）；整理交接紀錄位置 | Claude Code：C4 |
+| 2026-10-22 | Claude | C4 加入「少於 5 題併入前一關」（92 關）；放寬 Claude Code 存檔範圍為 design/ 以外 | Claude Code：C4 |
+| 2026-10-22 | Claude Code | C4 完成：關卡規則改為 92 關（最後一關少於 5 題併入前一關，最大 14 題）；做出 site/quiz.html（進度圓點、反向題橫幅與標記、空題幹提示句、即時對錯回饋）。結算頁 result.html 尚未做（C6），答完會跳到它 | Jim：確認；Claude Code：C5 |
 
 ## 開工提示詞
 

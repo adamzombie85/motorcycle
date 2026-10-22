@@ -1,14 +1,17 @@
 /* 題庫讀取與關卡切分。只讀 data/questions.json，不改題目內容。 */
 (function () {
   var LEVEL_SIZE = 10;
+  var MIN_LAST_LEVEL = 5; // 最後一關少於 5 題，併進前一關
   var EXCLUDED_SOURCES = ['影片']; // 影片題階段 4 才做
   var URLS = ['data/questions.json', '../data/questions.json'];
 
   var state = null;
+  var base = ''; // 資料檔所在的相對前綴，圖片路徑也用它
 
   function fetchFirst(urls) {
     return fetch(urls[0]).then(function (res) {
       if (!res.ok) throw new Error(res.status);
+      base = urls[0].replace('data/questions.json', '');
       return res.json();
     }).catch(function (err) {
       if (urls.length > 1) return fetchFirst(urls.slice(1));
@@ -31,15 +34,21 @@
     var levels = [];
     order.forEach(function (sub) {
       var list = groups[sub];
-      for (var i = 0, n = 1; i < list.length; i += LEVEL_SIZE, n++) {
-        levels.push({
-          id: sub + '-' + n,
-          category: list[0].category,
-          subcategory: sub,
-          index: n,
-          questionIds: list.slice(i, i + LEVEL_SIZE).map(function (q) { return q.id; })
-        });
+      var chunks = [];
+      for (var i = 0; i < list.length; i += LEVEL_SIZE) chunks.push(list.slice(i, i + LEVEL_SIZE));
+      if (chunks.length > 1 && chunks[chunks.length - 1].length < MIN_LAST_LEVEL) {
+        var tail = chunks.pop();
+        chunks[chunks.length - 1] = chunks[chunks.length - 1].concat(tail);
       }
+      chunks.forEach(function (c, k) {
+        levels.push({
+          id: sub + '-' + (k + 1),
+          category: c[0].category,
+          subcategory: sub,
+          index: k + 1,
+          questionIds: c.map(function (q) { return q.id; })
+        });
+      });
     });
     return { questions: questions, byId: byId, levels: levels, subcategories: order };
   }
@@ -58,6 +67,8 @@
         return window.Data;
       });
     },
+    // 題目圖片的可用網址（依資料檔位置換算）
+    assetUrl: function (path) { return path ? base + path : null; },
     getQuestions: function () { return need().questions; },
     getQuestion: function (id) { return need().byId[id] || null; },
     getLevels: function () { return need().levels; },
