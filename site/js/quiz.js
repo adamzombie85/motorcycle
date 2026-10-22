@@ -139,8 +139,8 @@
     answered = true;
     var q = questions[index];
     var correct = choice === q.answer;
-    results.push({ qid: q.id, choice: choice, correct: correct });
     var mistake = Store.recordAnswer(q.id, correct);
+    results.push({ qid: q.id, choice: choice, correct: correct, cleared: mistake.cleared });
 
     Array.prototype.forEach.call(list.children, function (btn, i) {
       btn.disabled = true;
@@ -201,6 +201,7 @@
     Store.addAttempt({
       levelId: level.id,
       mode: mode,
+      clearedCount: results.filter(function (r) { return r.cleared; }).length,
       answers: results,
       correctCount: correctCount,
       total: questions.length,

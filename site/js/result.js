@@ -1,0 +1,365 @@
+/* 結算頁：成績、圖表、下一步建議、本次錯題。不產生解析，只顯示對錯與正確答案。 */
+(function () {
+  var root = document.getElementById('result-root');
+  var BLANK_PROMPT = '請看圖，選出正確的答案。';
+  var charts = [];
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+  function link(cls, text, href) {
+    var a = el('a', cls, text);
+    a.href = href;
+    return a;
+  }
+  function cssVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  function formatTime(sec) {
+    var m = Math.floor(sec / 60), s = sec % 60;
+    return m ? m + ' 分 ' + s + ' 秒' : s + ' 秒';
+  }
+  // 長標籤斷成多行（Chart.js 的標籤可以是陣列）
+  function wrapLabel(text, n) {
+    var parts = [];
+    for (var i = 0; i < text.length; i += n) parts.push(text.slice(i, i + n));
+    return parts;
+  }
+  function shortSub(name) { return name.replace(/（.*$/, ''); }
+
+  function showMessage(text) {
+    root.textContent = '';
+    var box = el('div', 'empty-state-card');
+    box.appendChild(el('div', 'empty-state-title', text));
+    box.appendChild(link('btn btn-primary', '回首頁', 'index.html'));
+    root.appendChild(box);
+  }
+
+  /* ---------- 成績大卡片 ---------- */
+  function renderHero(attempt, isMistakes, level) {
+    var wrong = attempt.total - attempt.correctCount;
+    var sec = el('section', 'result-hero-card');
+    sec.appendChild(el('div', 'result-subtitle', isMistakes
+      ? '錯題重練 結算報告'
+      : level.category + ' · ' + level.subcategory + '（第 ' + level.index + ' 關）結算報告'));
+
+    var circle = el('div', 'score-badge-circle');
+    circle.appendChild(el('span', 'score-num', String(attempt.score)));
+    circle.appendChild(el('span', 'score-unit', '分 / 滿分 100'));
+    sec.appendChild(circle);
+
+    if (!isMistakes) {
+      var pass = attempt.score >= Stats.PASS_SCORE;
+      sec.appendChild(el('div', 'pass-status-pill ' + (pass ? 'is-pass' : 'is-fail'),
+        pass ? '🎉 本關合格通過！（及格標準 ' + Stats.PASS_SCORE + ' 分）'
+             : '💪 還差一點，再練一次！（及格標準 ' + Stats.PASS_SCORE + ' 分）'));
+    }
+
+    var p = el('p', 'result-summary-text');
+    p.appendChild(document.createTextNode(attempt.total + ' 題中答對 '));
+    p.appendChild(el('strong', null, attempt.correctCount + ' 題'));
+    sec.appendChild(p);
+
+    if (!isMistakes) {
+      var wrap = el('div', 'result-bar-wrap');
+      var track = el('div', 'progress-bar-track');
+      var fill = el('div', 'progress-bar-fill');
+      fill.style.width = attempt.score + '%';
+      track.appendChild(fill);
+      track.appendChild(el('div', 'pass-mark-indicator'));
+      track.appendChild(el('div', 'pass-mark-label', '🎯 及格線 ' + Stats.PASS_SCORE + ' 分'));
+      wrap.appendChild(track);
+      sec.appendChild(wrap);
+    }
+
+    var row = el('div', 'stats-summary-row');
+    function box(numCls, num, label) {
+      var b = el('div', 'stat-box');
+      b.appendChild(el('div', 'stat-box-num ' + numCls, num));
+      b.appendChild(el('div', 'stat-box-label', label));
+      row.appendChild(b);
+    }
+    box('stat-correct', attempt.correctCount + ' 題', '答對題數');
+    box('stat-wrong', wrong + ' 題', '答錯題數');
+    box('stat-time', formatTime(attempt.seconds || 0), '練習時間');
+    if (isMistakes) {
+      box('stat-correct', (attempt.clearedCount || 0) + ' 題', '本次移出錯題庫');
+      box('stat-wrong', Store.getMistakeIds().length + ' 題', '錯題庫還剩');
+    }
+    sec.appendChild(row);
+    root.appendChild(sec);
+  }
+
+  /* ---------- 下一步建議 ---------- */
+  function nextUnpassedLevel(sub) {
+    return Data.getLevels().filter(function (l) {
+      return l.subcategory === sub && !Stats.levelPassed(l.id);
+    })[0] || null;
+  }
+
+  function renderRecommend(subStats) {
+    var subs = Object.keys(subStats).sort(function (a, b) { return subStats[a].rate - subStats[b].rate; });
+    var target = null, targetLevel = null;
+    for (var i = 0; i < subs.length; i++) {
+      var l = nextUnpassedLevel(subs[i]);
+      if (l) { target = subs[i]; targetLevel = l; break; }
+    }
+    var banner = el('section', 'recommend-banner');
+    var left = el('div');
+    if (target) {
+      left.appendChild(el('div', 'recommend-title', '💡 下一步建議：加強弱點小類'));
+      var t = el('div', 'recommend-text');
+      t.appendChild(document.createTextNode('累計答對率最低的是'));
+      t.appendChild(el('strong', null, '「' + shortSub(target) + '」（' + subStats[target].rate + '%）'));
+      t.appendChild(document.createTextNode('，從這一關開始練習。'));
+      left.appendChild(t);
+      banner.appendChild(left);
+      banner.appendChild(link('btn btn-accent', '開始第 ' + targetLevel.index + ' 關 ➔',
+        'quiz.html?level=' + encodeURIComponent(targetLevel.id)));
+    } else {
+      left.appendChild(el('div', 'recommend-title', '🎉 已練過的小類，關卡都過關了！'));
+      left.appendChild(el('div', 'recommend-text', '可以到首頁挑選還沒練過的小類。'));
+      banner.appendChild(left);
+    }
+    root.appendChild(banner);
+  }
+
+  /* ---------- 圖表 ---------- */
+  function chartCard(title, icon) {
+    var card = el('div', 'chart-wrapper');
+    var h = el('h3', 'chart-title');
+    h.appendChild(el('span', null, icon));
+    h.appendChild(el('span', null, title));
+    card.appendChild(h);
+    return card;
+  }
+
+  function renderCharts(attempt, isMistakes, levelId) {
+    Chart.defaults.font.size = 18;
+    Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+    Chart.defaults.color = cssVar('--color-slate-800');
+    var primary = cssVar('--color-primary'), primaryFill = cssVar('--color-primary-200'),
+        accent = cssVar('--color-accent-600'), grid = cssVar('--color-slate-200'),
+        danger = cssVar('--color-danger-500'), warning = cssVar('--color-warning-500'),
+        success = cssVar('--color-success-500');
+
+    var sec = el('section', 'result-section');
+    var head = el('div', 'section-heading');
+    var h2 = el('h2', 'section-heading-title');
+    h2.appendChild(el('span', null, '📊'));
+    h2.appendChild(el('span', null, '學習能力分析圖表'));
+    head.appendChild(h2);
+    var exp = el('button', 'btn btn-outline', '📷 匯出圖表');
+    exp.type = 'button';
+    exp.addEventListener('click', exportPng);
+    head.appendChild(exp);
+    sec.appendChild(head);
+
+    var catStats = Stats.byCategory(), subStats = Stats.bySubcategory();
+    var cats = Data.getCategories();
+    var grid2 = el('div', 'grid-2');
+
+    // 雷達圖：四大類
+    var radar = chartCard('四大類累計答對率', '🕸️');
+    var rbox = el('div', 'chart-box'); rbox.style.height = '400px';
+    var rc = el('canvas'); rbox.appendChild(rc); radar.appendChild(rbox);
+    var untouched = cats.filter(function (c) { return !catStats[c]; });
+    radar.appendChild(el('div', 'chart-note', untouched.length
+      ? '尚未練習：' + untouched.join('、') : '每一類都練過了，繼續加油！'));
+    grid2.appendChild(radar);
+    charts.push(new Chart(rc, {
+      type: 'radar',
+      data: {
+        labels: cats.map(function (c) { return wrapLabel(c, 4); }),
+        datasets: [{
+          label: '累計答對率（%）',
+          data: cats.map(function (c) { return catStats[c] ? catStats[c].rate : 0; }),
+          borderColor: primary, backgroundColor: primaryFill, borderWidth: 3,
+          pointBackgroundColor: primary, pointRadius: 5
+        }]
+      },
+      options: {
+        maintainAspectRatio: false, animation: false,
+        layout: { padding: 4 },
+        plugins: { legend: { display: false } },
+        scales: { r: { min: 0, max: 100, ticks: { stepSize: 25, backdropColor: 'transparent' }, grid: { color: grid }, pointLabels: { font: { size: 18 } } } }
+      }
+    }));
+
+    // 長條圖：各小類，由低到高（只畫練過的）
+    var subs = Object.keys(subStats).sort(function (a, b) { return subStats[a].rate - subStats[b].rate; });
+    var bar = chartCard('各小類累計答對率（由低到高）', '📊');
+    var bbox = el('div', 'chart-box'); bbox.style.height = Math.max(200, subs.length * 74 + 70) + 'px';
+    var bc = el('canvas'); bbox.appendChild(bc); bar.appendChild(bbox);
+    var untouchedSubs = Data.getSubcategories().filter(function (s) { return !subStats[s]; });
+    bar.appendChild(el('div', 'chart-note', untouchedSubs.length
+      ? '尚未練習：' + untouchedSubs.map(shortSub).join('、') : '每個小類都練過了！'));
+    grid2.appendChild(bar);
+    charts.push(new Chart(bc, {
+      type: 'bar',
+      data: {
+        labels: subs.map(function (s) { return wrapLabel(shortSub(s), 9); }),
+        datasets: [{
+          label: '累計答對率（%）',
+          data: subs.map(function (s) { return subStats[s].rate; }),
+          backgroundColor: subs.map(function (s) {
+            var r = subStats[s].rate; return r < 60 ? danger : r < Stats.PASS_SCORE ? warning : success;
+          })
+        }]
+      },
+      options: {
+        indexAxis: 'y', maintainAspectRatio: false, animation: false,
+        plugins: { legend: { display: false } },
+        scales: { x: { min: 0, max: 100, grid: { color: grid } }, y: { grid: { display: false } } }
+      }
+    }));
+    sec.appendChild(grid2);
+
+    // 折線圖：同一關歷次分數（錯題重練沒有對應的關卡，不顯示）
+    if (!isMistakes) {
+      var tries = Store.getAttempts(levelId).filter(function (a) { return a.mode !== 'mistakes'; });
+      var line = chartCard('這一關歷次分數', '📈');
+      var lbox = el('div', 'chart-box'); lbox.style.height = '300px';
+      var lc = el('canvas'); lbox.appendChild(lc); line.appendChild(lbox);
+      sec.appendChild(line);
+      charts.push(new Chart(lc, {
+        type: 'line',
+        data: {
+          labels: tries.map(function (a, i) { return '第 ' + (i + 1) + ' 次'; }),
+          datasets: [
+            { label: '分數', data: tries.map(function (a) { return a.score; }), borderColor: primary,
+              backgroundColor: primary, borderWidth: 4, pointRadius: 7, tension: 0 },
+            { label: '及格線 ' + Stats.PASS_SCORE + ' 分', data: tries.map(function () { return Stats.PASS_SCORE; }),
+              borderColor: accent, borderDash: [8, 6], borderWidth: 3, pointRadius: 0 }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false, animation: false,
+          plugins: { legend: { position: 'bottom' } },
+          scales: { y: { min: 0, max: 100, grid: { color: grid } }, x: { grid: { display: false } } }
+        }
+      }));
+    }
+    root.appendChild(sec);
+  }
+
+  // 把畫面上的圖表合成一張 PNG 下載
+  function exportPng() {
+    var canvases = charts.map(function (c) { return c.canvas; });
+    if (!canvases.length) return;
+    var pad = 40, titleH = 90;
+    var w = Math.max.apply(null, canvases.map(function (c) { return c.width; })) + pad * 2;
+    var h = titleH + canvases.reduce(function (s, c) { return s + c.height + pad; }, 0);
+    var out = document.createElement('canvas');
+    out.width = w; out.height = h;
+    var ctx = out.getContext('2d');
+    ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = cssVar('--color-slate-800');
+    ctx.font = 'bold 36px sans-serif';
+    ctx.fillText('機車筆試好過關 學習圖表（' + (Store.getStudent() || '') + '）', pad, 56);
+    var y = titleH;
+    canvases.forEach(function (c) {
+      ctx.drawImage(c, pad, y);
+      y += c.height + pad;
+    });
+    out.toBlob(function (blob) {
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = '學習圖表-' + new Date().toISOString().slice(0, 10) + '.png';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    }, 'image/png');
+  }
+
+  /* ---------- 本次錯題 ---------- */
+  function renderMistakes(attempt) {
+    var wrongs = attempt.answers.filter(function (r) { return !r.correct; });
+    var sec = el('section', 'result-section');
+    var head = el('div', 'section-heading');
+    var h2 = el('h2', 'section-heading-title');
+    h2.appendChild(el('span', null, '🔍'));
+    h2.appendChild(el('span', null, '本次錯題（共 ' + wrongs.length + ' 題）'));
+    head.appendChild(h2);
+    sec.appendChild(head);
+
+    if (!wrongs.length) {
+      sec.appendChild(el('p', null, '這次全部答對，太棒了！'));
+    }
+    wrongs.forEach(function (r) {
+      var q = Data.getQuestion(r.qid);
+      if (!q) return;
+      var card = el('div', 'mistake-review-card');
+      card.appendChild(el('div', 'mistake-title', '❌ ' + (q.question.trim() || BLANK_PROMPT)));
+      if (q.image) {
+        var frame = el('div', 'question-image-frame');
+        var img = el('img'); img.src = Data.assetUrl(q.image); img.alt = '題目圖片';
+        frame.appendChild(img); card.appendChild(frame);
+      }
+      var lines = el('div', 'mistake-lines');
+      var mine = el('div'); mine.appendChild(document.createTextNode('你的答案：'));
+      mine.appendChild(el('span', 'mistake-mine', (r.choice + 1) + '. ' + q.options[r.choice]));
+      var right = el('div'); right.appendChild(document.createTextNode('正確答案：'));
+      right.appendChild(el('strong', 'mistake-right', (q.answer + 1) + '. ' + q.options[q.answer]));
+      lines.appendChild(mine); lines.appendChild(right);
+      card.appendChild(lines);
+      sec.appendChild(card);
+    });
+    root.appendChild(sec);
+  }
+
+  /* ---------- 底部按鈕 ---------- */
+  function renderActions(isMistakes, level) {
+    var bar = document.getElementById('action-bar');
+    var inner = document.getElementById('action-bar-inner');
+    inner.appendChild(link('btn btn-ghost', '🏠 回首頁', 'index.html'));
+    var btns = el('div', 'action-bar-buttons');
+    if (isMistakes) {
+      if (Store.getMistakeIds().length) {
+        btns.appendChild(link('btn btn-primary', '🔁 繼續重練', 'quiz.html?mode=mistakes'));
+      }
+    } else {
+      btns.appendChild(link('btn btn-secondary', '🔁 再練一次本關', 'quiz.html?level=' + encodeURIComponent(level.id)));
+      var levels = Data.getLevels();
+      var next = levels[levels.indexOf(level) + 1];
+      if (next) {
+        btns.appendChild(link('btn btn-primary', '下一關 ➔', 'quiz.html?level=' + encodeURIComponent(next.id)));
+      }
+    }
+    inner.appendChild(btns);
+    bar.hidden = false;
+  }
+
+  function init() {
+    var params = new URLSearchParams(location.search);
+    var isMistakes = params.get('mode') === 'mistakes';
+    var levelId = params.get('level');
+    if (!Store.getStudent()) Store.setStudent('訪客');
+    document.getElementById('user-chip').textContent = '👤 ' + Store.getStudent();
+
+    Data.load().then(function () {
+      var level = null;
+      if (!isMistakes) {
+        level = Data.getLevel(levelId);
+        if (!level) return showMessage('找不到這個關卡。');
+      }
+      var tries = Store.getAttempts(isMistakes ? 'mistakes' : levelId);
+      var attempt = tries[tries.length - 1];
+      if (!attempt) return showMessage('還沒有這一次的作答紀錄。');
+
+      root.textContent = '';
+      renderHero(attempt, isMistakes, level);
+      renderRecommend(Stats.bySubcategory());
+      renderCharts(attempt, isMistakes, levelId);
+      renderMistakes(attempt);
+      renderActions(isMistakes, level);
+    }).catch(function () {
+      showMessage('資料載入失敗，請用網址 http://localhost:8000/site/ 開啟。');
+    });
+  }
+  init();
+})();

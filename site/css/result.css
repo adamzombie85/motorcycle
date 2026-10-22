@@ -1,0 +1,131 @@
+/* 結算頁版面微調（取自 design/screen-result.html，只用 tokens 變數） */
+.result-container {
+  max-width: var(--container-max-tablet);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.result-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-2);
+}
+
+.result-summary-text {
+  font-size: var(--font-size-base);
+  color: var(--color-text-main);
+  line-height: var(--line-height-relaxed);
+  max-width: 480px;
+  margin: 0 auto var(--space-4) auto;
+}
+
+.result-bar-wrap {
+  position: relative;
+  padding-top: 36px;
+  max-width: 500px;
+  margin: 0 auto var(--space-4) auto;
+}
+
+.result-bar-wrap .progress-bar-track { height: 16px; }
+
+.stat-correct { color: var(--color-success-600); }
+.stat-wrong { color: var(--color-danger-600); }
+.stat-time { color: var(--color-primary-700); }
+
+.recommend-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-black);
+  color: var(--color-accent-800);
+  margin-bottom: var(--space-1);
+}
+
+.recommend-text {
+  font-size: var(--font-size-base);
+  color: var(--color-slate-800);
+}
+
+.result-section { margin-bottom: var(--space-8); }
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.section-heading-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.chart-box { position: relative; width: 100%; }
+.chart-note {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-3);
+  text-align: center;
+}
+
+/* 錯題檢討卡 */
+.mistake-review-card {
+  background-color: var(--color-danger-50);
+  border: 2px solid var(--color-danger-200);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin-top: var(--space-4);
+}
+
+.mistake-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-danger-800);
+  margin-bottom: var(--space-2);
+}
+
+.mistake-lines {
+  font-size: var(--font-size-base);
+  color: var(--color-slate-700);
+  line-height: var(--line-height-normal);
+}
+.mistake-mine { color: var(--color-danger-700); text-decoration: line-through; }
+.mistake-right { color: var(--color-success-700); }
+.mistake-review-card .question-image-frame { margin: var(--space-3) 0; }
+
+/* 底部行動列 */
+.result-action-bar {
+  position: sticky;
+  bottom: 0;
+  background-color: var(--color-bg-card);
+  border-top: 2px solid var(--color-border-subtle);
+  padding: var(--space-4) 0;
+  box-shadow: var(--shadow-sm);
+  z-index: 100;
+  margin-top: var(--space-8);
+}
+
+.action-bar-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.action-bar-inner > .btn { flex: 1 1 auto; }
+.action-bar-buttons { display: flex; gap: var(--space-2); flex-wrap: wrap; flex: 2 1 auto; }
+.action-bar-buttons .btn { flex: 1 1 auto; }
+
+@media (min-width: 640px) {
+  .action-bar-inner { justify-content: space-between; gap: var(--space-3); }
+  .action-bar-inner > .btn { flex: 0 0 auto; }
+  .action-bar-buttons { flex: 0 1 auto; gap: var(--space-3); }
+}
+
+@media (max-width: 480px) {
+  .result-container .chart-wrapper { padding: var(--space-4) var(--space-3); }
+}
