@@ -1,0 +1,924 @@
+/**
+ * 機車駕照筆試題庫 - 元件樣式庫 (Components Stylesheet)
+ * 嚴格遵循 AGENTS.md 規則：全數採用 design/tokens.css 的變數
+ * 專為特教資源班高中生設計：按鈕 >= 44px (標配 48~56px)、字級 >= 18px、WCAG AA 對比、雙重識別 (不只靠顏色)
+ */
+
+/* ==========================================================================
+   1. 版面容器與網格 (Containers & Layouts)
+   ========================================================================== */
+
+.app-container {
+  width: 100%;
+  max-width: var(--container-max-desktop);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .app-container {
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+  }
+}
+
+.main-content {
+  flex: 1;
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-12);
+}
+
+/* 網格系統 */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+  }
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+}
+
+/* ==========================================================================
+   2. 導覽列與輔助工具列 (Navigation & A11y Bar)
+   ========================================================================== */
+
+.site-header {
+  background-color: var(--color-bg-card);
+  border-bottom: 2px solid var(--color-border-subtle);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64px;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+}
+
+.brand-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--color-text-main);
+  font-weight: var(--font-weight-black);
+  font-size: var(--font-size-lg);
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+/* 特教輔助工具列 (A11y Toolbar) */
+.a11y-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--color-bg-subtle);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
+}
+
+/* 學生身分徽章 (Jim 決策：學生代號登入) */
+.user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  background-color: var(--color-primary-50);
+  border: 1px solid var(--color-primary-200);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-900);
+  font-weight: var(--font-weight-bold);
+  height: var(--touch-target-min);
+}
+
+/* ==========================================================================
+   3. 按鈕元件系統 (Buttons) - 保障觸控區域 >= 44px
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+  text-align: center;
+  border: 2px solid transparent;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* 主行動按鈕 (湖水藍) */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  box-shadow: 0 4px 10px rgba(44, 157, 176, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  box-shadow: 0 6px 14px rgba(44, 157, 176, 0.4);
+}
+
+/* 次要行動按鈕 (湖水藍淺色底) */
+.btn-secondary {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-800);
+  border-color: var(--color-primary-200);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-primary-100);
+  border-color: var(--color-primary-400);
+}
+
+/* 亮琥珀黃按鈕 (成就／重點行動) */
+.btn-accent {
+  background-color: var(--color-accent);
+  color: var(--color-slate-900);
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+}
+
+.btn-accent:hover {
+  background-color: var(--color-accent-dark);
+  color: var(--color-text-inverse);
+}
+
+/* 線框按鈕 */
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--color-slate-300);
+  color: var(--color-text-main);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-slate-100);
+  border-color: var(--color-slate-400);
+}
+
+/* 幽靈按鈕 (無邊框透明) */
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+}
+
+.btn-ghost:hover {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-primary-700);
+}
+
+/* 特大主按鈕 (答題推進、開始測驗) */
+.btn-lg {
+  min-height: var(--touch-target-lg);
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--font-size-md);
+  border-radius: var(--radius-lg);
+}
+
+/* 圖示按鈕 (朗讀、注音、放大) */
+.btn-icon {
+  width: var(--touch-target-min);
+  height: var(--touch-target-min);
+  padding: 0;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-lg);
+  background-color: var(--color-bg-card);
+  color: var(--color-primary-700);
+  border: 1px solid var(--color-border-card);
+}
+
+.btn-icon:hover {
+  background-color: var(--color-primary-50);
+  border-color: var(--color-primary-400);
+}
+
+.btn-icon.is-active {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
+}
+
+/* 禁用狀態 */
+.btn:disabled, .btn.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+  transform: none;
+}
+
+/* ==========================================================================
+   4. 答題選項卡系統 (Option Cards) - 多感官雙重識別
+   ========================================================================== */
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.option-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 64px;
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--color-bg-card);
+  border: 3px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+  width: 100%;
+}
+
+.option-card:hover {
+  border-color: var(--color-primary-400);
+  background-color: var(--color-primary-50);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* 序號徽章 (1, 2, 3) */
+.option-badge {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-slate-100);
+  color: var(--color-slate-700);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-border-subtle);
+  transition: all var(--transition-fast);
+}
+
+/* 選項文字 */
+.option-label {
+  flex: 1;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-main);
+}
+
+/* 狀態圖標與文字提示 (不只靠顏色傳遞資訊！) */
+.option-indicator {
+  display: none;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+}
+
+/* 選取中狀態 (未開獎前) */
+.option-card.is-selected {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-50);
+  box-shadow: var(--focus-ring);
+}
+
+.option-card.is-selected .option-badge {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
+}
+
+/* 答對狀態 (Correct) */
+.option-card.is-correct {
+  border-color: var(--color-success-500) !important;
+  background-color: var(--color-success-bg) !important;
+}
+
+.option-card.is-correct .option-badge {
+  background-color: var(--color-success-600);
+  color: var(--color-text-inverse);
+  border-color: var(--color-success-600);
+}
+
+.option-card.is-correct .option-indicator {
+  display: inline-flex;
+  background-color: var(--color-success-100);
+  color: var(--color-success-text);
+  border: 1px solid var(--color-success-500);
+}
+
+/* 答錯狀態 (Wrong) */
+.option-card.is-wrong {
+  border-color: var(--color-danger-500) !important;
+  background-color: var(--color-danger-bg) !important;
+}
+
+.option-card.is-wrong .option-badge {
+  background-color: var(--color-danger-600);
+  color: var(--color-text-inverse);
+  border-color: var(--color-danger-600);
+}
+
+.option-card.is-wrong .option-indicator {
+  display: inline-flex;
+  background-color: var(--color-danger-100);
+  color: var(--color-danger-text);
+  border: 1px solid var(--color-danger-500);
+}
+
+/* 非選中項目淡化 */
+.option-card.is-dimmed {
+  opacity: 0.55;
+  cursor: default;
+}
+
+/* ==========================================================================
+   5. 進度條系統 (Progress System) - 小關卡即時感知
+   ========================================================================== */
+
+.quiz-progress-section {
+  background-color: var(--color-bg-card);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+  margin-bottom: var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* 10 題微關卡分節圓點進度條 (Segmented Dots) */
+.progress-dots {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.dot-item {
+  flex: 1;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-slate-200);
+  transition: all var(--transition-normal);
+}
+
+.dot-item.is-done {
+  background-color: var(--color-success-500);
+}
+
+.dot-item.is-current {
+  background-color: var(--color-primary);
+  height: 14px;
+  box-shadow: 0 0 0 3px var(--color-primary-200);
+}
+
+.dot-item.is-wrong {
+  background-color: var(--color-danger-500);
+}
+
+/* 連續百分比進度條 */
+.progress-bar-track {
+  width: 100%;
+  height: 12px;
+  background-color: var(--color-slate-200);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary-400), var(--color-primary));
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease-out;
+}
+
+/* 及格門檻標記線 (85 分線) */
+.pass-mark-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 85%;
+  width: 3px;
+  background-color: var(--color-accent-600);
+  z-index: 2;
+}
+
+.pass-mark-label {
+  position: absolute;
+  top: -24px;
+  left: 85%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-accent-700);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   6. 回饋卡片系統 (Feedback Cards) - 溫和肯定、降低挫折、釐清觀念
+   ========================================================================== */
+
+.feedback-card {
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-top: var(--space-6);
+  border: 3px solid transparent;
+  box-shadow: var(--shadow-card);
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 答對回饋卡 */
+.feedback-card.is-success {
+  background-color: var(--color-success-bg);
+  border-color: var(--color-success-500);
+}
+
+/* 答錯回饋卡 */
+.feedback-card.is-danger {
+  background-color: var(--color-danger-bg);
+  border-color: var(--color-danger-500);
+}
+
+.feedback-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.feedback-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  color: var(--color-text-inverse);
+  flex-shrink: 0;
+}
+
+.feedback-card.is-success .feedback-icon {
+  background-color: var(--color-success-600);
+}
+
+.feedback-card.is-danger .feedback-icon {
+  background-color: var(--color-danger-600);
+}
+
+.feedback-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-black);
+}
+
+.feedback-card.is-success .feedback-title {
+  color: var(--color-success-text);
+}
+
+.feedback-card.is-danger .feedback-title {
+  color: var(--color-danger-text);
+}
+
+.feedback-body {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-main);
+  margin-bottom: var(--space-4);
+}
+
+/* 記憶小口訣卡片 (Mnemonic Box) */
+.concept-memo {
+  background-color: var(--color-bg-card);
+  border-left: 6px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  margin: var(--space-3) 0 var(--space-5) 0;
+  font-size: var(--font-size-base);
+  box-shadow: var(--shadow-sm);
+}
+
+.concept-memo-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-primary-800);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-1);
+}
+
+/* 答錯連對 2 次提醒 */
+.mistake-retest-notice {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--color-accent-100);
+  color: var(--color-accent-700);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
+}
+
+/* ==========================================================================
+   7. 反向題提醒橫幅 (Reverse Question Warning Banner)
+   ========================================================================== */
+
+.alert-reverse {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background-color: var(--color-warning-bg);
+  border: 2px solid var(--color-warning-500);
+  border-left-width: 8px;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+
+.alert-reverse-icon {
+  font-size: 26px;
+  line-height: 1;
+  color: var(--color-warning-700);
+  flex-shrink: 0;
+}
+
+.alert-reverse-content {
+  font-size: var(--font-size-base);
+  color: var(--color-warning-text);
+  line-height: var(--line-height-normal);
+}
+
+.alert-reverse-content strong {
+  color: var(--color-danger-700);
+  font-weight: var(--font-weight-black);
+}
+
+/* ==========================================================================
+   8. 題目卡片本體 (Question Card)
+   ========================================================================== */
+
+.question-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+  margin-bottom: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .question-card {
+    padding: var(--space-8);
+  }
+}
+
+.question-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.tag-list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+}
+
+.tag-category {
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-800);
+}
+
+.tag-sub {
+  background-color: var(--color-slate-100);
+  color: var(--color-slate-700);
+}
+
+.tag-reverse {
+  background-color: var(--color-warning-200);
+  color: var(--color-warning-800);
+  border: 1px solid var(--color-warning-500);
+}
+
+.question-title-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.question-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-main);
+  flex: 1;
+}
+
+/* 官方標誌、情境圖片框架 */
+.question-image-frame {
+  margin: var(--space-4) 0;
+  padding: var(--space-4);
+  background-color: var(--color-slate-50);
+  border: 2px dashed var(--color-border-card);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.question-image-frame img {
+  max-height: 240px;
+  width: auto;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================================
+   9. 關卡卡片與學習卡 (Level Cards & Mode Cards)
+   ========================================================================== */
+
+.level-card {
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.level-card:hover {
+  border-color: var(--color-primary-400);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-3px);
+}
+
+.level-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.level-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-700);
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-black);
+}
+
+.level-stars {
+  color: var(--color-accent);
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+.level-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-main);
+}
+
+.level-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   10. 成績結算與圖表區塊 (Result & Analytics Cards)
+   ========================================================================== */
+
+.result-hero-card {
+  background: linear-gradient(135deg, var(--color-primary-50), #FFFFFF);
+  border: 3px solid var(--color-primary-200);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8) var(--space-6);
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  margin-bottom: var(--space-6);
+}
+
+.score-badge-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--space-4) auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 6px solid var(--color-primary);
+  background-color: var(--color-bg-card);
+  box-shadow: var(--shadow-hover);
+}
+
+.score-num {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-primary-800);
+  line-height: 1;
+}
+
+.score-unit {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-bold);
+}
+
+.pass-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-black);
+  margin-bottom: var(--space-3);
+}
+
+.pass-status-pill.is-pass {
+  background-color: var(--color-success-100);
+  color: var(--color-success-700);
+  border: 2px solid var(--color-success-500);
+}
+
+.pass-status-pill.is-fail {
+  background-color: var(--color-danger-100);
+  color: var(--color-danger-700);
+  border: 2px solid var(--color-danger-500);
+}
+
+/* 統計三欄數據卡 */
+.stats-summary-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin: var(--space-5) 0;
+}
+
+.stat-box {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  text-align: center;
+}
+
+.stat-box-num {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-slate-800);
+}
+
+.stat-box-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* 圖表容器 (Chart Container) */
+.chart-wrapper {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-6);
+}
+
+.chart-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-main);
+  margin-bottom: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* 弱點加強建議橫幅 */
+.recommend-banner {
+  background-color: var(--color-accent-50);
+  border: 2px solid var(--color-accent-400);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+@media (min-width: 640px) {
+  .recommend-banner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
