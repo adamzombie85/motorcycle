@@ -1,0 +1,287 @@
+/* 首頁與關卡清單版面（取自 design/screen-home.html、screen-levels.html，只用 tokens 變數） */
+
+    /* 首頁專屬微調樣式 (全數引用 tokens.css 變數) */
+    .hero-banner {
+      background: linear-gradient(135deg, var(--color-primary-50) 0%, #FFFFFF 100%);
+      border: 2px solid var(--color-primary-200);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-6);
+      box-shadow: var(--shadow-card);
+    }
+
+    @media (min-width: 768px) {
+      .hero-banner {
+        flex-direction: row;
+        padding: var(--space-8);
+        gap: var(--space-8);
+      }
+    }
+
+    .hero-illustration {
+      flex: 1;
+      max-width: 380px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-illustration img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-lg);
+      filter: drop-shadow(0 8px 16px rgba(44, 157, 176, 0.2));
+    }
+
+    .hero-content {
+      flex: 1.2;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .hero-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-black);
+      color: var(--color-slate-900);
+      line-height: 1.25;
+    }
+
+    .hero-title span {
+      color: var(--color-primary);
+    }
+
+    .hero-desc {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-relaxed);
+    }
+
+    .hero-quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-top: var(--space-2);
+    }
+
+    /* 區塊標題 */
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .section-heading-title {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-black);
+      color: var(--color-text-main);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .section-heading-subtitle {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    /* 關卡卡片進度細節 */
+    .level-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-2);
+    }
+
+    /* 特訓專區卡片 */
+    .feature-card {
+      background-color: var(--color-bg-card);
+      border: 2px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      display: flex;
+      gap: var(--space-4);
+      align-items: flex-start;
+      transition: all var(--transition-normal);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .feature-card:hover {
+      border-color: var(--color-primary-400);
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+  
+
+    /* 關卡清單專屬排版 */
+    .levels-header-card {
+      background: linear-gradient(135deg, var(--color-primary-50) 0%, #FFFFFF 100%);
+      border: 2px solid var(--color-primary-200);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+      box-shadow: var(--shadow-card);
+    }
+
+    @media (min-width: 768px) {
+      .levels-header-card {
+        padding: var(--space-8);
+      }
+    }
+
+    .breadcrumb-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb-row a {
+      color: var(--color-primary-700);
+      text-decoration: none;
+      font-weight: var(--font-weight-bold);
+    }
+
+    .breadcrumb-row a:hover {
+      text-decoration: underline;
+    }
+
+    .levels-category-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-black);
+      color: var(--color-slate-900);
+      line-height: var(--line-height-tight);
+      margin-bottom: var(--space-2);
+    }
+
+    .levels-category-desc {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-relaxed);
+      margin-bottom: var(--space-4);
+    }
+
+    .rules-banner {
+      background-color: var(--color-accent-50);
+      border: 2px solid var(--color-accent-300);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--font-size-sm);
+      color: var(--color-accent-800);
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* 關卡按鈕區塊微調 */
+    .level-action-btn {
+      width: 100%;
+      min-height: var(--touch-target-min);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-bold);
+      text-decoration: none;
+      transition: all var(--transition-fast);
+      margin-top: var(--space-2);
+    }
+  
+.user-chip-plain { text-decoration: none; color: inherit; }
+
+.cat-sub-list { display: flex; flex-direction: column; gap: var(--space-2); }
+.cat-sub-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--touch-target-min);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-card);
+  color: var(--color-text-main);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+.cat-sub-link:hover { border-color: var(--color-primary-400); }
+.cat-sub-count { color: var(--color-primary-700); white-space: nowrap; }
+
+.level-card-actions { display: flex; gap: var(--space-2); }
+.level-card-actions .btn { flex: 1; }
+
+.feature-card.is-soon {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: var(--color-slate-50);
+}
+.feature-card.is-soon:hover { border-color: var(--color-border-subtle); box-shadow: none; transform: none; }
+.soon-tag {
+  display: inline-block;
+  margin-left: var(--space-2);
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-full);
+  background-color: var(--color-slate-200);
+  color: var(--color-slate-700);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+.feature-title { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); margin-bottom: var(--space-1); }
+.feature-desc { font-size: var(--font-size-base); color: var(--color-text-secondary); line-height: var(--line-height-normal); }
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-800);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  width: fit-content;
+}
+.site-footer {
+  background-color: var(--color-bg-card);
+  border-top: 1px solid var(--color-border-subtle);
+  padding: var(--space-6) 0;
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+.page-block { margin-bottom: var(--space-8); }
+.stat-primary { color: var(--color-primary-600); }
+.stat-success { color: var(--color-success-600); }
+.stat-accent { color: var(--color-accent-600); }
+.level-meta-state { font-weight: var(--font-weight-bold); }
+.levels-progress-head { display: flex; justify-content: space-between; font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); margin-bottom: var(--space-2); gap: var(--space-2); flex-wrap: wrap; }
+.levels-progress-wrap { margin-top: var(--space-5); }
+.levels-progress-wrap .progress-bar-track { height: 14px; }
+.rules-banner-icon { font-size: var(--font-size-md); }

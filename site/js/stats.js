@@ -28,14 +28,22 @@
     return out;
   }
 
-  window.Stats = {
+  var Stats = window.Stats = {
     PASS_SCORE: PASS_SCORE,
     byCategory: function () { return tally(function (q) { return q.category; }); },
     bySubcategory: function () { return tally(function (q) { return q.subcategory; }); },
-    levelPassed: function (levelId) {
-      return Store.getAttempts(levelId).some(function (a) {
-        return a.mode !== 'mistakes' && a.score >= PASS_SCORE;
+    // 每一關的最高分（只算關卡練習，錯題重練不算）
+    bestScores: function () {
+      var best = {};
+      Store.getAttempts().forEach(function (a) {
+        if (a.mode === 'mistakes') return;
+        if (best[a.levelId] === undefined || a.score > best[a.levelId]) best[a.levelId] = a.score;
       });
+      return best;
+    },
+    levelPassed: function (levelId) {
+      var b = Stats.bestScores()[levelId];
+      return b !== undefined && b >= PASS_SCORE;
     }
   };
 })();

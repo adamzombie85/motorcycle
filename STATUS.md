@@ -63,7 +63,7 @@
 |---|---|---|---|
 | 0 資料化 | 題庫轉 JSON、抽圖、影片壓縮、加標籤、程式交叉比對 | Claude → Jim 抽查 | ✅ 完成 |
 | 1a 視覺定調 | tokens.css、首頁和答題畫面樣板 | Antigravity（Gemini） | ✅ D1；🟡 D2 部分完成；D2b 待執行 |
-| 1 練習核心 | 小關卡、回饋、錯題重練、圖表 | Claude Code（照 design/ 實作，任務 C3～C12） | 🔄 C3～C5 ✅，C6 待執行 |
+| 1 練習核心 | 小關卡、回饋、錯題重練、圖表 | Claude Code（照 design/ 實作，任務 C3～C12） | 🔄 C3～C6 ✅，C7 待執行 |
 | 2 閱讀與學習設定 | 朗讀、注音、字級、反向題提醒（通用設計，每個人都可開關） | Claude Code | ⬜ |
 | 3 概念卡 | 概念歸類、概念卡、數字記憶卡 | Claude（內容）＋ Claude Code（介面） | ⬜ |
 | 4 危險感知與模擬考 | 影片模式、50 題模擬考、趨勢分析 | Claude Code | ⬜ |
@@ -97,6 +97,8 @@
 | 2026-10-22 | Claude | 審查 C5 通過；C6 補上錯題重練結算與累計答對率算法；確認 commit 內的 data/ 標籤正確 | Claude Code：C6 |
 | 2026-10-22 | Claude | 審查 D2：Antigravity 照舊版任務單做，登入、報告頁、通用設計字眼、頁尾未完成 → 開 D2b | Claude Code：存檔 design/；Antigravity：D2b |
 | 2026-10-22 | Claude Code | C6 完成：site/result.html（成績、85 分判定、雷達／長條／折線圖、下一步建議、本次錯題、匯出 PNG）、site/js/stats.js（累計答對率：每題只看最近一次）；?mode=mistakes 結算無過關判定與折線圖，顯示移出題數與錯題庫剩餘。quiz.js 的作答紀錄新增 clearedCount | Jim：確認；Claude Code：C9（C7、C8 等 D2） |
+| 2026-10-22 | Claude | 確認 design 存檔 882f655；審查 C6 通過；開放 C7、C8（順序 C7→C8→C9） | Claude Code：C7；Antigravity：D2b |
+| 2026-10-22 | Claude Code | C7 完成：site/index.html（首頁）、site/levels.html?sub=小類（關卡清單）、site/css/pages.css、home.js、levels.js；Stats 新增 bestScores。反向題專區、數字翻卡、模擬考顯示「即將推出」；錯題庫入口連到 mistakes.html（C8 才有）；頁尾「© 2026 41 研究室｜版權所有」 | Jim：確認；Claude Code：C8 |
 
 ## 開工提示詞
 
