@@ -91,15 +91,17 @@
 - 驗收條件：首頁數字都來自真實紀錄（沒有紀錄時顯示 0）；從首頁可以走到任何一關
 
 ### C8｜錯題庫畫面
-- 狀態：**待執行**（樣板 `design/screen-mistakes.html` 已完成）
+- 狀態：✅ 已完成（2026-10-22，commit 2965a9a，Claude 審查通過：單題複習也走 recordAnswer，一樣要連續答對 2 次）
+  - 決定：「開始重練」用 btn-primary，不用紅色（錯題不需要警告色，降低挫折）
 - 做什麼：錯題庫頁顯示題數、題目列表、開始重練；空的時候顯示鼓勵畫面
 - 驗收條件：有錯題、沒錯題兩種狀態都正確
 
 ### C9｜部署到 GitHub Pages
-- 狀態：**待執行**（C3～C6 完成後就可以做，讓 Jim 用手機實測）
+- 狀態：**待執行**
 - 做什麼：用 GitHub Actions 把 `site/`、`design/*.css`、`data/questions.json`、`media/` 組合後部署，網址根目錄直接開到網站首頁，路徑在線上和本機都要能用
   - **路徑注意（C4 回報）**：頁面目前用 `../design/`、`../media/`、`../data/` 相對路徑。部署時要保持同樣的資料夾結構（例如部署成 `/site/` 加上 `/design/`、`/media/`、`/data/`，根目錄放一個轉址到 `site/` 的 index.html），或統一改用 `Data.assetUrl()` 處理。選哪一種寫在回報裡
   - 圖片和影片都要確認在線上載入得到（抽 3 題圖片題、1 題情境題）
+  - **GitHub 設定要 Jim 做的部分**（例如 Settings → Pages → Source 選 GitHub Actions），寫成一步一步的說明給 Jim；如果 push workflow 檔被拒（權限不足），也要說明 Jim 該怎麼處理
   - **快取（C7 回報）**：瀏覽器會快取 `questions.json`，題庫更新後學生看到舊資料。在 `data.js` 定義一個版本號（例如 `DATA_VERSION = '2026-10-22'`），讀題庫時加 `?v=版本號`；`site/` 的 js、css 也同樣處理。題庫更新時，由 Claude 在 STATUS.md 提醒要改版本號
 - 驗收條件：手機打開 GitHub Pages 網址可以完整做完一關
 

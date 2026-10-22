@@ -3,18 +3,20 @@
   var LEVEL_SIZE = 10;
   var MIN_LAST_LEVEL = 5; // 最後一關少於 5 題，併進前一關
   var EXCLUDED_SOURCES = ['影片']; // 影片題階段 4 才做
-  var URLS = ['data/questions.json', '../data/questions.json'];
+  // 題庫更新時改這個版本號，瀏覽器才不會繼續用舊的快取（Claude 會在 STATUS.md 提醒）
+  var DATA_VERSION = '2026-10-22';
+  var PREFIXES = ['../', '']; // 頁面在 site/ 裡，資料在上一層；找不到再試同層
 
   var state = null;
   var base = ''; // 資料檔所在的相對前綴，圖片路徑也用它
 
-  function fetchFirst(urls) {
-    return fetch(urls[0]).then(function (res) {
+  function fetchFirst(prefixes) {
+    return fetch(prefixes[0] + 'data/questions.json?v=' + DATA_VERSION).then(function (res) {
       if (!res.ok) throw new Error(res.status);
-      base = urls[0].replace('data/questions.json', '');
+      base = prefixes[0];
       return res.json();
     }).catch(function (err) {
-      if (urls.length > 1) return fetchFirst(urls.slice(1));
+      if (prefixes.length > 1) return fetchFirst(prefixes.slice(1));
       throw err;
     });
   }
@@ -62,7 +64,7 @@
     LEVEL_SIZE: LEVEL_SIZE,
     load: function () {
       if (state) return Promise.resolve(window.Data);
-      return fetchFirst(URLS).then(function (all) {
+      return fetchFirst(PREFIXES).then(function (all) {
         state = build(all);
         return window.Data;
       });

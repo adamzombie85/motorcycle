@@ -56,7 +56,7 @@
    - 學生可以下載自己的學習成果報告圖片分享給老師（C12、D2）
 9. ✅ 管理者帳號：`adamzombie85@gmail.com`
 10. ⏳ 上線前請向教務處／資訊組確認：學生用 Google 帳號登入、作答紀錄存在 Firebase，是否符合學校個資規定
-7. ✅ 拿掉校名，頁尾改成「© 2026 41 研究室｜版權所有」。⏳ 頁首：Claude 建議保留網站名稱和使用者；階段 2 只放**一個**「⚙️ 閱讀設定」按鈕，點開後再選朗讀、注音、字級（比三個小圖示好懂），待 Jim 確認
+7. ✅ 拿掉校名，頁尾改成「© 2026 41 研究室｜版權所有」。✅ 頁首保留網站名稱和使用者，閱讀輔助改成一個「⚙️ 閱讀設定」按鈕（Jim 2026-10-22 同意）→ D3
 8. ⏳ 階段 1 規則（上方）有沒有要改的？
 
 ## 階段進度
@@ -64,8 +64,8 @@
 |---|---|---|---|
 | 0 資料化 | 題庫轉 JSON、抽圖、影片壓縮、加標籤、程式交叉比對 | Claude → Jim 抽查 | ✅ 完成 |
 | 1a 視覺定調 | tokens.css、首頁和答題畫面樣板 | Antigravity（Gemini） | ✅ D1、D2、D2b 完成 |
-| 1 練習核心 | 小關卡、回饋、錯題重練、圖表 | Claude Code（照 design/ 實作，任務 C3～C12） | 🔄 C3～C7 ✅，C8 待執行 |
-| 2 閱讀與學習設定 | 朗讀、注音、字級、反向題提醒（通用設計，每個人都可開關） | Claude Code | ⬜ |
+| 1 練習核心 | 小關卡、回饋、錯題重練、圖表 | Claude Code（照 design/ 實作，任務 C3～C12） | 🔄 C3～C8 ✅，C9 待執行 |
+| 2 閱讀與學習設定 | 朗讀、注音、字級、反向題提醒（通用設計，每個人都可開關） | Antigravity D3 → Claude Code | ⏳ D3 待執行 |
 | 3 概念卡 | 概念歸類、概念卡、數字記憶卡 | Claude（內容）＋ Claude Code（介面） | ⬜ |
 | 4 危險感知與模擬考 | 影片模式、50 題模擬考、趨勢分析 | Claude Code | ⬜ |
 
@@ -103,6 +103,9 @@
 | 2026-10-22 | Claude | 審查 C7 通過；C9 補快取版本號；頁首建議改為單一「閱讀設定」按鈕（待 Jim） | Claude Code：C8 |
 | 2026-10-22 | Claude | 審查 D2b 通過（遺留 1 處 IEP）；AGENTS.md 禁用字加入 IEP；.agents/rules 新增第 6 條待 Jim 確認 | Claude Code：C8 後存檔 design/ |
 | 2026-10-22 | Claude Code | C8 完成：site/mistakes.html（有錯題清單、連續答對進度、單獨複習；沒錯題鼓勵畫面）、mistakes.js、mistakes.css；quiz.html 新增 ?mode=mistakes&qid=題號 單題複習 | Jim：確認；Claude Code：C9 |
+| 2026-10-22 | Claude | 審查 C8 通過；錯題重練按鈕維持 btn-primary；C9 補上 Jim 要做的 GitHub 設定 | Claude Code：存檔 D2b → C9 |
+| 2026-10-22 | Claude | 開 D3 閱讀設定面板（單一按鈕、字級／注音／朗讀／反向題提醒） | Antigravity：D3 |
+| 2026-10-22 | Claude Code | C9 進行中：data.js 加 DATA_VERSION（題庫網址加 ?v=）；新增 .github/workflows/pages.yml（只部署 site/、tokens.css、components.css、questions.json、media/；部署時自動在 js/css 連結加 commit 版本號；根目錄轉址到 site/index.html） | Jim：GitHub 設定 Pages；手機測試 |
 
 ## 開工提示詞
 
