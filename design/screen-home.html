@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>機車筆試好過關 - 首頁 (Home)</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="components.css">
+  <style>
+    /* 首頁專屬微調樣式 (全數引用 tokens.css 變數) */
+    .hero-banner {
+      background: linear-gradient(135deg, var(--color-primary-50) 0%, #FFFFFF 100%);
+      border: 2px solid var(--color-primary-200);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-6);
+      box-shadow: var(--shadow-card);
+    }
+
+    @media (min-width: 768px) {
+      .hero-banner {
+        flex-direction: row;
+        padding: var(--space-8);
+        gap: var(--space-8);
+      }
+    }
+
+    .hero-illustration {
+      flex: 1;
+      max-width: 380px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-illustration img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-lg);
+      filter: drop-shadow(0 8px 16px rgba(44, 157, 176, 0.2));
+    }
+
+    .hero-content {
+      flex: 1.2;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .hero-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-black);
+      color: var(--color-slate-900);
+      line-height: 1.25;
+    }
+
+    .hero-title span {
+      color: var(--color-primary);
+    }
+
+    .hero-desc {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-relaxed);
+    }
+
+    .hero-quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-top: var(--space-2);
+    }
+
+    /* 區塊標題 */
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .section-heading-title {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-black);
+      color: var(--color-text-main);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .section-heading-subtitle {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    /* 關卡卡片進度細節 */
+    .level-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-2);
+    }
+
+    /* 特訓專區卡片 */
+    .feature-card {
+      background-color: var(--color-bg-card);
+      border: 2px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      display: flex;
+      gap: var(--space-4);
+      align-items: flex-start;
+      transition: all var(--transition-normal);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .feature-card:hover {
+      border-color: var(--color-primary-400);
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部通用導覽列 -->
+  <header class="site-header">
+    <div class="app-container nav-bar">
+      <a href="screen-home.html" class="brand-badge">
+        <span class="brand-icon">🛵</span>
+        <span>機車筆試好過關</span>
+      </a>
+
+      <!-- 學生代號標籤 -->
+      <div class="user-chip">
+        <span>👤 學生：S102-陳同學</span>
+      </div>
+
+      <!-- 特教輔助工具列 -->
+      <div class="a11y-toolbar">
+        <button type="button" class="btn-icon" id="btn-speech" title="語音朗讀" aria-label="切換語音朗讀">🔊</button>
+        <button type="button" class="btn-icon" id="btn-zhuyin" title="注音輔助" aria-label="切換注音模式">ㄅ</button>
+        <button type="button" class="btn-icon" id="btn-zoom" title="字級放大" aria-label="字級放大">🔍</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="app-container">
+
+      <!-- ====================================================================
+           主視覺橫幅 (Hero Banner) - 引用 hero.jpg 與友善標語
+           ==================================================================== -->
+      <section class="hero-banner">
+        <div class="hero-illustration">
+          <img src="../site/assets/illustrations/hero.jpg" alt="高中生戴安全帽騎著淺藍色速克達的扁平插畫">
+        </div>
+        <div class="hero-content">
+          <div style="display: inline-flex; align-items: center; gap: 6px; background-color: var(--color-primary-100); color: var(--color-primary-800); padding: 4px 12px; border-radius: var(--radius-full); font-size: var(--font-size-sm); font-weight: bold; width: fit-content;">
+            ✨ 一次 10 題 · 輕鬆過關無壓力
+          </div>
+          <h1 class="hero-title">
+            輕鬆學騎車，<span>安心考駕照</span>！
+          </h1>
+          <p class="hero-desc">
+            不用死背 1,050 題！專為你規劃的「概念微關卡」，每關只要 3 分鐘。還有語音朗讀、反向題提醒，帶你自信迎戰新制筆試。
+          </p>
+          <div class="hero-quick-actions">
+            <a href="screen-quiz.html" class="btn btn-primary btn-lg">
+              ▶ 繼續練習：第 6 關 (貨物裝載)
+            </a>
+            <a href="screen-result.html" class="btn btn-secondary btn-lg">
+              📊 查看最近成績分析
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           學習進度簡覽 (Progress Overview)
+           ==================================================================== -->
+      <section style="margin-bottom: var(--space-8);">
+        <div class="stats-summary-row" style="margin: 0;">
+          <div class="stat-box">
+            <div class="stat-box-num" style="color: var(--color-primary-600);">16 / 48</div>
+            <div class="stat-box-label">已通關小關卡</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-num" style="color: var(--color-success-600);">92%</div>
+            <div class="stat-box-label">平均答對率</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-num" style="color: var(--color-accent-600);">3 題</div>
+            <div class="stat-box-label">待複習錯題庫</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           主關卡模式 (Micro Levels) - 四大類小關卡 (每關 10 題)
+           ==================================================================== -->
+      <section style="margin-bottom: var(--space-10);">
+        <div class="section-heading">
+          <div>
+            <h2 class="section-heading-title"><span>🎯</span> 核心關卡學習 (一關 10 題)</h2>
+            <div class="section-heading-subtitle">集中火力練習一個重點，做完馬上看解說！</div>
+          </div>
+          <span style="font-size: var(--font-size-sm); color: var(--color-primary-700); font-weight: bold;">
+            共 1,052 題 · 官方正式新制題庫
+          </span>
+        </div>
+
+        <div class="grid-2">
+          <!-- 關卡 1：正確觀念與態度 -->
+          <div class="level-card" style="border-left: 8px solid var(--color-primary);">
+            <div class="level-card-top">
+              <span class="level-badge">01</span>
+              <span class="level-stars">★★★</span>
+            </div>
+            <div>
+              <h3 class="level-title">第 1 大類：正確觀念與態度</h3>
+              <p class="level-desc">駕駛心理、行車道德、標誌標線、道路急救處理常識</p>
+            </div>
+            <div>
+              <div class="progress-bar-track">
+                <div class="progress-bar-fill" style="width: 65%;"></div>
+              </div>
+              <div class="level-meta">
+                <span>進度：第 12 / 18 小關</span>
+                <span style="color: var(--color-primary-700);">進行中</span>
+              </div>
+            </div>
+            <a href="screen-quiz.html" class="btn btn-primary" style="width: 100%;">
+              進入練習 (第 12 關：載物法規) ➔
+            </a>
+          </div>
+
+          <!-- 關卡 2：主動停讓文化 -->
+          <div class="level-card" style="border-left: 8px solid var(--color-accent);">
+            <div class="level-card-top">
+              <span class="level-badge" style="background-color: var(--color-accent-100); color: var(--color-accent-700);">02</span>
+              <span class="level-stars">★★☆</span>
+            </div>
+            <div>
+              <h3 class="level-title">第 2 大類：主動停讓文化</h3>
+              <p class="level-desc">無號誌路口停讓、行人穿越道禮讓、路權先後順序</p>
+            </div>
+            <div>
+              <div class="progress-bar-track">
+                <div class="progress-bar-fill" style="width: 40%; background: var(--color-accent);"></div>
+              </div>
+              <div class="level-meta">
+                <span>進度：第 4 / 10 小關</span>
+                <span style="color: var(--color-accent-700);">進行中</span>
+              </div>
+            </div>
+            <a href="screen-quiz.html" class="btn btn-secondary" style="width: 100%;">
+              進入練習 (第 4 關：路口停看聽) ➔
+            </a>
+          </div>
+
+          <!-- 關卡 3：安全駕駛能力 -->
+          <div class="level-card" style="border-left: 8px solid var(--color-slate-400);">
+            <div class="level-card-top">
+              <span class="level-badge" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">03</span>
+              <span class="level-stars">☆☆☆</span>
+            </div>
+            <div>
+              <h3 class="level-title">第 3 大類：安全駕駛能力</h3>
+              <p class="level-desc">防衛駕駛技巧、大型車內輪差與視野死角、惡劣天候應變</p>
+            </div>
+            <div>
+              <div class="progress-bar-track">
+                <div class="progress-bar-fill" style="width: 0%;"></div>
+              </div>
+              <div class="level-meta">
+                <span>進度：尚未開始</span>
+                <span style="color: var(--color-slate-500);">待挑戰</span>
+              </div>
+            </div>
+            <button type="button" class="btn btn-outline" style="width: 100%;">
+              解鎖第 1 關 ➔
+            </button>
+          </div>
+
+          <!-- 關卡 4：危險感知情境題 (新制重點) -->
+          <div class="level-card" style="border-left: 8px solid var(--color-success);">
+            <div class="level-card-top">
+              <span class="level-badge" style="background-color: var(--color-success-100); color: var(--color-success-700);">04</span>
+              <span style="background-color: var(--color-success-100); color: var(--color-success-700); padding: 4px 10px; border-radius: var(--radius-full); font-size: 14px; font-weight: bold;">
+                ★ 15 題新制必考
+              </span>
+            </div>
+            <div>
+              <h3 class="level-title">第 4 大類：危險感知與情境題</h3>
+              <p class="level-desc">109 支實境短片、120 題情境圖。一眼找出馬路上的突發危機！</p>
+            </div>
+            <div>
+              <div class="progress-bar-track">
+                <div class="progress-bar-fill" style="width: 25%; background: var(--color-success-500);"></div>
+              </div>
+              <div class="level-meta">
+                <span>進度：第 3 / 12 小關</span>
+                <span style="color: var(--color-success-700);">熱門推薦</span>
+              </div>
+            </div>
+            <a href="screen-quiz.html" class="btn btn-secondary" style="width: 100%;">
+              看短片練習 (危險感知) ➔
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           特教強化專區 (Special Training Modes)
+           ==================================================================== -->
+      <section style="margin-bottom: var(--space-10);">
+        <div class="section-heading">
+          <div>
+            <h2 class="section-heading-title"><span>⚡</span> 專屬強化專區 (降低失分陷阱)</h2>
+            <div class="section-heading-subtitle">針對學生最容易卡關的題型量身設計</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- 錯題特訓 -->
+          <a href="screen-quiz.html" class="feature-card">
+            <div class="feature-icon-box" style="background-color: var(--color-danger-100); color: var(--color-danger-600);">
+              🔁
+            </div>
+            <div>
+              <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: 4px;">
+                錯題特訓庫 (3 題待練)
+              </h3>
+              <p style="font-size: var(--font-size-base); color: var(--color-text-secondary); line-height: var(--line-height-normal);">
+                只要答錯的題目都會收進這裡！<strong>連續答對 2 次</strong>即算真正掌握。
+              </p>
+            </div>
+          </a>
+
+          <!-- 反向題特訓 -->
+          <a href="screen-quiz.html" class="feature-card">
+            <div class="feature-icon-box" style="background-color: var(--color-warning-100); color: var(--color-warning-700);">
+              ⚠️
+            </div>
+            <div>
+              <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: 4px;">
+                反向題專區 (54 題)
+              </h3>
+              <p style="font-size: var(--font-size-base); color: var(--color-text-secondary); line-height: var(--line-height-normal);">
+                題目問「不正確」常常看反？醒目標記 + 專題練習，破除看錯題目的陷阱！
+              </p>
+            </div>
+          </a>
+
+          <!-- 數字與罰鍰翻卡記憶 -->
+          <a href="#" class="feature-card">
+            <div class="feature-icon-box" style="background-color: var(--color-primary-100); color: var(--color-primary-700);">
+              🃏
+            </div>
+            <div>
+              <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: 4px;">
+                數字與罰鍰記憶翻卡
+              </h3>
+              <p style="font-size: var(--font-size-base); color: var(--color-text-secondary); line-height: var(--line-height-normal);">
+                不用死背法規條文！整理公分、公斤、罰鍰對照卡，翻卡輕鬆記住。
+              </p>
+            </div>
+          </a>
+
+          <!-- 50 題全真模擬考 -->
+          <a href="screen-quiz.html" class="feature-card" style="border: 2px solid var(--color-primary-300); background-color: var(--color-primary-50);">
+            <div class="feature-icon-box" style="background-color: var(--color-primary); color: white;">
+              🏁
+            </div>
+            <div>
+              <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: 4px; color: var(--color-primary-900);">
+                50 題全真模擬考 (新制)
+              </h3>
+              <p style="font-size: var(--font-size-base); color: var(--color-text-secondary); line-height: var(--line-height-normal);">
+                比照官方新制：50 題選擇題（含 15 題危險感知），<strong>85 分及格</strong>，模擬正式考場！
+              </p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- 頁尾宣告 -->
+  <footer style="background-color: var(--color-bg-card); border-top: 1px solid var(--color-border-subtle); padding: var(--space-6) 0; text-align: center; color: var(--color-text-secondary); font-size: var(--font-size-sm);">
+    <div class="app-container">
+      <p>國立玉井工商輔導室 · 機車駕照筆試新制學習系統</p>
+      <p style="margin-top: 4px; color: var(--color-text-muted);">無障礙設計規範落實 · 支援手機與平板觸控</p>
+    </div>
+  </footer>
+
+  <script>
+    // A11y 工具列簡單互動示範
+    const btnSpeech = document.getElementById('btn-speech');
+    const btnZhuyin = document.getElementById('btn-zhuyin');
+    const btnZoom = document.getElementById('btn-zoom');
+
+    btnSpeech.addEventListener('click', () => {
+      btnSpeech.classList.toggle('is-active');
+      alert('語音朗讀模式：點擊介面任意文字即可啟動語音。');
+    });
+
+    btnZhuyin.addEventListener('click', () => {
+      btnZhuyin.classList.toggle('is-active');
+      alert('注音模式：已啟用注音輔助字型顯示。');
+    });
+
+    let zoomed = false;
+    btnZoom.addEventListener('click', () => {
+      zoomed = !zoomed;
+      document.documentElement.style.fontSize = zoomed ? '18px' : '16px';
+      btnZoom.classList.toggle('is-active', zoomed);
+    });
+  </script>
+</body>
+</html>

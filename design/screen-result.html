@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>機車筆試好過關 - 成績分析 (Result)</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="components.css">
+  <style>
+    /* 結算頁面專用佈局微調 */
+    .result-container {
+      max-width: var(--container-max-tablet);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .export-card-border {
+      border: 2px solid var(--color-primary-200);
+      background-color: var(--color-bg-card);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-8);
+      box-shadow: var(--shadow-card);
+    }
+
+    /* 錯題檢討卡 */
+    .mistake-review-card {
+      background-color: var(--color-danger-50);
+      border: 2px solid var(--color-danger-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-top: var(--space-4);
+    }
+
+    .mistake-title {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-danger-800);
+      margin-bottom: var(--space-2);
+    }
+
+    /* 底部行動工具列 (Sticky Action Bar for Mobile & Tablet) */
+    .result-action-bar {
+      position: sticky;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 2px solid var(--color-border-subtle);
+      padding: var(--space-4) 0;
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+      z-index: 100;
+      margin-top: var(--space-8);
+    }
+
+    .action-bar-inner {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    @media (min-width: 640px) {
+      .action-bar-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部通用導覽列 -->
+  <header class="site-header">
+    <div class="app-container nav-bar">
+      <a href="screen-home.html" class="brand-badge">
+        <span class="brand-icon">🛵</span>
+        <span>機車筆試好過關</span>
+      </a>
+
+      <!-- 學生識別 -->
+      <div class="user-chip">
+        <span>👤 S102-陳同學</span>
+      </div>
+
+      <!-- 特教輔助工具列 -->
+      <div class="a11y-toolbar">
+        <button type="button" class="btn-icon" id="btn-result-speech" title="朗讀成績報表" aria-label="朗讀本頁成績">🔊</button>
+        <button type="button" class="btn-icon" id="btn-result-zhuyin" title="注音字型" aria-label="切換注音">ㄅ</button>
+        <button type="button" class="btn-icon" id="btn-result-zoom" title="放大字級" aria-label="切換大字級">🔍</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="app-container result-container">
+
+      <!-- ====================================================================
+           成績大卡片 (Result Hero Card)
+           ==================================================================== -->
+      <section class="result-hero-card">
+        <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary); font-weight: bold; margin-bottom: var(--space-2);">
+          第 1 大類 · 第 12 關：貨物裝載法規 結算報告
+        </div>
+
+        <!-- 圓形大分數 (90 分) -->
+        <div class="score-badge-circle">
+          <span class="score-num">90</span>
+          <span class="score-unit">分 / 滿分 100</span>
+        </div>
+
+        <!-- 及格狀態膠囊 (雙重識別：圖標 + 文字 + 顏色) -->
+        <div class="pass-status-pill is-pass">
+          <span>🎉 本關合格通過！（官方及格標準 85 分）</span>
+        </div>
+
+        <p style="font-size: var(--font-size-base); color: var(--color-text-main); line-height: var(--line-height-relaxed); max-width: 480px; margin: 0 auto var(--space-4) auto;">
+          表現非常出色！10 題中順利答對 <strong>9 題</strong>，成功掌握了機車載物的寬度與高度核心觀念！
+        </p>
+
+        <!-- 連續進度條 + 及格門檻標記線 -->
+        <div style="position: relative; padding-top: 26px; max-width: 500px; margin: 0 auto var(--space-4) auto;">
+          <div class="progress-bar-track" style="height: 16px;">
+            <div class="progress-bar-fill" style="width: 90%;"></div>
+            <div class="pass-mark-indicator"></div>
+            <div class="pass-mark-label">🎯 及格線 85 分</div>
+          </div>
+        </div>
+
+        <!-- 三欄統計摘要 -->
+        <div class="stats-summary-row">
+          <div class="stat-box">
+            <div class="stat-box-num" style="color: var(--color-success-600);">9 題</div>
+            <div class="stat-box-label">答對題數</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-num" style="color: var(--color-danger-600);">1 題</div>
+            <div class="stat-box-label">答錯題數</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-num" style="color: var(--color-primary-700);">2 分 45 秒</div>
+            <div class="stat-box-label">練習時間</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           系統下一步建議 (Actionable Recommendation)
+           ==================================================================== -->
+      <section class="recommend-banner">
+        <div>
+          <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-black); color: var(--color-accent-800); margin-bottom: 4px;">
+            💡 系統建議下一步：立即加強弱點小類
+          </div>
+          <div style="font-size: var(--font-size-base); color: var(--color-slate-800);">
+            本次錯題主要在<strong>「伸出車尾長度限制」</strong>。建議先查看記憶概念卡，再重練一次錯題！
+          </div>
+        </div>
+        <div style="display: flex; gap: var(--space-2); flex-shrink: 0;">
+          <a href="screen-quiz.html" class="btn btn-accent">
+            立即複習本題錯題 ➔
+          </a>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           圖表分析區 (Charts Section: 雷達圖 + 小類長條圖 + 歷次折線圖)
+           ==================================================================== -->
+      <section style="margin-bottom: var(--space-8);">
+        <div class="section-heading">
+          <h2 class="section-heading-title"><span>📊</span> 學習能力分析圖表 (可匯出學習檔案)</h2>
+          <button type="button" class="btn btn-outline" style="min-height: 40px; padding: 6px 14px; font-size: var(--font-size-sm);" onclick="alert('已產生可列印或存檔的圖表報告，供特教 IEP 學習檔案紀錄使用！')">
+            📷 匯出本回合圖表
+          </button>
+        </div>
+
+        <div class="grid-2">
+          <!-- 圖表 1：四大類答對率 (雷達圖) -->
+          <div class="chart-wrapper">
+            <h3 class="chart-title"><span>🕸️</span> 四大面向答對率 (雷達圖)</h3>
+            <div style="height: 250px; display: flex; align-items: center; justify-content: center; background-color: var(--color-slate-50); border-radius: var(--radius-md); position: relative;">
+              <svg viewBox="0 0 200 200" style="width: 190px; height: 190px;">
+                <!-- 網格軸線 -->
+                <polygon points="100,20 180,100 100,180 20,100" fill="none" stroke="var(--color-slate-200)" stroke-width="1.5" />
+                <polygon points="100,50 150,100 100,150 50,100" fill="none" stroke="var(--color-slate-200)" stroke-width="1.5" />
+                <line x1="100" y1="20" x2="100" y2="180" stroke="var(--color-slate-300)" stroke-width="1" />
+                <line x1="20" y1="100" x2="180" y2="100" stroke="var(--color-slate-300)" stroke-width="1" />
+                <!-- 答對率多邊形 -->
+                <polygon points="100,28 172,100 100,165 38,100" fill="rgba(44, 157, 176, 0.25)" stroke="var(--color-primary)" stroke-width="3" />
+                <circle cx="100" cy="28" r="4" fill="var(--color-primary-700)" />
+                <circle cx="172" cy="100" r="4" fill="var(--color-primary-700)" />
+                <circle cx="100" cy="165" r="4" fill="var(--color-primary-700)" />
+                <circle cx="38" cy="100" r="4" fill="var(--color-primary-700)" />
+              </svg>
+              <div style="position: absolute; top: 8px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">正確觀念 92%</div>
+              <div style="position: absolute; right: 8px; top: 90px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">主動停讓 95%</div>
+              <div style="position: absolute; bottom: 8px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">安全駕駛 82%</div>
+              <div style="position: absolute; left: 8px; top: 90px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">危險感知 78%</div>
+            </div>
+            <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: var(--space-3); text-align: center;">
+              四大類皆達 75% 以上，整體防禦觀念良好！
+            </div>
+          </div>
+
+          <!-- 圖表 2：小類別答對率 (由低到高排序長條圖) -->
+          <div class="chart-wrapper">
+            <h3 class="chart-title"><span>📊</span> 各小類掌握度排行 (由低到高)</h3>
+            <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: var(--font-size-sm); margin-bottom: 4px;">
+                  <span style="font-weight: bold; color: var(--color-danger-700);">🔴 貨物裝載與尺寸 (需加強)</span>
+                  <span style="font-weight: bold; color: var(--color-danger-700);">60%</span>
+                </div>
+                <div class="progress-bar-track">
+                  <div class="progress-bar-fill" style="width: 60%; background-color: var(--color-danger-500);"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: var(--font-size-sm); margin-bottom: 4px;">
+                  <span style="font-weight: bold; color: var(--color-warning-700);">🟡 反向題辨識</span>
+                  <span style="font-weight: bold; color: var(--color-warning-700);">80%</span>
+                </div>
+                <div class="progress-bar-track">
+                  <div class="progress-bar-fill" style="width: 80%; background-color: var(--color-warning-500);"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: var(--font-size-sm); margin-bottom: 4px;">
+                  <span style="font-weight: bold; color: var(--color-success-700);">🟢 號誌與標誌認知</span>
+                  <span style="font-weight: bold; color: var(--color-success-700);">95%</span>
+                </div>
+                <div class="progress-bar-track">
+                  <div class="progress-bar-fill" style="width: 95%; background-color: var(--color-success-500);"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: var(--font-size-sm); margin-bottom: 4px;">
+                  <span style="font-weight: bold; color: var(--color-success-700);">🟢 事故預防與急救</span>
+                  <span style="font-weight: bold; color: var(--color-success-700);">100%</span>
+                </div>
+                <div class="progress-bar-track">
+                  <div class="progress-bar-fill" style="width: 100%; background-color: var(--color-success-500);"></div>
+                </div>
+              </div>
+            </div>
+            <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: var(--space-4); text-align: center;">
+              一眼看出個人弱點，複習更具方向感！
+            </div>
+          </div>
+        </div>
+
+        <!-- 圖表 3：歷次練習進步趨勢 (折線圖容器) -->
+        <div class="chart-wrapper">
+          <h3 class="chart-title"><span>📈</span> 近 5 次練習成績趨勢 (穩步向上成長)</h3>
+          <div style="height: 160px; background-color: var(--color-slate-50); border-radius: var(--radius-md); padding: var(--space-4); display: flex; flex-direction: column; justify-content: space-between;">
+            <!-- 示意折線與點 -->
+            <svg viewBox="0 0 500 100" style="width: 100%; height: 100px; overflow: visible;">
+              <!-- 85分及格基準橫線 -->
+              <line x1="0" y1="30" x2="500" y2="30" stroke="var(--color-accent-500)" stroke-width="2" stroke-dasharray="4,4" />
+              <text x="440" y="24" fill="var(--color-accent-700)" font-size="12" font-weight="bold">85分及格線</text>
+
+              <!-- 折線趨勢：70 -> 75 -> 80 -> 85 -> 90 -->
+              <polyline points="50,60 150,50 250,40 350,30 450,20" fill="none" stroke="var(--color-primary)" stroke-width="4" stroke-linecap="round" />
+
+              <!-- 數據節點 -->
+              <circle cx="50" cy="60" r="5" fill="var(--color-primary-700)" />
+              <text x="40" y="80" fill="var(--color-slate-600)" font-size="12">70分</text>
+
+              <circle cx="150" cy="50" r="5" fill="var(--color-primary-700)" />
+              <text x="140" y="70" fill="var(--color-slate-600)" font-size="12">75分</text>
+
+              <circle cx="250" cy="40" r="5" fill="var(--color-primary-700)" />
+              <text x="240" y="60" fill="var(--color-slate-600)" font-size="12">80分</text>
+
+              <circle cx="350" cy="30" r="5" fill="var(--color-primary-700)" />
+              <text x="340" y="50" fill="var(--color-slate-600)" font-size="12">85分</text>
+
+              <circle cx="450" cy="20" r="7" fill="var(--color-success-600)" stroke="#fff" stroke-width="2" />
+              <text x="435" y="10" fill="var(--color-success-700)" font-size="14" font-weight="bold">90分 ★</text>
+            </svg>
+            <div style="display: flex; justify-content: space-between; font-size: var(--font-size-sm); color: var(--color-text-secondary); border-top: 1px solid var(--color-slate-200); padding-top: 6px;">
+              <span>第 1 回合 (70分)</span>
+              <span>第 2 回合 (75分)</span>
+              <span>第 3 回合 (80分)</span>
+              <span>第 4 回合 (85分)</span>
+              <span style="font-weight: bold; color: var(--color-primary-700);">本次練習 (90分)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           錯題檢討清單 (Mistake Review List)
+           ==================================================================== -->
+      <section style="margin-bottom: var(--space-8);">
+        <div class="section-heading">
+          <h2 class="section-heading-title"><span>🔍</span> 本次錯題即時檢討 (共 1 題)</h2>
+          <span style="font-size: var(--font-size-sm); color: var(--color-danger-700); font-weight: bold;">
+            答對 2 次即可清除標記
+          </span>
+        </div>
+
+        <div class="mistake-review-card">
+          <div class="mistake-title">
+            ❌ Q4. 機車附載物品，長度規定伸出車尾部分，自後輪軸起，不得超過多少？
+          </div>
+          <div style="font-size: var(--font-size-base); color: var(--color-slate-700); margin-bottom: var(--space-3); line-height: 1.6;">
+            <div>你的回答：<span style="color: var(--color-danger-700); text-decoration: line-through;">1 公尺</span></div>
+            <div>正確解答：<strong style="color: var(--color-success-700);">半公尺（50公分）</strong></div>
+          </div>
+          <div class="concept-memo" style="margin-bottom: 0;">
+            <div class="concept-memo-title">💡 記憶秘訣</div>
+            <div>後輪軸往後伸出，以<strong>「半公尺（50公分）」</strong>為上限，不可以是一整公尺喔！</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ====================================================================
+       固定底部行動列 (Sticky Action Bar: 雙版本友善支援)
+       ==================================================================== -->
+  <div class="result-action-bar">
+    <div class="app-container result-container">
+      <div class="action-bar-inner">
+        <a href="screen-home.html" class="btn btn-ghost" style="font-size: var(--font-size-base);">
+          🏠 回首頁關卡選單
+        </a>
+        <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+          <a href="screen-quiz.html" class="btn btn-secondary btn-lg">
+            🔁 再練一次本關
+          </a>
+          <a href="screen-quiz.html" class="btn btn-primary btn-lg">
+            下一關：主動停讓 ➔
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // A11y 簡易輔助展示
+    const btnSpeech = document.getElementById('btn-result-speech');
+    const btnZhuyin = document.getElementById('btn-result-zhuyin');
+    const btnZoom = document.getElementById('btn-result-zoom');
+
+    btnSpeech.addEventListener('click', () => {
+      btnSpeech.classList.toggle('is-active');
+      alert('語音朗讀報告：本次練習得分 90 分，及格通過！10 題中答對 9 題，錯 1 題。');
+    });
+
+    btnZhuyin.addEventListener('click', () => {
+      btnZhuyin.classList.toggle('is-active');
+    });
+
+    let zoomed = false;
+    btnZoom.addEventListener('click', () => {
+      zoomed = !zoomed;
+      document.documentElement.style.fontSize = zoomed ? '18px' : '16px';
+      btnZoom.classList.toggle('is-active', zoomed);
+    });
+  </script>
+</body>
+</html>

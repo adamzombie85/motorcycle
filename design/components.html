@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>機車題庫視覺系統 - 元件庫與規範展示 (Components Guide)</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="components.css">
+  <style>
+    /* 元件庫展示專用排版 (僅用於 demo 頁面的區塊展示與標籤說明) */
+    .demo-page {
+      padding: var(--space-8) 0 var(--space-16) 0;
+    }
+    .demo-hero {
+      background: linear-gradient(135deg, var(--color-primary-100), var(--color-bg-card));
+      border: 2px solid var(--color-primary-200);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-bottom: var(--space-8);
+    }
+    .demo-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-black);
+      color: var(--color-primary-900);
+      margin-bottom: var(--space-2);
+    }
+    .demo-subtitle {
+      font-size: var(--font-size-md);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-relaxed);
+    }
+    .demo-section {
+      background-color: var(--color-bg-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-8);
+      box-shadow: var(--shadow-sm);
+    }
+    .demo-section-header {
+      border-bottom: 2px solid var(--color-border-subtle);
+      padding-bottom: var(--space-3);
+      margin-bottom: var(--space-5);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+    .demo-section-title {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-slate-800);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .demo-a11y-pill {
+      font-size: 14px;
+      font-weight: var(--font-weight-bold);
+      background-color: var(--color-success-100);
+      color: var(--color-success-700);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-success-500);
+    }
+    .demo-block {
+      background-color: var(--color-slate-50);
+      border: 1px dashed var(--color-slate-300);
+      border-radius: var(--radius-md);
+      padding: var(--space-5);
+      margin-bottom: var(--space-4);
+    }
+    .demo-label {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-3);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .demo-flex-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+    }
+    .quick-nav {
+      position: sticky;
+      top: 68px;
+      z-index: 90;
+      background-color: rgba(244, 248, 250, 0.95);
+      backdrop-filter: blur(8px);
+      padding: var(--space-2) 0;
+      margin-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-border-subtle);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .quick-nav-links {
+      display: flex;
+      gap: var(--space-2);
+    }
+    .quick-nav-link {
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      background-color: var(--color-bg-card);
+      border: 1px solid var(--color-border-subtle);
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      transition: all var(--transition-fast);
+    }
+    .quick-nav-link:hover {
+      background-color: var(--color-primary-50);
+      color: var(--color-primary-700);
+      border-color: var(--color-primary-300);
+    }
+    /* 注音字型預覽模式模擬 */
+    body.mode-zhuyin ruby rt {
+      font-size: 0.55em;
+      color: var(--color-primary-700);
+      font-weight: var(--font-weight-medium);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部通用導覽列展示 (Site Header) -->
+  <header class="site-header">
+    <div class="app-container nav-bar">
+      <a href="screen-home.html" class="brand-badge">
+        <span class="brand-icon">🛵</span>
+        <span>機車筆試好過關</span>
+      </a>
+
+      <!-- 學生代號登入徽章 (Jim 決策：學生代號登入) -->
+      <div class="user-chip">
+        <span>👤 學生：S102-陳同學</span>
+      </div>
+
+      <!-- 特教輔助工具列 (A11y Toolbar) -->
+      <div class="a11y-toolbar">
+        <button type="button" class="btn-icon" id="btn-toggle-speech" title="朗讀題目與選項 (特教輔助)" aria-label="開啟語音朗讀">
+          🔊
+        </button>
+        <button type="button" class="btn-icon" id="btn-toggle-zhuyin" title="切換注音字型" aria-label="切換注音模式">
+          ㄅ
+        </button>
+        <button type="button" class="btn-icon" id="btn-toggle-fontsize" title="放大字級" aria-label="切換大字級">
+          🔍
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 頁面快速錨點導覽列 (支援水平滾動 RWD) -->
+  <div class="quick-nav">
+    <div class="app-container quick-nav-links">
+      <a href="#section-buttons" class="quick-nav-link">1. 按鈕元件 (>=44px)</a>
+      <a href="#section-options" class="quick-nav-link">2. 選項卡 (雙重識別)</a>
+      <a href="#section-progress" class="quick-nav-link">3. 進度條與及格線</a>
+      <a href="#section-feedback" class="quick-nav-link">4. 回饋卡 (答對/錯/反向)</a>
+      <a href="#section-question" class="quick-nav-link">5. 題目卡 (文字與圖片題)</a>
+      <a href="#section-analytics" class="quick-nav-link">6. 成績與圖表區塊</a>
+    </div>
+  </div>
+
+  <main class="main-content demo-page">
+    <div class="app-container">
+
+      <!-- 頁面介紹橫幅 -->
+      <div class="demo-hero">
+        <h1 class="demo-title">機車駕照筆試題庫 · 視覺元件庫 (Components Library)</h1>
+        <p class="demo-subtitle">
+          依據 <strong>TASKS_AGY.md</strong> 與 <strong>AGENTS.md</strong> 規範建構。專門服務特教資源班高中生，嚴格落實：
+          <strong>字級至少 18px</strong>、<strong>按鈕觸控區域 >= 44px</strong>、<strong>對比度達 WCAG AA</strong>、<strong>不只靠顏色傳遞資訊</strong>。
+          色彩全面契合主視覺湖水藍速克達風格。
+        </p>
+      </div>
+
+      <!-- ====================================================================
+           1. 按鈕元件系統 (Buttons)
+           ==================================================================== -->
+      <section class="demo-section" id="section-buttons">
+        <div class="demo-section-header">
+          <h2 class="demo-section-title"><span>🔘</span> 1. 按鈕元件系統 (Button Components)</h2>
+          <span class="demo-a11y-pill">可點範圍 >= 48px · 符合特教規範</span>
+        </div>
+
+        <div class="demo-block">
+          <div class="demo-label">📌 主按鈕與次按鈕 (Primary / Secondary / Accent)</div>
+          <div class="demo-flex-wrap">
+            <button type="button" class="btn btn-primary">開始練習 (Primary)</button>
+            <button type="button" class="btn btn-secondary">看上一題 (Secondary)</button>
+            <button type="button" class="btn btn-accent">查看解鎖獎勵 (Accent)</button>
+            <button type="button" class="btn btn-outline">稍後再練 (Outline)</button>
+            <button type="button" class="btn btn-ghost">回首頁 (Ghost)</button>
+          </div>
+        </div>
+
+        <div class="demo-block">
+          <div class="demo-label">📌 特大按鈕 (Large Action Buttons: min-height 56px) 用於答題推進</div>
+          <div class="demo-flex-wrap">
+            <button type="button" class="btn btn-primary btn-lg">下一題 ➔ (Large Primary)</button>
+            <button type="button" class="btn btn-secondary btn-lg">查看詳細解析 (Large Secondary)</button>
+          </div>
+        </div>
+
+        <div class="demo-block">
+          <div class="demo-label">📌 特殊狀態與輔助圖示按鈕 (Disabled / Icon Buttons)</div>
+          <div class="demo-flex-wrap">
+            <button type="button" class="btn btn-primary" disabled>未作答不可送出 (Disabled)</button>
+            <button type="button" class="btn-icon" title="朗讀">🔊</button>
+            <button type="button" class="btn-icon is-active" title="注音啟用中">ㄅ</button>
+            <button type="button" class="btn-icon" title="放大字級">🔍</button>
+            <button type="button" class="btn-icon" title="慢速播放 0.5x">🐢</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           2. 答題選項卡系統 (Option Cards)
+           ==================================================================== -->
+      <section class="demo-section" id="section-options">
+        <div class="demo-section-header">
+          <h2 class="demo-section-title"><span>🃏</span> 2. 選項卡系統 (Option Cards)</h2>
+          <span class="demo-a11y-pill">雙重識別：顏色 + 專屬文字標籤 + 圖示標章</span>
+        </div>
+        <p style="margin-bottom: var(--space-4); color: var(--color-text-secondary); font-size: var(--font-size-base);">
+          真實題目選項範例（取自 <code>data/questions.json</code> 載物規定題）。點選卡片可查看即時切換反饋。
+        </p>
+
+        <div class="demo-block">
+          <div class="demo-label">📌 選項卡四種關鍵狀態展示 (點擊可切換選取狀態)</div>
+
+          <div class="options-list">
+            <!-- 預設未選中狀態 -->
+            <button type="button" class="option-card" onclick="toggleOption(this)">
+              <span class="option-badge">1</span>
+              <span class="option-label">得載運高於騎士肩膀以上之貨物</span>
+              <span class="option-indicator">點擊選擇</span>
+            </button>
+
+            <!-- 使用者已選中狀態 (尚未送出判定) -->
+            <button type="button" class="option-card is-selected" onclick="toggleOption(this)">
+              <span class="option-badge">2</span>
+              <span class="option-label">寬度不得超過把手外緣 10公分</span>
+              <span class="option-indicator" style="display:inline-flex; background-color: var(--color-primary-100); color: var(--color-primary-800);">已選擇</span>
+            </button>
+
+            <!-- 答對狀態 (綠框 + 綠色徽章 + 顯著標籤「✔ 正確答案」) -->
+            <div class="option-card is-correct">
+              <span class="option-badge">✔</span>
+              <span class="option-label"><strong>得載運高於騎士肩膀以上之貨物</strong>（反向題正確答案：這項是不合規定的）</span>
+              <span class="option-indicator">✔ 正確答案</span>
+            </div>
+
+            <!-- 答錯狀態 (珊瑚紅框 + 叉叉徽章 + 顯著標籤「✖ 你的選擇」) -->
+            <div class="option-card is-wrong">
+              <span class="option-badge">✖</span>
+              <span class="option-label">伸出車尾部分，自後輪軸起不得超過 50公分（這是法規允許的，並非錯誤敘述）</span>
+              <span class="option-indicator">✖ 你的選擇</span>
+            </div>
+
+            <!-- 檢討時未被選取的干擾項 (淡化呈現，不干擾視覺) -->
+            <div class="option-card is-dimmed">
+              <span class="option-badge">3</span>
+              <span class="option-label">寬度不得超過把手外緣 10公分（此為正確規則）</span>
+              <span class="option-indicator">未選擇</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           3. 進度條系統 (Progress Bars)
+           ==================================================================== -->
+      <section class="demo-section" id="section-progress">
+        <div class="demo-section-header">
+          <h2 class="demo-section-title"><span>📊</span> 3. 進度條與關卡指示 (Progress System)</h2>
+          <span class="demo-a11y-pill">10題小關卡節奏感 · 降低負擔</span>
+        </div>
+
+        <div class="demo-block">
+          <div class="demo-label">📌 10 題微關卡分段圓點進度條 (Segmented Dots: 已完成綠色、當前題藍色、答錯紅點、未作答灰點)</div>
+          <div class="quiz-progress-section">
+            <div class="progress-header">
+              <span>小關卡進度：第 4 題 / 共 10 題</span>
+              <span>40% 完成</span>
+            </div>
+            <div class="progress-dots">
+              <div class="dot-item is-done" title="第1題：答對"></div>
+              <div class="dot-item is-done" title="第2題：答對"></div>
+              <div class="dot-item is-wrong" title="第3題：答錯（待重練）"></div>
+              <div class="dot-item is-current" title="第4題：進行中"></div>
+              <div class="dot-item" title="第5題"></div>
+              <div class="dot-item" title="第6題"></div>
+              <div class="dot-item" title="第7題"></div>
+              <div class="dot-item" title="第8題"></div>
+              <div class="dot-item" title="第9題"></div>
+              <div class="dot-item" title="第10題"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-block">
+          <div class="demo-label">📌 附帶 85 分及格標準線的連續進度條 (Exam Pass Meter)</div>
+          <div style="position: relative; padding-top: 28px; margin-bottom: var(--space-4);">
+            <div class="progress-bar-track" style="height: 18px;">
+              <div class="progress-bar-fill" style="width: 88%;"></div>
+              <div class="pass-mark-indicator"></div>
+              <div class="pass-mark-label">🎯 及格門檻 85 分</div>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: var(--font-size-sm); color: var(--color-text-secondary); font-weight: bold;">
+            <span>目前得分：88 分 (已越過及格線)</span>
+            <span>滿分 100 分</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           4. 回饋卡片與反向題醒目標記 (Feedback Cards & Reverse Alerts)
+           ==================================================================== -->
+      <section class="demo-section" id="section-feedback">
+        <div class="demo-section-header">
+          <h2 class="demo-section-title"><span>💡</span> 4. 回饋卡片與反向題醒目標記 (Feedback & Alerts)</h2>
+          <span class="demo-a11y-pill">溫柔鼓勵 · 核心記憶法 · 降低挫折</span>
+        </div>
+
+        <!-- 反向題醒目提醒橫幅 -->
+        <div class="demo-block">
+          <div class="demo-label">📌 反向題提醒橫幅 (Alert Banner: 針對特教學生容易看反題目而設)</div>
+          <div class="alert-reverse">
+            <span class="alert-reverse-icon">⚠️</span>
+            <div class="alert-reverse-content">
+              <strong>注意！這題是反向題：</strong> 請找出<strong>「不正確」</strong>或<strong>「錯誤」</strong>的敘述，不要選正確的喔！
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- 答對回饋卡 -->
+          <div>
+            <div class="demo-label">📌 答對回饋卡 (Success Feedback Card)</div>
+            <div class="feedback-card is-success">
+              <div class="feedback-header">
+                <div class="feedback-icon">✔</div>
+                <div>
+                  <div class="feedback-title">太棒了！答對了 🎉</div>
+                  <div style="font-size: var(--font-size-sm); color: var(--color-success-700); font-weight: bold;">連續答對 +1</div>
+                </div>
+              </div>
+              <div class="feedback-body">
+                你精準選出了不合規定的選項！機車載物絕對不能高於肩膀，這能保持駕駛視野與車輛重心平衡。
+              </div>
+              <div class="concept-memo">
+                <div class="concept-memo-title">💡 核心觀念記憶小幫手</div>
+                <div><strong>載物口訣：</strong>寬 10 公分（把手外緣）、長 50 公分（後輪軸起）、高不過肩！</div>
+              </div>
+              <button type="button" class="btn btn-primary btn-lg" style="width: 100%;">下一題 ➔</button>
+            </div>
+          </div>
+
+          <!-- 答錯回饋卡 (溫柔包容、不指責) -->
+          <div>
+            <div class="demo-label">📌 答錯回饋卡 (Gentle Incorrect Feedback Card)</div>
+            <div class="feedback-card is-danger">
+              <div class="feedback-header">
+                <div class="feedback-icon">✖</div>
+                <div>
+                  <div class="feedback-title">這題選錯囉，沒關係！💪</div>
+                  <div style="font-size: var(--font-size-sm); color: var(--color-danger-700); font-weight: bold;">觀念釐清時間</div>
+                </div>
+              </div>
+              <div class="feedback-body">
+                正確答案是 <strong>(1) 得載運高於騎士肩膀以上之貨物</strong>。<br>
+                因為法規明文規定「高度不可超過肩膀」，所以這項敘述是不正確的！
+              </div>
+              <div class="mistake-retest-notice">
+                🔁 <strong>錯題重練機制：</strong> 本題已加入「錯題特訓庫」，後續連續答對 2 次就會過關！
+              </div>
+              <button type="button" class="btn btn-secondary btn-lg" style="width: 100%;">記住觀念，看下一題 ➔</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           5. 題目卡片展示 (Question Card Preview)
+           ==================================================================== -->
+      <section class="demo-section" id="section-question">
+        <div class="demo-section-header">
+          <h2 class="demo-section-title"><span>📝</span> 5. 題目卡片樣式 (Question Cards)</h2>
+          <span class="demo-a11y-pill">官方圖片標線 · 朗讀整合</span>
+        </div>
+
+        <div class="grid-2">
+          <!-- 題目 1：反向文字題目 -->
+          <div class="question-card">
+            <div class="question-meta-row">
+              <div class="tag-list">
+                <span class="tag tag-category">正確觀念與態度</span>
+                <span class="tag tag-sub">貨物裝載</span>
+                <span class="tag tag-reverse">⚠️ 反向題</span>
+              </div>
+              <button type="button" class="btn-icon" title="朗讀題目與選項" aria-label="朗讀本題">🔊</button>
+            </div>
+
+            <div class="alert-reverse">
+              <span class="alert-reverse-icon">⚠️</span>
+              <div class="alert-reverse-content">
+                <strong>反向題提醒：</strong>請選出<strong>「不正確」</strong>的選項！
+              </div>
+            </div>
+
+            <div class="question-title-wrapper">
+              <h3 class="question-title">
+                Q6. 關於機車載物的規定，下列何者<mark class="highlight-reverse">不正確</mark>？
+              </h3>
+            </div>
+
+            <div class="options-list" style="margin-bottom: 0;">
+              <button type="button" class="option-card is-correct">
+                <span class="option-badge">1</span>
+                <span class="option-label">得載運高於騎士肩膀以上之貨物</span>
+                <span class="option-indicator">✔ 正確解答</span>
+              </button>
+              <button type="button" class="option-card">
+                <span class="option-badge">2</span>
+                <span class="option-label">寬度不得超過把手外緣 10公分</span>
+              </button>
+              <button type="button" class="option-card">
+                <span class="option-badge">3</span>
+                <span class="option-label">伸出車尾部分，自後輪軸起不得超過 50公分</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 題目 2：官方交通標誌圖片題目 -->
+          <div class="question-card">
+            <div class="question-meta-row">
+              <div class="tag-list">
+                <span class="tag tag-category">正確觀念與態度</span>
+                <span class="tag tag-sub">標誌標線</span>
+                <span class="tag" style="background-color: var(--color-primary-100); color: var(--color-primary-800);">🖼️ 圖標題</span>
+              </div>
+              <button type="button" class="btn-icon" title="朗讀題目與選項" aria-label="朗讀本題">🔊</button>
+            </div>
+
+            <div class="question-title-wrapper">
+              <h3 class="question-title">
+                Q67. 請問這個交通標誌代表什麼意思？
+              </h3>
+            </div>
+
+            <!-- 官方圖示提取框架 -->
+            <div class="question-image-frame">
+              <img src="../media/images/M0067.png" alt="交通標誌：路滑" onerror="this.src='https://placehold.co/180x180?text=標誌圖+M0067'">
+              <span style="font-size: var(--font-size-sm); color: var(--color-text-muted); margin-top: var(--space-2);">圖檔來源：官方標誌題庫 M0067</span>
+            </div>
+
+            <div class="options-list" style="margin-bottom: 0;">
+              <button type="button" class="option-card">
+                <span class="option-badge">1</span>
+                <span class="option-label">路面高突</span>
+              </button>
+              <button type="button" class="option-card is-correct">
+                <span class="option-badge">2</span>
+                <span class="option-label">路滑（正確標誌）</span>
+                <span class="option-indicator">✔ 正確解答</span>
+              </button>
+              <button type="button" class="option-card">
+                <span class="option-badge">3</span>
+                <span class="option-label">禁止超車</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           6. 成績與圖表分析區塊 (Score & Analytics Blocks)
+           ==================================================================== -->
+      <section class="demo-section" id="section-analytics">
+        <div class="demo-section-header">
+          <h2 class="demo-section-title"><span>📈</span> 6. 每回合練習成績與圖表分析區塊</h2>
+          <span class="demo-a11y-pill">Chart.js 圖表容器 · 弱點立即強化</span>
+        </div>
+
+        <!-- 分數徽章與三欄數據卡 -->
+        <div class="result-hero-card">
+          <div class="score-badge-circle">
+            <span class="score-num">90</span>
+            <span class="score-unit">分 / 滿分 100</span>
+          </div>
+
+          <div class="pass-status-pill is-pass">
+            <span>🎉 本關已合格（及格標準 85 分）</span>
+          </div>
+
+          <p style="color: var(--color-text-secondary); font-size: var(--font-size-base); max-width: 500px; margin: 0 auto;">
+            太厲害了！10 題答對 9 題，僅錯 1 題。弱點集中在「貨物裝載」，強化後就能拿下滿分！
+          </p>
+
+          <div class="stats-summary-row">
+            <div class="stat-box">
+              <div class="stat-box-num" style="color: var(--color-success-600);">9 題</div>
+              <div class="stat-box-label">答對題數</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-num" style="color: var(--color-danger-600);">1 題</div>
+              <div class="stat-box-label">答錯題數</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-num" style="color: var(--color-primary-700);">3 分 12 秒</div>
+              <div class="stat-box-label">練習耗時</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 弱點改善建議 Banner -->
+        <div class="recommend-banner">
+          <div>
+            <div style="font-size: var(--font-size-md); font-weight: var(--font-weight-black); color: var(--color-accent-800); margin-bottom: 4px;">
+              🎯 系統弱點加強建議
+            </div>
+            <div style="font-size: var(--font-size-base); color: var(--color-slate-700);">
+              你目前在<strong>「貨物裝載尺寸與重量」</strong>答對率較低，建議先翻閱概念卡！
+            </div>
+          </div>
+          <button type="button" class="btn btn-accent" style="flex-shrink: 0;">
+            立即強化此弱點 ➔
+          </button>
+        </div>
+
+        <!-- 視覺化分析圖表容器 (規格書要求：雷達圖與長條圖) -->
+        <div class="grid-2">
+          <!-- 四大類答對率 (雷達圖樣式容器) -->
+          <div class="chart-wrapper">
+            <h3 class="chart-title"><span>🕸️</span> 四大類答對率分佈 (Radar Chart)</h3>
+            <div style="height: 260px; display: flex; align-items: center; justify-content: center; background-color: var(--color-slate-50); border-radius: var(--radius-md); position: relative;">
+              <!-- 示意 SVG 雷達圖 (完全採用 tokens.css 變數) -->
+              <svg viewBox="0 0 200 200" style="width: 200px; height: 200px;">
+                <!-- 網格軸線 -->
+                <polygon points="100,20 180,100 100,180 20,100" fill="none" stroke="var(--color-slate-200)" stroke-width="1.5" />
+                <polygon points="100,45 155,100 100,155 45,100" fill="none" stroke="var(--color-slate-200)" stroke-width="1.5" />
+                <line x1="100" y1="20" x2="100" y2="180" stroke="var(--color-slate-300)" stroke-width="1" />
+                <line x1="20" y1="100" x2="180" y2="100" stroke="var(--color-slate-300)" stroke-width="1" />
+                <!-- 實際能力多邊形 -->
+                <polygon points="100,30 170,100 100,165 35,100" fill="rgba(44, 157, 176, 0.25)" stroke="var(--color-primary)" stroke-width="3" />
+                <!-- 標記點 -->
+                <circle cx="100" cy="30" r="4" fill="var(--color-primary-700)" />
+                <circle cx="170" cy="100" r="4" fill="var(--color-primary-700)" />
+                <circle cx="100" cy="165" r="4" fill="var(--color-primary-700)" />
+                <circle cx="35" cy="100" r="4" fill="var(--color-primary-700)" />
+              </svg>
+              <!-- 四維度文字標示 -->
+              <div style="position: absolute; top: 10px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">正確觀念 (90%)</div>
+              <div style="position: absolute; right: 10px; top: 90px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">停讓文化 (95%)</div>
+              <div style="position: absolute; bottom: 10px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">安全駕駛 (80%)</div>
+              <div style="position: absolute; left: 10px; top: 90px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">危險感知 (75%)</div>
+            </div>
+            <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: var(--space-3); text-align: center;">
+              整合 Chart.js 雷達圖：可一鍵匯出供 IEP 學習檔案紀錄使用
+            </div>
+          </div>
+
+          <!-- 各小類答對率排行 (由低到高，一眼辨識弱點) -->
+          <div class="chart-wrapper">
+            <h3 class="chart-title"><span>📊</span> 各小類答對率分析 (由低到高排列)</h3>
+            <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: var(--font-size-sm); margin-bottom: 4px;">
+                  <span style="font-weight: bold; color: var(--color-danger-700);">🔴 貨物裝載 (最弱)</span>
+                  <span style="font-weight: bold; color: var(--color-danger-700);">50%</span>
+                </div>
+                <div class="progress-bar-track">
+                  <div class="progress-bar-fill" style="width: 50%; background-color: var(--color-danger-500);"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: var(--font-size-sm); margin-bottom: 4px;">
+                  <span style="font-weight: bold; color: var(--color-warning-700);">🟡 罰鍰與數字</span>
+                  <span style="font-weight: bold; color: var(--color-warning-700);">75%</span>
+                </div>
+                <div class="progress-bar-track">
+                  <div class="progress-bar-fill" style="width: 75%; background-color: var(--color-warning-500);"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: var(--font-size-sm); margin-bottom: 4px;">
+                  <span style="font-weight: bold; color: var(--color-success-700);">🟢 號誌與標誌</span>
+                  <span style="font-weight: bold; color: var(--color-success-700);">92%</span>
+                </div>
+                <div class="progress-bar-track">
+                  <div class="progress-bar-fill" style="width: 92%; background-color: var(--color-success-500);"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: var(--font-size-sm); margin-bottom: 4px;">
+                  <span style="font-weight: bold; color: var(--color-success-700);">🟢 路權與禮讓</span>
+                  <span style="font-weight: bold; color: var(--color-success-700);">100%</span>
+                </div>
+                <div class="progress-bar-track">
+                  <div class="progress-bar-fill" style="width: 100%; background-color: var(--color-success-500);"></div>
+                </div>
+              </div>
+            </div>
+            <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: var(--space-4); text-align: center;">
+              紅黃綠三色標示，清楚指引學生優先複習弱項小類
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    // 簡單展示切換：讓選項卡可在點選時模擬選取效果
+    function toggleOption(card) {
+      const parent = card.parentElement;
+      const cards = parent.querySelectorAll('.option-card');
+      cards.forEach(c => c.classList.remove('is-selected'));
+      card.classList.add('is-selected');
+    }
+
+    // 字級切換示範 (特教輔助)
+    const btnFontsize = document.getElementById('btn-toggle-fontsize');
+    let isLargeFont = false;
+    btnFontsize.addEventListener('click', () => {
+      isLargeFont = !isLargeFont;
+      if (isLargeFont) {
+        document.documentElement.style.fontSize = '18px';
+        btnFontsize.classList.add('is-active');
+      } else {
+        document.documentElement.style.fontSize = '16px';
+        btnFontsize.classList.remove('is-active');
+      }
+    });
+
+    // 注音字型預覽模式切換示範
+    const btnZhuyin = document.getElementById('btn-toggle-zhuyin');
+    btnZhuyin.addEventListener('click', () => {
+      document.body.classList.toggle('mode-zhuyin');
+      btnZhuyin.classList.toggle('is-active');
+    });
+
+    // 語音朗讀示意
+    const btnSpeech = document.getElementById('btn-toggle-speech');
+    btnSpeech.addEventListener('click', () => {
+      btnSpeech.classList.toggle('is-active');
+      if (btnSpeech.classList.contains('is-active')) {
+        alert('特教朗讀模式已啟動（示範）：點擊題目或選項時，系統將自動以清晰慢速朗讀語句。');
+      }
+    });
+  </script>
+</body>
+</html>

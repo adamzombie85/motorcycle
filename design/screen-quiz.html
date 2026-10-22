@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>機車筆試好過關 - 答題畫面 (Quiz)</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="components.css">
+  <style>
+    /* 答題畫面專用佈局微調 */
+    .quiz-container {
+      max-width: var(--container-max-tablet);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .quiz-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+      margin-bottom: var(--space-3);
+    }
+
+    .level-title-chip {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary-900);
+      background-color: var(--color-primary-50);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-primary-200);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* 題型快速切換展示條 (方便 Jim 或 Claude Code 檢視文字題與圖片題) */
+    .sample-switch-bar {
+      display: flex;
+      gap: var(--space-2);
+      align-items: center;
+      background-color: var(--color-slate-100);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-4);
+      font-size: var(--font-size-sm);
+    }
+
+    .sample-switch-btn {
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      border: 1px solid var(--color-border-card);
+      background-color: var(--color-bg-card);
+      cursor: pointer;
+    }
+
+    .sample-switch-btn.is-active {
+      background-color: var(--color-primary);
+      color: var(--color-text-inverse);
+      border-color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部導覽列 -->
+  <header class="site-header">
+    <div class="app-container nav-bar">
+      <a href="screen-home.html" class="brand-badge" style="font-size: var(--font-size-base);">
+        <span class="brand-icon" style="width: 36px; height: 36px; font-size: 20px;">🛵</span>
+        <span>回首頁</span>
+      </a>
+
+      <!-- 學生識別 -->
+      <div class="user-chip">
+        <span>👤 S102-陳同學</span>
+      </div>
+
+      <!-- 特教輔助工具列 -->
+      <div class="a11y-toolbar">
+        <button type="button" class="btn-icon is-active" id="btn-quiz-speech" title="自動語音朗讀中" aria-label="切換語音朗讀">🔊</button>
+        <button type="button" class="btn-icon" id="btn-quiz-zhuyin" title="注音輔助" aria-label="切換注音">ㄅ</button>
+        <button type="button" class="btn-icon" id="btn-quiz-zoom" title="字級調整" aria-label="放大字級">🔍</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="app-container quiz-container">
+
+      <!-- 關卡標題與離開暫停列 -->
+      <div class="quiz-top-bar">
+        <div class="level-title-chip">
+          🎯 第 1 大類 · 第 12 關：貨物裝載法規
+        </div>
+        <a href="screen-home.html" class="btn btn-outline" style="min-height: 40px; padding: 6px 14px; font-size: var(--font-size-sm);" title="隨時保存進度回首頁">
+          暫停離開
+        </a>
+      </div>
+
+      <!-- 小關卡進度條 (10 題微關卡：Done 綠點, Wrong 紅點, Current 藍點, Upcoming 灰點) -->
+      <div class="quiz-progress-section">
+        <div class="progress-header">
+          <span>關卡進度：第 6 題 / 共 10 題</span>
+          <span style="color: var(--color-primary-700);">進行中 (60%)</span>
+        </div>
+        <div class="progress-dots">
+          <div class="dot-item is-done" title="第 1 題：答對"></div>
+          <div class="dot-item is-done" title="第 2 題：答對"></div>
+          <div class="dot-item is-done" title="第 3 題：答對"></div>
+          <div class="dot-item is-wrong" title="第 4 題：答錯（待重練）"></div>
+          <div class="dot-item is-done" title="第 5 題：答對"></div>
+          <div class="dot-item is-current" title="第 6 題：目前作答中"></div>
+          <div class="dot-item" title="第 7 題"></div>
+          <div class="dot-item" title="第 8 題"></div>
+          <div class="dot-item" title="第 9 題"></div>
+          <div class="dot-item" title="第 10 題"></div>
+        </div>
+      </div>
+
+      <!-- 題目樣本切換工具 (展示文字反向題 vs 交通標誌圖片題) -->
+      <div class="sample-switch-bar">
+        <span style="font-weight: bold; color: var(--color-text-secondary);">樣板真實題型展示：</span>
+        <button type="button" class="sample-switch-btn is-active" id="show-q6-btn" onclick="showQuestion('q6')">
+          範例一：反向文字題 (M0006)
+        </button>
+        <button type="button" class="sample-switch-btn" id="show-q67-btn" onclick="showQuestion('q67')">
+          範例二：官方圖標題 (M0067)
+        </button>
+      </div>
+
+      <!-- ====================================================================
+           題目展示 1：反向題 (真實題目 M0006 載物規定)
+           ==================================================================== -->
+      <div id="question-block-q6">
+        <!-- 反向題醒目橫幅 -->
+        <div class="alert-reverse">
+          <span class="alert-reverse-icon">⚠️</span>
+          <div class="alert-reverse-content">
+            <strong>反向題提醒：</strong>這題是問<strong>「何者不正確」</strong>喔！請選出<strong>錯誤</strong>的敘述，不要選到正確的規定！
+          </div>
+        </div>
+
+        <div class="question-card">
+          <div class="question-meta-row">
+            <div class="tag-list">
+              <span class="tag tag-category">正確觀念與態度</span>
+              <span class="tag tag-sub">貨物裝載</span>
+              <span class="tag tag-reverse">⚠️ 反向題</span>
+              <span class="tag" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">🔢 數字題</span>
+            </div>
+            <!-- 單題朗讀按鈕 -->
+            <button type="button" class="btn-icon" title="朗讀題目與選項" onclick="alert('朗讀語音：第 6 題，關於機車載物的規定，下列何者不正確？')">
+              🔊
+            </button>
+          </div>
+
+          <div class="question-title-wrapper">
+            <h2 class="question-title">
+              Q6. 關於機車載物的規定，下列何者<mark class="highlight-reverse">不正確</mark>？
+            </h2>
+          </div>
+
+          <!-- 選項清單 (點選即時展示作答狀態) -->
+          <div class="options-list">
+            <!-- 選項 1：正確答案 (反向題中不正確的敘述) -->
+            <button type="button" class="option-card" id="q6-opt-1" onclick="answerQ6(1)">
+              <span class="option-badge">1</span>
+              <span class="option-label">得載運高於騎士肩膀以上之貨物</span>
+              <span class="option-indicator" id="q6-ind-1">點擊作答</span>
+            </button>
+
+            <!-- 選項 2 -->
+            <button type="button" class="option-card" id="q6-opt-2" onclick="answerQ6(2)">
+              <span class="option-badge">2</span>
+              <span class="option-label">寬度不得超過把手外緣 10公分</span>
+              <span class="option-indicator" id="q6-ind-2">點擊作答</span>
+            </button>
+
+            <!-- 選項 3 -->
+            <button type="button" class="option-card" id="q6-opt-3" onclick="answerQ6(3)">
+              <span class="option-badge">3</span>
+              <span class="option-label">伸出車尾部分，自後輪軸起不得超過 50公分</span>
+              <span class="option-indicator" id="q6-ind-3">點擊作答</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 答題即時回饋區 (預設展示答對狀態，點選其他選項會切換) -->
+        <div id="feedback-area-q6">
+          <div class="feedback-card is-success" id="feedback-card-correct">
+            <div class="feedback-header">
+              <div class="feedback-icon">✔</div>
+              <div>
+                <div class="feedback-title">太棒了！答對了 🎉</div>
+                <div style="font-size: var(--font-size-sm); color: var(--color-success-700); font-weight: bold;">
+                  成功識破反向題陷阱！
+                </div>
+              </div>
+            </div>
+
+            <div class="feedback-body">
+              <strong>正確解析：</strong>法規嚴格規定機車載物<strong>「高度不可超過駕駛人肩膀」</strong>，因此「得載運高於肩膀」是不正確的敘述！
+            </div>
+
+            <!-- 核心觀念記憶口訣 -->
+            <div class="concept-memo">
+              <div class="concept-memo-title">
+                <span>💡</span> <strong>核心觀念記憶小幫手（記住這句就全對）</strong>
+              </div>
+              <div style="font-size: var(--font-size-base); color: var(--color-slate-800); margin-top: 4px;">
+                <strong>機車載物三口訣：</strong>
+                <ul style="margin-left: 20px; margin-top: 4px; line-height: 1.8;">
+                  <li>寬度：不可超過把手外緣 <strong>10 公分</strong></li>
+                  <li>高度：不可超過駕駛人 <strong>肩膀</strong></li>
+                  <li>長度：自後輪軸起，伸出不可超過 <strong>半公尺（50公分）</strong></li>
+                </ul>
+              </div>
+            </div>
+
+            <a href="screen-result.html" class="btn btn-primary btn-lg" style="width: 100%;">
+              下一題 ➔ (第 7 題)
+            </a>
+          </div>
+
+          <!-- 答錯回饋 (備用切換) -->
+          <div class="feedback-card is-danger" id="feedback-card-wrong" style="display: none;">
+            <div class="feedback-header">
+              <div class="feedback-icon">✖</div>
+              <div>
+                <div class="feedback-title">這題選錯囉，沒關係！💪</div>
+                <div style="font-size: var(--font-size-sm); color: var(--color-danger-700); font-weight: bold;">
+                  沒關係，下次一定記得！
+                </div>
+              </div>
+            </div>
+
+            <div class="feedback-body">
+              這題是<strong>「反向題」</strong>，要找出<strong>不合規定</strong>的敘述。你選的項目在法律上是合法的正確規定。<br>
+              不合規定的是 <strong>(1) 得載運高於騎士肩膀以上之貨物</strong>。
+            </div>
+
+            <div class="mistake-retest-notice">
+              🔁 <strong>已加入錯題庫：</strong> 連續答對 2 次這題就會過關，安心練習不用擔心！
+            </div>
+
+            <a href="screen-result.html" class="btn btn-secondary btn-lg" style="width: 100%;">
+              記住了，繼續下一題 ➔
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           題目展示 2：官方圖片題 (真實題目 M0067 路滑標誌)
+           ==================================================================== -->
+      <div id="question-block-q67" style="display: none;">
+        <div class="question-card">
+          <div class="question-meta-row">
+            <div class="tag-list">
+              <span class="tag tag-category">正確觀念與態度</span>
+              <span class="tag tag-sub">標誌標線</span>
+              <span class="tag" style="background-color: var(--color-primary-100); color: var(--color-primary-800);">🖼️ 官方圖標題</span>
+            </div>
+            <button type="button" class="btn-icon" title="朗讀題目與選項" onclick="alert('朗讀語音：請問這個交通標誌代表什麼意思？')">
+              🔊
+            </button>
+          </div>
+
+          <div class="question-title-wrapper">
+            <h2 class="question-title">
+              Q67. 請問這個交通標誌代表什麼意思？
+            </h2>
+          </div>
+
+          <!-- 官方抽出圖檔展示框 -->
+          <div class="question-image-frame">
+            <img src="../media/images/M0067.png" alt="交通標誌：三角形警告標誌，黑色小車伴隨輪胎打滑波浪痕跡" onerror="this.src='https://placehold.co/200x200?text=標誌圖+M0067'">
+            <span style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: var(--space-2);">
+              官方題庫圖檔：M0067.png
+            </span>
+          </div>
+
+          <div class="options-list">
+            <button type="button" class="option-card">
+              <span class="option-badge">1</span>
+              <span class="option-label">路面高突</span>
+            </button>
+            <button type="button" class="option-card is-correct">
+              <span class="option-badge">2</span>
+              <span class="option-label">路滑（正確標誌）</span>
+              <span class="option-indicator">✔ 正確解答</span>
+            </button>
+            <button type="button" class="option-card">
+              <span class="option-badge">3</span>
+              <span class="option-label">禁止超車</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="feedback-card is-success">
+          <div class="feedback-header">
+            <div class="feedback-icon">✔</div>
+            <div>
+              <div class="feedback-title">答對了！這是「路滑」警告標誌 🎉</div>
+            </div>
+          </div>
+          <div class="feedback-body">
+            看到三角形黃底黑邊（或紅邊）的車輛打滑痕跡標誌，代表前方路段容易打滑，應立即減速慢行、切勿急踩煞車！
+          </div>
+          <a href="screen-result.html" class="btn btn-primary btn-lg" style="width: 100%;">
+            完成本關練習 ➔ 前往結算
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // 題型切換展示
+    function showQuestion(type) {
+      const q6Block = document.getElementById('question-block-q6');
+      const q67Block = document.getElementById('question-block-q67');
+      const q6Btn = document.getElementById('show-q6-btn');
+      const q67Btn = document.getElementById('show-q67-btn');
+
+      if (type === 'q6') {
+        q6Block.style.display = 'block';
+        q67Block.style.display = 'none';
+        q6Btn.classList.add('is-active');
+        q67Btn.classList.remove('is-active');
+      } else {
+        q6Block.style.display = 'none';
+        q67Block.style.display = 'block';
+        q6Btn.classList.remove('is-active');
+        q67Btn.classList.add('is-active');
+      }
+    }
+
+    // Q6 作答互動展示
+    function answerQ6(optionNum) {
+      const opt1 = document.getElementById('q6-opt-1');
+      const opt2 = document.getElementById('q6-opt-2');
+      const opt3 = document.getElementById('q6-opt-3');
+      const ind1 = document.getElementById('q6-ind-1');
+      const ind2 = document.getElementById('q6-ind-2');
+      const ind3 = document.getElementById('q6-ind-3');
+      const cardCorrect = document.getElementById('feedback-card-correct');
+      const cardWrong = document.getElementById('feedback-card-wrong');
+
+      // 重設狀態
+      [opt1, opt2, opt3].forEach(o => {
+        o.classList.remove('is-correct', 'is-wrong', 'is-selected');
+      });
+
+      if (optionNum === 1) {
+        // 答對
+        opt1.classList.add('is-correct');
+        ind1.textContent = '✔ 正確解答';
+        ind1.style.display = 'inline-flex';
+        ind2.style.display = 'none';
+        ind3.style.display = 'none';
+        cardCorrect.style.display = 'block';
+        cardWrong.style.display = 'none';
+      } else {
+        // 答錯
+        opt1.classList.add('is-correct');
+        ind1.textContent = '✔ 正確解答';
+        ind1.style.display = 'inline-flex';
+
+        if (optionNum === 2) {
+          opt2.classList.add('is-wrong');
+          ind2.textContent = '✖ 你的選擇';
+          ind2.style.display = 'inline-flex';
+        } else {
+          opt3.classList.add('is-wrong');
+          ind3.textContent = '✖ 你的選擇';
+          ind3.style.display = 'inline-flex';
+        }
+
+        cardCorrect.style.display = 'none';
+        cardWrong.style.display = 'block';
+      }
+    }
+
+    // 初始化狀態：預設高亮選項 1 (答對)
+    answerQ6(1);
+
+    // 輔助功能切換示範
+    const btnSpeech = document.getElementById('btn-quiz-speech');
+    const btnZhuyin = document.getElementById('btn-quiz-zhuyin');
+    const btnZoom = document.getElementById('btn-quiz-zoom');
+
+    btnSpeech.addEventListener('click', () => {
+      btnSpeech.classList.toggle('is-active');
+    });
+    btnZhuyin.addEventListener('click', () => {
+      btnZhuyin.classList.toggle('is-active');
+    });
+    let isZ = false;
+    btnZoom.addEventListener('click', () => {
+      isZ = !isZ;
+      document.documentElement.style.fontSize = isZ ? '18px' : '16px';
+      btnZoom.classList.toggle('is-active', isZ);
+    });
+  </script>
+</body>
+</html>
