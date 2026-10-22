@@ -1,6 +1,6 @@
 /**
  * 機車駕照筆試題庫 - 視覺設計 Design Tokens
- * 專為特教資源班高中生設計：清晰、友善、低挫折、無障礙 (WCAG 2.1 AA)
+ * 採通用設計規範：清晰、友善、低挫折、無障礙 (WCAG 2.1 AA)
  * 基準字級 >= 18px，觸控目標 >= 44px (標準 48px ~ 56px)
  * 配色與主視覺 site/assets/illustrations/hero.jpg (湖水藍速克達) 協調一致
  */
@@ -118,7 +118,7 @@
 
 
   /* ==========================================================================
-     2. 字型與字級系統 (Typography) - 嚴格落實資源班易讀性，基準 >= 18px
+     2. 字型與字級系統 (Typography) - 嚴格落實通用設計易讀性，基準 >= 18px
      ========================================================================== */
 
   --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Noto Sans TC", "Heiti TC", "Microsoft JhengHei", system-ui, sans-serif;

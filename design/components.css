@@ -1,7 +1,7 @@
 /**
  * 機車駕照筆試題庫 - 元件樣式庫 (Components Stylesheet)
  * 嚴格遵循 AGENTS.md 規則：全數採用 design/tokens.css 的變數
- * 專為特教資源班高中生設計：按鈕 >= 44px (標配 48~56px)、字級 >= 18px、WCAG AA 對比、雙重識別 (不只靠顏色)
+ * 採通用設計規範：按鈕 >= 44px (標配 48~56px)、字級 >= 18px、WCAG AA 對比、雙重識別 (不只靠顏色)
  */
 
 /* ==========================================================================
@@ -107,7 +107,7 @@
   font-size: 24px;
 }
 
-/* 特教輔助工具列 (A11y Toolbar) */
+/* 閱讀設定工具列 (A11y & Reading Settings Toolbar) */
 .a11y-toolbar {
   display: flex;
   align-items: center;
@@ -117,7 +117,7 @@
   border-radius: var(--radius-full);
 }
 
-/* 學生身分徽章 (Jim 決策：學生代號登入) */
+/* 學生身分徽章 */
 .user-chip {
   display: inline-flex;
   align-items: center;
@@ -946,7 +946,7 @@
 }
 
 /* ==========================================================================
-   12. 學生登入元件 (Login Components)
+   12. 學生登入元件 (Login Components - Google Sign-in & First Login Profile)
    ========================================================================== */
 .login-container {
   max-width: 580px;
@@ -970,13 +970,59 @@
   }
 }
 
+/* Google 帳號登入按鈕 (Google Sign-In Button) */
+.btn-google {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--touch-target-lg);
+  padding: var(--space-3) var(--space-6);
+  background-color: #FFFFFF;
+  color: #1F2937;
+  border: 2px solid #D1D5DB;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  transition: all var(--transition-fast);
+}
+
+.btn-google:hover {
+  background-color: #F9FAFB;
+  border-color: #9CA3AF;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.btn-google:focus-visible {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: var(--focus-ring);
+}
+
+.btn-google:active {
+  transform: translateY(0);
+  background-color: #F3F4F6;
+}
+
+.btn-google-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
 .login-input {
   width: 100%;
   min-height: var(--touch-target-lg);
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-md);
   font-weight: var(--font-weight-bold);
   padding: var(--space-3) var(--space-4);
-  border: 3px solid var(--color-border-card);
+  border: 2px solid var(--color-border-card);
   border-radius: var(--radius-md);
   color: var(--color-text-main);
   background-color: var(--color-slate-50);
@@ -996,37 +1042,28 @@
   font-weight: var(--font-weight-normal);
 }
 
-.code-chips-label {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-2);
-}
-
-.code-chips-group {
+.login-field-group {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: var(--space-2);
 }
 
-.code-chip-btn {
-  min-height: var(--touch-target-min);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-full);
-  border: 2px solid var(--color-primary-200);
-  background-color: var(--color-primary-50);
-  color: var(--color-primary-800);
+.login-field-label {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
-  cursor: pointer;
-  transition: all var(--transition-fast);
+  color: var(--color-text-main);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.code-chip-btn:hover,
-.code-chip-btn:focus-visible {
+.login-badge-optional {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-700);
   background-color: var(--color-primary-100);
-  border-color: var(--color-primary-500);
-  outline: none;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-bold);
 }
 
 /* ==========================================================================
@@ -1265,4 +1302,118 @@
   line-height: var(--line-height-relaxed);
   max-width: 520px;
 }
+
+/* ==========================================================================
+   16. 學習成果報告（直式成績單）元件 (Report Sheet Components)
+   ========================================================================== */
+.report-container {
+  max-width: 920px;
+  margin: var(--space-6) auto;
+}
+
+.report-sheet {
+  background-color: #FFFFFF;
+  border: 3px solid var(--color-primary-200);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .report-sheet {
+    padding: var(--space-10);
+  }
+}
+
+.report-header-banner {
+  text-align: center;
+  border-bottom: 2px dashed var(--color-primary-200);
+  padding-bottom: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.report-watermark-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-800);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-black);
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-2);
+}
+
+.report-sheet-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-slate-900);
+  margin-bottom: var(--space-2);
+}
+
+.report-student-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-bold);
+}
+
+.report-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+@media (min-width: 640px) {
+  .report-stat-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.report-stat-box {
+  background-color: var(--color-slate-50);
+  border: 2px solid var(--color-border-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  text-align: center;
+}
+
+.report-stat-val {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-black);
+  line-height: 1.2;
+}
+
+.report-stat-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+  font-weight: var(--font-weight-bold);
+}
+
+.report-section-card {
+  background-color: var(--color-slate-50);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.report-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-slate-900);
+}
+
 

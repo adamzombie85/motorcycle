@@ -136,14 +136,14 @@
         <span>機車筆試好過關</span>
       </a>
 
-      <!-- 學生代號登入徽章 (Jim 決策：學生代號登入) -->
+      <!-- 學生身分徽章 -->
       <div class="user-chip">
-        <span>👤 學生：S102-陳同學</span>
+        <span>👤 學生：301 班 12 號</span>
       </div>
 
-      <!-- 特教輔助工具列 (A11y Toolbar) -->
+      <!-- 閱讀設定工具列 (Reading Settings Toolbar) -->
       <div class="a11y-toolbar">
-        <button type="button" class="btn-icon" id="btn-toggle-speech" title="朗讀題目與選項 (特教輔助)" aria-label="開啟語音朗讀">
+        <button type="button" class="btn-icon" id="btn-toggle-speech" title="朗讀題目與選項 (閱讀設定)" aria-label="開啟語音朗讀">
           🔊
         </button>
         <button type="button" class="btn-icon" id="btn-toggle-zhuyin" title="切換注音字型" aria-label="切換注音模式">
@@ -175,7 +175,7 @@
       <div class="demo-hero">
         <h1 class="demo-title">機車駕照筆試題庫 · 視覺元件庫 (Components Library)</h1>
         <p class="demo-subtitle">
-          依據 <strong>TASKS_AGY.md</strong> 與 <strong>AGENTS.md</strong> 規範建構。專門服務特教資源班高中生，嚴格落實：
+          依據 <strong>TASKS_AGY.md</strong> 與 <strong>AGENTS.md</strong> 規範建構。採通用設計服務全校高中生，嚴格落實：
           <strong>字級至少 18px</strong>、<strong>按鈕觸控區域 >= 44px</strong>、<strong>對比度達 WCAG AA</strong>、<strong>不只靠顏色傳遞資訊</strong>。
           色彩全面契合主視覺湖水藍速克達風格。
         </p>
@@ -187,7 +187,7 @@
       <section class="demo-section" id="section-buttons">
         <div class="demo-section-header">
           <h2 class="demo-section-title"><span>🔘</span> 1. 按鈕元件系統 (Button Components)</h2>
-          <span class="demo-a11y-pill">可點範圍 >= 48px · 符合特教規範</span>
+          <span class="demo-a11y-pill">可點範圍 >= 48px · 符合通用設計規範</span>
         </div>
 
         <div class="demo-block">
@@ -333,7 +333,7 @@
 
         <!-- 反向題醒目提醒橫幅 -->
         <div class="demo-block">
-          <div class="demo-label">📌 反向題提醒橫幅 (Alert Banner: 針對特教學生容易看反題目而設)</div>
+          <div class="demo-label">📌 反向題提醒橫幅 (Alert Banner: 針對容易看反題目而設)</div>
           <div class="alert-reverse">
             <span class="alert-reverse-icon">⚠️</span>
             <div class="alert-reverse-content">
@@ -632,7 +632,7 @@
       card.classList.add('is-selected');
     }
 
-    // 字級切換示範 (特教輔助)
+    // 字級切換示範 (閱讀設定)
     const btnFontsize = document.getElementById('btn-toggle-fontsize');
     let isLargeFont = false;
     btnFontsize.addEventListener('click', () => {
@@ -658,7 +658,7 @@
     btnSpeech.addEventListener('click', () => {
       btnSpeech.classList.toggle('is-active');
       if (btnSpeech.classList.contains('is-active')) {
-        alert('特教朗讀模式已啟動（示範）：點擊題目或選項時，系統將自動以清晰慢速朗讀語句。');
+        alert('語音朗讀模式已啟動（示範）：點擊題目或選項時，系統將自動以清晰慢速朗讀語句。');
       }
     });
   </script>

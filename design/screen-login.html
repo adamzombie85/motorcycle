@@ -3,22 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>機車筆試好過關 - 學生代號登入 (Login)</title>
+  <title>機車筆試好過關 - Google 帳號登入 (Login)</title>
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="components.css">
   <style>
-    /* 登入畫面專用排版與微調 */
+    /* 登入畫面排版與視覺樣式 */
     .login-wrapper {
       min-height: calc(100vh - 180px);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: var(--space-4) 0;
+      padding: var(--space-6) 0;
+    }
+
+    /* 樣板狀態切換導覽 (供檢視兩種狀態) */
+    .state-switcher-bar {
+      display: flex;
+      gap: var(--space-2);
+      margin-bottom: var(--space-6);
+      background-color: var(--color-bg-subtle);
+      padding: var(--space-1);
+      border-radius: var(--radius-full);
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    .state-switch-btn {
+      min-height: 44px;
+      padding: var(--space-2) var(--space-5);
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-bold);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .state-switch-btn.is-active {
+      background-color: #FFFFFF;
+      color: var(--color-primary-800);
+      box-shadow: var(--shadow-sm);
     }
 
     .login-hero-img-box {
       width: 100%;
-      max-width: 280px;
+      max-width: 260px;
       margin: 0 auto;
       display: flex;
       justify-content: center;
@@ -26,7 +59,7 @@
 
     @media (min-width: 640px) {
       .login-hero-img-box {
-        max-width: 320px;
+        max-width: 300px;
       }
     }
 
@@ -60,6 +93,25 @@
       color: var(--color-text-secondary);
       line-height: var(--line-height-normal);
     }
+
+    .login-state-panel {
+      display: none;
+      width: 100%;
+    }
+
+    .login-state-panel.is-active {
+      display: block;
+    }
+
+    .info-callout {
+      background-color: var(--color-primary-50);
+      border: 2px solid var(--color-primary-200);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      display: flex;
+      gap: var(--space-3);
+      align-items: flex-start;
+    }
   </style>
 </head>
 <body>
@@ -72,7 +124,7 @@
         <span>機車筆試好過關</span>
       </div>
 
-      <!-- 特教輔助工具列 -->
+      <!-- 閱讀設定工具列 -->
       <div class="a11y-toolbar">
         <button type="button" class="btn-icon" id="btn-login-speech" title="語音朗讀" aria-label="切換語音朗讀">🔊</button>
         <button type="button" class="btn-icon" id="btn-login-zhuyin" title="注音輔助" aria-label="切換注音模式">ㄅ</button>
@@ -83,73 +135,159 @@
 
   <main class="main-content">
     <div class="app-container login-wrapper">
+
+      <!-- 畫面狀態切換條 (點選切換預覽登入或首次填寫表單) -->
+      <div class="state-switcher-bar" role="tablist" aria-label="登入畫面狀態切換">
+        <button type="button" class="state-switch-btn is-active" id="tab-login" onclick="switchLoginView('login')" role="tab" aria-selected="true">
+          狀態 1：Google 帳號登入
+        </button>
+        <button type="button" class="state-switch-btn" id="tab-first" onclick="switchLoginView('first')" role="tab" aria-selected="false">
+          狀態 2：首次登入填寫班級座號 (選填)
+        </button>
+      </div>
+
       <div class="login-container" style="width: 100%;">
 
-        <div class="login-card">
-          <!-- 主視覺插畫 (呼應 hero.jpg 淺藍色速克達) -->
-          <div class="login-hero-img-box">
-            <img src="../site/assets/illustrations/hero.jpg" alt="高中生戴安全帽騎著淺藍色速克達的插畫" class="login-hero-img">
-          </div>
-
-          <!-- 歡迎標題群 -->
-          <div class="login-header-group">
-            <div style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; background-color: var(--color-primary-100); color: var(--color-primary-800); padding: 4px 12px; border-radius: var(--radius-full); font-size: var(--font-size-sm); font-weight: bold; width: fit-content; margin: 0 auto;">
-              ✨ 特教友善 · 免記密碼
+        <!-- ==================================================================
+             狀態 1：Google 帳號登入 (State 1: Google Sign-in)
+             ================================================================== -->
+        <div id="panel-login" class="login-state-panel is-active">
+          <div class="login-card">
+            <!-- 主視覺插畫 (呼應 hero.jpg 淺藍色速克達) -->
+            <div class="login-hero-img-box">
+              <img src="../site/assets/illustrations/hero.jpg" alt="高中生戴安全帽騎著淺藍色速克達的插畫" class="login-hero-img">
             </div>
-            <h1 class="login-title">
-              輸入代號，<span>馬上開始練習</span>
-            </h1>
-            <p class="login-subtitle">
-              只要輸入你的座號或學生代號，系統就會自動幫你記錄學習進度與錯題！
-            </p>
-          </div>
 
-          <!-- 代號輸入表單區 -->
-          <form onsubmit="event.preventDefault(); window.location.href='screen-home.html';" style="display: flex; flex-direction: column; gap: var(--space-5);">
-            <div>
-              <label for="student-code-input" style="font-size: var(--font-size-md); font-weight: var(--font-weight-bold); color: var(--color-text-main); display: block; margin-bottom: var(--space-2);">
-                👤 學生代號（例如座號）：
-              </label>
-              <input
-                type="text"
-                id="student-code-input"
-                class="login-input"
-                placeholder="例如：12 或 S102"
-                value="S102"
-                required
-                autocomplete="off"
-                aria-describedby="code-help-text"
-              >
-              <div id="code-help-text" style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: var(--space-2);">
-                請輸入老師指定的座號或代號，英文或數字都可以。
+            <!-- 歡迎標題群 -->
+            <div class="login-header-group">
+              <div style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; background-color: var(--color-primary-100); color: var(--color-primary-800); padding: 4px 14px; border-radius: var(--radius-full); font-size: var(--font-size-sm); font-weight: bold; width: fit-content; margin: 0 auto;">
+                ✨ 通用學習系統 · 任何 Google 帳號皆可登入
+              </div>
+              <h1 class="login-title">
+                登入帳號，<span>開始練習</span>
+              </h1>
+              <p class="login-subtitle">
+                登入後會自動保存你的練習紀錄與錯題分析，換手機或平板也能隨時繼續！
+              </p>
+            </div>
+
+            <!-- Google 登入按鈕區 -->
+            <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+              <button type="button" class="btn-google" onclick="switchLoginView('first')" aria-label="使用 Google 帳號登入">
+                <!-- Google 官方四色 G 標誌 SVG -->
+                <svg class="btn-google-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+                </svg>
+                <span>使用 Google 帳號登入</span>
+              </button>
+
+              <div style="text-align: center; font-size: var(--font-size-sm); color: var(--color-text-secondary);">
+                點擊上方按鈕即可透過 Google 快速安全登入
               </div>
             </div>
 
-            <!-- 觸控快捷代號選擇 (方便行動觸控操作) -->
-            <div>
-              <div class="code-chips-label">⚡ 快速代號示例（點擊可直接填入）：</div>
-              <div class="code-chips-group">
-                <button type="button" class="code-chip-btn" onclick="setCode('12')">座號 12</button>
-                <button type="button" class="code-chip-btn" onclick="setCode('15')">座號 15</button>
-                <button type="button" class="code-chip-btn" onclick="setCode('S102')">S102 (陳同學)</button>
-                <button type="button" class="code-chip-btn" onclick="setCode('S108')">S108 (林同學)</button>
+            <!-- 溫馨提示卡片 -->
+            <div class="info-callout">
+              <span style="font-size: 24px; line-height: 1;">🔒</span>
+              <div style="font-size: var(--font-size-sm); color: var(--color-primary-900); line-height: var(--line-height-normal);">
+                <strong>學習安全保證：</strong> 不限學校網域，個人 Gmail 也可以登入。系統僅記錄題目答對率與通關星級，絕不讀取其他機密資訊。
               </div>
             </div>
 
-            <!-- 主行動按鈕 -->
-            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center; font-size: var(--font-size-md);">
-              進入學習首頁 ➔
-            </button>
-          </form>
-
-          <!-- 免密碼溫馨提示卡片 -->
-          <div style="background-color: var(--color-primary-50); border: 2px solid var(--color-primary-200); border-radius: var(--radius-md); padding: var(--space-4); display: flex; gap: var(--space-3); align-items: flex-start;">
-            <span style="font-size: 24px; line-height: 1;">💡</span>
-            <div style="font-size: var(--font-size-sm); color: var(--color-primary-900); line-height: var(--line-height-normal);">
-              <strong>不需要密碼！</strong> 你的做題紀錄、錯題庫和通關星星都會綁定在這個代號上。下次練習只要輸入一樣的代號即可繼續！
-            </div>
           </div>
+        </div>
 
+        <!-- ==================================================================
+             狀態 2：首次登入填寫班級座號 (State 2: First-time Login Profile Setup)
+             ================================================================== -->
+        <div id="panel-first" class="login-state-panel">
+          <div class="login-card">
+
+            <!-- 歡迎與身分識別 -->
+            <div style="display: flex; align-items: center; gap: var(--space-3); background-color: var(--color-success-50); border: 2px solid var(--color-success-200); border-radius: var(--radius-lg); padding: var(--space-4);">
+              <span style="font-size: 32px; line-height: 1;">🎉</span>
+              <div>
+                <div style="font-size: var(--font-size-base); font-weight: bold; color: var(--color-success-800);">
+                  Google 帳號已成功登入！
+                </div>
+                <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: 2px;">
+                  歡迎來到機車筆試好過關，一起準備拿駕照！
+                </div>
+              </div>
+            </div>
+
+            <div class="login-header-group">
+              <h2 class="login-title">
+                填寫班級座號 <span>(選填)</span>
+              </h2>
+              <p class="login-subtitle">
+                填寫後可以產生專屬成果報告，方便讓老師掌握你的學習進度；也可以直接跳過喔！
+              </p>
+            </div>
+
+            <!-- 班級座號表單 (選填) -->
+            <form onsubmit="event.preventDefault(); window.location.href='screen-home.html';" style="display: flex; flex-direction: column; gap: var(--space-5);">
+              
+              <!-- 班級欄位 -->
+              <div class="login-field-group">
+                <label for="input-class" class="login-field-label">
+                  <span>🏫 班級名稱：</span>
+                  <span class="login-badge-optional">選填</span>
+                </label>
+                <input
+                  type="text"
+                  id="input-class"
+                  class="login-input"
+                  placeholder="例如：301 或 電子三甲"
+                  value="301"
+                  autocomplete="off"
+                >
+                <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">
+                  請填寫你在學校的班級名稱，不想填可留白。
+                </div>
+              </div>
+
+              <!-- 座號欄位 -->
+              <div class="login-field-group">
+                <label for="input-seat" class="login-field-label">
+                  <span>🔢 座號：</span>
+                  <span class="login-badge-optional">選填</span>
+                </label>
+                <input
+                  type="text"
+                  id="input-seat"
+                  class="login-input"
+                  placeholder="例如：12"
+                  value="12"
+                  autocomplete="off"
+                >
+                <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">
+                  請填寫你的班級座號，成果報告將顯示「301 班 12 號」。
+                </div>
+              </div>
+
+              <!-- 行動操作按鈕組 (包含明顯的先跳過按鈕) -->
+              <div style="display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-2);">
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center; font-size: var(--font-size-md);">
+                  儲存並開始練習 ➔
+                </button>
+                <a href="screen-home.html" class="btn btn-outline btn-lg" style="width: 100%; justify-content: center; font-size: var(--font-size-base); text-decoration: none;">
+                  先跳過，直接進入練習 ➔
+                </a>
+              </div>
+            </form>
+
+            <div class="info-callout">
+              <span style="font-size: 24px; line-height: 1;">💡</span>
+              <div style="font-size: var(--font-size-sm); color: var(--color-primary-900); line-height: var(--line-height-normal);">
+                <strong>隨時可改：</strong> 之後在首頁或個人設定中，隨時都能隨意補充或更新班級座號。若未填寫，系統將親切稱呼你為「同學」。
+              </div>
+            </div>
+
+          </div>
         </div>
 
       </div>
@@ -159,17 +297,34 @@
   <!-- 頁尾宣告 -->
   <footer style="background-color: var(--color-bg-card); border-top: 1px solid var(--color-border-subtle); padding: var(--space-6) 0; text-align: center; color: var(--color-text-secondary); font-size: var(--font-size-sm);">
     <div class="app-container">
-      <p>國立玉井工商輔導室 · 機車駕照筆試新制學習系統</p>
-      <p style="margin-top: 4px; color: var(--color-text-muted);">無障礙設計規範落實 · 支援手機與平板觸控</p>
+      <p>© 2026 41 研究室｜版權所有</p>
+      <p style="margin-top: 4px; color: var(--color-text-muted);">通用無障礙設計規範落實 · 支援手機與平板觸控</p>
     </div>
   </footer>
 
   <script>
-    // 快速填入代號
-    function setCode(val) {
-      const input = document.getElementById('student-code-input');
-      input.value = val;
-      input.focus();
+    // 切換登入狀態預覽
+    function switchLoginView(view) {
+      const panelLogin = document.getElementById('panel-login');
+      const panelFirst = document.getElementById('panel-first');
+      const tabLogin = document.getElementById('tab-login');
+      const tabFirst = document.getElementById('tab-first');
+
+      if (view === 'login') {
+        panelLogin.classList.add('is-active');
+        panelFirst.classList.remove('is-active');
+        tabLogin.classList.add('is-active');
+        tabFirst.classList.remove('is-active');
+        tabLogin.setAttribute('aria-selected', 'true');
+        tabFirst.setAttribute('aria-selected', 'false');
+      } else {
+        panelLogin.classList.remove('is-active');
+        panelFirst.classList.add('is-active');
+        tabLogin.classList.remove('is-active');
+        tabFirst.classList.add('is-active');
+        tabLogin.setAttribute('aria-selected', 'false');
+        tabFirst.setAttribute('aria-selected', 'true');
+      }
     }
 
     // A11y 工具列簡單互動示範
