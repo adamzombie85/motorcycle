@@ -215,6 +215,8 @@
     var m = Store.getMistakes();
     // 連續答對次數少的先練；同分照題庫順序
     var ids = Object.keys(m).filter(function (id) { return Data.getQuestion(id); });
+    var only = new URLSearchParams(location.search).get('qid'); // 單獨複習某一題
+    if (only) ids = ids.filter(function (id) { return id === only; });
     ids.sort(function (a, b) { return m[a] - m[b]; });
     ids = ids.slice(0, Store.MISTAKE_RETEST_SIZE);
     if (!ids.length) return message('錯題庫是空的，太棒了！', '回首頁', 'index.html');

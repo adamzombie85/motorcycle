@@ -1,0 +1,84 @@
+/* 錯題庫版面（取自 design/screen-mistakes.html，只用 tokens 變數） */
+.mistakes-container {
+  max-width: var(--container-max-tablet);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mistakes-hero-card {
+  background: linear-gradient(135deg, var(--color-danger-50) 0%, var(--color-bg-card) 100%);
+  border: 2px solid var(--color-danger-200);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+  box-shadow: var(--shadow-card);
+}
+
+@media (min-width: 640px) {
+  .mistakes-hero-card { padding: var(--space-8); }
+}
+
+.mistakes-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-danger-800);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.mistakes-desc {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--space-4);
+}
+
+.mistakes-rule {
+  background-color: var(--color-primary-50);
+  border: 2px solid var(--color-primary-200);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-900);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-4);
+}
+
+.mistakes-start-btn { width: 100%; justify-content: center; font-size: var(--font-size-md); }
+
+.mistake-card {
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-border-subtle);
+  border-left: 6px solid var(--color-danger-500);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.mistake-card .question-title { font-size: var(--font-size-lg); }
+.mistake-card .options-list { margin-bottom: 0; }
+.mistake-card .option-card { cursor: default; }
+.mistake-card-actions { display: flex; justify-content: flex-end; padding-top: var(--space-2); }
+.streak-on { color: var(--color-success-700); }
+.streak-off { color: var(--color-danger-700); }
+.streak-hint { color: var(--color-text-secondary); }
+.mistakes-footer-nav { text-align: center; margin: var(--space-8) 0; }
+.empty-state-actions { display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center; margin-top: var(--space-4); }
+.site-footer {
+  background-color: var(--color-bg-card);
+  border-top: 1px solid var(--color-border-subtle);
+  padding: var(--space-6) 0;
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}

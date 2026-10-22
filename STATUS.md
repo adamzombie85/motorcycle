@@ -17,6 +17,7 @@
 - 關卡：依小類切，照題庫原順序每 10 題一關；最後一關少於 5 題就併進前一關，共 92 關（2026-10-22 改）；影片題 126 題留到階段 4
 - 不鎖關，學生可以自由選；一關 85 分以上算過關
 - 錯題：答錯就進錯題庫，之後連續答對 2 次才移出（任何練習都算）
+- 關卡名稱：只顯示「第 N 關」；逐關標題等階段 3 概念卡完成後由 Claude 提供
 - 累計答對率：每題只看最近一次作答，答對率 ＝ 最近答對題數 ÷ 作答過的題數（2026-10-22 Claude 訂，Jim 可推翻）
 - 選項不打亂（有「以上皆是」選項）
 - 回饋只顯示對錯和正確答案，**不顯示解析、口訣**：題庫沒有這些資料，不能讓 AI 自己編（法規內容要 Jim 審核，留到階段 3 概念卡）
@@ -55,15 +56,15 @@
    - 學生可以下載自己的學習成果報告圖片分享給老師（C12、D2）
 9. ✅ 管理者帳號：`adamzombie85@gmail.com`
 10. ⏳ 上線前請向教務處／資訊組確認：學生用 Google 帳號登入、作答紀錄存在 Firebase，是否符合學校個資規定
-7. ✅ 拿掉校名，頁尾改成「© 2026 41 研究室｜版權所有」（已寫進 D2）。頁首是否也要拿掉，待 Jim 確認（頁首有朗讀、注音、字級按鈕）
+7. ✅ 拿掉校名，頁尾改成「© 2026 41 研究室｜版權所有」。⏳ 頁首：Claude 建議保留網站名稱和使用者；階段 2 只放**一個**「⚙️ 閱讀設定」按鈕，點開後再選朗讀、注音、字級（比三個小圖示好懂），待 Jim 確認
 8. ⏳ 階段 1 規則（上方）有沒有要改的？
 
 ## 階段進度
 | 階段 | 內容 | 主要負責 | 狀態 |
 |---|---|---|---|
 | 0 資料化 | 題庫轉 JSON、抽圖、影片壓縮、加標籤、程式交叉比對 | Claude → Jim 抽查 | ✅ 完成 |
-| 1a 視覺定調 | tokens.css、首頁和答題畫面樣板 | Antigravity（Gemini） | ✅ D1；🟡 D2 部分完成；D2b 待執行 |
-| 1 練習核心 | 小關卡、回饋、錯題重練、圖表 | Claude Code（照 design/ 實作，任務 C3～C12） | 🔄 C3～C6 ✅，C7 待執行 |
+| 1a 視覺定調 | tokens.css、首頁和答題畫面樣板 | Antigravity（Gemini） | ✅ D1、D2、D2b 完成 |
+| 1 練習核心 | 小關卡、回饋、錯題重練、圖表 | Claude Code（照 design/ 實作，任務 C3～C12） | 🔄 C3～C7 ✅，C8 待執行 |
 | 2 閱讀與學習設定 | 朗讀、注音、字級、反向題提醒（通用設計，每個人都可開關） | Claude Code | ⬜ |
 | 3 概念卡 | 概念歸類、概念卡、數字記憶卡 | Claude（內容）＋ Claude Code（介面） | ⬜ |
 | 4 危險感知與模擬考 | 影片模式、50 題模擬考、趨勢分析 | Claude Code | ⬜ |
@@ -99,6 +100,9 @@
 | 2026-10-22 | Claude Code | C6 完成：site/result.html（成績、85 分判定、雷達／長條／折線圖、下一步建議、本次錯題、匯出 PNG）、site/js/stats.js（累計答對率：每題只看最近一次）；?mode=mistakes 結算無過關判定與折線圖，顯示移出題數與錯題庫剩餘。quiz.js 的作答紀錄新增 clearedCount | Jim：確認；Claude Code：C9（C7、C8 等 D2） |
 | 2026-10-22 | Claude | 確認 design 存檔 882f655；審查 C6 通過；開放 C7、C8（順序 C7→C8→C9） | Claude Code：C7；Antigravity：D2b |
 | 2026-10-22 | Claude Code | C7 完成：site/index.html（首頁）、site/levels.html?sub=小類（關卡清單）、site/css/pages.css、home.js、levels.js；Stats 新增 bestScores。反向題專區、數字翻卡、模擬考顯示「即將推出」；錯題庫入口連到 mistakes.html（C8 才有）；頁尾「© 2026 41 研究室｜版權所有」 | Jim：確認；Claude Code：C8 |
+| 2026-10-22 | Claude | 審查 C7 通過；C9 補快取版本號；頁首建議改為單一「閱讀設定」按鈕（待 Jim） | Claude Code：C8 |
+| 2026-10-22 | Claude | 審查 D2b 通過（遺留 1 處 IEP）；AGENTS.md 禁用字加入 IEP；.agents/rules 新增第 6 條待 Jim 確認 | Claude Code：C8 後存檔 design/ |
+| 2026-10-22 | Claude Code | C8 完成：site/mistakes.html（有錯題清單、連續答對進度、單獨複習；沒錯題鼓勵畫面）、mistakes.js、mistakes.css；quiz.html 新增 ?mode=mistakes&qid=題號 單題複習 | Jim：確認；Claude Code：C9 |
 
 ## 開工提示詞
 
