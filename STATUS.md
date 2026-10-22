@@ -106,6 +106,7 @@
 | 2026-10-22 | Claude | 審查 C8 通過；錯題重練按鈕維持 btn-primary；C9 補上 Jim 要做的 GitHub 設定 | Claude Code：存檔 D2b → C9 |
 | 2026-10-22 | Claude | 開 D3 閱讀設定面板（單一按鈕、字級／注音／朗讀／反向題提醒） | Antigravity：D3 |
 | 2026-10-22 | Claude Code | C9 進行中：data.js 加 DATA_VERSION（題庫網址加 ?v=）；新增 .github/workflows/pages.yml（只部署 site/、tokens.css、components.css、questions.json、media/；部署時自動在 js/css 連結加 commit 版本號；根目錄轉址到 site/index.html） | Jim：GitHub 設定 Pages；手機測試 |
+| 2026-10-22 | Claude Code | C9 完成：已部署 https://adamzombie85.github.io/motorcycle/ （頁面、題庫、圖片、影片都 200；STATUS.md、docs/、TASKS_*.md、scripts/、raw/ 為 404，沒有公開）。快取版本號：題庫 DATA_VERSION，js/css 自動加 commit 版本 | Jim：用手機做完一關測試 |
 
 ## 開工提示詞
 
