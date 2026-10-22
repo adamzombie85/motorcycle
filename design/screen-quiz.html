@@ -80,12 +80,11 @@
         <span>👤 301 班 12 號</span>
       </div>
 
-      <!-- 閱讀設定工具列 -->
-      <div class="a11y-toolbar">
-        <button type="button" class="btn-icon is-active" id="btn-quiz-speech" title="自動語音朗讀中" aria-label="切換語音朗讀">🔊</button>
-        <button type="button" class="btn-icon" id="btn-quiz-zhuyin" title="注音輔助" aria-label="切換注音">ㄅ</button>
-        <button type="button" class="btn-icon" id="btn-quiz-zoom" title="字級調整" aria-label="放大字級">🔍</button>
-      </div>
+      <!-- 閱讀設定按鈕 (點擊開啟閱讀設定面板) -->
+      <a href="screen-settings.html" class="btn-settings" id="btn-reading-settings" aria-label="開啟閱讀設定面板" title="開啟閱讀設定面板">
+        <span class="btn-settings-icon" aria-hidden="true">⚙️</span>
+        <span class="btn-settings-text">閱讀設定</span>
+      </a>
     </div>
   </header>
 
@@ -153,9 +152,10 @@
               <span class="tag tag-reverse">⚠️ 反向題</span>
               <span class="tag" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">🔢 數字題</span>
             </div>
-            <!-- 單題朗讀按鈕 -->
-            <button type="button" class="btn-icon" title="朗讀題目與選項" onclick="alert('朗讀語音：第 6 題，關於機車載物的規定，下列何者不正確？')">
-              🔊
+            <!-- 單題朗讀按鈕 (通用設計：無論自動朗讀是否開啟，皆可隨時手動點擊朗讀) -->
+            <button type="button" class="btn btn-outline" style="min-height: 44px; padding: 6px 12px; font-size: var(--font-size-sm); gap: 6px;" title="朗讀題目與選項" aria-label="朗讀本題" onclick="alert('朗讀語音：第 6 題，關於機車載物的規定，下列何者不正確？')">
+              <span aria-hidden="true">🔊</span>
+              <span>朗讀本題</span>
             </button>
           </div>
 
@@ -267,8 +267,10 @@
               <span class="tag" style="background-color: var(--color-primary-100); color: var(--color-primary-800);">🖼️ 官方圖片題</span>
               <span class="tag" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">無題幹題型</span>
             </div>
-            <button type="button" class="btn-icon" title="朗讀提示與選項" onclick="alert('朗讀語音：請看圖，選出正確的答案。選項一：路面高突。選項二：路滑。選項三：禁止超車。')">
-              🔊
+            <!-- 單題朗讀按鈕 (通用設計：手動朗讀本題題目與選項) -->
+            <button type="button" class="btn btn-outline" style="min-height: 44px; padding: 6px 12px; font-size: var(--font-size-sm); gap: 6px;" title="朗讀提示與選項" aria-label="朗讀本題" onclick="alert('朗讀語音：請看圖，選出正確的答案。選項一：路面高突。選項二：路滑。選項三：禁止超車。')">
+              <span aria-hidden="true">🔊</span>
+              <span>朗讀本題</span>
             </button>
           </div>
 

@@ -141,18 +141,11 @@
         <span>👤 學生：301 班 12 號</span>
       </div>
 
-      <!-- 閱讀設定工具列 (Reading Settings Toolbar) -->
-      <div class="a11y-toolbar">
-        <button type="button" class="btn-icon" id="btn-toggle-speech" title="朗讀題目與選項 (閱讀設定)" aria-label="開啟語音朗讀">
-          🔊
-        </button>
-        <button type="button" class="btn-icon" id="btn-toggle-zhuyin" title="切換注音字型" aria-label="切換注音模式">
-          ㄅ
-        </button>
-        <button type="button" class="btn-icon" id="btn-toggle-fontsize" title="放大字級" aria-label="切換大字級">
-          🔍
-        </button>
-      </div>
+      <!-- 閱讀設定按鈕 (點擊開啟閱讀設定面板，符合文字＋圖示與 >=44px) -->
+      <a href="screen-settings.html" class="btn-settings" id="btn-reading-settings" aria-label="開啟閱讀設定面板" title="開啟閱讀設定面板">
+        <span class="btn-settings-icon" aria-hidden="true">⚙️</span>
+        <span class="btn-settings-text">閱讀設定</span>
+      </a>
     </div>
   </header>
 
@@ -165,6 +158,7 @@
       <a href="#section-feedback" class="quick-nav-link">4. 回饋卡 (答對/錯/反向)</a>
       <a href="#section-question" class="quick-nav-link">5. 題目卡 (文字與圖片題)</a>
       <a href="#section-analytics" class="quick-nav-link">6. 成績與圖表區塊</a>
+      <a href="#section-reading-settings" class="quick-nav-link">7. 閱讀設定元件 (開關/三段選擇/抽屜)</a>
     </div>
   </div>
 
@@ -565,7 +559,7 @@
               <div style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: var(--font-size-sm); font-weight: bold; color: var(--color-slate-800);">危險感知 (75%)</div>
             </div>
             <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: var(--space-3); text-align: center;">
-              整合 Chart.js 雷達圖：可一鍵匯出供 IEP 學習檔案紀錄使用
+              整合 Chart.js 雷達圖：可一鍵匯出供學習成果與個人歷程分享使用
             </div>
           </div>
 
@@ -620,6 +614,164 @@
         </div>
       </section>
 
+      <!-- ====================================================================
+           7. 閱讀設定專用元件系統 (Reading Settings Components - D3)
+           - 通用設計：自由開關輔助功能，不貼任何特殊標籤
+           - 開關元件 (Toggle Switch)：狀態具備「開／關」文字與狀態徽章，不只依賴顏色
+           - 三段選擇元件 (Segmented Control)：字級 (標準/大/特大)、語速 (慢/正常/快)
+           - 即時預覽卡片：動態反饋所選字級大小與注音標註
+           ==================================================================== -->
+      <section id="section-reading-settings" class="component-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            <span>⚙️</span> 7. 閱讀設定專用元件 (Reading Settings Components - D3)
+          </h2>
+          <p class="section-desc">
+            符合 Universal Design 精神，提供全校學生依個人視力與閱讀節奏微調介面。
+            所有開關與按鈕皆具備 <strong>>= 44px 觸控範圍</strong>、<strong>字級 >= 18px</strong>，
+            且<strong>開關狀態絕不只依靠顏色區分</strong>，軌道內均內建「開／關」字樣並搭配文字標籤。
+          </p>
+        </div>
+
+        <div class="component-card-grid">
+
+          <!-- 7-1: 開關元件 (Toggle Switch) -->
+          <div class="demo-card">
+            <span class="demo-card-tag">無障礙開關 · 雙重識別</span>
+            <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: var(--space-2);">
+              開關元件 (Toggle Switch)
+            </h3>
+            <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-bottom: var(--space-4);">
+              狀態不只靠顏色：軌道內刻印「開／關」文字，旁邊附帶「已開啟／已關閉」徽章，支援鍵盤 Space/Enter 切換。
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+              <!-- 狀態 A：開啟中 -->
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) var(--space-4); background-color: var(--color-slate-50); border: 2px solid var(--color-border-subtle); border-radius: var(--radius-md);">
+                <div>
+                  <div style="font-size: var(--font-size-base); font-weight: bold; color: var(--color-slate-900);">⚠️ 反向題醒目提醒</div>
+                  <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">遇到「何者不正確」時以亮黃底紅字警示</div>
+                </div>
+                <label class="toggle-wrapper" title="切換反向題提醒">
+                  <input type="checkbox" class="toggle-input" checked id="demo-toggle-reverse" onchange="updateToggleBadge(this, 'badge-reverse')">
+                  <span class="toggle-track" aria-hidden="true">
+                    <span class="toggle-thumb"></span>
+                    <span class="toggle-label-on">開</span>
+                    <span class="toggle-label-off">關</span>
+                  </span>
+                  <span class="toggle-status-badge is-active" id="badge-reverse">已開啟 ✔</span>
+                </label>
+              </div>
+
+              <!-- 狀態 B：已關閉 -->
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) var(--space-4); background-color: var(--color-slate-50); border: 2px solid var(--color-border-subtle); border-radius: var(--radius-md);">
+                <div>
+                  <div style="font-size: var(--font-size-base); font-weight: bold; color: var(--color-slate-900);">ㄅ 注音符號輔助</div>
+                  <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">採用開源芫荽注音字型，字詞附帶清晰注音</div>
+                </div>
+                <label class="toggle-wrapper" title="切換注音模式">
+                  <input type="checkbox" class="toggle-input" id="demo-toggle-zhuyin" onchange="updateToggleBadge(this, 'badge-zhuyin')">
+                  <span class="toggle-track" aria-hidden="true">
+                    <span class="toggle-thumb"></span>
+                    <span class="toggle-label-on">開</span>
+                    <span class="toggle-label-off">關</span>
+                  </span>
+                  <span class="toggle-status-badge" id="badge-zhuyin">已關閉 ✕</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7-2: 三段選擇元件 (Segmented Control) -->
+          <div class="demo-card">
+            <span class="demo-card-tag">三段控制 · 觸控大按鈕</span>
+            <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: var(--space-2);">
+              三段選擇 (Segmented Control)
+            </h3>
+            <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-bottom: var(--space-4);">
+              提供固定段位選擇，每個選項皆具備 >= 48px 高度，選中時有粗邊框、反差底色與清晰勾選提示。
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+              <!-- 字級三段選擇 -->
+              <div>
+                <div style="font-size: var(--font-size-base); font-weight: bold; margin-bottom: var(--space-2); color: var(--color-slate-900);">
+                  字級大小（標準／大／特大）
+                </div>
+                <div class="segmented-group" role="radiogroup" aria-label="選擇字級大小">
+                  <button type="button" class="segmented-btn is-active" role="radio" aria-checked="true" onclick="selectSegmented(this)">
+                    <span>標準</span>
+                    <span class="segmented-meta">20px · 預設</span>
+                  </button>
+                  <button type="button" class="segmented-btn" role="radio" aria-checked="false" onclick="selectSegmented(this)">
+                    <span>大</span>
+                    <span class="segmented-meta">24px · 放大</span>
+                  </button>
+                  <button type="button" class="segmented-btn" role="radio" aria-checked="false" onclick="selectSegmented(this)">
+                    <span>特大</span>
+                    <span class="segmented-meta">28px · 最舒適</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 語音速度三段選擇 -->
+              <div>
+                <div style="font-size: var(--font-size-base); font-weight: bold; margin-bottom: var(--space-2); color: var(--color-slate-900);">
+                  朗讀語速（慢／正常／快）
+                </div>
+                <div class="segmented-group" role="radiogroup" aria-label="選擇朗讀語速">
+                  <button type="button" class="segmented-btn" role="radio" aria-checked="false" onclick="selectSegmented(this)">
+                    <span>慢速</span>
+                    <span class="segmented-meta">0.8x · 清晰</span>
+                  </button>
+                  <button type="button" class="segmented-btn is-active" role="radio" aria-checked="true" onclick="selectSegmented(this)">
+                    <span>正常</span>
+                    <span class="segmented-meta">1.0x · 標準</span>
+                  </button>
+                  <button type="button" class="segmented-btn" role="radio" aria-checked="false" onclick="selectSegmented(this)">
+                    <span>快速</span>
+                    <span class="segmented-meta">1.2x · 高效</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7-3: 閱讀設定觸發按鈕與即時預覽卡 -->
+          <div class="demo-card" style="grid-column: 1 / -1;">
+            <span class="demo-card-tag">頁首按鈕與即時預覽</span>
+            <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: var(--space-2);">
+              頁首觸發按鈕 (.btn-settings) 與即時文字預覽卡
+            </h3>
+            <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-bottom: var(--space-4);">
+              頁首單一「⚙️ 閱讀設定」按鈕（文字＋圖示）取代舊版三個分散圖示；設定面板內提供即時文字預覽。
+            </p>
+
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-4); padding: var(--space-4); background-color: var(--color-slate-50); border-radius: var(--radius-lg);">
+              <div>
+                <div style="font-weight: bold; font-size: var(--font-size-base); margin-bottom: 4px;">頁首閱讀設定觸發鈕外觀：</div>
+                <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">觸控高度 48px，大字級 18px，清楚易按</div>
+              </div>
+              <a href="screen-settings.html" class="btn-settings" title="點擊檢視完整閱讀設定面板樣板">
+                <span class="btn-settings-icon">⚙️</span>
+                <span class="btn-settings-text">閱讀設定</span>
+              </a>
+            </div>
+
+            <!-- 即時預覽卡片 -->
+            <div class="reading-preview-box">
+              <div class="reading-preview-label">
+                <span>👁️</span> 即時預覽效果（支援字級縮放與注音標註）
+              </div>
+              <div class="reading-preview-content" id="demo-preview-text" style="font-size: 20px;">
+                騎乘機車應依規定配戴合格安全帽，行經交叉路口應減速慢行、主動禮讓行人。
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
     </div>
   </main>
 
@@ -632,35 +784,31 @@
       card.classList.add('is-selected');
     }
 
-    // 字級切換示範 (閱讀設定)
-    const btnFontsize = document.getElementById('btn-toggle-fontsize');
-    let isLargeFont = false;
-    btnFontsize.addEventListener('click', () => {
-      isLargeFont = !isLargeFont;
-      if (isLargeFont) {
-        document.documentElement.style.fontSize = '18px';
-        btnFontsize.classList.add('is-active');
+    // 開關狀態徽章更新示範
+    function updateToggleBadge(input, badgeId) {
+      const badge = document.getElementById(badgeId);
+      if (!badge) return;
+      if (input.checked) {
+        badge.textContent = '已開啟 ✔';
+        badge.classList.add('is-active');
       } else {
-        document.documentElement.style.fontSize = '16px';
-        btnFontsize.classList.remove('is-active');
+        badge.textContent = '已關閉 ✕';
+        badge.classList.remove('is-active');
       }
-    });
+    }
 
-    // 注音字型預覽模式切換示範
-    const btnZhuyin = document.getElementById('btn-toggle-zhuyin');
-    btnZhuyin.addEventListener('click', () => {
-      document.body.classList.toggle('mode-zhuyin');
-      btnZhuyin.classList.toggle('is-active');
-    });
-
-    // 語音朗讀示意
-    const btnSpeech = document.getElementById('btn-toggle-speech');
-    btnSpeech.addEventListener('click', () => {
-      btnSpeech.classList.toggle('is-active');
-      if (btnSpeech.classList.contains('is-active')) {
-        alert('語音朗讀模式已啟動（示範）：點擊題目或選項時，系統將自動以清晰慢速朗讀語句。');
-      }
-    });
+    // 分段選擇切換示範
+    function selectSegmented(btn) {
+      const parent = btn.parentElement;
+      const btns = parent.querySelectorAll('.segmented-btn');
+      btns.forEach(b => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-checked', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-checked', 'true');
+    }
   </script>
 </body>
 </html>
+

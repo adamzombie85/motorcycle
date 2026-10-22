@@ -123,8 +123,11 @@
 
   --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Noto Sans TC", "Heiti TC", "Microsoft JhengHei", system-ui, sans-serif;
   --font-family-display: "Noto Sans TC", "PingFang TC", var(--font-family-sans);
+  
+  /* 開源注音字型 (芫荽注音 / SIL Open Font License 1.1) */
+  --font-family-zhuyin: "IansuiBpmf", "Iansui", "芫荽注音", "BpmfIansui", var(--font-family-sans);
 
-  /* 字級階層 (字級至少 18px 規範) */
+  /* 字級階層 (字級至少 18px 規範) - 標準預設 (Normal) */
   --font-size-sm:   1.125rem; /* 18px - 次要輔助文字 (不低於 18px 確保弱視與識字友善) */
   --font-size-base: 1.25rem;  /* 20px - 正文內文、選項文字 */
   --font-size-md:   1.375rem; /* 22px - 強調內文、按鈕文字 */
@@ -259,3 +262,48 @@ mark.highlight-reverse, .text-reverse-emphasis {
   text-decoration: underline 3px #DC2626;
   text-underline-offset: 4px;
 }
+
+/* ==========================================================================
+   8. 閱讀設定樣式修飾符 (Universal Design Reading Settings Classes)
+   ========================================================================== */
+
+/* 字級模式：大 (Large) */
+html.font-size-large,
+.font-size-large {
+  --font-size-sm:   1.25rem;   /* 20px */
+  --font-size-base: 1.4375rem; /* 23px */
+  --font-size-md:   1.5625rem; /* 25px */
+  --font-size-lg:   1.75rem;   /* 28px */
+  --font-size-xl:   2rem;      /* 32px */
+  --font-size-2xl:  2.375rem;  /* 38px */
+}
+
+/* 字級模式：特大 (Extra Large) */
+html.font-size-xlarge,
+.font-size-xlarge {
+  --font-size-sm:   1.375rem; /* 22px */
+  --font-size-base: 1.625rem; /* 26px */
+  --font-size-md:   1.75rem;  /* 28px */
+  --font-size-lg:   2rem;     /* 32px */
+  --font-size-xl:   2.375rem; /* 38px */
+  --font-size-2xl:  2.625rem; /* 42px */
+}
+
+/* 注音輔助模式 (採用開源芫荽注音字型，相容 HTML5 ruby 標籤) */
+body.mode-zhuyin,
+.mode-zhuyin {
+  font-family: var(--font-family-zhuyin);
+}
+
+ruby {
+  ruby-position: over;
+}
+
+rt {
+  font-size: 0.58em;
+  color: var(--color-slate-600);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0;
+  user-select: none;
+}
+

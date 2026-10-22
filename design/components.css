@@ -107,15 +107,60 @@
   font-size: 24px;
 }
 
-/* 閱讀設定工具列 (A11y & Reading Settings Toolbar) */
+/* 閱讀設定觸發按鈕 (Reading Settings Button) - 滿足觸控 >= 44px 與字級 >= 18px，文字＋圖示 */
+.btn-settings {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target-min);
+  padding: 8px 18px;
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-primary-300);
+  border-radius: var(--radius-full);
+  color: var(--color-primary-900);
+  font-size: var(--font-size-sm); /* >= 18px */
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+
+.btn-settings:hover {
+  background-color: var(--color-primary-50);
+  border-color: var(--color-primary-500);
+  color: var(--color-primary-800);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-hover);
+}
+
+.btn-settings:active {
+  transform: translateY(0);
+}
+
+.btn-settings:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.btn-settings-icon {
+  font-size: 1.25em;
+  line-height: 1;
+}
+
+.btn-settings-text {
+  font-weight: var(--font-weight-bold);
+}
+
+/* 舊版閱讀設定工具列 (相容並過渡) */
 .a11y-toolbar {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  background-color: var(--color-bg-subtle);
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-full);
 }
+
 
 /* 學生身分徽章 */
 .user-chip {
@@ -1415,5 +1460,450 @@
   font-weight: var(--font-weight-bold);
   color: var(--color-slate-900);
 }
+
+/* ==========================================================================
+   16. 閱讀設定面板與專用控制元件 (D3 Reading Settings System)
+   - 通用設計原則：每位學生皆可自由設定，提升易讀性與無障礙體驗
+   - 開關 (Toggle Switch)：狀態不只依賴顏色，具備明確「開／關」文字與狀態標籤
+   - 三段選擇 (Segmented Control)：觸控範圍 >= 48px，字級 >= 18px，具選取狀態
+   - 響應式面板 (Responsive Drawer)：手機由底部滑出 (Bottom Sheet)，桌面在右側滑出 (Side Sheet)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   A. 開關元件 (Accessible Toggle Switch) - 具備文字「開／關」，不只靠顏色
+   -------------------------------------------------------------------------- */
+.toggle-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--touch-target-min);
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* 開關軌道本體 */
+.toggle-track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 84px;
+  height: 44px; /* 符合 >= 44px 觸控可點要求 */
+  background-color: var(--color-slate-300);
+  border: 2px solid var(--color-slate-400);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+  padding: 2px;
+  flex-shrink: 0;
+}
+
+/* 滑動圓點 */
+.toggle-thumb {
+  position: absolute;
+  left: 4px;
+  top: 3px;
+  width: 34px;
+  height: 34px;
+  background-color: #FFFFFF;
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform var(--transition-fast);
+  z-index: 2;
+}
+
+/* 軌道內文字標示「開」與「關」 */
+.toggle-label-on,
+.toggle-label-off {
+  position: absolute;
+  font-size: var(--font-size-sm); /* >= 18px */
+  font-weight: var(--font-weight-black);
+  line-height: 1;
+  transition: opacity var(--transition-fast);
+  pointer-events: none;
+}
+
+.toggle-label-on {
+  left: 12px;
+  color: #FFFFFF;
+  opacity: 0;
+  z-index: 1;
+}
+
+.toggle-label-off {
+  right: 12px;
+  color: var(--color-slate-700);
+  opacity: 1;
+  z-index: 1;
+}
+
+/* 當開關為 checked 開啟狀態 */
+.toggle-input:checked + .toggle-track {
+  background-color: var(--color-success-600);
+  border-color: var(--color-success-700);
+}
+
+.toggle-input:checked + .toggle-track .toggle-thumb {
+  transform: translateX(38px);
+}
+
+.toggle-input:checked + .toggle-track .toggle-label-on {
+  opacity: 1;
+}
+
+.toggle-input:checked + .toggle-track .toggle-label-off {
+  opacity: 0;
+}
+
+/* 鍵盤聚焦環 */
+.toggle-input:focus-visible + .toggle-track {
+  box-shadow: var(--focus-ring);
+}
+
+/* 開關外側輔助狀態徽章 (例如「已開啟 / 已關閉」文字提示) */
+.toggle-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  background-color: var(--color-slate-100);
+  color: var(--color-slate-700);
+  border: 1px solid var(--color-border-card);
+}
+
+.toggle-status-badge.is-active {
+  background-color: var(--color-success-50);
+  color: var(--color-success-800);
+  border-color: var(--color-success-500);
+}
+
+/* --------------------------------------------------------------------------
+   B. 三段選擇元件 (Segmented Control) - 標準 / 大 / 特大、慢 / 正常 / 快
+   -------------------------------------------------------------------------- */
+.segmented-group {
+  display: flex;
+  background-color: var(--color-slate-100);
+  border: 2px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 4px;
+  gap: 4px;
+  width: 100%;
+}
+
+.segmented-btn {
+  flex: 1;
+  min-height: 52px; /* 寬大觸控目標 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: 2px solid transparent;
+  color: var(--color-slate-700);
+  font-size: var(--font-size-base); /* 20px */
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.segmented-btn:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: var(--color-primary-800);
+}
+
+.segmented-btn.is-active {
+  background-color: #FFFFFF;
+  color: var(--color-primary-800);
+  border-color: var(--color-primary-500);
+  box-shadow: var(--shadow-sm);
+}
+
+.segmented-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* 選中圖示或提示小字 (全面 >= 18px) */
+.segmented-meta {
+  font-size: var(--font-size-sm); /* 18px */
+  font-weight: var(--font-weight-medium);
+  color: var(--color-slate-500);
+  margin-top: 2px;
+}
+
+.segmented-btn.is-active .segmented-meta {
+  color: var(--color-primary-700);
+  font-weight: var(--font-weight-bold);
+}
+
+/* --------------------------------------------------------------------------
+   C. 閱讀設定抽屜面板 (Reading Settings Drawer / Bottom & Side Sheet)
+   -------------------------------------------------------------------------- */
+/* 全頁半透明遮罩 */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  transition: opacity var(--transition-normal);
+}
+
+/* 面板主體 */
+.drawer-panel {
+  position: fixed;
+  z-index: 1001;
+  background-color: var(--color-bg-card);
+  box-shadow: var(--shadow-modal);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform var(--transition-spring);
+}
+
+/* 手機版 (小於 768px)：從下方滑出 Bottom Sheet */
+@media (max-width: 767px) {
+  .drawer-panel {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 90vh;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    border-top: 3px solid var(--color-primary-400);
+    animation: drawerSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* 平板與電腦版 (768px 以上)：從右側滑出 Side Sheet Drawer */
+@media (min-width: 768px) {
+  .drawer-panel {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 480px;
+    max-width: 90vw;
+    height: 100vh;
+    border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+    border-left: 3px solid var(--color-primary-400);
+    animation: drawerSlideLeft 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* 樣板專用：強制展示手機底部模式 */
+.drawer-panel.is-force-bottom {
+  top: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  max-height: 88vh !important;
+  height: auto !important;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0 !important;
+  border-top: 3px solid var(--color-primary-400) !important;
+  border-left: none !important;
+}
+
+/* 樣板專用：強制展示桌面右側模式 */
+.drawer-panel.is-force-side {
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: auto !important;
+  width: 480px !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  border-radius: var(--radius-xl) 0 0 var(--radius-xl) !important;
+  border-left: 3px solid var(--color-primary-400) !important;
+  border-top: none !important;
+}
+
+@keyframes drawerSlideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes drawerSlideLeft {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+/* 手機頂部拖曳把手 */
+.drawer-handle-bar {
+  display: block;
+  width: 48px;
+  height: 5px;
+  background-color: var(--color-slate-300);
+  border-radius: var(--radius-full);
+  margin: 12px auto 4px auto;
+}
+
+@media (min-width: 768px) {
+  .drawer-handle-bar {
+    display: none;
+  }
+}
+
+/* 面板頂部標題列 */
+.drawer-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 2px solid var(--color-border-subtle);
+  background-color: var(--color-bg-card);
+}
+
+.drawer-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.drawer-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-slate-900);
+  line-height: 1.2;
+}
+
+.drawer-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* 關閉按鈕 (觸控 >= 44px) */
+.btn-drawer-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-slate-100);
+  color: var(--color-slate-700);
+  font-size: 24px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.btn-drawer-close:hover {
+  background-color: var(--color-danger-50);
+  color: var(--color-danger-600);
+  border-color: var(--color-danger-200);
+}
+
+.btn-drawer-close:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* 面板滾動內容區 */
+.drawer-body {
+  padding: var(--space-5) var(--space-6);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* 設定單項卡片 (Setting Item Card) */
+.setting-card {
+  background-color: var(--color-slate-50);
+  border: 2px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: border-color var(--transition-fast);
+}
+
+.setting-card:hover {
+  border-color: var(--color-primary-300);
+}
+
+.setting-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.setting-card-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-md); /* 22px */
+  font-weight: var(--font-weight-black);
+  color: var(--color-slate-900);
+}
+
+.setting-card-desc {
+  font-size: var(--font-size-sm); /* >= 18px */
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+}
+
+/* 即時預覽卡片 (Live Preview Box) */
+.reading-preview-box {
+  background-color: #FFFFFF;
+  border: 2px dashed var(--color-primary-400);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-top: var(--space-1);
+}
+
+.reading-preview-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-800);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.reading-preview-content {
+  color: var(--color-slate-900);
+  line-height: var(--line-height-relaxed);
+  font-weight: var(--font-weight-medium);
+  transition: font-size var(--transition-fast);
+}
+
+/* 面板底部操作列 */
+.drawer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  border-top: 2px solid var(--color-border-subtle);
+  background-color: var(--color-bg-card);
+  flex-shrink: 0;
+}
+
 
 
