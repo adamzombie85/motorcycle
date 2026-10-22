@@ -463,6 +463,11 @@
 }
 
 /* 及格門檻標記線 (85 分線) */
+.progress-bar-track:has(.pass-mark-indicator),
+.progress-bar-track.has-pass-mark {
+  overflow: visible;
+}
+
 .pass-mark-indicator {
   position: absolute;
   top: 0;
@@ -475,10 +480,10 @@
 
 .pass-mark-label {
   position: absolute;
-  top: -24px;
+  top: -30px;
   left: 85%;
   transform: translateX(-50%);
-  font-size: 14px;
+  font-size: var(--font-size-sm); /* 18px 無障礙規範合規 */
   font-weight: var(--font-weight-bold);
   color: var(--color-accent-700);
   white-space: nowrap;
@@ -922,3 +927,342 @@
     justify-content: space-between;
   }
 }
+
+/* ==========================================================================
+   11. 題目卡擴充：只有圖、無題幹提示句 (Image-only Question Stem Prompt)
+   ========================================================================== */
+.question-stem-prompt {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-900);
+  background-color: var(--color-primary-50);
+  border-left: 4px solid var(--color-primary);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin-bottom: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* ==========================================================================
+   12. 學生登入元件 (Login Components)
+   ========================================================================== */
+.login-container {
+  max-width: 580px;
+  margin: var(--space-6) auto;
+}
+
+.login-card {
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-border-card);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+@media (min-width: 640px) {
+  .login-card {
+    padding: var(--space-8);
+  }
+}
+
+.login-input {
+  width: 100%;
+  min-height: var(--touch-target-lg);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-3) var(--space-4);
+  border: 3px solid var(--color-border-card);
+  border-radius: var(--radius-md);
+  color: var(--color-text-main);
+  background-color: var(--color-slate-50);
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.login-input:focus {
+  border-color: var(--color-primary);
+  background-color: #FFFFFF;
+  box-shadow: var(--focus-ring);
+}
+
+.login-input::placeholder {
+  color: var(--color-slate-400);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+}
+
+.code-chips-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.code-chips-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.code-chip-btn {
+  min-height: var(--touch-target-min);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-primary-200);
+  background-color: var(--color-primary-50);
+  color: var(--color-primary-800);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.code-chip-btn:hover,
+.code-chip-btn:focus-visible {
+  background-color: var(--color-primary-100);
+  border-color: var(--color-primary-500);
+  outline: none;
+}
+
+/* ==========================================================================
+   13. 小類關卡清單元件 (Level Grid & Level Card)
+   ========================================================================== */
+.levels-container {
+  max-width: var(--container-max-desktop);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.level-filter-bar {
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: var(--space-2) 0;
+  margin-bottom: var(--space-6);
+}
+
+.level-filter-tab {
+  min-height: var(--touch-target-min);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border-card);
+  background-color: var(--color-bg-card);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  transition: all var(--transition-fast);
+}
+
+.level-filter-tab.is-active {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.level-item-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+@media (min-width: 640px) {
+  .level-item-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .level-item-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.level-item-card {
+  background-color: var(--color-bg-card);
+  border: 2px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-3);
+  transition: all var(--transition-normal);
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+}
+
+.level-item-card:hover {
+  border-color: var(--color-primary-400);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.level-item-card.is-passed {
+  border-color: var(--color-success-300);
+  background-color: #FAFFFC;
+}
+
+.level-item-card.is-in-progress {
+  border-color: var(--color-accent-300);
+  background-color: #FFFDF7;
+}
+
+.level-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.level-item-num {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-black);
+  color: var(--color-slate-900);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.level-item-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.level-item-badge.is-passed {
+  background-color: var(--color-success-100);
+  color: var(--color-success-700);
+  border-color: var(--color-success-500);
+}
+
+.level-item-badge.is-in-progress {
+  background-color: var(--color-accent-100);
+  color: var(--color-accent-700);
+  border-color: var(--color-accent-400);
+}
+
+.level-item-badge.is-not-started {
+  background-color: var(--color-slate-100);
+  color: var(--color-slate-600);
+  border-color: var(--color-slate-300);
+}
+
+.level-item-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-main);
+  margin: var(--space-1) 0;
+}
+
+.level-item-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+}
+
+.level-item-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--color-border-subtle);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ==========================================================================
+   14. 錯題庫頁面元件 (Mistake Bank Components)
+   ========================================================================== */
+.mistake-streak-box {
+  background-color: var(--color-slate-50);
+  border: 2px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.mistake-streak-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-2);
+}
+
+.streak-dots {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.streak-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-slate-300);
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+  color: var(--color-slate-400);
+}
+
+.streak-dot.is-active {
+  background-color: var(--color-success-500);
+  border-color: var(--color-success-600);
+  color: #FFFFFF;
+}
+
+.empty-state-card {
+  background-color: var(--color-bg-card);
+  border: 2px dashed var(--color-success-300);
+  border-radius: var(--radius-xl);
+  padding: var(--space-10) var(--space-6);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.empty-state-icon {
+  font-size: 64px;
+  line-height: 1;
+}
+
+.empty-state-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-success-700);
+}
+
+.empty-state-desc {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  max-width: 520px;
+}
+

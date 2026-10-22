@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>機車筆試好過關 - 錯題特訓庫 (Mistake Bank)</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="components.css">
+  <style>
+    /* 錯題庫專用排版 */
+    .mistakes-container {
+      max-width: var(--container-max-tablet);
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .mistakes-hero-card {
+      background: linear-gradient(135deg, var(--color-danger-50) 0%, #FFFFFF 100%);
+      border: 2px solid var(--color-danger-200);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+      box-shadow: var(--shadow-card);
+    }
+
+    @media (min-width: 640px) {
+      .mistakes-hero-card {
+        padding: var(--space-8);
+      }
+    }
+
+    .mistakes-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-black);
+      color: var(--color-danger-800);
+      line-height: var(--line-height-tight);
+      margin-bottom: var(--space-2);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .mistakes-desc {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-relaxed);
+      margin-bottom: var(--space-4);
+    }
+
+    /* 狀態切換導覽列 (方便設計檢視兩種真實使用情境) */
+    .state-toggle-bar {
+      display: flex;
+      gap: var(--space-2);
+      align-items: center;
+      background-color: var(--color-slate-100);
+      border: 2px solid var(--color-border-card);
+      border-radius: var(--radius-lg);
+      padding: var(--space-2);
+      margin-bottom: var(--space-6);
+    }
+
+    .state-toggle-btn {
+      flex: 1;
+      min-height: var(--touch-target-min);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-bold);
+      border: none;
+      background: transparent;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+    }
+
+    .state-toggle-btn.is-active {
+      background-color: #FFFFFF;
+      color: var(--color-slate-900);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* 錯題卡片 */
+    .mistake-card {
+      background-color: var(--color-bg-card);
+      border: 2px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      border-left: 6px solid var(--color-danger-500);
+    }
+
+    .mistake-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部通用導覽列 -->
+  <header class="site-header">
+    <div class="app-container nav-bar">
+      <a href="screen-home.html" class="brand-badge" style="font-size: var(--font-size-base);">
+        <span class="brand-icon" style="width: 36px; height: 36px; font-size: 20px;">🛵</span>
+        <span>回首頁</span>
+      </a>
+
+      <!-- 學生識別 -->
+      <a href="screen-login.html" class="user-chip" title="點擊前往切換代號" style="text-decoration: none; color: inherit;">
+        <span>👤 學生：S102-陳同學</span>
+      </a>
+
+      <!-- 特教輔助工具列 -->
+      <div class="a11y-toolbar">
+        <button type="button" class="btn-icon" id="btn-mistakes-speech" title="語音朗讀錯題" aria-label="切換語音朗讀">🔊</button>
+        <button type="button" class="btn-icon" id="btn-mistakes-zhuyin" title="注音輔助" aria-label="切換注音">ㄅ</button>
+        <button type="button" class="btn-icon" id="btn-mistakes-zoom" title="字級放大" aria-label="切換字級">🔍</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="app-container mistakes-container">
+
+      <!-- 狀態切換列：方便 Jim 與工程端同時驗收「有錯題」與「無錯題」兩種畫面 -->
+      <div class="state-toggle-bar" role="tablist" aria-label="畫面狀態切換">
+        <button type="button" class="state-toggle-btn is-active" id="tab-has-mistakes" onclick="switchMistakeView('has')">
+          <span>🔁 狀態 A：有錯題 (4 題待複習)</span>
+        </button>
+        <button type="button" class="state-toggle-btn" id="tab-no-mistakes" onclick="switchMistakeView('none')">
+          <span>🎉 狀態 B：沒有錯題 (鼓勵畫面)</span>
+        </button>
+      </div>
+
+      <!-- ====================================================================
+           【狀態 A】：有錯題清單 (4 題待練)
+           ==================================================================== -->
+      <div id="view-has-mistakes">
+
+        <!-- 錯題總覽大卡片 -->
+        <section class="mistakes-hero-card">
+          <h1 class="mistakes-title">
+            <span>🔁</span> 錯題特訓庫 (4 題待複習)
+          </h1>
+          <p class="mistakes-desc">
+            做錯的題目會自動保存在這裡。只要<strong>連續答對 2 次</strong>就會光榮移出！消除所有錯題，駕照輕鬆到手！💪
+          </p>
+
+          <!-- 移出規則提示 -->
+          <div style="background-color: var(--color-primary-50); border: 2px solid var(--color-primary-200); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); display: flex; align-items: center; gap: var(--space-3); font-size: var(--font-size-sm); color: var(--color-primary-900); font-weight: bold; margin-bottom: var(--space-4);">
+            <span style="font-size: 20px;">💡</span>
+            <span>移出機制：每題只要連續答對 2 次（✔✔），系統就會自動移出錯題庫！</span>
+          </div>
+
+          <a href="screen-quiz.html" class="btn btn-danger btn-lg" style="width: 100%; justify-content: center; font-size: var(--font-size-md);">
+            🚀 一鍵複習全部 4 題 ➔
+          </a>
+        </section>
+
+        <!-- 錯題列表 (真實題庫題目，依據規範：只顯示對錯與答案，不顯示未經審核的解析或口訣) -->
+        <div class="mistakes-list">
+
+          <!-- 錯題 1：M0006 (反向題，目前答對 1/2 次) -->
+          <article class="mistake-card">
+            <div class="mistake-card-header">
+              <div class="tag-list">
+                <span class="tag tag-category">正確觀念與態度</span>
+                <span class="tag tag-sub">貨物裝載</span>
+                <span class="tag tag-reverse">⚠️ 反向題</span>
+                <span class="tag" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">題號 Q6</span>
+              </div>
+              <button type="button" class="btn-icon" title="朗讀題目與選項" aria-label="朗讀本題">🔊</button>
+            </div>
+
+            <!-- 連續答對次數進度條 -->
+            <div class="mistake-streak-box">
+              <div class="mistake-streak-header">
+                <span style="color: var(--color-success-700);">
+                  🎯 連續答對進度：<strong>1 / 2 次</strong>
+                </span>
+                <span style="color: var(--color-primary-700);">
+                  再答對 1 次即可移出！
+                </span>
+              </div>
+              <div class="streak-dots">
+                <div class="streak-dot is-active" title="第 1 次答對">✔</div>
+                <div class="streak-dot" title="還需答對 1 次">2</div>
+              </div>
+            </div>
+
+            <!-- 題目主文 -->
+            <div class="question-title-wrapper" style="margin-bottom: var(--space-2);">
+              <h2 class="question-title" style="font-size: var(--font-size-lg);">
+                Q6. 關於機車載物的規定，下列何者<mark class="highlight-reverse">不正確</mark>？
+              </h2>
+            </div>
+
+            <!-- 選項與對錯狀態 (只顯示對錯與官方答案，不含 AI 口訣) -->
+            <div class="options-list" style="margin-bottom: 0;">
+              <div class="option-card is-correct" style="cursor: default;">
+                <span class="option-badge">1</span>
+                <span class="option-label">得載運高於騎士肩膀以上之貨物</span>
+                <span class="option-indicator">✔ 正確解答</span>
+              </div>
+              <div class="option-card" style="cursor: default; opacity: 0.65;">
+                <span class="option-badge">2</span>
+                <span class="option-label">寬度不得超過把手外緣 10公分</span>
+              </div>
+              <div class="option-card is-wrong" style="cursor: default;">
+                <span class="option-badge">3</span>
+                <span class="option-label">伸出車尾部分，自後輪軸起不得超過 50公分</span>
+                <span class="option-indicator">✖ 你的上次選擇</span>
+              </div>
+            </div>
+
+            <!-- 單題練習按鈕 -->
+            <div style="display: flex; justify-content: flex-end; padding-top: var(--space-2);">
+              <a href="screen-quiz.html" class="btn btn-secondary">
+                單獨複習此題 ➔
+              </a>
+            </div>
+          </article>
+
+          <!-- 錯題 2：M0067 (官方圖片題，只有圖無題幹，目前答對 0/2 次) -->
+          <article class="mistake-card">
+            <div class="mistake-card-header">
+              <div class="tag-list">
+                <span class="tag tag-category">正確觀念與態度</span>
+                <span class="tag tag-sub">事故預防及處理</span>
+                <span class="tag" style="background-color: var(--color-primary-100); color: var(--color-primary-800);">🖼️ 官方圖片題</span>
+                <span class="tag" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">題號 Q67</span>
+              </div>
+              <button type="button" class="btn-icon" title="朗讀提示與選項" aria-label="朗讀本題">🔊</button>
+            </div>
+
+            <!-- 連續答對次數進度條 -->
+            <div class="mistake-streak-box">
+              <div class="mistake-streak-header">
+                <span style="color: var(--color-danger-700);">
+                  🎯 連續答對進度：<strong>0 / 2 次</strong>
+                </span>
+                <span style="color: var(--color-text-secondary);">
+                  還需連續答對 2 次
+                </span>
+              </div>
+              <div class="streak-dots">
+                <div class="streak-dot" title="還需第 1 次答對">1</div>
+                <div class="streak-dot" title="還需第 2 次答對">2</div>
+              </div>
+            </div>
+
+            <!-- 無題幹題目提示句 (D2 規範) -->
+            <div class="question-stem-prompt">
+              <span>👉</span> 請看圖，選出正確的答案。
+            </div>
+
+            <!-- 官方抽出圖檔展示框 -->
+            <div class="question-image-frame">
+              <img src="../media/images/M0067.png" alt="交通標誌：路滑警告標誌" onerror="this.src='https://placehold.co/180x180?text=標誌圖+M0067'">
+              <span style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: var(--space-2);">
+                官方題庫圖檔：M0067.png（實際題幹為空）
+              </span>
+            </div>
+
+            <!-- 選項與對錯狀態 -->
+            <div class="options-list" style="margin-bottom: 0;">
+              <div class="option-card is-wrong" style="cursor: default;">
+                <span class="option-badge">1</span>
+                <span class="option-label">路面高突</span>
+                <span class="option-indicator">✖ 你的上次選擇</span>
+              </div>
+              <div class="option-card is-correct" style="cursor: default;">
+                <span class="option-badge">2</span>
+                <span class="option-label">路滑</span>
+                <span class="option-indicator">✔ 正確解答</span>
+              </div>
+              <div class="option-card" style="cursor: default; opacity: 0.65;">
+                <span class="option-badge">3</span>
+                <span class="option-label">禁止超車</span>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; padding-top: var(--space-2);">
+              <a href="screen-quiz.html" class="btn btn-secondary">
+                單獨複習此題 ➔
+              </a>
+            </div>
+          </article>
+
+          <!-- 錯題 3：M0002 (數字題，目前答對 1/2 次) -->
+          <article class="mistake-card">
+            <div class="mistake-card-header">
+              <div class="tag-list">
+                <span class="tag tag-category">正確觀念與態度</span>
+                <span class="tag tag-sub">貨物裝載</span>
+                <span class="tag" style="background-color: var(--color-accent-100); color: var(--color-accent-800);">🔢 數字題</span>
+                <span class="tag" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">題號 Q2</span>
+              </div>
+              <button type="button" class="btn-icon" title="朗讀題目與選項" aria-label="朗讀本題">🔊</button>
+            </div>
+
+            <div class="mistake-streak-box">
+              <div class="mistake-streak-header">
+                <span style="color: var(--color-success-700);">
+                  🎯 連續答對進度：<strong>1 / 2 次</strong>
+                </span>
+                <span style="color: var(--color-primary-700);">
+                  再答對 1 次即可移出！
+                </span>
+              </div>
+              <div class="streak-dots">
+                <div class="streak-dot is-active" title="第 1 次答對">✔</div>
+                <div class="streak-dot" title="還需答對 1 次">2</div>
+              </div>
+            </div>
+
+            <div class="question-title-wrapper" style="margin-bottom: var(--space-2);">
+              <h2 class="question-title" style="font-size: var(--font-size-lg);">
+                Q2. 機車附載物品，寬度不可超過車輛把手外緣：
+              </h2>
+            </div>
+
+            <div class="options-list" style="margin-bottom: 0;">
+              <div class="option-card is-correct" style="cursor: default;">
+                <span class="option-badge">1</span>
+                <span class="option-label">10公分</span>
+                <span class="option-indicator">✔ 正確解答</span>
+              </div>
+              <div class="option-card is-wrong" style="cursor: default;">
+                <span class="option-badge">2</span>
+                <span class="option-label">2 公尺</span>
+                <span class="option-indicator">✖ 你的上次選擇</span>
+              </div>
+              <div class="option-card" style="cursor: default; opacity: 0.65;">
+                <span class="option-badge">3</span>
+                <span class="option-label">1公尺半</span>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; padding-top: var(--space-2);">
+              <a href="screen-quiz.html" class="btn btn-secondary">
+                單獨複習此題 ➔
+              </a>
+            </div>
+          </article>
+
+          <!-- 錯題 4：M0016 (法規罰則題，目前答對 0/2 次) -->
+          <article class="mistake-card">
+            <div class="mistake-card-header">
+              <div class="tag-list">
+                <span class="tag tag-category">正確觀念與態度</span>
+                <span class="tag tag-sub">貨物裝載</span>
+                <span class="tag" style="background-color: var(--color-primary-100); color: var(--color-primary-800);">法規題</span>
+                <span class="tag" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">題號 Q16</span>
+              </div>
+              <button type="button" class="btn-icon" title="朗讀題目與選項" aria-label="朗讀本題">🔊</button>
+            </div>
+
+            <div class="mistake-streak-box">
+              <div class="mistake-streak-header">
+                <span style="color: var(--color-danger-700);">
+                  🎯 連續答對進度：<strong>0 / 2 次</strong>
+                </span>
+                <span style="color: var(--color-text-secondary);">
+                  還需連續答對 2 次
+                </span>
+              </div>
+              <div class="streak-dots">
+                <div class="streak-dot" title="還需第 1 次答對">1</div>
+                <div class="streak-dot" title="還需第 2 次答對">2</div>
+              </div>
+            </div>
+
+            <div class="question-title-wrapper" style="margin-bottom: var(--space-2);">
+              <h2 class="question-title" style="font-size: var(--font-size-lg);">
+                Q16. 若機車附載人員或物品違反規定，將處罰誰？
+              </h2>
+            </div>
+
+            <div class="options-list" style="margin-bottom: 0;">
+              <div class="option-card" style="cursor: default; opacity: 0.65;">
+                <span class="option-badge">1</span>
+                <span class="option-label">乘客</span>
+              </div>
+              <div class="option-card is-correct" style="cursor: default;">
+                <span class="option-badge">2</span>
+                <span class="option-label">機車駕駛人</span>
+                <span class="option-indicator">✔ 正確解答</span>
+              </div>
+              <div class="option-card is-wrong" style="cursor: default;">
+                <span class="option-badge">3</span>
+                <span class="option-label">機車駕駛人及乘客</span>
+                <span class="option-indicator">✖ 你的上次選擇</span>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; padding-top: var(--space-2);">
+              <a href="screen-quiz.html" class="btn btn-secondary">
+                單獨複習此題 ➔
+              </a>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- 底部導覽回首頁 -->
+        <div style="text-align: center; margin-top: var(--space-8); margin-bottom: var(--space-8);">
+          <a href="screen-home.html" class="btn btn-outline btn-lg">
+            🏠 回學習首頁
+          </a>
+        </div>
+
+      </div>
+
+      <!-- ====================================================================
+           【狀態 B】：沒有錯題 (全數過關鼓勵畫面)
+           ==================================================================== -->
+      <div id="view-no-mistakes" style="display: none;">
+        <div class="empty-state-card">
+          <div class="empty-state-icon">🏆✨</div>
+          <h2 class="empty-state-title">
+            太棒了！目前沒有任何錯題！
+          </h2>
+          <p class="empty-state-desc">
+            你已經將所有先前做錯的題目全部挑戰成功，連續答對 2 次光榮移出！你的騎乘觀念非常扎實，保持這個好狀態！
+          </p>
+
+          <div style="background-color: var(--color-success-50); border: 2px solid var(--color-success-200); border-radius: var(--radius-md); padding: var(--space-4); max-width: 460px; margin: var(--space-2) 0;">
+            <p style="font-size: var(--font-size-base); color: var(--color-success-800); font-weight: bold; margin: 0;">
+              🌟 錯題清空成就達成 · 信心滿滿迎戰考驗！
+            </p>
+          </div>
+
+          <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center; margin-top: var(--space-4);">
+            <a href="screen-levels.html" class="btn btn-primary btn-lg">
+              🎯 繼續挑戰小關卡 ➔
+            </a>
+            <a href="screen-home.html" class="btn btn-outline btn-lg">
+              🏠 返回學習首頁
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 頁尾宣告 -->
+  <footer style="background-color: var(--color-bg-card); border-top: 1px solid var(--color-border-subtle); padding: var(--space-6) 0; text-align: center; color: var(--color-text-secondary); font-size: var(--font-size-sm);">
+    <div class="app-container">
+      <p>國立玉井工商輔導室 · 機車駕照筆試新制學習系統</p>
+      <p style="margin-top: 4px; color: var(--color-text-muted);">無障礙設計規範落實 · 支援手機與平板觸控</p>
+    </div>
+  </footer>
+
+  <script>
+    // 切換「有錯題」與「無錯題」兩種畫面狀態
+    function switchMistakeView(view) {
+      const viewHas = document.getElementById('view-has-mistakes');
+      const viewNone = document.getElementById('view-no-mistakes');
+      const tabHas = document.getElementById('tab-has-mistakes');
+      const tabNone = document.getElementById('tab-no-mistakes');
+
+      if (view === 'has') {
+        viewHas.style.display = 'block';
+        viewNone.style.display = 'none';
+        tabHas.classList.add('is-active');
+        tabNone.classList.remove('is-active');
+      } else {
+        viewHas.style.display = 'none';
+        viewNone.style.display = 'block';
+        tabHas.classList.remove('is-active');
+        tabNone.classList.add('is-active');
+      }
+    }
+
+    // A11y 工具列簡單互動示範
+    const btnSpeech = document.getElementById('btn-mistakes-speech');
+    const btnZhuyin = document.getElementById('btn-mistakes-zhuyin');
+    const btnZoom = document.getElementById('btn-mistakes-zoom');
+
+    btnSpeech.addEventListener('click', () => {
+      btnSpeech.classList.toggle('is-active');
+      alert('語音朗讀錯題：已啟用點讀朗讀功能。');
+    });
+
+    btnZhuyin.addEventListener('click', () => {
+      btnZhuyin.classList.toggle('is-active');
+      alert('注音模式：已切換注音字型顯示。');
+    });
+
+    let zoomed = false;
+    btnZoom.addEventListener('click', () => {
+      zoomed = !zoomed;
+      document.documentElement.style.fontSize = zoomed ? '18px' : '16px';
+      btnZoom.classList.toggle('is-active', zoomed);
+    });
+  </script>
+</body>
+</html>

@@ -151,10 +151,10 @@
         <span>機車筆試好過關</span>
       </a>
 
-      <!-- 學生代號標籤 -->
-      <div class="user-chip">
+      <!-- 學生代號標籤 (點擊可切換學生或登入) -->
+      <a href="screen-login.html" class="user-chip" title="點擊前往登入或切換代號" style="text-decoration: none; color: inherit;">
         <span>👤 學生：S102-陳同學</span>
-      </div>
+      </a>
 
       <!-- 特教輔助工具列 -->
       <div class="a11y-toolbar">
@@ -183,7 +183,7 @@
             輕鬆學騎車，<span>安心考駕照</span>！
           </h1>
           <p class="hero-desc">
-            不用死背 1,050 題！專為你規劃的「概念微關卡」，每關只要 3 分鐘。還有語音朗讀、反向題提醒，帶你自信迎戰新制筆試。
+            不用死背 1,052 題！專為你規劃的「概念微關卡」，每關只要 3 分鐘。還有語音朗讀、反向題提醒，帶你自信迎戰新制筆試。
           </p>
           <div class="hero-quick-actions">
             <a href="screen-quiz.html" class="btn btn-primary btn-lg">
@@ -250,9 +250,14 @@
                 <span style="color: var(--color-primary-700);">進行中</span>
               </div>
             </div>
-            <a href="screen-quiz.html" class="btn btn-primary" style="width: 100%;">
-              進入練習 (第 12 關：載物法規) ➔
-            </a>
+            <div style="display: flex; gap: var(--space-2);">
+              <a href="screen-quiz.html" class="btn btn-primary" style="flex: 1;">
+                進入練習 (第 12 關) ➔
+              </a>
+              <a href="screen-levels.html" class="btn btn-outline" style="white-space: nowrap;" title="查看完整 25 關清單">
+                關卡清單
+              </a>
+            </div>
           </div>
 
           <!-- 關卡 2：主動停讓文化 -->
@@ -274,7 +279,7 @@
                 <span style="color: var(--color-accent-700);">進行中</span>
               </div>
             </div>
-            <a href="screen-quiz.html" class="btn btn-secondary" style="width: 100%;">
+            <a href="screen-levels.html" class="btn btn-secondary" style="width: 100%;">
               進入練習 (第 4 關：路口停看聽) ➔
             </a>
           </div>
@@ -298,16 +303,16 @@
                 <span style="color: var(--color-slate-500);">待挑戰</span>
               </div>
             </div>
-            <button type="button" class="btn btn-outline" style="width: 100%;">
-              解鎖第 1 關 ➔
-            </button>
+            <a href="screen-levels.html" class="btn btn-outline" style="width: 100%;">
+              開始挑戰 ➔
+            </a>
           </div>
 
           <!-- 關卡 4：危險感知情境題 (新制重點) -->
           <div class="level-card" style="border-left: 8px solid var(--color-success);">
             <div class="level-card-top">
               <span class="level-badge" style="background-color: var(--color-success-100); color: var(--color-success-700);">04</span>
-              <span style="background-color: var(--color-success-100); color: var(--color-success-700); padding: 4px 10px; border-radius: var(--radius-full); font-size: 14px; font-weight: bold;">
+              <span style="background-color: var(--color-success-100); color: var(--color-success-700); padding: 4px 12px; border-radius: var(--radius-full); font-size: var(--font-size-sm); font-weight: bold;">
                 ★ 15 題新制必考
               </span>
             </div>
@@ -344,7 +349,7 @@
 
         <div class="grid-2">
           <!-- 錯題特訓 -->
-          <a href="screen-quiz.html" class="feature-card">
+          <a href="screen-mistakes.html" class="feature-card">
             <div class="feature-icon-box" style="background-color: var(--color-danger-100); color: var(--color-danger-600);">
               🔁
             </div>

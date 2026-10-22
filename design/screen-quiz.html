@@ -97,7 +97,7 @@
         <div class="level-title-chip">
           🎯 第 1 大類 · 第 12 關：貨物裝載法規
         </div>
-        <a href="screen-home.html" class="btn btn-outline" style="min-height: 40px; padding: 6px 14px; font-size: var(--font-size-sm);" title="隨時保存進度回首頁">
+        <a href="screen-home.html" class="btn btn-outline" style="min-height: var(--touch-target-min); padding: 8px 16px; font-size: var(--font-size-sm);" title="隨時保存進度回首頁">
           暫停離開
         </a>
       </div>
@@ -256,32 +256,32 @@
       </div>
 
       <!-- ====================================================================
-           題目展示 2：官方圖片題 (真實題目 M0067 路滑標誌)
+           題目展示 2：只有圖、無題幹題型 (真實題目 M0067 路滑標誌)
            ==================================================================== -->
       <div id="question-block-q67" style="display: none;">
         <div class="question-card">
           <div class="question-meta-row">
             <div class="tag-list">
               <span class="tag tag-category">正確觀念與態度</span>
-              <span class="tag tag-sub">標誌標線</span>
-              <span class="tag" style="background-color: var(--color-primary-100); color: var(--color-primary-800);">🖼️ 官方圖標題</span>
+              <span class="tag tag-sub">事故預防及處理</span>
+              <span class="tag" style="background-color: var(--color-primary-100); color: var(--color-primary-800);">🖼️ 官方圖片題</span>
+              <span class="tag" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">無題幹題型</span>
             </div>
-            <button type="button" class="btn-icon" title="朗讀題目與選項" onclick="alert('朗讀語音：請問這個交通標誌代表什麼意思？')">
+            <button type="button" class="btn-icon" title="朗讀提示與選項" onclick="alert('朗讀語音：請看圖，選出正確的答案。選項一：路面高突。選項二：路滑。選項三：禁止超車。')">
               🔊
             </button>
           </div>
 
-          <div class="question-title-wrapper">
-            <h2 class="question-title">
-              Q67. 請問這個交通標誌代表什麼意思？
-            </h2>
+          <!-- 無題幹題目專用提示句 (D2 規範) -->
+          <div class="question-stem-prompt">
+            <span>👉</span> 請看圖，選出正確的答案。
           </div>
 
           <!-- 官方抽出圖檔展示框 -->
           <div class="question-image-frame">
             <img src="../media/images/M0067.png" alt="交通標誌：三角形警告標誌，黑色小車伴隨輪胎打滑波浪痕跡" onerror="this.src='https://placehold.co/200x200?text=標誌圖+M0067'">
             <span style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: var(--space-2);">
-              官方題庫圖檔：M0067.png
+              官方題庫圖檔：M0067.png（實際題幹為空）
             </span>
           </div>
 
@@ -292,7 +292,7 @@
             </button>
             <button type="button" class="option-card is-correct">
               <span class="option-badge">2</span>
-              <span class="option-label">路滑（正確標誌）</span>
+              <span class="option-label">路滑</span>
               <span class="option-indicator">✔ 正確解答</span>
             </button>
             <button type="button" class="option-card">
@@ -306,11 +306,11 @@
           <div class="feedback-header">
             <div class="feedback-icon">✔</div>
             <div>
-              <div class="feedback-title">答對了！這是「路滑」警告標誌 🎉</div>
+              <div class="feedback-title">答對了！正確答案是「路滑」🎉</div>
             </div>
           </div>
           <div class="feedback-body">
-            看到三角形黃底黑邊（或紅邊）的車輛打滑痕跡標誌，代表前方路段容易打滑，應立即減速慢行、切勿急踩煞車！
+            交通標誌：路滑警告標誌。
           </div>
           <a href="screen-result.html" class="btn btn-primary btn-lg" style="width: 100%;">
             完成本關練習 ➔ 前往結算

@@ -56,11 +56,11 @@
       gap: var(--space-2);
     }
     .demo-a11y-pill {
-      font-size: 14px;
+      font-size: var(--font-size-sm);
       font-weight: var(--font-weight-bold);
       background-color: var(--color-success-100);
       color: var(--color-success-700);
-      padding: 4px 10px;
+      padding: 4px 12px;
       border-radius: var(--radius-full);
       border: 1px solid var(--color-success-500);
     }
@@ -308,7 +308,7 @@
 
         <div class="demo-block">
           <div class="demo-label">📌 附帶 85 分及格標準線的連續進度條 (Exam Pass Meter)</div>
-          <div style="position: relative; padding-top: 28px; margin-bottom: var(--space-4);">
+          <div style="position: relative; padding-top: 36px; margin-bottom: var(--space-4);">
             <div class="progress-bar-track" style="height: 18px;">
               <div class="progress-bar-fill" style="width: 88%;"></div>
               <div class="pass-mark-indicator"></div>
@@ -440,27 +440,27 @@
             </div>
           </div>
 
-          <!-- 題目 2：官方交通標誌圖片題目 -->
+          <!-- 題目 2：只有圖、無題幹之官方圖片題目 (符合真實題庫 Q67) -->
           <div class="question-card">
             <div class="question-meta-row">
               <div class="tag-list">
                 <span class="tag tag-category">正確觀念與態度</span>
-                <span class="tag tag-sub">標誌標線</span>
-                <span class="tag" style="background-color: var(--color-primary-100); color: var(--color-primary-800);">🖼️ 圖標題</span>
+                <span class="tag tag-sub">事故預防及處理</span>
+                <span class="tag" style="background-color: var(--color-primary-100); color: var(--color-primary-800);">🖼️ 圖片題</span>
+                <span class="tag" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">無題幹題型</span>
               </div>
-              <button type="button" class="btn-icon" title="朗讀題目與選項" aria-label="朗讀本題">🔊</button>
+              <button type="button" class="btn-icon" title="朗讀提示與選項" aria-label="朗讀本題">🔊</button>
             </div>
 
-            <div class="question-title-wrapper">
-              <h3 class="question-title">
-                Q67. 請問這個交通標誌代表什麼意思？
-              </h3>
+            <!-- 無題幹題目專用提示句 (D2 規範) -->
+            <div class="question-stem-prompt">
+              <span>👉</span> 請看圖，選出正確的答案。
             </div>
 
             <!-- 官方圖示提取框架 -->
             <div class="question-image-frame">
-              <img src="../media/images/M0067.png" alt="交通標誌：路滑" onerror="this.src='https://placehold.co/180x180?text=標誌圖+M0067'">
-              <span style="font-size: var(--font-size-sm); color: var(--color-text-muted); margin-top: var(--space-2);">圖檔來源：官方標誌題庫 M0067</span>
+              <img src="../media/images/M0067.png" alt="交通標誌：路滑警告標誌" onerror="this.src='https://placehold.co/180x180?text=標誌圖+M0067'">
+              <span style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: var(--space-2);">官方題庫圖檔：M0067.png（實際題幹為空）</span>
             </div>
 
             <div class="options-list" style="margin-bottom: 0;">
@@ -470,7 +470,7 @@
               </button>
               <button type="button" class="option-card is-correct">
                 <span class="option-badge">2</span>
-                <span class="option-label">路滑（正確標誌）</span>
+                <span class="option-label">路滑</span>
                 <span class="option-indicator">✔ 正確解答</span>
               </button>
               <button type="button" class="option-card">
@@ -558,11 +558,11 @@
                 <circle cx="100" cy="165" r="4" fill="var(--color-primary-700)" />
                 <circle cx="35" cy="100" r="4" fill="var(--color-primary-700)" />
               </svg>
-              <!-- 四維度文字標示 -->
-              <div style="position: absolute; top: 10px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">正確觀念 (90%)</div>
-              <div style="position: absolute; right: 10px; top: 90px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">停讓文化 (95%)</div>
-              <div style="position: absolute; bottom: 10px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">安全駕駛 (80%)</div>
-              <div style="position: absolute; left: 10px; top: 90px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">危險感知 (75%)</div>
+              <!-- 四維度文字標示 (全面 >= 18px 無障礙規範) -->
+              <div style="position: absolute; top: 8px; font-size: var(--font-size-sm); font-weight: bold; color: var(--color-slate-800);">正確觀念 (90%)</div>
+              <div style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: var(--font-size-sm); font-weight: bold; color: var(--color-slate-800);">停讓文化 (95%)</div>
+              <div style="position: absolute; bottom: 8px; font-size: var(--font-size-sm); font-weight: bold; color: var(--color-slate-800);">安全駕駛 (80%)</div>
+              <div style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: var(--font-size-sm); font-weight: bold; color: var(--color-slate-800);">危險感知 (75%)</div>
             </div>
             <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: var(--space-3); text-align: center;">
               整合 Chart.js 雷達圖：可一鍵匯出供 IEP 學習檔案紀錄使用

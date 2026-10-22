@@ -118,7 +118,7 @@
         </p>
 
         <!-- 連續進度條 + 及格門檻標記線 -->
-        <div style="position: relative; padding-top: 26px; max-width: 500px; margin: 0 auto var(--space-4) auto;">
+        <div style="position: relative; padding-top: 36px; max-width: 500px; margin: 0 auto var(--space-4) auto;">
           <div class="progress-bar-track" style="height: 16px;">
             <div class="progress-bar-fill" style="width: 90%;"></div>
             <div class="pass-mark-indicator"></div>
@@ -168,7 +168,7 @@
       <section style="margin-bottom: var(--space-8);">
         <div class="section-heading">
           <h2 class="section-heading-title"><span>📊</span> 學習能力分析圖表 (可匯出學習檔案)</h2>
-          <button type="button" class="btn btn-outline" style="min-height: 40px; padding: 6px 14px; font-size: var(--font-size-sm);" onclick="alert('已產生可列印或存檔的圖表報告，供特教 IEP 學習檔案紀錄使用！')">
+          <button type="button" class="btn btn-outline" style="min-height: var(--touch-target-min); padding: 8px 16px; font-size: var(--font-size-sm);" onclick="alert('已產生可列印或存檔的圖表報告，供特教 IEP 學習檔案紀錄使用！')">
             📷 匯出本回合圖表
           </button>
         </div>
@@ -191,10 +191,10 @@
                 <circle cx="100" cy="165" r="4" fill="var(--color-primary-700)" />
                 <circle cx="38" cy="100" r="4" fill="var(--color-primary-700)" />
               </svg>
-              <div style="position: absolute; top: 8px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">正確觀念 92%</div>
-              <div style="position: absolute; right: 8px; top: 90px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">主動停讓 95%</div>
-              <div style="position: absolute; bottom: 8px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">安全駕駛 82%</div>
-              <div style="position: absolute; left: 8px; top: 90px; font-size: 13px; font-weight: bold; color: var(--color-slate-700);">危險感知 78%</div>
+              <div style="position: absolute; top: 8px; font-size: var(--font-size-sm); font-weight: bold; color: var(--color-slate-800);">正確觀念 92%</div>
+              <div style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: var(--font-size-sm); font-weight: bold; color: var(--color-slate-800);">主動停讓 95%</div>
+              <div style="position: absolute; bottom: 8px; font-size: var(--font-size-sm); font-weight: bold; color: var(--color-slate-800);">安全駕駛 82%</div>
+              <div style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: var(--font-size-sm); font-weight: bold; color: var(--color-slate-800);">危險感知 78%</div>
             </div>
             <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: var(--space-3); text-align: center;">
               四大類皆達 75% 以上，整體防禦觀念良好！
