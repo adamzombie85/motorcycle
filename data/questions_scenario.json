@@ -1,0 +1,2528 @@
+[
+ {
+  "id": "S001",
+  "source": "情境",
+  "num": 1,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，哪一位駕駛人配戴機車安全帽才「正確」？",
+  "options": [
+   "A",
+   "B",
+   "C"
+  ],
+  "answer": 2,
+  "image": "media/images/S001.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 1
+ },
+ {
+  "id": "S002",
+  "source": "情境",
+  "num": 2,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，違反下列哪項規定？",
+  "options": [
+   "配戴安全帽規定",
+   "附載坐人的乘坐方向規定",
+   "附載人數規定"
+  ],
+  "answer": 2,
+  "image": "media/images/S002.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 2
+ },
+ {
+  "id": "S003",
+  "source": "情境",
+  "num": 3,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，有關機車載物寬度A何者「正確」？",
+  "options": [
+   "不超過機車的左右把手外緣各10公分",
+   "不超過機車的左右車身外緣各20公分",
+   "只要不妨礙兩旁的其他用路人即可"
+  ],
+  "answer": 0,
+  "image": "media/images/S003.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 3
+ },
+ {
+  "id": "S004",
+  "source": "情境",
+  "num": 4,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，有關機車載物長度C何者「正確」？",
+  "options": [
+   "自後輪輪軸起不超過50公分",
+   "自後輪輪軸起不超過100公分",
+   "以不妨礙操控為原則"
+  ],
+  "answer": 0,
+  "image": "media/images/S004.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 4
+ },
+ {
+  "id": "S005",
+  "source": "情境",
+  "num": 5,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，三角形「△」標記代表何意義？",
+  "options": [
+   "輪胎規格尺寸的記號",
+   "尋找「輪胎胎面磨耗指示平台」位置的導引記號",
+   "輪胎胎面寬度的記號"
+  ],
+  "answer": 1,
+  "image": "media/images/S005.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 5
+ },
+ {
+  "id": "S006",
+  "source": "情境",
+  "num": 6,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車輪胎之紅色圈選處，代表的意義為何?",
+  "options": [
+   "輪胎胎面之「磨擦力指示平台」，此點可以增加輪胎之磨擦力",
+   "輪胎胎面之「脆弱指示點」，此點最脆弱使用時不可以破損",
+   "輪胎胎面之「磨耗指示平台」，若輪胎溝紋磨耗到此點時，就應更換輪胎"
+  ],
+  "answer": 2,
+  "image": "media/images/S006.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 6
+ },
+ {
+  "id": "S007",
+  "source": "情境",
+  "num": 7,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，當機車直行時，哪些區域是駕駛人無法利用照後鏡看見的視野範圍？",
+  "options": [
+   "A、C、E",
+   "A、B、C",
+   "C、D、E"
+  ],
+  "answer": 0,
+  "image": "media/images/S007.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 7
+ },
+ {
+  "id": "S008",
+  "source": "情境",
+  "num": 8,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，當騎機車並行於汽車的左側或右側時，要注意圖中哪些區域，以免因視野死角而發生事故？",
+  "options": [
+   "B、C",
+   "A、E",
+   "C、D"
+  ],
+  "answer": 1,
+  "image": "media/images/S008.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 8
+ },
+ {
+  "id": "S009",
+  "source": "情境",
+  "num": 9,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，當汽車要左轉時，後方的機車駕駛人要特別小心，是因為汽車駕駛人看不到圖中哪個區域?",
+  "options": [
+   "A",
+   "B",
+   "C"
+  ],
+  "answer": 0,
+  "image": "media/images/S009.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 9
+ },
+ {
+  "id": "S010",
+  "source": "情境",
+  "num": 10,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，當汽車要右轉時，後方的機車駕駛人要特別小心，是因為汽車駕駛人看不到圖中哪個區域?",
+  "options": [
+   "C",
+   "D",
+   "E"
+  ],
+  "answer": 2,
+  "image": "media/images/S010.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 10
+ },
+ {
+  "id": "S011",
+  "source": "情境",
+  "num": 11,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，大型車右轉時，機車駕駛人應避免進入的內輪差範圍為何？",
+  "options": [
+   "A區域",
+   "B區域",
+   "C區域"
+  ],
+  "answer": 1,
+  "image": "media/images/S011.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 11
+ },
+ {
+  "id": "S012",
+  "source": "情境",
+  "num": 12,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，騎乘機車右轉彎時，應如何行駛較安全？",
+  "options": [
+   "搶快超前轉彎",
+   "靠邊暫停於A處，待大型車轉彎後再行轉彎",
+   "靠邊暫停於B處，待大型車轉彎後再行轉彎"
+  ],
+  "answer": 1,
+  "image": "media/images/S012.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 12
+ },
+ {
+  "id": "S013",
+  "source": "情境",
+  "num": 13,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛較安全？\nA.大型車駕駛座較高，前方有視野死角，機車駕駛人應避免騎在前方。\nB.機車駕駛人要與大型車輛保持一段安全距離與間隔。\nC.立即煞車，等大型車通過後再行駛。\nD.搶快超前轉彎。",
+  "options": [
+   "A、B",
+   "B、C",
+   "A、D"
+  ],
+  "answer": 0,
+  "image": "media/images/S013.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 13
+ },
+ {
+  "id": "S014",
+  "source": "情境",
+  "num": 14,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛較安全？",
+  "options": [
+   "轉彎車須讓直行車先行，因此機車可加速超越大型車",
+   "放慢車速，遠離並避讓大型車先行",
+   "緊跟在大型車旁邊"
+  ],
+  "answer": 1,
+  "image": "media/images/S014.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 14
+ },
+ {
+  "id": "S015",
+  "source": "情境",
+  "num": 15,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛較能確保行車安全？",
+  "options": [
+   "應先放鬆油門減速行駛，以免在轉彎時失控",
+   "保持一定的速度行駛",
+   "不須減速，也無須做好傾斜車身的準備動作"
+  ],
+  "answer": 0,
+  "image": "media/images/S015.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 15
+ },
+ {
+  "id": "S016",
+  "source": "情境",
+  "num": 16,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛較能確保行車安全？",
+  "options": [
+   "急加速",
+   "急減速",
+   "保持適當速度"
+  ],
+  "answer": 2,
+  "image": "media/images/S016.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 16
+ },
+ {
+  "id": "S017",
+  "source": "情境",
+  "num": 17,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛較能確保行車安全？",
+  "options": [
+   "不管車頭及車身是否轉正，立即加速朝直線前進",
+   "應把車頭逐漸轉正，安全確認沒問題後，即可加速前進",
+   "完全放鬆油門行駛"
+  ],
+  "answer": 1,
+  "image": "media/images/S017.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 17
+ },
+ {
+  "id": "S018",
+  "source": "情境",
+  "num": 18,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人右轉時應如何行駛？",
+  "options": [
+   "停車並讓行人優先通過，待行人穿越後再行駛",
+   "停車並按鳴喇叭，以催促行人快速通過",
+   "直接繞過行人以迅速完成右轉的動作"
+  ],
+  "answer": 0,
+  "image": "media/images/S018.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 18
+ },
+ {
+  "id": "S019",
+  "source": "情境",
+  "num": 19,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛？",
+  "options": [
+   "仍應停於A區，讓行人優先通過",
+   "可向前騎向B區，並連續按鳴喇叭3次以上催促行人快速通過",
+   "應直接繞過行人，前行通過路口"
+  ],
+  "answer": 0,
+  "image": "media/images/S019.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 19
+ },
+ {
+  "id": "S020",
+  "source": "情境",
+  "num": 20,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人「X」直行時，應如何行駛較安全？",
+  "options": [
+   "向前騎入B區停等，待前方壅堵車流疏通後，再通過路口",
+   "仍應停於A區，待前方壅堵車流疏通後，再通過路口",
+   "繼續前進，直接跟著前車通過路口"
+  ],
+  "answer": 1,
+  "image": "media/images/S020.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 20
+ },
+ {
+  "id": "S021",
+  "source": "情境",
+  "num": 21,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人的行駛方式何者容易發生危險？",
+  "options": [
+   "雖尚未通過停止線，但仍可加速前行通過路口",
+   "若尚未通過停止線，則應停於停止線前，待下一個綠燈顯示時再通過路口",
+   "若已通過停止線，則應繼續前行通過路口，但仍須注意左右兩側的來車狀況"
+  ],
+  "answer": 0,
+  "image": "media/images/S021.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 21
+ },
+ {
+  "id": "S022",
+  "source": "情境",
+  "num": 22,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應停於圖中何處？",
+  "options": [
+   "A區",
+   "B區",
+   "C區"
+  ],
+  "answer": 0,
+  "image": "media/images/S022.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 22
+ },
+ {
+  "id": "S023",
+  "source": "情境",
+  "num": 23,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車不可行駛在哪一個車道上？",
+  "options": [
+   "A車道",
+   "B車道",
+   "C車道"
+  ],
+  "answer": 0,
+  "image": "media/images/S023.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 23
+ },
+ {
+  "id": "S024",
+  "source": "情境",
+  "num": 24,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車不可行駛在哪一個車道上？",
+  "options": [
+   "A車道",
+   "B車道",
+   "C車道"
+  ],
+  "answer": 0,
+  "image": "media/images/S024.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 24
+ },
+ {
+  "id": "S025",
+  "source": "情境",
+  "num": 25,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車不可行駛在哪一個車道上？",
+  "options": [
+   "A車道",
+   "B車道",
+   "C車道"
+  ],
+  "answer": 2,
+  "image": "media/images/S025.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 25
+ },
+ {
+  "id": "S026",
+  "source": "情境",
+  "num": 26,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，普通重型機車駕駛人「Y」兩段式左轉從A區行駛至B待轉區時，該如何行駛較安全？",
+  "options": [
+   "不需顯示方向燈，直接行駛至B區",
+   "需顯示右方向燈，先變換至外側車道後，再行駛至B區",
+   "直行駛至B區前方待停即可"
+  ],
+  "answer": 1,
+  "image": "media/images/S026.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 26
+ },
+ {
+  "id": "S027",
+  "source": "情境",
+  "num": 27,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，「X」機車駕駛人若想要左轉，應該如何行駛較安全?",
+  "options": [
+   "應距交岔路口10公尺前顯示左轉方向燈，換入內側車道，行駛到交岔路口中心處，確認對向來車安全無誤再左轉",
+   "應距交岔路口30公尺前顯示左轉方向燈，換入內側車道，行駛到交岔路口中心處，確認對向來車安全無誤再左轉",
+   "直接換入內側車道，並在過停止線時立即左轉"
+  ],
+  "answer": 1,
+  "image": "media/images/S027.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 27
+ },
+ {
+  "id": "S028",
+  "source": "情境",
+  "num": 28,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，「X」機車駕駛人若想要右轉，應該如何行駛較安全?",
+  "options": [
+   "應距交岔路口10公尺前顯示右轉方向燈，換入外側車道，行駛到路口後再右轉",
+   "應距交岔路口30公尺前顯示右轉方向燈，慢慢換入外側車道，行駛到路口後再右轉",
+   "直接換入外側車道，並在剛過停止線時立即右轉"
+  ],
+  "answer": 1,
+  "image": "media/images/S028.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 28
+ },
+ {
+  "id": "S029",
+  "source": "情境",
+  "num": 29,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人若發現前方汽車車速過慢，是否可超車？",
+  "options": [
+   "不可以",
+   "可以至左側超車",
+   "可以至右側超車"
+  ],
+  "answer": 0,
+  "image": "media/images/S029.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 29
+ },
+ {
+  "id": "S030",
+  "source": "情境",
+  "num": 30,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人若發現前方汽車車速過慢，是否可超車？",
+  "options": [
+   "不可以",
+   "可以自車輛的右側超車",
+   "可以自前方車輛的左側超車"
+  ],
+  "answer": 2,
+  "image": "media/images/S030.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 30
+ },
+ {
+  "id": "S031",
+  "source": "情境",
+  "num": 31,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人若發現前方汽車車速過慢，是否可超車？",
+  "options": [
+   "不可以",
+   "可以，但只能自前方車輛的右側超車",
+   "可以，只要小心通過就好"
+  ],
+  "answer": 0,
+  "image": "media/images/S031.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 31
+ },
+ {
+  "id": "S032",
+  "source": "情境",
+  "num": 32,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，下列哪個敘述較安全？",
+  "options": [
+   "機車應讓汽車先行",
+   "汽車應讓機車先行",
+   "速度快的先行通過"
+  ],
+  "answer": 0,
+  "image": "media/images/S032.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 32
+ },
+ {
+  "id": "S033",
+  "source": "情境",
+  "num": 33,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，為何機車應讓汽車先行？",
+  "options": [
+   "幹道車應讓支道車先行",
+   "支道車應讓幹道車先行",
+   "因為汽車車速較快"
+  ],
+  "answer": 1,
+  "image": "media/images/S033.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 33
+ },
+ {
+  "id": "S034",
+  "source": "情境",
+  "num": 34,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛較安全？",
+  "options": [
+   "應先暫停並左右擺頭查看，等汽車通過後再繼續通行",
+   "應減速慢行，查看無其他來車後通行",
+   "不需理會標線，只需按鳴喇叭加速通過即可"
+  ],
+  "answer": 0,
+  "image": "media/images/S034.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 34
+ },
+ {
+  "id": "S035",
+  "source": "情境",
+  "num": 35,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛較安全？",
+  "options": [
+   "機車行至路口時應減速接近，並小心通過路口",
+   "機車行至路口時應先停在交岔路口前，等汽車通過後再繼續通行",
+   "不需理會右側來車，只需按鳴喇叭加速通過即可"
+  ],
+  "answer": 0,
+  "image": "media/images/S035.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 35
+ },
+ {
+  "id": "S036",
+  "source": "情境",
+  "num": 36,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛較安全？",
+  "options": [
+   "減速並暫停，讓汽車先行",
+   "按鳴喇叭並直接通過路口",
+   "不需按鳴喇叭，直接加速通過"
+  ],
+  "answer": 0,
+  "image": "media/images/S036.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 36
+ },
+ {
+  "id": "S037",
+  "source": "情境",
+  "num": 37,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛較安全？",
+  "options": [
+   "不須減速，直接通過路口",
+   "減速慢行，應左右擺頭查看兩側是否有來車再通行",
+   "減速慢行，而在通過路口時，按鳴喇叭後再通行"
+  ],
+  "answer": 1,
+  "image": "media/images/S037.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 37
+ },
+ {
+  "id": "S038",
+  "source": "情境",
+  "num": 38,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人在狹窄道路中，應如何行駛較安全？",
+  "options": [
+   "機車駕駛人應停靠於路旁，讓汽車優先通行",
+   "汽車駕駛人應停靠於路旁，讓機車優先通行",
+   "按鳴喇叭並自汽車右側空隙通過"
+  ],
+  "answer": 0,
+  "image": "media/images/S038.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 38
+ },
+ {
+  "id": "S039",
+  "source": "情境",
+  "num": 39,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，若機車欲減速，機車駕駛人應如何操作煞車較安全？",
+  "options": [
+   "以前輪煞車為主，後輪煞車為輔進行操作",
+   "以前輪煞車為輔，後輪煞車為主進行操作",
+   "只需煞前輪即可"
+  ],
+  "answer": 0,
+  "image": "media/images/S039.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 39
+ },
+ {
+  "id": "S040",
+  "source": "情境",
+  "num": 40,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人遇突然迴轉之汽車，應如何操作煞車較安全？",
+  "options": [
+   "以前輪煞車為主，後輪煞車為輔進行操作",
+   "以前輪煞車為輔，後輪煞車為主進行操作",
+   "應立即放鬆油門，並同時使用前後煞車，一次完成煞車動作"
+  ],
+  "answer": 2,
+  "image": "media/images/S040.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 40
+ },
+ {
+  "id": "S041",
+  "source": "情境",
+  "num": 41,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛較安全？",
+  "options": [
+   "應讓圓環內的車輛先行通過，再進入圓環",
+   "可不須停車，直接駛入圓環",
+   "按鳴喇叭後就可先行通過圓環"
+  ],
+  "answer": 0,
+  "image": "media/images/S041.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 41
+ },
+ {
+  "id": "S042",
+  "source": "情境",
+  "num": 42,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，B車與A車同時要通過路口時，B車應如何行駛較安全？",
+  "options": [
+   "按鳴喇叭並儘速通行",
+   "停車並讓A車優先通行",
+   "若B車已超過停止線，則B車可優先通行"
+  ],
+  "answer": 1,
+  "image": "media/images/S042.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 42
+ },
+ {
+  "id": "S043",
+  "source": "情境",
+  "num": 43,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，汽、機車同時行經此路段時，機車駕駛人應如何行駛較安全？",
+  "options": [
+   "減速並讓汽車優先通行",
+   "加速通行",
+   "與汽車緊靠併行"
+  ],
+  "answer": 0,
+  "image": "media/images/S043.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 43
+ },
+ {
+  "id": "S044",
+  "source": "情境",
+  "num": 44,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人在此環境中，應如何行駛較安全？",
+  "options": [
+   "視線不佳，跟隨前方汽車燈光行駛，不用開啟頭燈",
+   "因路面濕滑，應減速慢行且要與前車保持更長的安全距離",
+   "騎車速度按照路面標示之速限行駛即可"
+  ],
+  "answer": 1,
+  "image": "media/images/S044.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 44
+ },
+ {
+  "id": "S045",
+  "source": "情境",
+  "num": 45,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應該如何行駛較安全？",
+  "options": [
+   "按鳴喇叭並加速通過",
+   "減速並緊鄰該車之間隙通過",
+   "減速並與路邊車輛保持一個車門以上的間隔"
+  ],
+  "answer": 2,
+  "image": "media/images/S045.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 45
+ },
+ {
+  "id": "S046",
+  "source": "情境",
+  "num": 46,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛較安全？",
+  "options": [
+   "前方視野死角處，應減速慢行並隨時注意車前狀況",
+   "按鳴喇叭提醒後，繼續通過",
+   "維持原速行駛，但變換燈光提醒"
+  ],
+  "answer": 0,
+  "image": "media/images/S046.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 46
+ },
+ {
+  "id": "S047",
+  "source": "情境",
+  "num": 47,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，騎機車行經圖中巷口時，應如何行駛較安全？",
+  "options": [
+   "我車是直行車輛，可優先通行、繼續前進就好",
+   "減速並觀察反射鏡，以及擺頭查看左方是否有來車",
+   "按鳴喇叭後，繼續通過"
+  ],
+  "answer": 1,
+  "image": "media/images/S047.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 47
+ },
+ {
+  "id": "S048",
+  "source": "情境",
+  "num": 48,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，圖中機車駕駛人可以左轉進入巷口嗎？",
+  "options": [
+   "可以",
+   "不可以",
+   "不一定，視路況而定"
+  ],
+  "answer": 1,
+  "image": "media/images/S048.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 48
+ },
+ {
+  "id": "S049",
+  "source": "情境",
+  "num": 49,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，圖中巷口裝設反射鏡的主要用意為何？",
+  "options": [
+   "機車駕駛人可利用反射鏡觀察巷道來車狀況",
+   "利用反射鏡的裝設位置可避免汽機車在路邊停車",
+   "透過反射鏡放大空間，可使巷口的空間感覺更加寬敞明亮"
+  ],
+  "answer": 0,
+  "image": "media/images/S049.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 49
+ },
+ {
+  "id": "S050",
+  "source": "情境",
+  "num": 50,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛較安全？",
+  "options": [
+   "按規定速限繼續前行",
+   "應立即靠右側避讓，讓救護車優先通行",
+   "由於趕時間，可立即加速前行"
+  ],
+  "answer": 1,
+  "image": "media/images/S050.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 50
+ },
+ {
+  "id": "S051",
+  "source": "情境",
+  "num": 51,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛較安全？",
+  "options": [
+   "對於闖紅燈之救護車，可不必避讓",
+   "不論號誌為何，應立即避讓優先通行",
+   "加速離開，以避免阻擋救護車執行任務"
+  ],
+  "answer": 1,
+  "image": "media/images/S051.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 51
+ },
+ {
+  "id": "S052",
+  "source": "情境",
+  "num": 52,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛較安全？",
+  "options": [
+   "利用對向車道行駛，遠離公車後通過",
+   "騎至公車右側，鳴喇叭後通過",
+   "等候公車駛離後再繼續行駛"
+  ],
+  "answer": 2,
+  "image": "media/images/S052.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 52
+ },
+ {
+  "id": "S053",
+  "source": "情境",
+  "num": 53,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛較安全？",
+  "options": [
+   "要先減速行駛，以免在轉彎時失控滑倒",
+   "依彎道寬度決定超車行駛",
+   "依彎道寬度決定並排行駛"
+  ],
+  "answer": 0,
+  "image": "media/images/S053.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 53
+ },
+ {
+  "id": "S054",
+  "source": "情境",
+  "num": 54,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人行駛時遇前方狀況，應如何行駛較安全？",
+  "options": [
+   "直接從左側超越",
+   "按喇叭提醒前方駕駛人並從右方超越通行",
+   "應減速停車，不要強行超越"
+  ],
+  "answer": 2,
+  "image": "media/images/S054.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 54
+ },
+ {
+  "id": "S055",
+  "source": "情境",
+  "num": 55,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛比較安全？",
+  "options": [
+   "應減速並停止於平交道遮斷器前",
+   "在遮斷器尚未完全放下前加速前進通過",
+   "在未看到火車來之前，都可以閃過遮斷器，通過鐵路平交道"
+  ],
+  "answer": 0,
+  "image": "media/images/S055.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 55
+ },
+ {
+  "id": "S056",
+  "source": "情境",
+  "num": 56,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人轉彎行經此路面時，應如何行駛較安全？",
+  "options": [
+   "應盡量避開或減速慢行",
+   "立即加速轉彎行駛通過",
+   "緊急煞車"
+  ],
+  "answer": 0,
+  "image": "media/images/S056.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 56
+ },
+ {
+  "id": "S057",
+  "source": "情境",
+  "num": 57,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，下雨天行經此標線時，應如何行駛較安全？",
+  "options": [
+   "行駛時應盡量避開",
+   "按照規定速限行駛就可以",
+   "避免緊急煞車就可以"
+  ],
+  "answer": 0,
+  "image": "media/images/S057.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 57
+ },
+ {
+  "id": "S058",
+  "source": "情境",
+  "num": 58,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人行經此路面時，應如何行駛較安全？",
+  "options": [
+   "應盡量避開或減速慢行",
+   "立即加速轉向行駛通過",
+   "緊急煞車"
+  ],
+  "answer": 0,
+  "image": "media/images/S058.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 58
+ },
+ {
+  "id": "S059",
+  "source": "情境",
+  "num": 59,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人是否可以變換車道超車？",
+  "options": [
+   "不可以",
+   "可以",
+   "視車輛間距而異"
+  ],
+  "answer": 0,
+  "image": "media/images/S059.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 59
+ },
+ {
+  "id": "S060",
+  "source": "情境",
+  "num": 60,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "反向題",
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人操作方式何者「錯誤」?",
+  "options": [
+   "與前車保持適當的安全距離，並注意車流的變化",
+   "依車道照明度，適時開亮頭燈",
+   "應全程開亮頭燈"
+  ],
+  "answer": 1,
+  "image": "media/images/S060.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 60
+ },
+ {
+  "id": "S061",
+  "source": "情境",
+  "num": 61,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，行車前的輪胎檢查內容為何？",
+  "options": [
+   "檢查輪胎是否有低於磨耗指示平台",
+   "檢查輪胎外觀是否龜裂、損傷",
+   "以上皆是"
+  ],
+  "answer": 2,
+  "image": "media/images/S061.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 61
+ },
+ {
+  "id": "S062",
+  "source": "情境",
+  "num": 62,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "機車駕駛人於騎乘機車前應做那些檢查？",
+  "options": [
+   "行車前，應檢查輪胎、燈光、喇叭、煞車及油料，以確保行車安全",
+   "不需要檢查，以免浪費時間",
+   "長途行車才要檢查，短程行車無須檢查"
+  ],
+  "answer": 0,
+  "image": "media/images/S062.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 62
+ },
+ {
+  "id": "S063",
+  "source": "情境",
+  "num": 63,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "機車排氣管的設備何者正確？",
+  "options": [
+   "A",
+   "B",
+   "C"
+  ],
+  "answer": 0,
+  "image": "media/images/S063.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 63
+ },
+ {
+  "id": "S064",
+  "source": "情境",
+  "num": 64,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，何者為正確之乘坐方式？",
+  "options": [
+   "A",
+   "B",
+   "C"
+  ],
+  "answer": 0,
+  "image": "media/images/S064.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 64
+ },
+ {
+  "id": "S065",
+  "source": "情境",
+  "num": 65,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，何者為安全載運寵物的方式？",
+  "options": [
+   "A",
+   "B",
+   "C"
+  ],
+  "answer": 2,
+  "image": "media/images/S065.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 65
+ },
+ {
+  "id": "S066",
+  "source": "情境",
+  "num": 66,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "圖中何者為安全載運貨物的方式？",
+  "options": [
+   "A",
+   "B",
+   "C"
+  ],
+  "answer": 1,
+  "image": "media/images/S066.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 66
+ },
+ {
+  "id": "S067",
+  "source": "情境",
+  "num": 67,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，方向燈的顏色，何者正確？",
+  "options": [
+   "橙色",
+   "綠色",
+   "藍色"
+  ],
+  "answer": 0,
+  "image": "media/images/S067.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 67
+ },
+ {
+  "id": "S068",
+  "source": "情境",
+  "num": 68,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，哪輛機車尾燈的燈光符合規定？",
+  "options": [
+   "A",
+   "B",
+   "C"
+  ],
+  "answer": 2,
+  "image": "media/images/S068.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 68
+ },
+ {
+  "id": "S069",
+  "source": "情境",
+  "num": 69,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何起駛才正確？",
+  "options": [
+   "從照後鏡察看無來車即可起駛",
+   "顯示方向燈後即可起駛",
+   "顯示方向燈並擺頭察看前、後方，確認無行人及車輛後起駛"
+  ],
+  "answer": 2,
+  "image": "media/images/S069.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 69
+ },
+ {
+  "id": "S070",
+  "source": "情境",
+  "num": 70,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人停車位置，何者正確？",
+  "options": [
+   "A",
+   "B",
+   "C"
+  ],
+  "answer": 2,
+  "image": "media/images/S070.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 70
+ },
+ {
+  "id": "S071",
+  "source": "情境",
+  "num": 71,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車停放位置下列敘述何者正確？",
+  "options": [
+   "沒有壓到紅線就不算違規停車",
+   "禁止臨時停車標線之左、右道路範圍內均不得停車",
+   "只要不影響交通，可以暫停一下，不會受罰"
+  ],
+  "answer": 1,
+  "image": "media/images/S071.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 71
+ },
+ {
+  "id": "S072",
+  "source": "情境",
+  "num": 72,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人行經彎道，何者行為正確？",
+  "options": [
+   "A駕駛人跨越道路中央雙黃線，加速超車",
+   "B駕駛人減速慢行，不超車，避免車速過快衝入對向車道",
+   "C駕駛人在前車右側加速超車"
+  ],
+  "answer": 1,
+  "image": "media/images/S072.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 72
+ },
+ {
+  "id": "S073",
+  "source": "情境",
+  "num": 73,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示中標誌，機車駕駛人違反什麼規定？",
+  "options": [
+   "行駛於快車道",
+   "未開啓頭燈",
+   "未依遵行之方向行駛"
+  ],
+  "answer": 2,
+  "image": "media/images/S073.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 73
+ },
+ {
+  "id": "S074",
+  "source": "情境",
+  "num": 74,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "反向題",
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人的行駛方式何者錯誤？",
+  "options": [
+   "A",
+   "B",
+   "C"
+  ],
+  "answer": 2,
+  "image": "media/images/S074.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 74
+ },
+ {
+  "id": "S075",
+  "source": "情境",
+  "num": 75,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何安全行駛？",
+  "options": [
+   "按鳴喇叭，使對方避讓",
+   "減速慢行，並做隨時停車之準備",
+   "搶先前進，使對方讓道"
+  ],
+  "answer": 1,
+  "image": "media/images/S075.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 75
+ },
+ {
+  "id": "S076",
+  "source": "情境",
+  "num": 76,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "反向題",
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人的行為何者錯誤？",
+  "options": [
+   "猛按喇叭後直接搶先轉彎",
+   "轉彎車應禮讓直行車先行",
+   "轉彎前應減速慢行，並做隨時停車之準備"
+  ],
+  "answer": 0,
+  "image": "media/images/S076.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 76
+ },
+ {
+  "id": "S077",
+  "source": "情境",
+  "num": 77,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車在前方路口欲右轉，應依哪條路線行駛？",
+  "options": [
+   "A",
+   "B",
+   "C"
+  ],
+  "answer": 2,
+  "image": "media/images/S077.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 77
+ },
+ {
+  "id": "S078",
+  "source": "情境",
+  "num": 78,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人遇障礙物煞車時，反應順序為何？",
+  "options": [
+   "A→B→C",
+   "B→A→C",
+   "C→B→A"
+  ],
+  "answer": 1,
+  "image": "media/images/S078.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 78
+ },
+ {
+  "id": "S079",
+  "source": "情境",
+  "num": 79,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，他們要回家，應該怎麼辦？",
+  "options": [
+   "搭乘大眾運輸工具或親友接送",
+   "稍有醉意無妨，可以騎機車回家",
+   "離家很近，短程騎車沒有關係"
+  ],
+  "answer": 0,
+  "image": "media/images/S079.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 79
+ },
+ {
+  "id": "S080",
+  "source": "情境",
+  "num": 80,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "機車駕駛人行駛途中，手機鈴聲響起，應如何處理才正確？",
+  "options": [
+   "A",
+   "B",
+   "C"
+  ],
+  "answer": 0,
+  "image": "media/images/S080.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 80
+ },
+ {
+  "id": "S081",
+  "source": "情境",
+  "num": 81,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，何種行為屬於違規？",
+  "options": [
+   "機車駕駛人邊騎車邊抽菸",
+   "後座乘客側坐",
+   "以上皆是"
+  ],
+  "answer": 2,
+  "image": "media/images/S081.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 81
+ },
+ {
+  "id": "S082",
+  "source": "情境",
+  "num": 82,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何正確超越前車？",
+  "options": [
+   "沒有規定",
+   "從前車右側超車",
+   "顯示左方向燈並與前車左側保持半公尺以上之間隔"
+  ],
+  "answer": 2,
+  "image": "media/images/S082.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 82
+ },
+ {
+  "id": "S083",
+  "source": "情境",
+  "num": 83,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人在哪個區域可跨越分向線超車？",
+  "options": [
+   "A",
+   "B",
+   "Ｃ"
+  ],
+  "answer": 2,
+  "image": "media/images/S083.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 83
+ },
+ {
+  "id": "S084",
+  "source": "情境",
+  "num": 84,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，不同車速時之視野範圍，請依車速由慢至快排列：",
+  "options": [
+   "A→C→B",
+   "B→C→A",
+   "C→A→B"
+  ],
+  "answer": 1,
+  "image": "media/images/S084.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 84
+ },
+ {
+  "id": "S085",
+  "source": "情境",
+  "num": 85,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人何時可開啟遠光燈？",
+  "options": [
+   "A",
+   "B",
+   "Ｃ"
+  ],
+  "answer": 1,
+  "image": "media/images/S085.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 85
+ },
+ {
+  "id": "S086",
+  "source": "情境",
+  "num": 86,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "機車駕駛人行經圖中路段，何者正確？",
+  "options": [
+   "應減速慢行，並依速限標誌指示行駛",
+   "車前路況無障礙，後行機車可以加速超越行駛",
+   "可與他車競駛、超車"
+  ],
+  "answer": 0,
+  "image": "media/images/S086.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 86
+ },
+ {
+  "id": "S087",
+  "source": "情境",
+  "num": 87,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人A，發現違規車輛，應如何安全行駛？",
+  "options": [
+   "不用理會違規車輛，直接通過交岔路口",
+   "注意機車動向，減速通過",
+   "按鳴喇叭後，加速行駛通過"
+  ],
+  "answer": 1,
+  "image": "media/images/S087.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 87
+ },
+ {
+  "id": "S088",
+  "source": "情境",
+  "num": 88,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "反向題",
+   "有圖"
+  ],
+  "question": "圖中哪位機車駕駛人之行為錯誤？",
+  "options": [
+   "A",
+   "B",
+   "Ｃ"
+  ],
+  "answer": 0,
+  "image": "media/images/S088.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 88
+ },
+ {
+  "id": "S089",
+  "source": "情境",
+  "num": 89,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，在平交道發生車輛故障時，處理順序為何？",
+  "options": [
+   "A→B→C",
+   "C→B→A",
+   "B→C→A"
+  ],
+  "answer": 1,
+  "image": "media/images/S089.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 89
+ },
+ {
+  "id": "S090",
+  "source": "情境",
+  "num": 90,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何安全行駛？",
+  "options": [
+   "開啟頭燈，駛入X車道",
+   "開啟頭燈，駛入Y車道",
+   "以上皆可"
+  ],
+  "answer": 1,
+  "image": "media/images/S090.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 90
+ },
+ {
+  "id": "S091",
+  "source": "情境",
+  "num": 91,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "圖中A、B機車駕駛人依據號誌燈號，誰可直行或右轉行駛？",
+  "options": [
+   "A",
+   "B",
+   "A、B"
+  ],
+  "answer": 0,
+  "image": "media/images/S091.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 91
+ },
+ {
+  "id": "S092",
+  "source": "情境",
+  "num": 92,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何安全行駛？",
+  "options": [
+   "加速通過",
+   "按鳴喇叭後加速通過",
+   "注意汽車動向，減速通過"
+  ],
+  "answer": 2,
+  "image": "media/images/S092.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 92
+ },
+ {
+  "id": "S093",
+  "source": "情境",
+  "num": 93,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人遇到蜂群時，應如何安全行駛？",
+  "options": [
+   "繞道或後退離開，避免動作過大",
+   "停車拍照留念",
+   "停車驅趕蜂群"
+  ],
+  "answer": 0,
+  "image": "media/images/S093.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 93
+ },
+ {
+  "id": "S094",
+  "source": "情境",
+  "num": 94,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛？",
+  "options": [
+   "內、外側車道均可行駛",
+   "顯示方向燈後，察看後方無來車，直接變換至內側車道",
+   "減速後顯示左方向燈，察看照後鏡，確認無來車後，變換至鄰近車道"
+  ],
+  "answer": 2,
+  "image": "media/images/S094.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 94
+ },
+ {
+  "id": "S095",
+  "source": "情境",
+  "num": 95,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人發現人孔蓋時應如何應變？",
+  "options": [
+   "緊急煞車",
+   "放鬆油門，穩握把手",
+   "快速變換車道，以閃避人孔蓋"
+  ],
+  "answer": 1,
+  "image": "media/images/S095.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 95
+ },
+ {
+  "id": "S096",
+  "source": "情境",
+  "num": 96,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何行駛？",
+  "options": [
+   "行駛X路線後，變換車道",
+   "直接變換車道，行駛Y路線",
+   "顯示左方向燈，並察看有無來車再變換車道，行駛Y路線"
+  ],
+  "answer": 2,
+  "image": "media/images/S096.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 96
+ },
+ {
+  "id": "S097",
+  "source": "情境",
+  "num": 97,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人在此環境中，應如何安全行駛？",
+  "options": [
+   "A",
+   "B",
+   "C"
+  ],
+  "answer": 1,
+  "image": "media/images/S097.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 97
+ },
+ {
+  "id": "S098",
+  "source": "情境",
+  "num": 98,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，何者行為較安全？",
+  "options": [
+   "A",
+   "B",
+   "Ｃ"
+  ],
+  "answer": 1,
+  "image": "media/images/S098.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 98
+ },
+ {
+  "id": "S099",
+  "source": "情境",
+  "num": 99,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何安全行駛？",
+  "options": [
+   "人車稀少，可以騎快車",
+   "依速限行駛，注意遵守標誌，並開亮頭燈",
+   "路燈照明設備良好，可以不用開頭燈"
+  ],
+  "answer": 1,
+  "image": "media/images/S099.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 99
+ },
+ {
+  "id": "S100",
+  "source": "情境",
+  "num": 100,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "反向題",
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人哪項行為錯誤？",
+  "options": [
+   "開啟頭燈",
+   "降低車速行駛",
+   "猛按鳴喇叭，加速行駛"
+  ],
+  "answer": 2,
+  "image": "media/images/S100.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 100
+ },
+ {
+  "id": "S101",
+  "source": "情境",
+  "num": 101,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "反向題",
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人之行為何者錯誤？",
+  "options": [
+   "握穩把手，適當減速慢行",
+   "做隨時停車之準備",
+   "加速繼續行駛通過"
+  ],
+  "answer": 2,
+  "image": "media/images/S101.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 101
+ },
+ {
+  "id": "S102",
+  "source": "情境",
+  "num": 102,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，天氣寒冷時，機車駕駛人的行為何種方式安全？",
+  "options": [
+   "A",
+   "B",
+   "Ｃ"
+  ],
+  "answer": 0,
+  "image": "media/images/S102.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 102
+ },
+ {
+  "id": "S103",
+  "source": "情境",
+  "num": 103,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何安全行駛？",
+  "options": [
+   "靠右行駛，避免爬坡的視野死角",
+   "猛按喇叭，維持原車速",
+   "加速通過"
+  ],
+  "answer": 0,
+  "image": "media/images/S103.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 103
+ },
+ {
+  "id": "S104",
+  "source": "情境",
+  "num": 104,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何安全行駛？",
+  "options": [
+   "不理會違規車輛，繼續直行",
+   "注意前方車輛，適當減速因應",
+   "按鳴喇叭後立即加速通行"
+  ],
+  "answer": 1,
+  "image": "media/images/S104.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 104
+ },
+ {
+  "id": "S105",
+  "source": "情境",
+  "num": 105,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何安全行駛？",
+  "options": [
+   "閃避落石，繼續行駛",
+   "確認道路狀況或改道行駛",
+   "移除落石，繼續行駛"
+  ],
+  "answer": 1,
+  "image": "media/images/S105.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 105
+ },
+ {
+  "id": "S106",
+  "source": "情境",
+  "num": 106,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何安全行駛？",
+  "options": [
+   "加速轉彎通過",
+   "緊急煞車",
+   "減速慢行，避免因視野死角造成危險"
+  ],
+  "answer": 2,
+  "image": "media/images/S106.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 106
+ },
+ {
+  "id": "S107",
+  "source": "情境",
+  "num": 107,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人通過路口時，如何行駛較為安全？",
+  "options": [
+   "不予理會，繼續行駛",
+   "按鳴喇叭，加速前進",
+   "減速慢行，禮讓幼童專用車"
+  ],
+  "answer": 2,
+  "image": "media/images/S107.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 107
+ },
+ {
+  "id": "S108",
+  "source": "情境",
+  "num": 108,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何安全行駛？",
+  "options": [
+   "應讓外緣汽車優先通行",
+   "不需禮讓",
+   "按鳴喇叭後加速通行"
+  ],
+  "answer": 0,
+  "image": "media/images/S108.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 108
+ },
+ {
+  "id": "S109",
+  "source": "情境",
+  "num": 109,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，兩車進入同一車道，何者應該先行？",
+  "options": [
+   "B車先行",
+   "A車先行",
+   "搶先者即可先行"
+  ],
+  "answer": 1,
+  "image": "media/images/S109.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 109
+ },
+ {
+  "id": "S110",
+  "source": "情境",
+  "num": 110,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "機車駕駛人行經路口處如何安全行駛較安全？",
+  "options": [
+   "按鳴喇叭後，直接從汽車右側超越",
+   "按鳴喇叭後，直接繞過汽車左側超越",
+   "減速慢行，注意違規車輛之動向"
+  ],
+  "answer": 2,
+  "image": "media/images/S110.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 110
+ },
+ {
+  "id": "S111",
+  "source": "情境",
+  "num": 111,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，請排列優先路權的順序：",
+  "options": [
+   "A→B→C",
+   "C→B→A",
+   "B→C→A"
+  ],
+  "answer": 1,
+  "image": "media/images/S111.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 111
+ },
+ {
+  "id": "S112",
+  "source": "情境",
+  "num": 112,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖中警察手勢，哪輛機車應停止？",
+  "options": [
+   "A",
+   "B",
+   "Ｃ"
+  ],
+  "answer": 2,
+  "image": "media/images/S112.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 112
+ },
+ {
+  "id": "S113",
+  "source": "情境",
+  "num": 113,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何安全行駛？",
+  "options": [
+   "A",
+   "B",
+   "C"
+  ],
+  "answer": 0,
+  "image": "media/images/S113.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 113
+ },
+ {
+  "id": "S114",
+  "source": "情境",
+  "num": 114,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何正確反應？",
+  "options": [
+   "猛按鳴喇叭後，加速從汽車左側超越",
+   "不要強行超越，應減速慢行並做隨時停車之準備",
+   "可直接利用對向車道超越汽車"
+  ],
+  "answer": 1,
+  "image": "media/images/S114.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 114
+ },
+ {
+  "id": "S115",
+  "source": "情境",
+  "num": 115,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何處理？",
+  "options": [
+   "預作隨時煞停之準備",
+   "減速慢行並注意計程車之動向",
+   "以上皆是"
+  ],
+  "answer": 2,
+  "image": "media/images/S115.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 115
+ },
+ {
+  "id": "S116",
+  "source": "情境",
+  "num": 116,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，機車駕駛人應如何安全行駛？",
+  "options": [
+   "注意前方車輛動態，小心變換車道，減速通過",
+   "猛按喇叭，催促行駛",
+   "加速超車"
+  ],
+  "answer": 0,
+  "image": "media/images/S116.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 116
+ },
+ {
+  "id": "S117",
+  "source": "情境",
+  "num": 117,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，哪一區域對機車駕駛人潛藏道路風險？",
+  "options": [
+   "A",
+   "B",
+   "Ｃ"
+  ],
+  "answer": 0,
+  "image": "media/images/S117.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 117
+ },
+ {
+  "id": "S118",
+  "source": "情境",
+  "num": 118,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，當機車駕駛人遇此情形，應該如何行駛？",
+  "options": [
+   "應減速慢行，小心通過",
+   "猛按喇叭，加速通過",
+   "維持原速行駛，變換燈光警告"
+  ],
+  "answer": 0,
+  "image": "media/images/S118.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 118
+ },
+ {
+  "id": "S119",
+  "source": "情境",
+  "num": 119,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，當機車故障時，駕駛人應該如何處理？",
+  "options": [
+   "A",
+   "B",
+   "Ｃ"
+  ],
+  "answer": 0,
+  "image": "media/images/S119.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 119
+ },
+ {
+  "id": "S120",
+  "source": "情境",
+  "num": 120,
+  "category": "危險感知",
+  "subcategory": "情境題",
+  "tags": [
+   "有圖"
+  ],
+  "question": "依據圖示，哪個輪胎之胎壓是正常的？",
+  "options": [
+   "A",
+   "B",
+   "Ｃ"
+  ],
+  "answer": 2,
+  "image": "media/images/S120.jpg",
+  "video": null,
+  "concept_id": null,
+  "page": 120
+ }
+]
