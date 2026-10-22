@@ -32,7 +32,7 @@
 - ✅ 筆試題庫：806 題 → `data/questions_main.json`，148 張圖 → `media/images/`
   - 程式交叉比對：答案不一致 0、文字不一致 0（`data/verify_main_report.json`）
   - 大類：正確觀念與態度 480／主動停讓文化 92／安全駕駛能力 234
-  - 標籤：有圖 148、數字題 142、罰鍰題 103、反向題 54
+  - 標籤：有圖 148、數字題 142、罰鍰題 103、反向題 52（2026-10-22 人工審查後修正）
   - ✅ Jim 抽查 50 題全部正確（2026-10-22）
 - ✅ 情境式題目 120 題 → `data/questions_scenario.json`，圖 → `media/images/S001～S120.jpg`；交叉比對零不一致；反向題 6 題
   - 另一個 Claude 對話也獨立做了一份，逐題比對完全一致（第三次驗證）。重複檔案已移到 `_to_delete/`
@@ -62,7 +62,7 @@
 |---|---|---|---|
 | 0 資料化 | 題庫轉 JSON、抽圖、影片壓縮、加標籤、程式交叉比對 | Claude → Jim 抽查 | ✅ 完成 |
 | 1a 視覺定調 | tokens.css、首頁和答題畫面樣板 | Antigravity（Gemini） | ✅ D1 完成；D2 補畫面 ⏳ |
-| 1 練習核心 | 小關卡、回饋、錯題重練、圖表 | Claude Code（照 design/ 實作，任務 C3～C12） | 🔄 C3 ✅，C4 待執行 |
+| 1 練習核心 | 小關卡、回饋、錯題重練、圖表 | Claude Code（照 design/ 實作，任務 C3～C12） | 🔄 C3 ✅ C4 ✅，C5 待執行 |
 | 2 閱讀與學習設定 | 朗讀、注音、字級、反向題提醒（通用設計，每個人都可開關） | Claude Code | ⬜ |
 | 3 概念卡 | 概念歸類、概念卡、數字記憶卡 | Claude（內容）＋ Claude Code（介面） | ⬜ |
 | 4 危險感知與模擬考 | 影片模式、50 題模擬考、趨勢分析 | Claude Code | ⬜ |
@@ -91,6 +91,8 @@
 | 2026-10-22 | Claude | 審查 C3 通過（97 關、926 題、代號分開存，Node 實測）；整理交接紀錄位置 | Claude Code：C4 |
 | 2026-10-22 | Claude | C4 加入「少於 5 題併入前一關」（92 關）；放寬 Claude Code 存檔範圍為 design/ 以外 | Claude Code：C4 |
 | 2026-10-22 | Claude Code | C4 完成：關卡規則改為 92 關（最後一關少於 5 題併入前一關，最大 14 題）；做出 site/quiz.html（進度圓點、反向題橫幅與標記、空題幹提示句、即時對錯回饋）。結算頁 result.html 尚未做（C6），答完會跳到它 | Jim：確認；Claude Code：C5 |
+| 2026-10-22 | Claude | 審查 C4 通過；反向題標籤修正（去除 6 題誤判、補 M0247，共 64 題，`scripts/tag_reverse.py`）；C9、C10 補上路徑與訪客處理 | Claude Code：C5 |
+| 2026-10-22 | Claude Code | C5 完成：store.js 加 recordAnswer（答錯入庫、連續答對 2 次移出）；quiz.html?mode=mistakes 錯題重練（最多 10 題）；回饋卡顯示 mistake-retest-notice。重練的作答紀錄 levelId 為 mistakes、mode 為 mistakes，C6 結算頁要處理 result.html?mode=mistakes | Jim：確認；Claude Code：C6 |
 
 ## 開工提示詞
 

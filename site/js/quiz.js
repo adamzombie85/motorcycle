@@ -5,7 +5,7 @@
   // 反向題關鍵字：只加標記，不改字
   var REVERSE_RE = /不正確|不適當|不包括|不屬於|不是|不利於|不可以|不須|不符|不當|有違|錯誤|非屬|為非|何者非|非/g;
 
-  var level, questions, index = 0, results = [], answered = false, startedAt = Date.now();
+  var level, mode, questions, index = 0, results = [], answered = false, startedAt = Date.now();
 
   function el(tag, cls, text) {
     var e = document.createElement(tag);
@@ -41,8 +41,9 @@
 
   function renderTop() {
     var top = el('div', 'quiz-top-bar');
-    top.appendChild(el('div', 'level-title-chip',
-      '🎯 ' + level.category + ' · ' + level.subcategory + '（第 ' + level.index + ' 關）'));
+    top.appendChild(el('div', 'level-title-chip', mode === 'mistakes'
+      ? '🔁 錯題重練'
+      : '🎯 ' + level.category + ' · ' + level.subcategory + '（第 ' + level.index + ' 關）'));
     var pause = el('a', 'btn btn-outline quiz-pause-btn', '暫停離開');
     pause.href = 'index.html';
     top.appendChild(pause);
@@ -139,6 +140,7 @@
     var q = questions[index];
     var correct = choice === q.answer;
     results.push({ qid: q.id, choice: choice, correct: correct });
+    var mistake = Store.recordAnswer(q.id, correct);
 
     Array.prototype.forEach.call(list.children, function (btn, i) {
       btn.disabled = true;
@@ -164,6 +166,9 @@
       fb.appendChild(body);
     }
 
+    var notice = mistakeNotice(mistake, correct);
+    if (notice) fb.appendChild(notice);
+
     var last = index === questions.length - 1;
     var next = el('button', 'btn btn-lg quiz-next-btn ' + (correct ? 'btn-primary' : 'btn-secondary'),
       last ? '完成本關練習 ➔ 前往結算' : '下一題 ➔（第 ' + (index + 2) + ' 題）');
@@ -175,24 +180,56 @@
     fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
 
+  function mistakeNotice(m, correct) {
+    var need = Store.MISTAKE_CLEAR_STREAK;
+    var text;
+    if (!correct) {
+      text = (m.added ? '已加入錯題庫：' : '這題還在錯題庫：') + '連續答對 ' + need + ' 次這題就會過關，安心練習不用擔心！';
+    } else if (m.cleared) {
+      text = '這題已經過關，從錯題庫移出了！';
+    } else if (m.inMistakes) {
+      text = '錯題庫進度：連續答對 ' + m.streak + ' 次，再答對 ' + (need - m.streak) + ' 次就過關！';
+    } else return null;
+    var box = el('div', 'mistake-retest-notice');
+    box.appendChild(document.createTextNode('🔁 '));
+    box.appendChild(el('strong', null, text));
+    return box;
+  }
+
   function finish() {
     var correctCount = results.filter(function (r) { return r.correct; }).length;
     Store.addAttempt({
       levelId: level.id,
+      mode: mode,
       answers: results,
       correctCount: correctCount,
       total: questions.length,
       score: Math.round(correctCount / questions.length * 100),
       seconds: Math.round((Date.now() - startedAt) / 1000)
     });
-    location.href = 'result.html?level=' + encodeURIComponent(level.id);
+    location.href = 'result.html?' + (mode === 'mistakes' ? 'mode=mistakes' : 'level=' + encodeURIComponent(level.id));
+  }
+
+  function startMistakes() {
+    var m = Store.getMistakes();
+    // 連續答對次數少的先練；同分照題庫順序
+    var ids = Object.keys(m).filter(function (id) { return Data.getQuestion(id); });
+    ids.sort(function (a, b) { return m[a] - m[b]; });
+    ids = ids.slice(0, Store.MISTAKE_RETEST_SIZE);
+    if (!ids.length) return message('錯題庫是空的，太棒了！', '回首頁', 'index.html');
+    level = { id: 'mistakes', category: '錯題重練', subcategory: '錯題重練', index: 0 };
+    questions = ids.map(function (id) { return Data.getQuestion(id); });
+    renderQuestion();
   }
 
   function init() {
     if (!Store.getStudent()) Store.setStudent('訪客'); // 登入功能之後再做，先用預設代號
     document.getElementById('user-chip').textContent = '👤 ' + Store.getStudent();
-    var levelId = new URLSearchParams(location.search).get('level');
+    var params = new URLSearchParams(location.search);
+    var levelId = params.get('level');
+    mode = params.get('mode') === 'mistakes' ? 'mistakes' : 'level';
     Data.load().then(function () {
+      if (mode === 'mistakes') return startMistakes();
       if (!levelId) return message('請從首頁選擇一個關卡。', '回首頁', 'index.html');
       level = Data.getLevel(levelId);
       if (!level) return message('找不到這個關卡。', '回首頁', 'index.html');
