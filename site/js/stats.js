@@ -6,9 +6,7 @@
 
   function latestByQuestion() {
     var latest = {};
-    Store.getAttempts().forEach(function (a) {
-      a.answers.forEach(function (r) { latest[r.qid] = r.correct; });
-    });
+    Store.getAnswerLog().forEach(function (r) { latest[r.qid] = r.correct; });
     return latest;
   }
 
@@ -29,6 +27,7 @@
   }
 
   var Stats = window.Stats = {
+    latestByQuestion: latestByQuestion,
     PASS_SCORE: PASS_SCORE,
     byCategory: function () { return tally(function (q) { return q.category; }); },
     bySubcategory: function () { return tally(function (q) { return q.subcategory; }); },

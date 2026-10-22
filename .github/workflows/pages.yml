@@ -32,6 +32,7 @@ jobs:
           cp design/tokens.css design/components.css _site/design/
           cp data/questions.json _site/data/
           cp -r media _site/media
+          rm -rf _site/site/tests
           touch _site/.nojekyll
           cat > _site/index.html <<'HTML'
           <!DOCTYPE html>

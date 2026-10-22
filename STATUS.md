@@ -56,6 +56,8 @@
    - 學生可以下載自己的學習成果報告圖片分享給老師（C12、D2）
 9. ✅ 管理者帳號：`adamzombie85@gmail.com`
 10. ⏳ 上線前請向教務處／資訊組確認：學生用 Google 帳號登入、作答紀錄存在 Firebase，是否符合學校個資規定
+11. ✅ 公開範圍（C9 回報）：題庫是監理機關公開資料，網站公開沒問題；**repo 本身是公開的**，所以 AGENTS.md、STATUS.md、docs/ 在 github.com 上本來就看得到（Pages 不放只是網址上打不開）。學生資料會存在 Firebase，不在 repo 裡。是否加 noindex（不讓 Google 搜尋到）留到正式推廣前再決定
+12. 📌 網址：https://adamzombie85.github.io/motorcycle/
 7. ✅ 拿掉校名，頁尾改成「© 2026 41 研究室｜版權所有」。✅ 頁首保留網站名稱和使用者，閱讀輔助改成一個「⚙️ 閱讀設定」按鈕（Jim 2026-10-22 同意）→ D3
 8. ⏳ 階段 1 規則（上方）有沒有要改的？
 
@@ -64,8 +66,10 @@
 |---|---|---|---|
 | 0 資料化 | 題庫轉 JSON、抽圖、影片壓縮、加標籤、程式交叉比對 | Claude → Jim 抽查 | ✅ 完成 |
 | 1a 視覺定調 | tokens.css、首頁和答題畫面樣板 | Antigravity（Gemini） | ✅ D1、D2、D2b 完成 |
-| 1 練習核心 | 小關卡、回饋、錯題重練、圖表 | Claude Code（照 design/ 實作，任務 C3～C12） | 🔄 C3～C8 ✅，C9 待執行 |
-| 2 閱讀與學習設定 | 朗讀、注音、字級、反向題提醒（通用設計，每個人都可開關） | Antigravity D3 → Claude Code | ⏳ D3 待執行 |
+| 1 練習核心 | 小關卡、回饋、錯題重練、圖表 | Claude Code（照 design/ 實作，任務 C3～C12） | 🔄 C3～C9 ✅（已上線），等 Jim 手機實測 → C10 |
+| 1.5 質感與遊戲化 | 專業視覺、每日挑戰、連續天數、地圖、徽章、間隔複習、動畫音效、角色（規格 `docs/遊戲化設計.md`） | Antigravity D4→A1→A2＋R1 審查、Gemini 插圖、Claude Code C13、C16 | ⏳ D4、C13 待執行 |
+| ★ 學生試玩 | 3～5 位學生（含資源班學生）試玩，Claude 準備觀察表 | Jim | ⬜ |
+| 2 閱讀與學習設定 | 朗讀、注音、字級、反向題提醒、音效、動畫、確認作答 | Antigravity D3 ✅ → Claude Code C14 | ⏳ |
 | 3 概念卡 | 概念歸類、概念卡、數字記憶卡 | Claude（內容）＋ Claude Code（介面） | ⬜ |
 | 4 危險感知與模擬考 | 影片模式、50 題模擬考、趨勢分析 | Claude Code | ⬜ |
 
@@ -107,6 +111,10 @@
 | 2026-10-22 | Claude | 開 D3 閱讀設定面板（單一按鈕、字級／注音／朗讀／反向題提醒） | Antigravity：D3 |
 | 2026-10-22 | Claude Code | C9 進行中：data.js 加 DATA_VERSION（題庫網址加 ?v=）；新增 .github/workflows/pages.yml（只部署 site/、tokens.css、components.css、questions.json、media/；部署時自動在 js/css 連結加 commit 版本號；根目錄轉址到 site/index.html） | Jim：GitHub 設定 Pages；手機測試 |
 | 2026-10-22 | Claude Code | C9 完成：已部署 https://adamzombie85.github.io/motorcycle/ （頁面、題庫、圖片、影片都 200；STATUS.md、docs/、TASKS_*.md、scripts/、raw/ 為 404，沒有公開）。快取版本號：題庫 DATA_VERSION，js/css 自動加 commit 版本 | Jim：用手機做完一關測試 |
+| 2026-10-22 | Claude | 審查 C9 通過（workflow 只部署必要檔案、版本號機制正確）；記錄公開範圍說明 | Jim：手機實測；之後建 Firebase 專案 → C10 |
+| 2026-10-22 | Claude | Jim 手機實測回饋；決定 1～7 遊戲化全做、順序：精修＋遊戲化 → 試玩 → 登入。寫 docs/遊戲化設計.md、D4、插圖 4 組、C13～C16；D3 審查通過（注音字型未載入，C14 處理） | Antigravity：D4；Claude Code：C13；Jim：Gemini 第 1 組徽章 |
+| 2026-10-22 | Claude | 依 Jim 要求重新分配額度：畫面工程、測試、交叉審查改由 Antigravity（A1、A2、R1）；Claude Code 只做引擎；兩邊各自存檔；更新 AGENTS.md、.agents/rules | Claude Code：C13；Antigravity：D4 |
+| 2026-10-22 | Claude Code | C13 完成：D3 已存檔（80cbe38）；site/js/game.js（每日挑戰、連續天數＋休息卡、間隔複習、12 徽章、角色、地圖）；store.js 新增 Store.now/setClock、作答紀錄（每答一題就存）、複習到期日、通用文件 getDoc/setDoc；stats.js 改讀作答紀錄；測試 node site/tests/game-test.js 42 項全過；部署時排除 tests/ | Antigravity：D4 畫面（呼叫 Game.* 與 Store.recordAnswer(qid, correct, {choice, src})） |
 
 ## 開工提示詞
 

@@ -11,8 +11,8 @@
 | 角色 | 工具 | 負責 | 不做 |
 |---|---|---|---|
 | 大腦／資料 | Claude（Cowork 對話） | 規劃、題庫資料化、概念卡內容、寫任務單 | 不寫網站程式 |
-| 工程 | Claude Code | `site/` 裡的網站程式 | 不改題目內容與答案 |
-| 視覺設計 | Antigravity（Gemini） | 依 `TASKS_AGY.md` 定視覺風格：`design/tokens.css` 和畫面樣板 | 不寫功能邏輯，不改 design/ 以外的檔案 |
+| 引擎工程 | Claude Code | `site/js/` 的引擎模組：data.js、store.js、stats.js、game.js；之後的 Firebase 與安全規則 | 不做畫面；不改題目內容與答案 |
+| 設計＋畫面工程 | Antigravity（Gemini） | `design/` 設計系統；`site/` 的畫面：*.html、css/、頁面程式（home.js、quiz.js、result.js、levels.js、mistakes.js 及新增頁面）；多種手機寬度的瀏覽器測試；交叉審查 Claude Code 的引擎程式 | 不改引擎模組（只呼叫它們的函式）；不改題庫 |
 | 美術 | Gemini App（Jim 手動操作） | 依 `assets-spec.md` 產圖 | 不畫交通標誌、標線 |
 | 調度／決策 | Jim | 每階段確認、在 AI 之間交接 | — |
 
@@ -31,7 +31,8 @@
 | STATUS.md | Claude | Claude Code 只能在「交接紀錄」追加一行 |
 | TASKS_AGY.md、TASKS_CODE.md、assets-spec.md、data/、docs/、scripts/ | Claude | 唯讀 |
 | .agents/rules/ | Jim | Antigravity 的專用規則 |
-| site/（不含 site/assets/illustrations/） | Claude Code | 唯讀 |
+| site/js/data.js、store.js、stats.js、game.js | Claude Code | Antigravity 只能呼叫，需要新功能就寫進 STATUS.md 待決事項 |
+| site/ 其餘（html、css、頁面程式、fonts） | Antigravity | Claude Code 唯讀 |
 | site/assets/illustrations/ | Jim（放 Gemini 產的圖） | 唯讀 |
 | design/ | Antigravity | Claude Code 唯讀，只能引用 |
 | raw/（原始 PDF 與影片） | 不可修改 | 唯讀 |
@@ -74,7 +75,8 @@
 
 ## 版本控制（Git）
 - GitHub repo：`adamzombie85/motorcycle`
-- **只有 Claude Code 會執行 git 指令**（commit、push）。其他 AI 改完檔案後，由 Jim 請 Claude Code 存檔。
+- **Claude Code 和 Antigravity 都可以存檔，但只能 add 自己負責的檔案**（見上表），push 前先 `git pull --rebase`。Claude（大腦）改的文件由 Claude Code 順便存。
+- 額度分配原則（2026-10-22 Jim 要求）：畫面和測試多給 Antigravity（Google 額度多），Claude Code 只做引擎，大腦只做規格與抽查
 - commit 訊息開頭標示是誰的工作：`[claude]` 資料與規劃、`[code]` 網站程式、`[agy]` 視覺設計、`[setup]` 環境設定
 - 每次交接前都要 commit 一次。做壞了可以回到上一個存檔點。
 
