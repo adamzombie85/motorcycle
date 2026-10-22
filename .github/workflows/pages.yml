@@ -1,0 +1,62 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble site
+        run: |
+          # 只公開網站需要的檔案：site/、樣式 CSS、題庫 JSON、媒體。
+          # STATUS.md、docs/、TASKS_*.md、scripts/、raw/ 等內部檔案不放進去。
+          mkdir -p _site/design _site/data
+          cp -r site _site/site
+          cp design/tokens.css design/components.css _site/design/
+          cp data/questions.json _site/data/
+          cp -r media _site/media
+          touch _site/.nojekyll
+          cat > _site/index.html <<'HTML'
+          <!DOCTYPE html>
+          <html lang="zh-TW">
+          <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="refresh" content="0; url=site/index.html">
+            <title>機車筆試好過關</title>
+          </head>
+          <body><a href="site/index.html">進入機車筆試好過關</a></body>
+          </html>
+          HTML
+
+      - name: Stamp build version on local JS/CSS links
+        run: |
+          V="${GITHUB_SHA::7}"
+          # 本機的 js/css 連結加上 ?v=版本，每次部署瀏覽器都會抓新檔（外部網址不動）
+          sed -E -i "s#((src|href)=\"[^\":]+\.(js|css))\"#\1?v=${V}\"#g" _site/site/*.html
+          grep -h "?v=" _site/site/index.html
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
