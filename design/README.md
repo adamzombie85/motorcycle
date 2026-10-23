@@ -323,4 +323,26 @@ design/
      - 全專案 grep 禁用詞彙 0 筆。
 - **下一棒：** 依任務指示回報 V2 與 A5 完成成果。
 
+### V1b｜比較卡法規引用修正與條文原文標註（2026-10-23）
+- **執行角色：** Antigravity（Gemini）
+- **完成項目與設計決策：**
+  1. **清查並解決條號編造與疑似張冠李戴問題：**
+     - 盤點 `assets-src/laws/verify-result.txt` 提出之 25 條疑似張冠李戴項目，以及不存在的「安全規則第 88-2 條」（更正為《道路交通安全規則》第 88 條）。
+     - 深入比對《道路交通標誌標線號誌設置規則》（273 條）與《道路交通安全規則》（185 條）全文。
+     - 針對非成文法規規定的駕駛知識（如警察指揮手勢、內輪差原理、煞車力道比例、標線防滑等），改標記為題庫出處（`external: false`，`source: "M0xxx、S0xx"`），絕不捏造條號。
+  2. **82 條外部法規原則逐字引用原文（quote）全面補齊：**
+     - 為所有 `external: true` 原則補上單一條文內連續逐字之法條原文（`quote`），嚴格通過 `scripts/verify_citations.py` 的文字規範化與子字串驗證。
+     - 原則總數：99 條（82 條外部法規引用、17 條題庫題目依據）。
+     - **needs_source 標記數量：0 條**。
+     - **刪除原則數量：0 條**。
+  3. **verify_citations.py 驗證全數通過：**
+     - 執行 `python3 scripts/verify_citations.py --hint`：**外部依據共 82 條：通過 82，不通過 0（涉及 0／33 張卡），疑似張冠李戴 0 筆**，達成 100% 零誤差合格。
+  4. **審核介面更新（docs/比較卡審核.html & scripts/generate_compare_cards.py）：**
+     - 重構 `scripts/generate_compare_cards.py`，改以 `data/concepts/compare-draft.json` 為真實資料來源（Single Source of Truth），避免資料不同步。
+     - 在審核頁每條外部法規原則下方新增 `.law-quote` 區塊，清晰展示「法條原文：『...』」，並提供法規標籤與出處。
+  5. **全站回歸檢查：**
+     - `node design/check-screens.mjs` 88 項測試 100% 通過（無溢出、無重疊、無截斷、無 Console 錯誤）。
+     - 禁用詞彙掃描 0 筆。
+- **下一棒：** 提交 commit 並產出交接提示詞供 Claude Cowork 接手。
+
 

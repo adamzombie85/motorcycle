@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>看圖題比較卡審核（V1 初稿）</title>
+<title>看圖題比較卡審核（V1b 法條引用核定版）</title>
 <style>
 :root {
   --primary: #1e3a8a;
@@ -41,11 +41,11 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   display: inline-block;
   background: var(--primary-light);
   color: var(--primary);
-  padding: 4px 12px;
+  padding: 6px 14px;
   border-radius: 999px;
   font-weight: 600;
   font-size: 0.9rem;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 .group-card {
   max-width: 1200px;
@@ -94,7 +94,7 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   border-left: 4px solid var(--primary);
   padding: 10px 14px;
   border-radius: 4px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   font-size: 0.95rem;
 }
 .principle-item.is-external {
@@ -115,6 +115,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   background: var(--external-bg);
   color: var(--external);
   border: 1px solid #fde68a;
+}
+.law-quote {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #fefce8;
+  border-left: 3px solid #d97706;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  color: #78350f;
+  line-height: 1.5;
+  word-break: break-all;
+}
+.law-quote strong {
+  color: #92400e;
+}
+.law-quote.needs-source {
+  background: #fef2f2;
+  border-left-color: #ef4444;
+  color: #991b1b;
 }
 .confusions-box {
   background: #fff1f2;
@@ -229,12 +248,14 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
 </head>
 <body>
 <div class="header">
-  <h1>看圖題比較卡審核（V1 初稿）</h1>
+  <h1>看圖題比較卡審核（V1b 法條引用核定版）</h1>
   <p class="desc">
     本審核頁收錄全站 268 張看圖題目（筆試 148 題、情境 120 題），依「外觀相似、容易搞混」歸納為 33 個比較群組。<br>
-    每個群組提供 2～4 條分辨原則（包含《道路交通標誌標線號誌設置規則》與《道路交通安全規則》法定條號）與常見混淆解析。
+    每個群組提供 2～4 條分辨原則（包含《道路交通標誌標線號誌設置規則》與《道路交通安全規則》法定條號與<b>逐字法條原文引用</b>）與常見混淆解析。
   </p>
-  <div class="stats-badge">總群組數：33 組 ｜ 涵蓋題數：268 題 ｜ 覆蓋率：100% ｜ 「其他」組：0 題</div>
+  <div class="stats-badge">
+    總群組數：33 組 ｜ 涵蓋題數：268 題 ｜ 外部法規引用：82 條（100% 程式驗證通過） ｜ 題庫題目出處：17 條 ｜ 待確認來源 (needs_source)：0 條
+  </div>
 </div>
 
 <section class="group-card" data-gid="CMP-police-gesture" data-gname="警察指揮手勢">
@@ -245,17 +266,23 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
 
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
-    <li class="principle-item is-external">
-      <span>手臂水平伸直時，該手臂方向（或正面對面）之車輛應依指示停止或通行。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第7條</span>
-    </li>
-    <li class="principle-item is-external">
-      <span>手掌掌心立起朝向來車為「停止」；手臂平伸擺動或前屈為「速行」或「轉彎」。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第7條</span>
+    <li class="principle-item">
+      <div>
+        <span>手臂水平伸直時，該手臂方向（或正面對面）之車輛應依指示停止或通行。</span>
+        <span class="source-tag">題庫出處：M0527、M0529</span>
+      </div>
     </li>
     <li class="principle-item">
-      <span>右手平伸掌心向前為右方來車停止（M0530）；左右手均平伸為前後來車停止、左右來車通行（M0527）。</span>
-      <span class="source-tag">題庫出處：M0527</span>
+      <div>
+        <span>手掌掌心立起朝向來車為「停止」；手臂平伸擺動或前屈為「速行」或「轉彎」。</span>
+        <span class="source-tag">題庫出處：M0528、M0531</span>
+      </div>
+    </li>
+    <li class="principle-item">
+      <div>
+        <span>右手平伸掌心向前為右方來車停止（M0530）；左右手均平伸為前後來車停止、左右來車通行（M0527）。</span>
+        <span class="source-tag">題庫出處：M0527、M0530</span>
+      </div>
     </li>
   </ul>
 
@@ -386,16 +413,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>左臂平伸、手掌向下為「左轉彎」信號。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第91條</span>
+      <div>
+        <span>左臂平伸、手掌向下為「左轉彎」信號。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第91條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「左轉彎時，應先顯示車輛前後之左邊方向燈光，或由駕駛人表示左臂平伸，手掌向下之手勢。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>左臂向上屈曲、手掌向右微曲為「右轉彎」信號（自行車亦得以右臂平伸表示右轉）。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第91條</span>
+      <div>
+        <span>左臂向上屈曲、手掌向右微曲為「右轉彎」信號（自行車亦得以右臂平伸表示右轉）。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第91條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「右轉彎時，應先顯示車輛前後之右邊方向燈光，或由駕駛人表示左臂向上，手掌向右微曲之手勢。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>左臂向下垂伸、手掌向後為「減速暫停」；左臂向下垂伸、手掌向前微動為「允讓後車超越」。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第91條</span>
+      <div>
+        <span>左臂向下垂伸、手掌向後為「減速暫停」；左臂向下垂伸、手掌向前微動為「允讓後車超越」。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第91條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「減速暫停時，應顯示燈光，或由駕駛人表示左臂向下垂伸，手掌向後之手勢。」</div>
     </li>
   </ul>
 
@@ -526,16 +562,24 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>圓形白底紅邊加紅色反斜線表示「禁止進入」；牌面黑色圖案代表受禁止之車種或對象。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第58條</span>
+      <div>
+        <span>圓形白底紅邊加紅色反斜線表示「禁止進入」；牌面黑色圖案代表受禁止之車種或對象。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第57條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「除特殊標誌另有規定外，遵行標誌為藍底白色圖案，禁止  限制標誌為白底紅邊黑色圖案。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>白底紅圈無圖案為「禁止任何車輛進入」；內畫汽車為四輪以上汽車，機車有分普通機車、大重機與550cc以上大重機。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第63條</span>
+      <div>
+        <span>白底紅圈無圖案為「禁止任何車輛進入」；內畫汽車為四輪以上汽車，機車有分普通機車、大重機與550cc以上大重機。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第73條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「禁止進入標誌「禁1」，用以告示任何車輛不准進入。設於禁止車輛進入路段入口顯明之處。」</div>
     </li>
     <li class="principle-item">
-      <span>紅色圓圈內黃底機車圖案專指「大型重型機車」，紅色圓圈內機車圖案加註黃底550字樣為「550cc以上大重機」。</span>
-      <span class="source-tag">題庫出處：M0712</span>
+      <div>
+        <span>紅色圓圈內黃底機車圖案專指「大型重型機車」，紅色圓圈內機車圖案加註黃底550字樣為「550cc以上大重機」。</span>
+        <span class="source-tag">題庫出處：M0712</span>
+      </div>
     </li>
   </ul>
 
@@ -699,16 +743,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>圓形白底紅邊加紅斜線覆蓋動作圖案，表示禁止該項動作（禁止迴車、禁止左轉、禁止超車等）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第64條</span>
+      <div>
+        <span>圓形白底紅邊加紅斜線覆蓋動作圖案，表示禁止該項動作（禁止迴車、禁止左轉、禁止超車等）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第74條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「禁行方向標誌，用以告示車輛駕駛人禁行之方向。禁止右轉用「禁  17」、禁止左轉用「禁  18」、禁止左右轉用「禁  19」、禁止右轉及直行用「禁  20」、禁止左轉及直行用「禁  21」。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>八角形紅底白字「停」表示車輛必須停止於停止線前，確認安全後再開。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第59條</span>
+      <div>
+        <span>八角形紅底白字「停」表示車輛必須停止於停止線前，確認安全後再開。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第58條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「停車再開標誌「遵1」，用以告示車輛駕駛人必須停車觀察，認為安全時，方得再開。設於安全停車視距不足之交岔道路支線道之路口。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>「禁止超車」標誌內為並行之兩輛車加紅色斜線（M0715）；「停車檢查」為白底紅圈內寫檢查類別（M0219、M0220）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第70條</span>
+      <div>
+        <span>「禁止超車」標誌內為並行之兩輛車加紅色斜線（M0715）；「停車檢查」為白底紅圈內寫檢查類別（M0219、M0220）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第76條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「禁止超車標誌「禁２３」，用以告示車輛駕駛人禁止超車。設於超車視距不足及其他禁止超車路段之起點。」</div>
     </li>
   </ul>
 
@@ -828,16 +881,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>圓形白底紅邊內黑色數字加單位（t 或無單位）表示車輛總重限制或最高速限。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第72條</span>
+      <div>
+        <span>圓形白底紅邊內黑色數字加單位（t 或無單位）表示車輛總重限制或最高速限。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第81條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「車輛總重限制標誌「限１」，用以告示道路、橋涵所能承載之重量限制，超限之車輛不准通行。設於限重路段將近之處，並須考慮超限車輛能在該處繞道行駛或迴車。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>數字左右有向外箭頭為「車輛寬度限制」（M0217）；一輛車圖案前後有箭頭標數字為「車輛長度限制」（M0218）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第75條</span>
+      <div>
+        <span>數字左右有向外箭頭為「車輛寬度限制」（M0217）；一輛車圖案前後有箭頭標數字為「車輛長度限制」（M0218）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第82條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「車輛寬度限制標誌「限２」，用以告示道路情況特殊，車輛寬度應受限制，超限之車輛不准通行。設於限寬路段將近之處，並須考慮超限車輛能在該處繞道行駛或迴車。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>圓形紅圈純數字（例如 40、50）為最高速限，單位為公里/小時（M0710、M0717）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第77條</span>
+      <div>
+        <span>圓形紅圈純數字（例如 40、50）為最高速限，單位為公里/小時（M0710、M0717）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第85條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「最高速限標誌「限５」，用以告示車輛駕駛人前方道路最高行車時速之限制，不得超速。設於以標誌或標線規定最高速限路段起點及行車管制號誌路口遠端適當距離處」</div>
     </li>
   </ul>
 
@@ -924,16 +986,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>圓形藍底白色箭頭表示遵行行車方向（直行、轉彎、單行或靠右）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第40條</span>
+      <div>
+        <span>圓形藍底白色箭頭表示遵行行車方向（直行、轉彎、單行或靠右）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第61條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「道路遵行方向標誌，用以告示車輛駕駛人應遵行之行駛方向。設於交岔路口附近顯明之處。僅准直行用「遵７」。僅准右轉通行用「遵８」。僅准左轉通行用「遵９」。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>藍底方形白圖之機車加轉折箭頭為「機慢車兩段左轉」（M0587）或「兩段右轉」（M0588）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第65條之一</span>
+      <div>
+        <span>藍底方形白圖之機車加轉折箭頭為「機慢車兩段左轉」（M0587）或「兩段右轉」（M0588）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第65條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「機慢車兩段左（右）轉標誌「遵20」、「遵20.1」，用以告示左（右）轉大型重型機車以外之機車或慢車駕駛人應以兩段方式完成左（右）轉。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>箭頭斜向右下指向地面為「靠右行駛」（M0718）；長方形藍底白箭頭為「單行道」（M0594）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第41條</span>
+      <div>
+        <span>箭頭斜向右下指向地面為「靠右行駛」（M0718）；長方形藍底白箭頭為「單行道」（M0594）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第63條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「單行道標誌，用以告示該道路為單向行車，已進入之車輛應依標誌指示方向行車。設於單行道入口起點處。」</div>
     </li>
   </ul>
 
@@ -1031,16 +1102,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>圓形或長方形藍底白色圖案，指示該車道或道路僅准特定車種通行。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第48條</span>
+      <div>
+        <span>圓形或長方形藍底白色圖案，指示該車道或道路僅准特定車種通行。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第68條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「道路專行車輛標誌，用以告示前段道路專供指定之車輛通行，不准其他車輛及行人進入；其應設於該路段起點顯明之處」</div>
     </li>
     <li class="principle-item is-external">
-      <span>標示「四輪以上汽車及大型重型機車」表示該路段排除普通機車與慢車（M0439、M0735）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第55條</span>
+      <div>
+        <span>標示「四輪以上汽車及大型重型機車」表示該路段排除普通機車與慢車（M0439、M0735）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第68條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「一、道路指定四輪以上汽車專行用「遵  23」。二、道路指定四輪以上汽車及汽缸總排氣量五百五十立方公分以上之大型重型機車專行用「遵  23.1」。三、道路指定四輪以上汽車及大型重型機車專行用「遵  23.2」。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>「開亮頭燈」標誌為圓形藍底白圖（大燈光束照射狀），指示行駛該路段必須開啟頭燈（M0792）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第139條</span>
+      <div>
+        <span>「開亮頭燈」標誌為圓形藍底白圖（大燈光束照射狀），指示行駛該路段必須開啟頭燈（M0792）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第70-1條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「開亮頭燈標誌「遵 30-1 」，用以告示車輛駕駛人必須開亮頭燈，以利明視前方路況，或提醒對向車輛駕駛人注意。得設於依規定開亮頭燈路段之起點。」</div>
     </li>
   </ul>
 
@@ -1193,16 +1273,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>正等邊三角形黃底黑邊黑圖案為警告標誌；折線曲線形狀代表前方路形走向。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第14條</span>
+      <div>
+        <span>正等邊三角形黃底黑邊黑圖案為警告標誌；折線曲線形狀代表前方路形走向。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第23條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「警告標誌之設計，依左列規定：一、體形  正等邊三角形。二、顏色  白底、紅邊、黑色圖案。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>單一弧度折向右為「右彎」（M0699），折向左為「左彎」（M0700）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第14條</span>
+      <div>
+        <span>單一弧度折向右為「右彎」（M0699），折向左為「左彎」（M0700）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第24條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「彎路標誌分為右彎標誌「警 1」及左彎標誌「警 2」，用以促使車輛駕駛人減速慢行」</div>
     </li>
     <li class="principle-item is-external">
-      <span>連續S形折線以「第一個彎轉向」命名：第一折向右為「連續彎路先向右」（M0701），反之先向左（M0702）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第15條</span>
+      <div>
+        <span>連續S形折線以「第一個彎轉向」命名：第一折向右為「連續彎路先向右」（M0701），反之先向左（M0702）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第25條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「連續彎路標誌，用以促使車輛駕駛人減速慢行，設於路線具有反向曲線或連續轉彎，其曲線半徑及視距低於前條表列規定之路段。第一彎道先向右者用「警３」，第一彎道先向左者用「警４」。」</div>
     </li>
   </ul>
 
@@ -1289,16 +1378,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>正三角形黃底黑圖用以促使駕駛人提高警覺，採取減速或防護措施。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第12條</span>
+      <div>
+        <span>警告標誌用以促使車輛駕駛人及行人瞭解道路上之特殊狀況、提高警覺，並準備防範應變之措施。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第10條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「警告標誌  用以促使車輛駕駛人及行人瞭解道路上之特殊狀況、提高警覺，並準備防範應變之措施。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>黑色驚嘆號「！」表示「注意危險」，附牌通常說明危險性質（M0071）；波浪輪胎痕表示「路滑」（M0067）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第38條</span>
+      <div>
+        <span>黑色驚嘆號「！」表示「注意危險」，附牌通常說明危險性質（M0071）；波浪輪胎痕表示「路滑」（M0067）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第55條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「危險標誌「警５○」，用以促使車輛駕駛人小心駕駛。設於危險路段將近之處。本標誌下緣應設附牌，說明危險原因。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>斜坡標示%數為「險升坡/險降坡」（M0512）；落石碎塊在左為「注意左側落石」（M0068），在右為右側（M0069）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第27條</span>
+      <div>
+        <span>斜坡標示%數為「險升坡/險降坡」（M0512）；落石碎塊在左為「注意左側落石」（M0068），在右為右側（M0069）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第26條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「險坡標誌，用以促使車輛駕駛人小心駕駛。設於道路縱坡在百分之七以上之路段。險升坡用「警５」，險降坡用「警６」。」</div>
     </li>
   </ul>
 
@@ -1473,16 +1571,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>道路兩側線條同時向內對稱內縮為「狹路」（M0703）；單側內縮代表該側車道縮減（M0704、M0705）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第20條</span>
+      <div>
+        <span>道路兩側線條同時向內對稱內縮為「狹路」（M0703）；單側內縮代表該側車道縮減（M0704、M0705）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第27條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「狹路標誌「警７」，用以促使車輛駕駛人注意路面狹窄情況，遇有來車應予減速避讓。設於雙車道路面寬度縮減為六公尺以下路段起點前方。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>兩條平行線於中間突然凹入如工字形代表「狹橋」（M0739）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第21條</span>
+      <div>
+        <span>兩條平行線於中間突然凹入如工字形代表「狹橋」，用以警告不得在橋上會車（M0739）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第29條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「狹橋標誌「警１○」，用以警告車輛駛人不得在橋上會車。設於淨寬不足六公尺之橋樑。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>左邊直線右邊向內斜為「右側車道縮減」（M0705）；右邊直線左邊向內斜為「左側車道縮減」（M0704）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第22條</span>
+      <div>
+        <span>左邊直線右邊向內斜為「右側車道縮減」（M0705）；右邊直線左邊向內斜為「左側車道縮減」（M0704）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第28條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「車道、路寬縮減標誌，用以促使車輛駕駛人注意前方車道或路寬將縮減之情況，設於同向多車道或路寬縮減路段將近處，右側縮減用「警8」，左側縮減用「警 9」。」</div>
     </li>
   </ul>
 
@@ -1558,16 +1665,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>十字、丁字、丫字交叉黑線表示交岔路口形式（岔路標誌，M0509、M0510、M0511）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第17條</span>
+      <div>
+        <span>十字、丁字、丫字交叉黑線表示交岔路口形式（岔路標誌，M0509、M0510、M0511）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第30條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「岔路標誌，用以促使車輛駕駛人減速慢行，注意橫向來車相交。設於交岔路口將近之處。其圖案視道路交岔形狀定之。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>大人牽小孩背包圖案為「當心兒童」（M0514）；單人手持提袋走斑馬線為「當心行人」（M0515）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第34條</span>
+      <div>
+        <span>大人牽小孩背包圖案為「當心兒童」（M0514）；單人手持提袋走斑馬線為「當心行人」（M0515）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第41條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「當心行人標誌「警３４」用以促使車輛駕駛人減速慢行，注意行人。設於行人易肇事路段，或設有「行人穿越道」標線將近之處。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>兩人上下平行單車為「雙向道」（M0582）；紅黃綠三色圓燈排列為「注意號誌」（M0516）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第23條</span>
+      <div>
+        <span>兩人上下平行單車為「雙向道」（M0582）；紅黃綠三色圓燈排列為「注意號誌」（M0516）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第49條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「雙向道標誌「警４２」，用以促使車輛駕駛人注意會車。設於單行道連接雙向道將近之處。」</div>
     </li>
   </ul>
 
@@ -1698,16 +1814,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>施工標誌以橙色（橘色）或黃色為底色，搭配工人和路面封閉符號。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第138條</span>
+      <div>
+        <span>施工標誌以橙色（橘色）或黃色為底色，搭配工人和路面封閉符號。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第142條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「施工標誌，用以告示前方道路施工，車輛應減速慢行或改道行駛。設於施工路段附近。本標誌為菱形或長方形，橙底黑字黑色或白色圖案及黑色細邊」</div>
     </li>
     <li class="principle-item is-external">
-      <span>長方形白底黑字紅反光邊或橘底黑字，標示「道路施工」（M0731）或「道路封閉」（M0586）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第142條</span>
+      <div>
+        <span>長方形白底黑字紅反光邊或橘底黑字，標示「道路施工」（M0731）或「道路封閉」（M0586）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第142條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「施工標誌，用以告示前方道路施工，車輛應減速慢行或改道行駛。設於施工路段附近。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>斜向紅白或黑黃斑馬斜紋箭頭指示「車輛改道」（M0732）或左右道封閉（M0729、M0730）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第141條</span>
+      <div>
+        <span>斜向紅白或黑黃斑馬斜紋箭頭指示「車輛改道」（M0732）或左右道封閉（M0729、M0730）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第139條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「固定型拒馬，用以阻擋車輛及行人前進或指示改道，設於道路或其他設施損壞、施工或養護而致交通阻斷時間較久或範圍較廣之處。本拒馬橫材應標繪橙白相間由右（左）上斜向左（右）下之反光性斜紋，以導引車輛通行。」</div>
     </li>
   </ul>
 
@@ -1805,16 +1930,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>柵欄柵門圖案為「有柵門鐵路平交道」（M0447）；蒸氣火車頭圖案為「無柵門鐵路平交道」（M0446）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第13條</span>
+      <div>
+        <span>柵欄柵門圖案為「有柵門鐵路平交道」（M0447）；蒸氣火車頭圖案為「無柵門鐵路平交道」（M0446）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第35條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「有柵門鐵路平交道標誌「警２５」，用以警告車輛駕駛人注意慢行或及時停車，設於車輛駕駛人無法直接察覺有柵門鐵路平交道將近之處。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>交叉叉形標誌下方加一閃電符號為「單線電化鐵路平交道」（M0442），加二道倒V線為「雙線以上」（M0417）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第13條</span>
+      <div>
+        <span>交叉叉形標誌下方加一閃電符號為「單線電化鐵路平交道」（M0442），加二道倒V線為「雙線以上」（M0417）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第72條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「鐵路平交道標誌，用以告示車輛駕駛人及行人必須暫停、看、聽，確認安全時方得通過。穿越電化鐵路平交道時，應注意上方之高壓電線。單線鐵路平交道用「遵３１」。雙線以上鐵路平交道用「遵３２」。單線電化鐵路平交道用「遵３３」。雙線以上電化鐵路平交道用「遵３４」。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>遇平交道警鈴響起、閃光號誌閃爍或遮斷器放下，一律必須停止於停止線前，故障應按「推、按、跑」應變。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第104條</span>
+      <div>
+        <span>遇平交道警鈴響起、閃光號誌閃爍或遮斷器放下，一律必須停止於停止線前，故障應按「推、按、跑」應變。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第104條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「汽車行駛中，駕駛人看到鐵路平交道標誌或標線後，應即將速度減低至時速十五公里以下，接近平交道時，應依下列規定：一、鐵路平交道設有遮斷器或看守人員管理者，如警鈴已響、閃光號誌已顯示或遮斷器已開始放下或看守人員表示停止時，應即暫停」</div>
     </li>
   </ul>
 
@@ -1912,16 +2046,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>行車管制號誌為紅、黃、綠三色；圓形綠燈得直行、左右轉，箭頭綠燈僅准依箭頭所指方向行駛。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第207條</span>
+      <div>
+        <span>行車管制號誌為紅、黃、綠三色；圓形綠燈得直行、左右轉，箭頭綠燈僅准依箭頭所指方向行駛。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第206條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「在無其他標誌、標線禁制或指示下，圓形綠燈表示准許車輛直行或左、右轉。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>特種閃光紅燈表示「停車再開」，車輛應停止於停止線前確認安全後開；閃光黃燈表示「減速接近，小心通過」。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第211條</span>
+      <div>
+        <span>特種閃光紅燈表示「停車再開」，車輛應停止於停止線前確認安全後開；閃光黃燈表示「減速接近，小心通過」。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第211條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「閃光黃燈表示「警告」，車輛應減速接近，注意安全，小心通過。二、閃光紅燈表示「停車再開」，車輛應減速接近，先停止於交岔路口前，讓幹線道車優先通行後認為安全時，方得續行。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>站立紅人為禁止行人通行（M0522），行走綠人為准許行人通行；車輛遇黃燈未過停止線應減速煞停（S021）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第212條</span>
+      <div>
+        <span>站立紅人為禁止行人通行（M0522），行走綠人為准許行人通行；車輛遇黃燈未過停止線應減速煞停（S021）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第207條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「「站立行人」之紅色燈號穩定顯示時，行人禁止進入道路。」</div>
     </li>
   </ul>
 
@@ -2074,16 +2217,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>黃色標線分隔對向車流（分向線），白色標線分隔同向車道或指示路面邊線。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第149條</span>
+      <div>
+        <span>黃色標線分隔對向車流（分向線），白色標線分隔同向車道或指示路面邊線。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第149條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「白虛線  設於路段中者，用以分隔同向車道或作為行車安全距離辨識線；設於路口者，用以引導車輛行進」</div>
     </li>
     <li class="principle-item is-external">
-      <span>雙黃實線（分向限制線，M0724）絕對禁止跨越、迴車或超車；黃虛線（行車分向線，M0721）得超車但應注意安全。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第165條</span>
+      <div>
+        <span>雙黃實線（分向限制線，M0724）絕對禁止跨越、迴車或超車；黃虛線（行車分向線，M0721）得超車但應注意安全。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第165條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「分向限制線，用以劃分路面成雙向車道，禁止車輛跨越行駛，並不得迴轉。本標線為雙黃實線」</div>
     </li>
     <li class="principle-item is-external">
-      <span>路面邊緣黃實線為禁止停車線（夜間可臨時停車，M0720）；紅實線為禁止臨時停車線（全天禁止停放與臨停，M0725）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第168條</span>
+      <div>
+        <span>路面邊緣黃實線為禁止停車線（夜間可臨時停車，M0720）；紅實線為禁止臨時停車線（全天禁止停放與臨停，M0725）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第168條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「禁止停車線，用以指示禁止停車路段，以劃設於道路緣石正面及頂面為原則，無緣石之道路得標繪於路面上，距路面邊緣以三十公分為度。」</div>
     </li>
   </ul>
 
@@ -2214,16 +2366,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>路口橫向白色粗實線為「停止線」，車輛紅燈或遇停標字時應停止於線後（M0526）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第174條</span>
+      <div>
+        <span>路口橫向白色粗實線為「停止線」，車輛紅燈或遇停標字時應停止於線後（M0526）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第170條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「停止線，用以指示車輛停止之界線，車輛停止時，其前懸部分不得伸越該線。本標線設於已設有第五十八條「停車再開」標誌、第一百七十七條「停」標字或設有號誌之交岔路口」</div>
     </li>
     <li class="principle-item is-external">
-      <span>枕木紋（平行於道路行向粗白實線條）為行人穿越道線（M0728）；白色倒三角形為「讓路標線」（M0726）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第186條</span>
+      <div>
+        <span>枕木紋（平行於道路行向粗白實線條）為行人穿越道線（M0728）；白色倒三角形為「讓路標線」（M0726）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第185條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「枕木紋行人穿越道線，設於交岔路口；其枕木線型為平行行車方向之枕木紋白色實線」</div>
     </li>
     <li class="principle-item is-external">
-      <span>黃色網狀線指示路口或特殊出入口禁止臨時停車保持淨空（M0426）；斜紋線為槽化線（M0525）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第173條</span>
+      <div>
+        <span>黃色網狀線指示路口或特殊出入口禁止臨時停車保持淨空（M0426）；斜紋線為槽化線（M0525）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第173條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「網狀線，用以告示車輛駕駛人禁止在設置本標線之範圍內暫停或臨時停車，並應保持淨空，防止交通阻塞。」</div>
     </li>
   </ul>
 
@@ -2387,16 +2548,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>綠底梅花形內標數字為「國道路線編號」（M0413）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第85條</span>
+      <div>
+        <span>綠底梅花形內標數字為「國道路線編號」（M0413）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第88條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「國道路線編號標誌「指１」，用以指示國道路線之編號，其編號由國道主管機關定之。設於已編號之國道路線上」</div>
     </li>
     <li class="principle-item is-external">
-      <span>藍底盾形為「一般省道」（M0412）；紅底藍框盾形為「快速公路之省道路線」（M0414）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第86條</span>
+      <div>
+        <span>藍底盾形為「一般省道」（M0412）；紅底藍框盾形為「快速公路之省道路線」（M0414）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第89條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「省道路線編號標誌「指 2」，用以指示省道路線之編號，其編號由省道主管機關定之。設於已編號之省道路線及其與各級道路之交岔路口上。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>白底長方形黑框為「市道、縣道路線編號」（M0415）；白底長方形黑字標示地名簡稱加數字為「區道、鄉道」（M0416）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第88條</span>
+      <div>
+        <span>白底長方形黑框為「市道、縣道路線編號」（M0415）；白底長方形黑字標示地名簡稱加數字為「區道、鄉道」（M0416）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第90條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「市、縣、區、鄉道路線編號標誌，用以指示市、縣、區、鄉道路線之編號，設於已編號之市、縣、區、鄉道路線及其與各級道路之交岔路口上。」</div>
     </li>
   </ul>
 
@@ -2494,16 +2664,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>綠底白字指示標誌用以指引行車動向、地名與剩餘公里數（M0591、M0745）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第118條</span>
+      <div>
+        <span>綠底白字指示標誌用以指引行車動向、地名與剩餘公里數（M0591、M0745）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第98條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「方向里程標誌「指 24 」，用以指示行車路線通往地點之方向及里程。設於交岔路口顯明之處，牌面與行車路線平行，箭頭指向通往之地點。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>車道預告標誌上方標示不同車道指引之地名或公路路線（M0421、M0443）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第121條</span>
+      <div>
+        <span>車道預告標誌上方標示不同車道指引之地名或公路路線（M0421、M0443）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第103條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「車道指示標誌「指 29 」，用以指示通達地點應行駛之車道。懸掛於應進入該車道將近處之正前上方。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>藍底白圖紅色長條橫槓置於路口末端為「此路不通」（M0519）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第134條</span>
+      <div>
+        <span>藍底白圖紅色長條橫槓置於路口末端為「此路不通」（M0519）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第129條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「此路不通標誌「指６５」，用以指示前端道路無出口不能通行。設於不通道路之入口處。」</div>
     </li>
   </ul>
 
@@ -2612,16 +2791,25 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>藍底正方形白色圖案指示各項公共運輸與旅客服務設施。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第125條</span>
+      <div>
+        <span>藍底正方形白色圖案指示各項公共運輸與旅客服務設施。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第118-4條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「運輸場站標誌，用以指示運輸場站之位置。設於鄰近道路適當之處，並得以附牌指示方向、距離及中英文站名。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>正方形藍底白「P」為停車處（M0419）；白底紅十字為救護站（M0072）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第127條</span>
+      <div>
+        <span>正方形藍底白「P」為停車處（M0419）；白底紅十字為救護站（M0072）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第118條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「停車處標誌「指 46 」、「指 47 」，用以指示公共停車場之位置。設於停車場入口處附近，面向行車方向」</div>
     </li>
     <li class="principle-item is-external">
-      <span>火車頭圖案為鐵路車站（M0431）；子彈型列車圖案為高鐵車站（M0748）；捷運標誌為捷運車站（M0740）。</span>
-      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第126條</span>
+      <div>
+        <span>火車頭圖案為鐵路車站（M0431）；子彈型列車圖案為高鐵車站（M0748）；捷運標誌為捷運車站（M0740）。</span>
+        <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第118-4條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「運輸場站標誌，用以指示運輸場站之位置。設於鄰近道路適當之處，並得以附牌指示方向、距離及中英文站名。」</div>
     </li>
   </ul>
 
@@ -2752,16 +2940,24 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>機車駕駛人及附載座人均應配戴合格安全帽，繫緊頤帶且帽體不可鬆脫遮蔽視線。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第88-2條</span>
+      <div>
+        <span>機車駕駛人及附載座人均應配戴合格安全帽，繫緊頤帶且帽體不可鬆脫遮蔽視線。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第88條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「三、配帶時安全帽應正面朝前及位置正確，於顎下繫緊扣環，安全帽並應適合頭形，穩固戴在頭上，不致上下左右晃動，且不可遮蔽視線。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>機車後座乘客必須跨坐並抓緊駕駛人或握把，不得側坐或站立踏板；普通輕型與重型機車最多附載1人。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第88條</span>
+      <div>
+        <span>機車後座乘客必須跨坐並抓緊駕駛人或握把，不得側坐或站立踏板；普通輕型與重型機車最多附載1人。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第88條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「重型及普通輕型機車在駕駛人後設有固定座位者，得附載一人。三、附載座人後，不得另載物品。但零星物品不影響駕駛人及附載人員之安全者，不在此限。四、附載座人不得側坐。」</div>
     </li>
     <li class="principle-item">
-      <span>騎車時應穿著長袖長褲、包覆鞋款與防滑手套，切勿穿拖鞋、高跟鞋以防操作失靈及受傷（S003、S004）。</span>
-      <span class="source-tag">題庫出處：S003</span>
+      <div>
+        <span>騎車時應穿著長袖長褲、包覆鞋款與防滑手套，切勿穿拖鞋、高跟鞋以防操作失靈及受傷（S003、S004）。</span>
+        <span class="source-tag">題庫出處：S003</span>
+      </div>
     </li>
   </ul>
 
@@ -2892,16 +3088,23 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>行車前應檢查機車煞車、方向燈、尾燈、照後鏡及胎紋深度（法定胎紋深度不得低於0.8mm）。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第39-2條</span>
+      <div>
+        <span>行車前應檢查機車煞車、方向燈、尾燈、照後鏡及胎紋深度（法定胎紋深度不得低於0.8mm）。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第89條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「行車前應注意之事項，依下列規定：一、方向盤、煞車、輪胎、燈光、雨刮、喇叭、照後鏡及依規定應裝設之行車紀錄器、載重計、轉彎及倒車警報裝置、行車視野輔助系統等須詳細檢查確實有效。」</div>
     </li>
     <li class="principle-item">
-      <span>胎面磨耗指示點（對齊胎壁小三角形凸起點）若磨平應立即更換輪胎以防雨天打滑水漂（S061）。</span>
-      <span class="source-tag">題庫出處：S061</span>
+      <div>
+        <span>胎面磨耗指示點（對齊胎壁小三角形凸起點）若磨平應立即更換輪胎以防雨天打滑水漂（S061）。</span>
+        <span class="source-tag">題庫出處：S061</span>
+      </div>
     </li>
     <li class="principle-item">
-      <span>胎壓過低易耗油磨損胎邊，胎壓過高著地面積減小易滑倒，應維持原廠標準胎壓（S120）。</span>
-      <span class="source-tag">題庫出處：S120</span>
+      <div>
+        <span>胎壓過低易耗油磨損胎邊，胎壓過高著地面積減小易滑倒，應維持原廠標準胎壓（S120）。</span>
+        <span class="source-tag">題庫出處：S120</span>
+      </div>
     </li>
   </ul>
 
@@ -3009,17 +3212,23 @@ h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
 
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
-    <li class="principle-item is-external">
-      <span>大型車轉彎時後輪軌跡較前輪更向內偏移，形成「內輪差」危險區域，機車切勿在轉彎內側鑽縫或併行。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
-    </li>
-    <li class="principle-item is-external">
-      <span>大型車車身四周（尤其是右前側及正後方）存在龐大視野死角，機車駕駛應與大型車保持足夠安全間隔。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第94條</span>
+    <li class="principle-item">
+      <div>
+        <span>大型車轉彎時後輪軌跡較前輪更向內偏移，形成「內輪差」危險區域，機車切勿在轉彎內側鑽縫或併行。</span>
+        <span class="source-tag">題庫出處：S008、S009</span>
+      </div>
     </li>
     <li class="principle-item">
-      <span>大型車行駛中產生強大側向氣流氣壓，機車在旁易受強風吸附或吹翻，應避免與其長時間併行（S016）。</span>
-      <span class="source-tag">題庫出處：S016</span>
+      <div>
+        <span>大型車車身四周（尤其是右前側及正後方）存在龐大視野死角，機車駕駛應與大型車保持足夠安全間隔。</span>
+        <span class="source-tag">題庫出處：S010、S011</span>
+      </div>
+    </li>
+    <li class="principle-item">
+      <div>
+        <span>大型車行駛中產生強大側向氣流氣壓，機車在旁易受強風吸附或吹翻，應避免與其長時間併行（S016）。</span>
+        <span class="source-tag">題庫出處：S016</span>
+      </div>
     </li>
   </ul>
 
@@ -3176,16 +3385,24 @@ D.搶快超前轉彎。</div>
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>汽車行經行人穿越道有行人穿越時，無論有無號誌，均應暫停讓行人先行通過。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第103條</span>
+      <div>
+        <span>汽車行經行人穿越道有行人穿越時，無論有無號誌，均應暫停讓行人先行通過。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第103條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「汽車行近行人穿越道，遇有行人穿越、攜帶白手杖或導盲犬之視覺功能障礙者時，無論有無交通指揮人員指揮或號誌指示，均應暫停讓行人、視覺功能障礙者先行通過。」</div>
+    </li>
+    <li class="principle-item">
+      <div>
+        <span>車輛行近行人穿越道時，應距離行人行進方向 3 公尺（約 1 個車道寬或約 3 條枕木紋）以上完全煞停。</span>
+        <span class="source-tag">題庫出處：S031、S032</span>
+      </div>
     </li>
     <li class="principle-item is-external">
-      <span>車輛行近行人穿越道時，應距離行人行進方向 3 公尺（約 1 個車道寬或約 3 條枕木紋）以上完全煞停。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第103條</span>
-    </li>
-    <li class="principle-item is-external">
-      <span>遇攜帶白手杖之視障者或導盲犬穿越道路時，應全面停讓並保持耐心，不得鳴按喇叭催促（S035）。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第103條</span>
+      <div>
+        <span>遇攜帶白手杖之視障者或導盲犬穿越道路時，應全面停讓並保持耐心，不得鳴按喇叭催促（S035）。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第103條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「汽車行近行人穿越道，遇有行人穿越、攜帶白手杖或導盲犬之視覺功能障礙者時，無論有無交通指揮人員指揮或號誌指示，均應暫停讓行人、視覺功能障礙者先行通過。」</div>
     </li>
   </ul>
 
@@ -3338,16 +3555,25 @@ D.搶快超前轉彎。</div>
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>超車應一律由「左側」超越，並於超車前保持安全距離打左方向燈、鳴喇叭或變換燈光預告。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第101條</span>
+      <div>
+        <span>超車應一律由「左側」超越，並於超車前保持安全距離打左方向燈、鳴喇叭或變換燈光預告。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第101條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「欲超越同一車道之前車時，須先按鳴喇叭二單響或變換燈光一次，不得連續密集按鳴喇叭或變換燈光迫使前車允讓。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>超車時與前車左側應保持半公尺（50公分）以上間隔，超越後確認安全距離再行打右方向燈駛回原車道。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第101條</span>
+      <div>
+        <span>超車時與前車左側應保持半公尺（50公分）以上間隔，超越後確認安全距離再行打右方向燈駛回原車道。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第101條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「超越時應顯示左方向燈並於前車左側保持半公尺以上之間隔超過，行至安全距離後，再顯示右方向燈駛入原行路線。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>在彎道、險坡、狹橋、隧道、交岔路口及設有禁止超車標誌標線（雙黃線/單黃實線）處，絕對禁止超車。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第101條</span>
+      <div>
+        <span>在彎道、險坡、狹橋、隧道、交岔路口及設有禁止超車標誌標線（雙黃線/單黃實線）處，絕對禁止超車。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第101條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「行經設有彎道、陡坡、狹橋、隧道、交岔路口標誌之路段或鐵路平交道、道路施工地段，不得超車。二、在設有學校、醫院標誌或其他設有禁止超車標誌、標線之處所、地段或對面有來車交會或前行車連貫二輛以上者，不得超車。」</div>
     </li>
   </ul>
 
@@ -3511,16 +3737,25 @@ D.搶快超前轉彎。</div>
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>機車行駛時應遵守車道管制規定，路面劃有「禁行機車」字樣之車道絕對禁止進入行駛。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第99條</span>
+      <div>
+        <span>機車行駛時應遵守車道管制規定，路面劃有「禁行機車」字樣之車道絕對禁止進入行駛。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第99條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「內側車道設有禁行機車標誌或標線者，應依兩段方式進行左轉，不得由內側或其他車道左轉。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>未劃分快慢車道之單行道，機車應在最外側車道或慢車道行駛，不得佔用內側快車道。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第98條</span>
+      <div>
+        <span>未劃分快慢車道之單行道，機車應在最外側車道或慢車道行駛，不得佔用內側快車道。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第99條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「在未劃分快慢車道之道路，應在最外側二車道行駛；單行道應在最左、右側車道行駛。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>同向劃有三車道以上之道路，最內側車道除另有規定外通常劃設禁行機車，機車應行駛於外側或中側車道。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第99條</span>
+      <div>
+        <span>同向劃有三車道以上之道路，最內側車道除另有規定外通常劃設禁行機車，機車應行駛於外側或中側車道。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第99條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「二、在三快車道以上單行道道路，行駛於右側車道或慢車道者，應以兩段方式進行左轉彎；行駛於左側車道或慢車道者，應以兩段方式進行右轉彎。」</div>
     </li>
   </ul>
 
@@ -3640,16 +3875,25 @@ D.搶快超前轉彎。</div>
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>路口設有兩段左轉標誌或最內側為禁行機車道路口，機車左轉必須依兩段式規定於待轉區待轉。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第99條</span>
+      <div>
+        <span>路口設有兩段左轉標誌或最內側為禁行機車道路口，機車左轉必須依兩段式規定於待轉區待轉。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第99條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「內側車道設有禁行機車標誌或標線者，應依兩段方式進行左轉，不得由內側或其他車道左轉。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>汽車轉彎或變換車道前，應至少於交岔路口 30 公尺前顯示方向燈預告。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+      <div>
+        <span>汽車轉彎或變換車道前，應至少於交岔路口 30 公尺前顯示方向燈預告。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「右轉彎時，應距交岔路口三十公尺前顯示方向燈或手勢，換入外側車道、右轉車道或慢車道，駛至路口後再行右轉。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>在無禁行機車及兩段轉彎規定之雙向兩車道路口，機車欲左轉應提早換入內側車道至路口中心處再左轉（S027）。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+      <div>
+        <span>在無禁行機車及兩段轉彎規定之雙向兩車道路口，機車欲左轉應提早換入內側車道至路口中心處再左轉（S027）。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「左轉彎時，應距交岔路口三十公尺前顯示方向燈或手勢，換入內側車道或左轉車道，行至交岔路口中心處左轉，並不得占用來車道搶先左轉。」</div>
     </li>
   </ul>
 
@@ -3780,16 +4024,25 @@ D.搶快超前轉彎。</div>
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>路權判定順序：支線道車讓幹線道車先行；少線道車讓多線道車先行；轉彎車讓直行車先行。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+      <div>
+        <span>路權判定順序：支線道車讓幹線道車先行；少線道車讓多線道車先行；轉彎車讓直行車先行。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「支線道車應暫停讓幹線道車先行。未設標誌、標線或號誌劃分幹、支線道者，少線道車應暫停讓多線道車先行；車道數相同時，轉彎車應暫停讓直行車先行」</div>
     </li>
     <li class="principle-item is-external">
-      <span>未劃分幹支線且車道數相同之路口，同為直行車或轉彎車時，左方車應讓右方車先行。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+      <div>
+        <span>未劃分幹支線且車道數相同之路口，同為直行車或轉彎車時，左方車應讓右方車先行。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「同為直行車或轉彎車者，左方車應暫停讓右方車先行。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>前方路口車流壅塞或號誌即將變換時，即使本車道為綠燈，車輛仍不得強行駛入路口，應保持路口淨空（S020）。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+      <div>
+        <span>前方路口車流壅塞或號誌即將變換時，即使本車道為綠燈，車輛仍不得強行駛入路口，應保持路口淨空（S020）。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「行至有號誌之交岔路口，遇有前行或轉彎之車道交通擁塞時，應在路口停止線前暫停，不得逕行駛入交岔路口內，致號誌轉換後，仍未能通過妨礙其他車輛通行。」</div>
     </li>
   </ul>
 
@@ -3887,16 +4140,25 @@ D.搶快超前轉彎。</div>
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>行經彎道、坡道應於「入彎前」提早減速，在彎道中切忌緊急猛煞車或劇烈傾斜以免輪胎打滑失控。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第93條</span>
+      <div>
+        <span>行經彎道、坡道應於「入彎前」提早減速，在彎道中切忌緊急猛煞車或劇烈傾斜以免輪胎打滑失控。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第93條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「行經設有彎道、坡路、狹路、狹橋、隧道、學校、醫院標誌之路段、道路施工路段、泥濘或積水道路、無號誌之交岔路口及其他人車擁擠處所，或因雨霧致視線不清或道路發生臨時障礙，均應減速慢行，作隨時停車之準備。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>在狹窄坡道會車時，下坡車應暫停讓上坡車先行；但下坡車已到中途而上坡車尚未上坡者，上坡車應讓下坡車先行。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第100條</span>
+      <div>
+        <span>在狹窄坡道會車時，下坡車應暫停讓上坡車先行；但下坡車已到中途而上坡車尚未上坡者，上坡車應讓下坡車先行。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第100條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「在峻狹坡路交會時，下坡車應停車讓上坡車先行駛過。但上坡車尚在坡下而下坡車已駛至坡道中途者，上坡車應讓下坡車駛過後，再行上坡。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>彎道行駛視線受阻，對向可能隨時有車輛侵入，應隨時靠右行駛、保持車距、禁止超車（S072、S087）。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第101條</span>
+      <div>
+        <span>彎道行駛視線受阻，對向可能隨時有車輛侵入，應隨時靠右行駛、保持車距、禁止超車（S072、S087）。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第101條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「行經設有彎道、陡坡、狹橋、隧道、交岔路口標誌之路段或鐵路平交道、道路施工地段，不得超車。」</div>
     </li>
   </ul>
 
@@ -3993,17 +4255,23 @@ D.搶快超前轉彎。</div>
 
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
-    <li class="principle-item is-external">
-      <span>人孔蓋、金屬鐵板、路面油污及潮濕標線之摩擦係數極低，輪胎極易打滑失去抓地力。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第93條</span>
-    </li>
-    <li class="principle-item is-external">
-      <span>行經低摩擦特殊路面時，應「保持車身正直、鬆開油門順向滑過」，切忌緊急煞車、劇烈壓車或急催油門。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第94條</span>
+    <li class="principle-item">
+      <div>
+        <span>人孔蓋、金屬鐵板、路面油污及潮濕標線之摩擦係數極低，輪胎極易打滑失去抓地力。</span>
+        <span class="source-tag">題庫出處：S045、S055</span>
+      </div>
     </li>
     <li class="principle-item">
-      <span>雨天行車應加大跟車安全距離一倍以上，提早減速預警，避免積水水漂現象（S057、S094）。</span>
-      <span class="source-tag">題庫出處：S057</span>
+      <div>
+        <span>行經低摩擦特殊路面時，應「保持車身正直、鬆開油門順向滑過」，切忌緊急煞車、劇烈壓車或急催油門。</span>
+        <span class="source-tag">題庫出處：S046、S056</span>
+      </div>
+    </li>
+    <li class="principle-item">
+      <div>
+        <span>雨天行車應加大跟車安全距離一倍以上，提早減速預警，避免積水水漂現象（S057、S094）。</span>
+        <span class="source-tag">題庫出處：S057</span>
+      </div>
     </li>
   </ul>
 
@@ -4111,17 +4379,24 @@ D.搶快超前轉彎。</div>
 
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
-    <li class="principle-item is-external">
-      <span>機車煞車操作應前後輪同時均勻施力（前煞約7成、後煞約3成），維持車身穩定，避免單鎖死前輪後摔。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第94條</span>
+    <li class="principle-item">
+      <div>
+        <span>機車煞車操作應前後輪同時均勻施力（前煞約7成、後煞約3成），維持車身穩定，避免單鎖死前輪後摔。</span>
+        <span class="source-tag">題庫出處：S078、M0147</span>
+      </div>
     </li>
     <li class="principle-item is-external">
-      <span>行經路邊停放之汽車旁時，應隨時注意車內有無乘員，並保持 1 公尺以上安全間隔，以防突開車門肇事。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第112條</span>
+      <div>
+        <span>行經路邊停放之汽車旁時，應隨時注意車內有無乘員，並保持 1 公尺以上安全間隔，以防突開車門肇事。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第112條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「三、應注意行人、其他車輛，並讓其先行。四、確認安全無虞後，再將車門開啟至可供出入幅度，迅速下車並關上車門。」</div>
     </li>
     <li class="principle-item">
-      <span>前方突遇緊急障礙物煞車之反應順序：鬆油門 -> 前後輪同時煞車 -> 抓緊龍頭保持直線平衡（S078）。</span>
-      <span class="source-tag">題庫出處：S078</span>
+      <div>
+        <span>前方突遇緊急障礙物煞車之反應順序：鬆油門 -> 前後輪同時煞車 -> 抓緊龍頭保持直線平衡（S078）。</span>
+        <span class="source-tag">題庫出處：S078</span>
+      </div>
     </li>
   </ul>
 
@@ -4208,16 +4483,25 @@ D.搶快超前轉彎。</div>
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>夜間、行經隧道、濃霧、雨雪或視線不清時，機車行駛應開亮頭燈。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第109條</span>
+      <div>
+        <span>夜間、行經隧道、濃霧、雨雪或視線不清時，機車行駛應開亮頭燈。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第109條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「汽車行駛時，應依下列規定使用燈光：一、夜間應開亮頭燈。二、行經隧道、調撥車道應開亮頭燈。三、遇濃霧、雨、雪、天色昏暗或視線不清時，應開亮頭燈。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>市區照明充足路段或與對向來車會車、跟隨前車時，應使用「近光燈」，嚴禁使用遠光燈造成眩光危險。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第109條</span>
+      <div>
+        <span>市區照明充足路段或與對向來車會車、跟隨前車時，應使用「近光燈」，嚴禁使用遠光燈造成眩光危險。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第109條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「六、夜間會車時，或同向前方一百公尺內有車輛行駛，除第一百零一條第三款之情形外，應使用近光燈。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>遠光燈僅限於郊區無路燈或照明嚴重不足且前方無車輛時使用，遇來車應立即切換回近光燈（S085）。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第109條</span>
+      <div>
+        <span>遠光燈僅限於郊區無路燈或照明嚴重不足且前方無車輛時使用，遇來車應立即切換回近光燈（S085）。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第109條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「六、夜間會車時，或同向前方一百公尺內有車輛行駛，除第一百零一條第三款之情形外，應使用近光燈。」</div>
     </li>
   </ul>
 
@@ -4304,16 +4588,24 @@ D.搶快超前轉彎。</div>
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>路邊起駛前應先打方向燈預告，轉頭觀察後方與左右來車狀況，確認安全後方可緩步起駛。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第89條</span>
+      <div>
+        <span>路邊起駛前應先打方向燈預告，轉頭觀察後方與左右來車狀況，確認安全後方可緩步起駛。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第89條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「七、起駛前應顯示方向燈，注意前後左右有無障礙或車輛行人，並應讓行進中之車輛行人優先通行。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>臨時停車與停車應緊靠路邊停放，不得併排停車或在紅線、交岔路口 10 公尺內違規停放。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第111條</span>
+      <div>
+        <span>臨時停車與停車應緊靠路邊停放，不得併排停車或在紅線、交岔路口 10 公尺內違規停放。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第111條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「二、交岔路口、公共汽車招呼站十公尺內、消防栓、消防車出入口五公尺內不得臨時停車。」</div>
     </li>
     <li class="principle-item">
-      <span>車速越快駕駛人之視野角度越狹窄（高速隧道效應），行經複雜路段應主動降低車速以擴大有效視野（S084）。</span>
-      <span class="source-tag">題庫出處：S084</span>
+      <div>
+        <span>車速越快駕駛人之視野角度越狹窄（高速隧道效應），行經複雜路段應主動降低車速以擴大有效視野（S084）。</span>
+        <span class="source-tag">題庫出處：S084</span>
+      </div>
     </li>
   </ul>
 
@@ -4422,16 +4714,25 @@ D.搶快超前轉彎。</div>
   <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
   <ul class="principles-list">
     <li class="principle-item is-external">
-      <span>聞消防車、救護車、警備車等特種緊急車輛警號，應立即避讓，向路側減速或停讓先行。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第101條</span>
+      <div>
+        <span>聞消防車、救護車、警備車等特種緊急車輛警號，應立即避讓，向路側減速或停讓先行。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第101條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「聞有執行緊急任務車輛之警號時，不論來自何方，均應立即避讓」</div>
     </li>
     <li class="principle-item is-external">
-      <span>行經無號誌盲點巷口或公車靠站時，應預判盲區可能突竄行人或車輛，減速慢行並備煞（S052、S113）。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第93條</span>
+      <div>
+        <span>行經無號誌盲點巷口或公車靠站時，應預判盲區可能突竄行人或車輛，減速慢行並備煞（S052、S113）。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第93條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「行經設有彎道、坡路、狹路、狹橋、隧道、學校、醫院標誌之路段、道路施工路段、泥濘或積水道路、無號誌之交岔路口及其他人車擁擠處所，或因雨霧致視線不清或道路發生臨時障礙，均應減速慢行，作隨時停車之準備。」</div>
     </li>
     <li class="principle-item is-external">
-      <span>遇前方施工路段或障礙物，應提前減速循指示導引車道行駛，不強行爭道超車（S114、S118）。</span>
-      <span class="source-tag external">法規依據：道路交通安全規則第94條</span>
+      <div>
+        <span>遇前方施工路段或障礙物，應提前減速循指示導引車道行駛，不強行爭道超車（S114、S118）。</span>
+        <span class="source-tag external">法規依據：道路交通安全規則第93條</span>
+      </div>
+      <div class="law-quote"><strong>法條原文：</strong>「行經設有彎道、坡路、狹路、狹橋、隧道、學校、醫院標誌之路段、道路施工路段、泥濘或積水道路、無號誌之交岔路口及其他人車擁擠處所，或因雨霧致視線不清或道路發生臨時障礙，均應減速慢行，作隨時停車之準備。」</div>
     </li>
   </ul>
 
