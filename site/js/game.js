@@ -90,29 +90,42 @@
   function dailyDoneIds(date, ids) {
     var done = {};
     Store.getAnswerLog().forEach(function (r) {
-      if (r.src === 'daily' && Store.dateStr(r.ts) === date) done[r.qid] = true;
+      if (r.src === 'daily' && (r.dailyDate || Store.dateStr(r.ts)) === date) done[r.qid] = true;
     });
     return ids.filter(function (id) { return done[id]; });
   }
 
-  function getDaily() {
+  // 跨午夜：23:58 開始的挑戰，過了 00:00 繼續作答仍算開始那天。
+  // 最近一次每日挑戰作答的 2 小時內、且那天的挑戰還沒做完，getDaily() 就繼續回傳那一天。
+  var DAILY_RESUME_MS = 2 * 60 * 60 * 1000;
+
+  function activeDailyDate(today, all) {
+    var a = Store.getDoc('dailyActive', null);
+    if (a && a.date < today && all[a.date] && Store.now().getTime() - a.ts <= DAILY_RESUME_MS &&
+        dailyDoneIds(a.date, all[a.date]).length < all[a.date].length) return a.date;
+    return today;
+  }
+
+  // date（選填）：指定要接續的挑戰日期（需已存在且不是未來）；不給就自動判斷
+  function getDaily(date) {
     dataReady();
     var today = Store.today();
     var all = Store.getDoc('daily', {});
-    if (!all[today]) {
+    var day = date && date <= today && all[date] ? date : activeDailyDate(today, all);
+    if (!all[day]) {
       var ids = [], seen = {};
-      dueIds('mistake', DAILY_DUE_MISTAKES, today).forEach(function (id) { ids.push(id); seen[id] = true; });
-      dueIds('grad', DAILY_DUE_GRAD, today).forEach(function (id) {
+      dueIds('mistake', DAILY_DUE_MISTAKES, day).forEach(function (id) { ids.push(id); seen[id] = true; });
+      dueIds('grad', DAILY_DUE_GRAD, day).forEach(function (id) {
         if (!seen[id]) { ids.push(id); seen[id] = true; }
       });
       pickNewQuestions(DAILY_SIZE - ids.length, seen).forEach(function (id) { ids.push(id); });
-      all[today] = ids.slice(0, DAILY_SIZE);
+      all[day] = ids.slice(0, DAILY_SIZE);
       Store.setDoc('daily', all);
     }
-    var ids2 = all[today];
-    var done = dailyDoneIds(today, ids2);
+    var ids2 = all[day];
+    var done = dailyDoneIds(day, ids2);
     return {
-      date: today,
+      date: day,
       ids: ids2,
       done: done,
       remaining: ids2.filter(function (id) { return done.indexOf(id) === -1; }),
@@ -120,17 +133,19 @@
     };
   }
 
-  // 每日挑戰作答（會標記 src='daily'，用來判斷當天挑戰完成）
-  function dailyAnswer(qid, correct, choice) {
-    var res = Store.recordAnswer(qid, correct, { choice: choice, src: 'daily' });
-    return { result: res, daily: getDaily() };
+  // 每日挑戰作答（會標記 src='daily' 和挑戰日期，用來判斷當天挑戰完成）
+  function dailyAnswer(qid, correct, choice, date) {
+    var day = getDaily(date).date;
+    var res = Store.recordAnswer(qid, correct, { choice: choice, src: 'daily', dailyDate: day });
+    Store.setDoc('dailyActive', { date: day, ts: Store.now().getTime() });
+    return { result: res, daily: getDaily(day) };
   }
 
   function completedDailyDates() {
     var all = Store.getDoc('daily', {}), done = {};
     Store.getAnswerLog().forEach(function (r) {
       if (r.src === 'daily') {
-        var d = Store.dateStr(r.ts);
+        var d = r.dailyDate || Store.dateStr(r.ts);
         (done[d] = done[d] || {})[r.qid] = true;
       }
     });
@@ -155,6 +170,8 @@
     var today = Store.today();
     var checked = checkedDays();
     var days = Object.keys(checked).filter(function (d) { return d <= today; }).sort();
+    var first = null;   // 學生第一次作答的日子
+    Store.getAnswerLog().forEach(function (r) { var d = Store.dateStr(r.ts); if (!first || d < first) first = d; });
     var status = {}, usedWeeks = {};
     var streak = 0, best = 0, resets = 0, lastReset = null;
     if (days.length) {
@@ -174,7 +191,9 @@
     var start = Store.weekStart(today), week = [];
     for (var i = 0; i < 7; i++) {
       var day = Store.addDays(start, i);
-      var st = day > today ? 'future' : (status[day] || 'missed');
+      var st = day > today ? 'future'
+        : (!first || day < first) ? (day === today ? 'today' : 'before')   // 還沒開始練習的日子
+        : (status[day] || 'missed');
       week.push({ date: day, status: st, isToday: day === today });
     }
     return {

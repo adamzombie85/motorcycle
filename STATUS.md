@@ -123,6 +123,10 @@
 | 2026-10-23 | Claude Code | C17 全部 11 個小類完成：926 題→287 個概念（覆蓋 100%、無重複）；初稿 data/concepts/draft-01~11-*.json，審核頁 docs/概念卡審核-01~11.html；有疑似矛盾 7 處（見審核頁⚠） | Jim：審核 02～11；Claude：抽查規則、裁決矛盾 |
 | 2026-10-23 | Claude | 審查 C17：規則皆來自題目；7 處矛盾 5 處裁定為不同情況、2 處待 Jim；看圖題改一題一卡 → C17b | Claude Code：C17b；Jim：等 C17b 後審核 |
 | 2026-10-23 | Claude Code | C17b 完成：照 5 項裁決拆分／合併；看圖題改一題一張圖卡（268 張）；共 490 張卡（文字概念 222）；剩 3 個 ⚠（C-jct-06b、S060、S099）；審核頁 01～11 已重產 | Jim：審核；Claude：抽查 |
+| 2026-10-23 | Claude | 抽查 C17b 通過 | Jim：審核概念卡 01～11（先看 3 個 ⚠ 和文字概念） |
+| 2026-10-23 | Claude | Jim 審 3 個 ⚠ 完成（記在 docs/概念卡-Jim審核紀錄.md）；看圖題改為比較卡，原則可引用有條號的官方法規 → 開 V1 給 Antigravity | Antigravity：A1 → V1；Jim：審文字概念卡 |
+| 2026-10-23 | Claude | 審查 A1（ea5225c）與 R1：假資料外漏、字型 7.4MB、截圖不是真畫面 → A1b；引擎 ISSUE-01/03/05 → C18；順序 A1b→A2→V1 | Antigravity：A1b；Claude Code：C18 |
+| 2026-10-23 | Claude Code | C18 完成：ISSUE-05（getStreak week 新增 'before'）、ISSUE-01（每日挑戰跨午夜算開始那天，dailyDate）、ISSUE-03（確認無影片題）；game-test 49/49 | Antigravity：週打卡格要處理 'before'；每日挑戰畫面可沿用 getDaily() 自動接續 |
 
 ## 開工提示詞
 

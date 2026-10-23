@@ -111,7 +111,7 @@
     // 作答一題：寫入紀錄、更新錯題庫與複習日期。
     // 錯題庫規則：答錯 → 加入（或歸 0），隔天到期；答對且在錯題庫 → +1（第 1 次 3 天後到期），
     // 連續答對 2 次移出並排 7 天後的「畢業檢查」；畢業檢查答對 → 完全畢業，答錯 → 重新進錯題庫。
-    // meta（選填）：{ choice, src }，src 'daily' 代表每日挑戰。
+    // meta（選填）：{ choice, src, dailyDate }，src 'daily' 代表每日挑戰，dailyDate 是該挑戰的日期。
     // 回傳 { inMistakes, streak, cleared, added, graduated }，讓畫面決定要顯示什麼。
     recordAnswer: function (qid, correct, meta) {
       meta = meta || {};
@@ -120,6 +120,7 @@
       var entry = { qid: qid, correct: !!correct, ts: now.getTime() };
       if (meta.choice !== undefined) entry.choice = meta.choice;
       if (meta.src) entry.src = meta.src;
+      if (meta.dailyDate) entry.dailyDate = meta.dailyDate;   // 每日挑戰開始那天（跨午夜仍算那天）
       log.push(entry);
       write(userKey('answers'), log);
 
