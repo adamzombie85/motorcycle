@@ -1,10 +1,87 @@
 [
-{"id":"C-large-01","name":"內外輪差","rule":"軸距愈長，內外輪差愈大，所需路面也愈寬；小客車也有內輪差。","questions":["M0560","M0562"],"numbers":[],"conflict":null},
-{"id":"C-large-02","name":"轉彎處的事故原因","rule":"轉彎處車禍，常因疏忽視野死角和大型車內輪差。","questions":["M0563"],"numbers":[],"conflict":null},
-{"id":"C-large-03","name":"大型車右轉","rule":"大型車打右轉燈時，要減速留在後方，不進入右側內輪差範圍。","questions":["M0572"],"numbers":[],"conflict":null},
-{"id":"C-large-04","name":"與大型車同行","rule":"不要與大型車並行，要保持足夠間隔；大型車在後就靠右減速禮讓。","questions":["M0566","M0567"],"numbers":[],"conflict":null},
-{"id":"C-large-05","name":"禁止大貨車標誌","rule":"這個標誌的意思是「禁止大貨車及聯結車進入」。","questions":["M0564"],"numbers":[],"conflict":null},
-{"id":"C-large-06","name":"緊急車輛速度與車道","rule":"執行任務中的消防車、救護車、警備車，速度不受限制，內外側車道都可行駛；任務完畢後依道路速限。","questions":["M0561","M0568","M0569"],"numbers":[],"conflict":null},
-{"id":"C-large-07","name":"禮讓緊急車輛","rule":"遇到執行任務的救護車要避讓，不得超越；垃圾車、郵務車不須禮讓。","questions":["M0570","M0571"],"numbers":[],"conflict":null},
-{"id":"C-large-08","name":"闖紅燈認定","rule":"此題正確答案：面對圓形紅燈，牽引（騎乘）到非紅燈行向的道路後繼續騎乘。","questions":["M0565"],"numbers":[],"conflict":"題意不明：題目問「違規認定標準」，正確選項是否屬違規沒寫明，請 Jim／Claude 判斷"}
+ {
+  "id": "C-large-01",
+  "name": "內外輪差",
+  "rule": "軸距愈長，內外輪差愈大，所需路面也愈寬；小客車也有內輪差。",
+  "questions": [
+   "M0560",
+   "M0562"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-large-02",
+  "name": "轉彎處的事故原因",
+  "rule": "轉彎處車禍，常因疏忽視野死角和大型車內輪差。",
+  "questions": [
+   "M0563"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-large-03",
+  "name": "大型車右轉",
+  "rule": "大型車打右轉燈時，要減速留在後方，不進入右側內輪差範圍。",
+  "questions": [
+   "M0572"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-large-04",
+  "name": "與大型車同行",
+  "rule": "不要與大型車並行，要保持足夠間隔；大型車在後就靠右減速禮讓。",
+  "questions": [
+   "M0566",
+   "M0567"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-large-05",
+  "name": "禁止大貨車標誌",
+  "rule": "這個標誌的意思是「禁止大貨車及聯結車進入」。",
+  "questions": [
+   "M0564"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-large-06",
+  "name": "緊急車輛速度與車道",
+  "rule": "執行任務中的消防車、救護車、警備車，速度不受限制，內外側車道都可行駛；任務完畢後依道路速限。",
+  "questions": [
+   "M0561",
+   "M0568",
+   "M0569"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-large-07",
+  "name": "禮讓緊急車輛",
+  "rule": "遇到執行任務的救護車要避讓，不得超越；垃圾車、郵務車不須禮讓。",
+  "questions": [
+   "M0570",
+   "M0571"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-large-08",
+  "name": "闖紅燈認定",
+  "rule": "此題正確答案：面對圓形紅燈，牽引（騎乘）到非紅燈行向的道路後繼續騎乘。",
+  "questions": [
+   "M0565"
+  ],
+  "numbers": [],
+  "conflict": "題意不明：題目問「違規認定標準」。M0450（牽引過停止線後繼續騎乘＝視同闖紅燈）可佐證此選項是闖紅燈情形，但請 Jim／Claude 確認"
+ }
 ]
