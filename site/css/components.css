@@ -2432,12 +2432,15 @@
 }
 
 /* ==========================================================================
-   28. 遊戲化 - 考照之路地圖 (Road to License Map)
+   28. 遊戲化 - 考照之路地圖 (Road to License Map - Winding Road)
    ========================================================================== */
 .map-container {
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .map-road-section {
@@ -2446,120 +2449,398 @@
   border-radius: var(--radius-xl);
   overflow: hidden;
   box-shadow: var(--shadow-card);
+  position: relative;
 }
 
+/* 路段場景圖橫幅 */
 .map-scene-banner {
   height: 180px;
   background-color: var(--color-slate-200);
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
 }
 
-.map-scene-header {
-  padding: var(--space-5);
-  border-bottom: 1px solid var(--color-border-subtle);
-  background-color: #FFFFFF;
+.map-scene-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.map-scene-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.4) 60%, rgba(15, 23, 42, 0.1) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-4) var(--space-5);
+  color: #FFFFFF;
+}
+
+.map-scene-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-full);
+  color: #FFFFFF;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  width: fit-content;
+  margin-bottom: var(--space-1);
 }
 
 .map-scene-title {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-black);
-  color: var(--color-slate-900);
-  margin-bottom: var(--space-1);
+  color: #FFFFFF;
+  margin: 0 0 var(--space-1);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .map-scene-subtitle {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  color: #E2E8F0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
-.map-stations-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: var(--space-3);
-  padding: var(--space-5);
+.map-scene-progress-pill {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-bold);
 }
 
-.map-station-card {
+/* 彎曲道路主軌道 (Winding Road Track) */
+.map-road-track {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  overflow: visible;
+  padding: 10px 0;
+}
+
+.map-road-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.road-path-border {
+  stroke: #94A3B8;
+  stroke-width: 48px;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.road-path-surface {
+  stroke: #334155;
+  stroke-width: 40px;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.road-path-centerline {
+  stroke: #FEF08A;
+  stroke-width: 3px;
+  stroke-linecap: round;
+  stroke-dasharray: 8 8;
+  fill: none;
+  opacity: 0.95;
+}
+
+/* 道路上的關卡站點 (Station Nodes) */
+.map-road-station {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  z-index: 5;
+  outline: none;
+}
+
+.station-node-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-full);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--space-4) var(--space-2);
-  border-radius: var(--radius-lg);
-  border: 2px solid var(--color-border-card);
-  background-color: #FFFFFF;
-  text-decoration: none;
-  color: inherit;
-  transition: all var(--transition-fast);
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25), inset 0 2px 2px rgba(255, 255, 255, 0.4);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
   position: relative;
-  min-height: 100px;
-  text-align: center;
 }
 
-.map-station-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--color-primary-400);
-  box-shadow: var(--shadow-hover);
+.map-road-station:hover .station-node-circle,
+.map-road-station:focus-visible .station-node-circle {
+  transform: scale(1.14);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.35);
 }
 
-.map-station-num {
-  font-size: var(--font-size-md);
+/* 站點狀態：已過關 (實心綠色 + ✓ 白色打勾) */
+.map-road-station.is-passed .station-node-circle {
+  background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+  border: 3.5px solid #FFFFFF;
+  color: #FFFFFF;
+}
+
+/* 站點狀態：練習過（半滿/琥珀色 + 分數） */
+.map-road-station.is-practiced .station-node-circle {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  border: 3.5px solid #FFFFFF;
+  color: #FFFFFF;
+}
+
+.station-score-badge {
+  font-size: 0.85rem;
   font-weight: var(--font-weight-black);
-  color: var(--color-slate-900);
-  margin-bottom: var(--space-1);
+  line-height: 1;
 }
 
-.map-station-status {
-  font-size: var(--font-size-sm);
+.station-score-label {
+  font-size: 0.65rem;
   font-weight: var(--font-weight-bold);
+  opacity: 0.9;
+  line-height: 1;
+}
+
+/* 站點狀態：未練習 (空心白底 + 灰邊框) */
+.map-road-station.is-untouched .station-node-circle {
+  background-color: #FFFFFF;
+  border: 3.5px solid #94A3B8;
+  color: #64748B;
+}
+
+.station-empty-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background-color: #CBD5E1;
+}
+
+/* 站點名稱標籤 (Station Name Pill) */
+.station-name-pill {
+  margin-top: 6px;
+  padding: 2px 10px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-slate-800);
+  white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  transition: all var(--transition-fast);
+}
+
+.map-road-station:hover .station-name-pill {
+  background-color: var(--color-primary-50);
+  border-color: var(--color-primary-300);
+  color: var(--color-primary-800);
+}
+
+/* 當前停靠站點高亮 (Active Current Station) */
+.map-road-station.is-current .station-node-circle {
+  box-shadow: 0 0 0 4px var(--color-primary-500), 0 8px 20px rgba(37, 99, 235, 0.45);
+}
+
+/* 主角騎士停靠標記 (Rider Marker Next to Current Station) */
+.map-rider-marker {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+  animation: riderBob 2s ease-in-out infinite;
+}
+
+.map-rider-marker.is-left {
+  right: calc(100% + 10px);
+}
+
+.map-rider-marker.is-right {
+  left: calc(100% + 10px);
+}
+
+.map-rider-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.map-rider-bubble {
+  background: var(--color-primary-600);
+  color: #FFFFFF;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-black);
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  margin-top: -6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+@keyframes riderBob {
+  0%, 100% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(calc(-50% - 6px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-rider-marker {
+    animation: none;
+  }
+}
+
+/* 終點線橫幅 (Goal Finish Banner) */
+.map-goal-banner {
+  margin: var(--space-6) var(--space-4) var(--space-6);
+  padding: var(--space-4);
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  border: 2px dashed #D97706;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  font-weight: var(--font-weight-bold);
+  color: #92400E;
+}
+
+/* 站點詳細資訊小卡彈出層 (Station Detail Modal) */
+.map-station-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+}
+
+.map-station-modal-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.map-station-modal-card {
+  background-color: #FFFFFF;
+  border-radius: var(--radius-xl);
+  max-width: 400px;
+  width: 100%;
+  padding: var(--space-6);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  transform: scale(0.94);
+  transition: transform var(--transition-fast);
+  position: relative;
+}
+
+.map-station-modal-backdrop.is-open .map-station-modal-card {
+  transform: scale(1);
+}
+
+.map-station-modal-close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  background: var(--color-slate-100);
+  border: none;
+  border-radius: var(--radius-full);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-slate-600);
+  transition: all var(--transition-fast);
+}
+
+.map-station-modal-close:hover {
+  background-color: var(--color-slate-200);
+  color: var(--color-slate-900);
+}
+
+.map-station-modal-badge {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-}
-
-.map-station-card.is-passed {
-  border-color: var(--color-success-500);
-  background-color: var(--color-success-50);
-}
-.map-station-card.is-passed .map-station-status {
-  color: var(--color-success-700);
-}
-
-.map-station-card.is-practiced {
-  border-color: var(--color-accent-400);
-  background-color: var(--color-accent-50);
-}
-.map-station-card.is-practiced .map-station-status {
-  color: var(--color-accent-700);
-}
-
-.map-station-card.is-unvisited {
-  border-color: var(--color-border-subtle);
-  background-color: var(--color-slate-50);
-  color: var(--color-slate-500);
-}
-
-/* 主角目前停留站點標記 */
-.station-rider-marker {
-  position: absolute;
-  top: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--color-primary-600);
-  color: #FFFFFF;
-  padding: 2px 10px;
+  padding: 4px 10px;
   border-radius: var(--radius-full);
-  font-size: 0.95rem;
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  white-space: nowrap;
+  margin-bottom: var(--space-2);
+}
+
+.map-station-modal-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-black);
+  color: var(--color-slate-900);
+  margin: 0 0 var(--space-1);
+}
+
+.map-station-modal-sub {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-5);
+}
+
+.map-station-info-box {
+  background-color: var(--color-slate-50);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
   display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.map-station-info-row {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 4px;
-  z-index: 2;
+  font-size: var(--font-size-sm);
+}
+
+.map-station-info-label {
+  color: var(--color-text-secondary);
+}
+
+.map-station-info-val {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-slate-900);
 }
 
 /* ==========================================================================
