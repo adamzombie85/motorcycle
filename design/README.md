@@ -249,4 +249,22 @@ design/
   4. **自動化檢驗與品質把關：**
      - `node design/check-screens.mjs` 自動掃描 21 個畫面（12 個設計樣板 + 9 個網站頁面）× 4 種寬度 = **84 項測試 100% 完美通過（0 溢出、0 橫向捲動、0 重疊、0 截斷）**。
      - 全專案 grep 禁用詞彙為 **0 筆**。
-- **下一棒：** 請 Claude（大腦）與 Jim 確認 A3 驗收成果，並指示後續 V1 看圖題比較卡。
+
+### A2b｜畫面問題修復與功能檢查自動化強化（2026-10-23）
+- **執行角色：** Antigravity（Gemini）
+- **完成項目與設計決策：**
+  1. **地圖頁（site/map.html & site/js/map.js）異常修復：**
+     - 修復 `site/js/map.js` 中 `seg.subs` 未由 `Game.getMap()` 提供而導致的 TypeError 崩潰問題，改從 `seg.levels` 動態提取小類名稱。
+     - 將地圖驛站節點標籤改為全域標準關卡編號「第 N 關」（第 1 關 ~ 第 92 關），並以 title 屬性提供完整小類標題，徹底消除長標題在 360px 窄螢幕的溢出擠壓與重疊。
+  2. **答題頁（site/quiz.html、site/js/quiz.js、components.css）版面放寬與題號隱藏：**
+     - 移除學生介面可見的內部標籤「題號 M0001」，改將題號注入至 `.question-card` 的 `data-qid` 屬性，介面更乾淨無干擾。
+     - 針對 360px 極窄螢幕調整 `.question-card` 內距為 `var(--space-4)`（16px），並修訂 `.question-title` 的 `text-wrap` 為合法標準值 `wrap !important`，解除 `h2` 預設 `text-wrap: balance` 在短句時強制對稱折行而造成的右側過早留白問題，讓題幹完整佔滿卡片寬度（一行可容納 14~15 字）。
+  3. **原始 7.4MB 字型檔案遷移保存：**
+     - 原 `site/fonts/BpmfIansui-Regular.ttf` 已由子集化 505KB 的 `BpmfIansui-Subset.woff2` 取代，原檔已安全移至 `assets-src/BpmfIansui-Regular.ttf` 妥善保存，大幅減輕 `site/` 發布體積。
+  4. **check-screens.mjs 全自動功能性健康檢查強化：**
+     - 深度監聽 Chrome DevTools Protocol 之 `Runtime.consoleAPICalled`、`Runtime.exceptionThrown` 與 `Log.entryAdded`，若頁面執行期間產生任何 Console 錯誤或未捕獲例外，直接標記為不通過。
+     - 引入畫面異常文字關鍵字偵測（包含「失敗」、「找不到」以及專屬錯誤容器內之「錯誤」字樣）。
+     - 加入動態載入等待機制，自動輪詢直到「載入中…」狀態徹底消除且 DOM 渲染完畢後才截圖，並修復了 `site/js/levels.js`（`Stats.bestScores` 呼叫）與 `design/screen-levels.html` 的潛在例外。
+  5. **檢驗成果：**
+     - `node design/check-screens.mjs` 掃描 21 畫面 × 4 寬度 = **84 項測試 100% 完美通過（0 溢出、0 橫向捲動、0 重疊、0 截斷、0 Console 錯誤、0 畫面異常文字）**。
+- **下一棒：** 依任務單指示直接推進 V1 看圖題「比較卡」初稿。

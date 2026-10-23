@@ -219,8 +219,35 @@ async function main() {
     ws.send(JSON.stringify({ id, method, params }));
   });
 
+  let pageErrors = [];
+  ws.addEventListener('message', (e) => {
+    try {
+      const data = JSON.parse(e.data);
+      if (!data.id && data.method) {
+        if (data.method === 'Runtime.consoleAPICalled') {
+          if (data.params.type === 'error') {
+            const text = (data.params.args || [])
+              .map(a => a.value !== undefined ? String(a.value) : (a.description || ''))
+              .join(' ');
+            pageErrors.push(`Console Error: ${text}`);
+          }
+        } else if (data.method === 'Runtime.exceptionThrown') {
+          const d = data.params.exceptionDetails;
+          const text = d.exception ? (d.exception.description || d.exception.value) : d.text;
+          pageErrors.push(`Uncaught Exception: ${text}`);
+        } else if (data.method === 'Log.entryAdded') {
+          if (data.params.entry && data.params.entry.level === 'error') {
+            pageErrors.push(`Log Error: ${data.params.entry.text}`);
+          }
+        }
+      }
+    } catch (err) {}
+  });
+
   await send('Page.enable');
   await send('DOM.enable');
+  await send('Runtime.enable');
+  await send('Log.enable');
 
   // 前置設定：注入真實測試資料至 localStorage，確保結算頁、錯題庫皆能渲染出真實狀態
   try {
@@ -297,9 +324,27 @@ async function main() {
         mobile: vp.mobile
       });
 
-      // 2. 載入頁面
+      // 2. 載入頁面並清空該次錯誤收集
+      pageErrors = [];
       await send('Page.navigate', { url: pageUrl });
-      await new Promise(r => setTimeout(r, 450));
+
+      // 等待頁面與資料載入完成 (持續檢查是否還有「載入中」提示，最多等 3 秒)
+      for (let w = 0; w < 30; w++) {
+        await new Promise(r => setTimeout(r, 100));
+        try {
+          const loadingCheck = await send('Runtime.evaluate', {
+            returnByValue: true,
+            expression: `(() => {
+              const text = document.body ? document.body.innerText : '';
+              return text.includes('載入中…') || text.includes('載入中...');
+            })()`
+          });
+          if (loadingCheck && loadingCheck.result && !loadingCheck.result.value) {
+            break;
+          }
+        } catch (e) {}
+      }
+      await new Promise(r => setTimeout(r, 250));
 
       if (entry.file === 'teacher-view.html') {
         await send('Runtime.evaluate', {
@@ -312,7 +357,7 @@ async function main() {
         await new Promise(r => setTimeout(r, 350));
       }
 
-      // 3. 檢查水平捲動與元素溢出
+      // 3. 檢查水平捲動、元素溢出與畫面功能異常文字
       const evalRes = await send('Runtime.evaluate', {
         returnByValue: true,
         expression: `(() => {
@@ -405,6 +450,29 @@ async function main() {
             }
           }
 
+          // 5. 功能檢查：畫面出現「失敗」「錯誤」「找不到」等異常訊息
+          const failureErrors = [];
+          const bodyText = document.body ? document.body.innerText : '';
+
+          if (bodyText.includes('失敗')) {
+            failureErrors.push('含有「失敗」字樣');
+          }
+          if (bodyText.includes('找不到')) {
+            failureErrors.push('含有「找不到」字樣');
+          }
+
+          // 針對「錯誤」：檢查訊息容器與系統錯誤文字
+          const errorContainers = document.querySelectorAll('.quiz-message, .map-message, .levels-message, .result-message, .mistakes-message, .home-message, .text-danger, .alert-error');
+          for (const c of errorContainers) {
+            const t = (c.innerText || '').trim();
+            if (t.includes('錯誤') || t.includes('失敗') || t.includes('找不到')) {
+              failureErrors.push('錯誤容器 (' + c.className + '): ' + t);
+            }
+          }
+          if (bodyText.includes('發生錯誤') || bodyText.includes('讀取錯誤') || bodyText.includes('載入錯誤') || bodyText.includes('系統錯誤') || bodyText.includes('404 Not Found')) {
+            failureErrors.push('含有系統錯誤字樣');
+          }
+
           return {
             clientWidth,
             scrollWidth,
@@ -414,7 +482,9 @@ async function main() {
             overlappingCount: overlapping.length,
             overlappingSamples: overlapping.slice(0, 3),
             truncatedCount: truncated.length,
-            truncatedSamples: truncated.slice(0, 3)
+            truncatedSamples: truncated.slice(0, 3),
+            failureCount: failureErrors.length,
+            failureSamples: failureErrors.slice(0, 3)
           };
         })()`
       });
@@ -428,9 +498,18 @@ async function main() {
         overlappingCount: 0,
         overlappingSamples: [],
         truncatedCount: 0,
-        truncatedSamples: []
+        truncatedSamples: [],
+        failureCount: 0,
+        failureSamples: []
       };
-      const isClean = !metrics.hasHScroll && metrics.overflowingCount === 0 && metrics.overlappingCount === 0 && metrics.truncatedCount === 0;
+
+      const consoleErrors = [...pageErrors];
+      const isClean = !metrics.hasHScroll && 
+                      metrics.overflowingCount === 0 && 
+                      metrics.overlappingCount === 0 && 
+                      metrics.truncatedCount === 0 &&
+                      consoleErrors.length === 0 &&
+                      metrics.failureCount === 0;
 
       if (!isClean) {
         totalIssues++;
@@ -452,6 +531,8 @@ async function main() {
         overflowing: metrics.overflowingSamples,
         overlapping: metrics.overlappingSamples,
         truncated: metrics.truncatedSamples,
+        consoleErrors,
+        failureSamples: metrics.failureSamples,
         isClean,
         image: imgFileName
       });
@@ -462,8 +543,10 @@ async function main() {
       if (metrics.overflowingCount > 0) errDetails.push(`溢出 ${metrics.overflowingCount} 個`);
       if (metrics.overlappingCount > 0) errDetails.push(`重疊 ${metrics.overlappingCount} 處`);
       if (metrics.truncatedCount > 0) errDetails.push(`文字截斷 ${metrics.truncatedCount} 個: ${metrics.truncatedSamples[0].text}`);
+      if (consoleErrors.length > 0) errDetails.push(`Console 錯誤 ${consoleErrors.length} 個: ${consoleErrors[0]}`);
+      if (metrics.failureCount > 0) errDetails.push(`畫面異常文字: ${metrics.failureSamples[0]}`);
       const statusText = isClean 
-        ? '正常 (無溢出、無重疊、無文字截斷)' 
+        ? '正常 (無溢出、無重疊、無文字截斷、無Console錯誤、無異常文字)' 
         : `異常: ${errDetails.join(' | ')}`;
       console.log(`${mark} [${entry.group}/${entry.file}] @ ${vp.width}px ➔ ${statusText}`);
     }
@@ -483,18 +566,30 @@ async function main() {
   console.log('--------------------------------------------------------------------------');
 
   if (totalIssues > 0) {
-    console.log('❌ 以下項目發現溢出或橫向捲動問題：');
+    console.log('❌ 以下項目發現版面或功能異常：');
     results.filter(r => !r.isClean).forEach(r => {
       console.log(`- 畫面: ${r.screen} (${r.width}px)`);
       if (r.hasHScroll) console.log(`  • 橫向捲動條產生 (scrollWidth: ${r.scrollWidth}px vs clientWidth: ${r.clientWidth}px)`);
       if (r.overflowing.length > 0) {
         console.log(`  • 溢出元素範例: ${r.overflowing.map(o => `${o.selector} (右界 ${o.right}px > 視窗 ${o.clientWidth}px)`).join(', ')}`);
       }
+      if (r.overlapping.length > 0) {
+        console.log(`  • 重疊元素範例: ${r.overlapping.map(o => `${o.elemA} 與 ${o.elemB}`).join(', ')}`);
+      }
+      if (r.truncated.length > 0) {
+        console.log(`  • 文字截斷範例: ${r.truncated.map(t => `${t.text} (${t.scrollWidth}px > ${t.clientWidth}px)`).join(', ')}`);
+      }
+      if (r.consoleErrors && r.consoleErrors.length > 0) {
+        console.log(`  • Console 錯誤: ${r.consoleErrors.join(' | ')}`);
+      }
+      if (r.failureSamples && r.failureSamples.length > 0) {
+        console.log(`  • 畫面異常文字: ${r.failureSamples.join(' | ')}`);
+      }
     });
     console.log('--------------------------------------------------------------------------');
     process.exit(1);
   } else {
-    console.log('🎉 所有畫面在 360px、390px、430px、1024px 均無橫向捲動與溢出問題，完美落實 RWD！');
+    console.log('🎉 所有畫面在 360px、390px、430px、1024px 均無橫向捲動、溢出、Console 錯誤與畫面異常，功能與 RWD 完美驗收通過！');
     process.exit(0);
   }
 }

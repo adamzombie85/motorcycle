@@ -753,22 +753,28 @@
     const btnZhuyin = document.getElementById('btn-levels-zhuyin');
     const btnZoom = document.getElementById('btn-levels-zoom');
 
-    btnSpeech.addEventListener('click', () => {
-      btnSpeech.classList.toggle('is-active');
-      alert('語音朗讀關卡：已啟用點讀朗讀功能。');
-    });
+    if (btnSpeech) {
+      btnSpeech.addEventListener('click', () => {
+        btnSpeech.classList.toggle('is-active');
+        alert('語音朗讀關卡：已啟用點讀朗讀功能。');
+      });
+    }
 
-    btnZhuyin.addEventListener('click', () => {
-      btnZhuyin.classList.toggle('is-active');
-      alert('注音模式：已切換注音字型顯示。');
-    });
+    if (btnZhuyin) {
+      btnZhuyin.addEventListener('click', () => {
+        btnZhuyin.classList.toggle('is-active');
+        alert('注音模式：已切換注音字型顯示。');
+      });
+    }
 
     let zoomed = false;
-    btnZoom.addEventListener('click', () => {
-      zoomed = !zoomed;
-      document.documentElement.style.fontSize = zoomed ? '18px' : '16px';
-      btnZoom.classList.toggle('is-active', zoomed);
-    });
+    if (btnZoom) {
+      btnZoom.addEventListener('click', () => {
+        zoomed = !zoomed;
+        document.documentElement.style.fontSize = zoomed ? '18px' : '16px';
+        btnZoom.classList.toggle('is-active', zoomed);
+      });
+    }
   </script>
 </body>
 </html>

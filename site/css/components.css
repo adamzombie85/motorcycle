@@ -781,9 +781,15 @@
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-xl);
-  padding: var(--space-6);
+  padding: var(--space-4);
   box-shadow: var(--shadow-card);
   margin-bottom: var(--space-4);
+}
+
+@media (min-width: 480px) {
+  .question-card {
+    padding: var(--space-6);
+  }
 }
 
 @media (min-width: 768px) {
@@ -840,6 +846,7 @@
   align-items: flex-start;
   gap: var(--space-3);
   margin-bottom: var(--space-4);
+  width: 100%;
 }
 
 .question-title {
@@ -848,6 +855,9 @@
   line-height: var(--line-height-relaxed);
   color: var(--color-text-main);
   flex: 1;
+  width: 100%;
+  text-wrap: wrap !important;
+  word-break: break-word;
 }
 
 /* 官方標誌、情境圖片框架 */
