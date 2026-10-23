@@ -133,7 +133,7 @@
 | 2026-10-23 | Claude | A1b（字型 505KB）、A2、A3 完成；截圖發現地圖頁載入失敗、題目欄過窄、原字型檔未刪 → A2b；自動檢查要加功能檢查 | Antigravity：A2b → V1 |
 | 2026-10-23 | Claude Code | C19 完成：149 張文字卡改短／加白話（revised、before；審核頁顯示修改前後）；C20 完成：數字卡 80 筆、12 組易混淆（data/concepts/numbers-draft.json、docs/數字卡審核.html，產生器 make-numbers.py） | Jim：審核；Claude：抽查 |
 | 2026-10-23 | Claude | C19（149 張改寫）、C20（80 筆數字卡）抽查通過；5 筆弱出處其實有效；7 張超長卡要拆 → C19b | Claude Code：C19b；Jim：審文字概念卡 |
-| 2026-10-23 | Claude Code | C19b 完成：7 張超長卡拆成 33 張（題目跟著分，覆蓋 926 題 100%）；數字卡 5 筆弱出處改為有效並加 source_note，之後由程式自動判斷 | Jim：審核 |
+| 2026-10-23 | Claude Code | C19b 完成：7 張超長卡拆成 34 張（題目跟著分，覆蓋 926 題 100%）；數字卡 5 筆弱出處改為有效並加 source_note，之後由程式自動判斷 | Jim：審核 |
 
 ## 開工提示詞
 
