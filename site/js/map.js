@@ -125,8 +125,13 @@
         // 路段標題資訊
         var sHead = el('div', 'map-scene-header');
         var sTitle = el('h2', 'map-scene-title', '路段 ' + seg.id + '：' + seg.name);
-        sHead.appendChild(sTitle);
-        var sSub = el('div', 'map-scene-subtitle', seg.subs.join('、') + ' (' + seg.passedCount + ' / ' + seg.levels.length + ' 關過關)');
+        var subNames = [];
+        seg.levels.forEach(function (l) {
+          if (l.subcategory && subNames.indexOf(l.subcategory) === -1) {
+            subNames.push(l.subcategory);
+          }
+        });
+        var sSub = el('div', 'map-scene-subtitle', (subNames.length ? subNames.join('、') + ' · ' : '') + seg.passedCount + ' / ' + seg.levels.length + ' 關過關');
         sHead.appendChild(sSub);
         sec.appendChild(sHead);
 
@@ -137,6 +142,7 @@
           var isCurrent = (currentLevelId === l.id);
           var cardCls = 'map-station-card is-' + l.state;
           var card = link(cardCls, '', 'quiz.html?level=' + encodeURIComponent(l.id));
+          card.title = l.id;
 
           // 若主角停在此站，顯示機車與「你在這裡」
           if (isCurrent) {
@@ -149,7 +155,13 @@
             card.appendChild(marker);
           }
 
-          var numSpan = el('span', 'map-station-num text-nowrap', l.id);
+          var allLevels = Data.getLevels();
+          var gIdx = -1;
+          for (var i = 0; i < allLevels.length; i++) {
+            if (allLevels[i].id === l.id) { gIdx = i + 1; break; }
+          }
+          var stationLabel = gIdx > 0 ? ('第 ' + gIdx + ' 關') : l.id;
+          var numSpan = el('span', 'map-station-num text-nowrap', stationLabel);
           card.appendChild(numSpan);
 
           var statusSpan = el('span', 'map-station-status text-nowrap');

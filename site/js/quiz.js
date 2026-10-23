@@ -124,12 +124,12 @@
     }
 
     var card = el('div', 'question-card');
+    card.setAttribute('data-qid', q.id);
     var meta = el('div', 'question-meta-row');
     var tags = el('div', 'tag-list');
     tags.appendChild(el('span', 'tag tag-category text-nowrap', q.category));
     tags.appendChild(el('span', 'tag tag-sub text-nowrap', q.subcategory));
     if (reverse) tags.appendChild(el('span', 'tag tag-reverse text-nowrap', '反向題'));
-    tags.appendChild(el('span', 'tag text-nowrap', '題號 ' + q.id));
     meta.appendChild(tags);
 
     // 朗讀本題按鈕

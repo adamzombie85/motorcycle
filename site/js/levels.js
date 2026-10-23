@@ -174,11 +174,12 @@
       var subLevels = levels.filter(function (l) { return l.subcategory === sub; });
       if (!subLevels.length) return message('找不到這個小類的關卡。');
 
-      var best = Stats.levelBestScores();
+      var best = (typeof Stats.bestScores === 'function' ? Stats.bestScores() : {});
       root.textContent = '';
       renderHeader(sub, subLevels, best);
       renderGrid(subLevels, best);
-    }).catch(function () {
+    }).catch(function (err) {
+      console.error('Levels error', err);
       message('資料載入失敗，請用網址 http://localhost:8000/site/ 開啟。');
     });
   }
