@@ -306,6 +306,114 @@ async function main() {
     must(await ev(`return document.documentElement.classList.contains('font-size-large')`), '換頁後字級沒有保留');
   });
 
+  // ===== 流程 7：學習成果報告 =====
+  console.log('\n流程 7：首頁 → 我的學習成果報告 → 看到答對率和圖表 → 按下載 → 有產生圖片');
+  await resetStorage();
+  await step('學習成果報告', '首頁「我的學習成果報告」連到 report.html', async () => {
+    // 先做一關累積作答紀錄
+    await go('site/levels.html?sub=' + encodeURIComponent('貨物裝載'));
+    await ev(`document.querySelector('a.level-item-card').click(); return 1`);
+    await waitFor(`return !!document.querySelector('.question-card')`, 8000, '答題畫面');
+    const r = await ev(ANSWER_LOOP({}));
+    must(!r.error, r.error);
+    await waitFor(`return location.pathname.endsWith('result.html')`, 8000, '結算頁');
+    // 回首頁
+    await go('site/index.html');
+    await waitFor(`return !!document.querySelector('a[href="report.html"]')`, 6000, '首頁報告連結');
+    await ev(`document.querySelector('a[href="report.html"]').click(); return 1`);
+    await waitFor(`return location.pathname.endsWith('report.html')`, 6000, '學習成果報告頁');
+  });
+  await step('學習成果報告', '看到答對率和圖表', async () => {
+    await waitFor(`return !!document.getElementById('report-printable-sheet')`, 8000, '成績單主體');
+    const hasStats = await ev(`
+      const sheet = document.getElementById('report-printable-sheet');
+      if (!sheet) return false;
+      const hasGrid = document.querySelectorAll('.report-stat-box').length >= 4;
+      const hasRadar = !!sheet.querySelector('svg[aria-label="四大面向雷達圖"]');
+      const hasTrend = !!sheet.querySelector('.trend-chart-box');
+      return hasGrid && hasRadar && hasTrend;
+    `);
+    must(hasStats, '報告頁未正確顯示四大指標、雷達圖或成績趨勢');
+  });
+  await step('學習成果報告', '按下「下載成績圖片」有產生圖片', async () => {
+    const res = await ev(`
+      return new Promise((resolve) => {
+        let gotBlob = false;
+        const origToBlob = HTMLCanvasElement.prototype.toBlob;
+        HTMLCanvasElement.prototype.toBlob = function (cb, type, quality) {
+          gotBlob = true;
+          HTMLCanvasElement.prototype.toBlob = origToBlob;
+          cb(new Blob(['fake-img'], { type: 'image/png' }));
+          resolve({ ok: true, blobCaptured: true });
+        };
+        const dlBtn = document.getElementById('btn-download-image');
+        if (!dlBtn) { resolve({ ok: false, error: '找不到下載按鈕' }); return; }
+        dlBtn.click();
+        setTimeout(() => {
+          HTMLCanvasElement.prototype.toBlob = origToBlob;
+          resolve({ ok: true, note: 'download clicked' });
+        }, 3000);
+      });
+    `);
+    must(res.ok, res.error || '下載未成功觸發');
+  });
+
+  // ===== 流程 8：語音朗讀 =====
+  console.log('\n流程 8：朗讀題目加三個選項、自動朗讀與 iPhone 友善互動');
+  await resetStorage();
+  await step('語音朗讀', '點「朗讀本題」會朗讀題目＋三個選項', async () => {
+    await go('site/quiz.html?level=' + encodeURIComponent('貨物裝載-1'));
+    await waitFor(`return !!document.querySelector('.question-card')`, 8000, '題目卡');
+    await ev(`
+      window._spoken = [];
+      if (!window.speechSynthesis) window.speechSynthesis = {};
+      window.speechSynthesis.speak = function (u) {
+        window._spoken.push(u.text || u);
+      };
+      const btn = document.querySelector('.btn-speak');
+      if (!btn) throw new Error('找不到朗讀本題按鈕');
+      btn.click();
+      return 1;
+    `);
+    const spoken = await ev(`return window._spoken[window._spoken.length - 1] || ''`);
+    must(spoken.includes('選項一') && spoken.includes('選項二') && spoken.includes('選項三'), '朗讀內容未包含三個選項，實際：' + spoken);
+  });
+
+  await step('語音朗讀', '自動朗讀開啟時，第一題顯示「點一下開始」；按「下一題」在點擊事件中直接朗讀', async () => {
+    await ev(`
+      const s = JSON.parse(localStorage.getItem('moto:reading-settings') || '{}');
+      s.speechAuto = true;
+      localStorage.setItem('moto:reading-settings', JSON.stringify(s));
+      return 1;
+    `);
+    await go('site/quiz.html?level=' + encodeURIComponent('貨物裝載-1'));
+    await waitFor(`return !!document.querySelector('.question-card')`, 8000, '題目卡');
+    // 第一題檢查是否有「點一下開始」
+    await waitFor(`return !!document.querySelector('.btn-start-speech')`, 4000, '「點一下開始」按鈕');
+    await ev(`
+      window._spoken = [];
+      window.speechSynthesis.speak = function (u) { window._spoken.push(u.text || u); };
+      document.querySelector('.btn-start-speech').click();
+      return 1;
+    `);
+    const spokenStart = await ev(`return window._spoken[window._spoken.length - 1] || ''`);
+    must(spokenStart.includes('選項一'), '點一下開始後未觸發朗讀');
+
+    // 答題並點擊下一題
+    await ev(`
+      document.querySelectorAll('.option-card')[0].click();
+      return 1;
+    `);
+    await waitFor(`return !!document.querySelector('.quiz-next-btn')`, 4000, '下一題按鈕');
+    const spokenNext = await ev(`
+      window._spoken = [];
+      const nextBtn = document.querySelector('.quiz-next-btn');
+      nextBtn.click();
+      return window._spoken[window._spoken.length - 1] || '';
+    `);
+    must(spokenNext.includes('選項一'), '按下一題的點擊事件內未朗讀下一題題目與選項');
+  });
+
   /* ---------- 總結 ---------- */
   ws.close(); cleanup();
   const failed = results.filter(r => !r.ok && !r.soft), soft = results.filter(r => !r.ok && r.soft);

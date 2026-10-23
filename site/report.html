@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>機車筆試好過關 - 我的學習成果報告</title>
+  <link rel="stylesheet" href="../design/tokens.css">
+  <link rel="stylesheet" href="css/components.css">
+  <!-- html2canvas 鎖定版本（將直式成績單渲染為 PNG） -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+  <!-- 頂部通用導覽列 -->
+  <header class="site-header">
+    <div class="app-container nav-bar">
+      <a href="index.html" class="brand-badge" style="font-size: var(--font-size-base); text-decoration: none; color: inherit;">
+        <span class="brand-icon" style="width: 36px; height: 36px;">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
+          </svg>
+        </span>
+        <span class="text-nowrap">回首頁</span>
+      </a>
+
+      <!-- 學生識別（絕不顯示 email，保護隱私） -->
+      <div class="user-chip">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span id="user-chip">同學</span>
+      </div>
+
+      <!-- 閱讀設定按鈕 -->
+      <button type="button" class="btn-settings" id="btn-reading-settings" aria-label="開啟閱讀設定面板" title="開啟閱讀設定面板">
+        <svg class="icon btn-settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
+        <span class="btn-settings-text btn-settings-text-full text-nowrap">閱讀設定</span>
+        <span class="btn-settings-text btn-settings-text-short text-nowrap">設定</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="app-container report-container">
+
+      <!-- 操作動作列 -->
+      <div class="report-page-actions" id="report-actions-bar">
+        <div style="display: flex; align-items: center; gap: var(--space-2);">
+          <a href="index.html" class="btn btn-outline" style="min-height: 48px; padding: 8px 16px; font-size: var(--font-size-sm); text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m15 18-6-6 6-6"/>
+            </svg>
+            <span>回首頁</span>
+          </a>
+        </div>
+
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button type="button" class="btn btn-outline" id="btn-print-report" style="min-height: 48px; padding: 8px 16px; font-size: var(--font-size-sm);">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/>
+            </svg>
+            <span>列印成績單</span>
+          </button>
+          <button type="button" class="btn btn-primary" id="btn-download-image" style="min-height: 48px; padding: 8px 20px; font-size: var(--font-size-sm);">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>下載成績圖片</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 動態報告內容掛載區 -->
+      <div id="report-content-root"></div>
+
+    </div>
+  </main>
+
+  <!-- 儲存圖片提示彈窗 (支援 iPhone 長按儲存影像至相簿) -->
+  <div class="report-save-modal-backdrop" id="report-save-modal" aria-hidden="true">
+    <div class="report-save-modal" role="dialog" aria-modal="true" aria-labelledby="report-save-title">
+      <div class="report-save-modal-header">
+        <h3 id="report-save-title" style="margin: 0; font-size: var(--font-size-lg); font-weight: bold; color: var(--color-slate-900);">成績圖片已產生</h3>
+        <button type="button" class="btn btn-outline btn-sm" id="btn-close-save-modal" aria-label="關閉視窗">關閉</button>
+      </div>
+      <div class="report-save-modal-body">
+        <div style="background: var(--color-primary-50); border: 1px solid var(--color-primary-200); border-radius: var(--radius-md); padding: var(--space-3); margin-bottom: var(--space-4); font-size: var(--font-size-sm); color: var(--color-primary-900); text-align: left;">
+          <strong>📱 儲存至手機相簿提示：</strong><br>
+          請<strong>長按下方成績單圖片</strong>，並在彈出的選單中選擇<strong>「儲存影像」</strong>（或「加入照片」），即可將完整直式成績單儲存至相簿，方便以 LINE 分享給老師或家長！
+        </div>
+        <img id="report-modal-img" src="" alt="學習成果報告成績單圖片" class="report-save-modal-img">
+      </div>
+    </div>
+  </div>
+
+  <!-- 頁尾宣告 -->
+  <footer style="background-color: var(--color-bg-card); border-top: 1px solid var(--color-border-subtle); padding: var(--space-6) 0; text-align: center; color: var(--color-text-secondary); font-size: var(--font-size-sm); margin-top: var(--space-10);">
+    <div class="app-container">
+      <p>© 2026 41 研究室｜版權所有</p>
+      <p style="margin-top: 4px; color: var(--color-text-muted);">通用無障礙設計規範落實 · 支援手機與平板觸控</p>
+    </div>
+  </footer>
+
+  <!-- 依賴模組載入 -->
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/report.js"></script>
+</body>
+</html>

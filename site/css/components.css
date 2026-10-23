@@ -1560,6 +1560,110 @@
   color: var(--color-slate-900);
 }
 
+.report-page-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  background-color: var(--color-bg-card);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.report-bar-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+.report-bar-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.report-radar-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+@media (min-width: 680px) {
+  .report-radar-grid {
+    grid-template-columns: 260px 1fr;
+  }
+}
+
+.trend-chart-box {
+  background-color: #FFFFFF;
+  border: 2px solid var(--color-border-card);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  position: relative;
+}
+
+/* 儲存圖片提示彈窗 (支援 iPhone 長按儲存) */
+.report-save-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.report-save-modal-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.report-save-modal {
+  background: #FFFFFF;
+  border-radius: var(--radius-xl);
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+}
+
+.report-save-modal-header {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-slate-200);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.report-save-modal-body {
+  padding: var(--space-4);
+  overflow-y: auto;
+  text-align: center;
+}
+
+.report-save-modal-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-slate-200);
+}
+
 /* ==========================================================================
    16. 閱讀設定面板與專用控制元件 (D3 Reading Settings System)
    - 通用設計原則：每位學生皆可自由設定，提升易讀性與無障礙體驗

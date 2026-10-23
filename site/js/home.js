@@ -260,7 +260,7 @@
     grid.appendChild(cBadges);
 
     // 5. 學習成果報告
-    var cReport = link('feature-item-card', '', 'result.html?level=level-1');
+    var cReport = link('feature-item-card', '', 'report.html');
     cReport.style.borderLeft = '6px solid var(--color-primary-600)';
     var iReport = el('div', 'feature-icon-wrapper');
     iReport.style.cssText = 'background-color: var(--color-primary-50); color: var(--color-primary-800);';

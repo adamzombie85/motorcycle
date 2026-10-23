@@ -19,6 +19,23 @@
   };
 
   var level, mode, dailyDate, questions, index = 0, results = [], answered = false, selectedOption = null, startedAt = Date.now();
+  var CHINESE_NUMS = ['一', '二', '三', '四', '五'];
+  var hasStartedSpeechSession = false;
+  var justSpokeNextInClick = false;
+
+  function getQuestionSpeechText(q) {
+    var raw = (q.question || '').trim();
+    var qText = raw || '請看圖，選出正確的答案。';
+    if (!/[。！？.!?]$/.test(qText)) qText += '。';
+    var opts = q.options || [];
+    var optTexts = opts.map(function (opt, idx) {
+      var num = CHINESE_NUMS[idx] || (idx + 1);
+      var clean = (opt || '').trim();
+      if (!/[。！？.!?]$/.test(clean)) clean += '。';
+      return '選項' + num + '，' + clean;
+    });
+    return qText + (optTexts.length ? ' ' + optTexts.join(' ') : '');
+  }
 
   function el(tag, cls, text) {
     var e = document.createElement(tag);
@@ -139,8 +156,9 @@
     speakBtn.title = '朗讀本題';
     speakBtn.innerHTML = ICONS.volume + '<span style="margin-left: 4px;">朗讀本題</span>';
     speakBtn.addEventListener('click', function () {
+      hasStartedSpeechSession = true;
       if (window.Settings && window.Settings.speak) {
-        window.Settings.speak(q.question.trim() || BLANK_PROMPT);
+        window.Settings.speak(getQuestionSpeechText(q));
       }
     });
     meta.appendChild(speakBtn);
@@ -175,10 +193,31 @@
 
     var settings = window.Settings ? window.Settings.get() : { confirmAnswer: false, speechAuto: false };
 
-    // 自動朗讀
+    // 自動朗讀（iPhone Safari 規定要有使用者點擊才能發聲）：
+    // 第一題先顯示「點一下開始」按鈕，點下去才朗讀；之後在按「下一題」的點擊裡直接朗讀下一題
     if (settings.speechAuto && window.Settings && window.Settings.speak) {
-      window.Settings.speak(text || BLANK_PROMPT);
+      if (index === 0 && !hasStartedSpeechSession) {
+        var startSpeechBox = el('div', 'speech-start-banner');
+        startSpeechBox.style.cssText = 'background: var(--color-primary-50); border: 2px solid var(--color-primary-300); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); margin-bottom: var(--space-4); display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);';
+        var txtBox = el('div');
+        txtBox.innerHTML = '<strong style="color: var(--color-primary-900);">🔊 已開啟自動朗讀</strong><p style="margin: 2px 0 0; font-size: var(--font-size-sm); color: var(--color-text-secondary);">點擊按鈕即可開始聆聽題目與選項</p>';
+        startSpeechBox.appendChild(txtBox);
+        var startSpeechBtn = el('button', 'btn btn-primary btn-sm btn-start-speech', '點一下開始');
+        startSpeechBtn.type = 'button';
+        startSpeechBtn.addEventListener('click', function () {
+          hasStartedSpeechSession = true;
+          startSpeechBox.remove();
+          if (window.Settings && window.Settings.speak) {
+            window.Settings.speak(getQuestionSpeechText(q));
+          }
+        });
+        startSpeechBox.appendChild(startSpeechBtn);
+        card.insertBefore(startSpeechBox, wrap);
+      } else if (!justSpokeNextInClick) {
+        window.Settings.speak(getQuestionSpeechText(q));
+      }
     }
+    justSpokeNextInClick = false;
 
     var list = el('div', 'options-list');
     var confirmBtn = null;
@@ -298,12 +337,28 @@
     var notice = mistakeNotice(mistake, correct);
     if (notice) fb.appendChild(notice);
 
+    // 作答後回饋朗讀（只在自動朗讀開啟時，答錯時朗讀正確答案）
+    var settings = window.Settings ? window.Settings.get() : { speechAuto: false };
+    if (!correct && settings.speechAuto && window.Settings && window.Settings.speak) {
+      var ansNum = CHINESE_NUMS[q.answer] || (q.answer + 1);
+      var ansText = (q.options[q.answer] || '').trim();
+      var fbSpeech = '正確答案是第' + ansNum + '個選項，' + ansText + '。';
+      window.Settings.speak(fbSpeech);
+    }
+
     var last = index === questions.length - 1;
     var next = el('button', 'btn btn-lg quiz-next-btn ' + (correct ? 'btn-primary' : 'btn-secondary'),
       last ? '完成本關練習 ➔ 前往結算' : '下一題 ➔（' + (index + 2) + ' / ' + questions.length + '）');
     next.type = 'button';
     next.addEventListener('click', last ? finish : function () {
+      var nextQ = questions[index + 1];
       index++;
+      hasStartedSpeechSession = true;
+      // iPhone Safari 友善設計：在使用者按下「下一題」的點擊事件內直接呼叫 speak() 朗讀下一題
+      if (settings.speechAuto && window.Settings && window.Settings.speak && nextQ) {
+        window.Settings.speak(getQuestionSpeechText(nextQ));
+        justSpokeNextInClick = true;
+      }
       renderQuestion();
       window.scrollTo(0, 0);
     });

@@ -33,6 +33,21 @@
   // 狀態變數
   var examData = null;
   var questions = [];
+  var CHINESE_NUMS = ['一', '二', '三', '四', '五'];
+
+  function getExamQuestionSpeechText(q) {
+    var raw = (q.question || '').trim();
+    var qText = raw || BLANK_PROMPT;
+    if (!/[。！？.!?]$/.test(qText)) qText += '。';
+    var opts = q.options || [];
+    var optTexts = opts.map(function (opt, idx) {
+      var num = CHINESE_NUMS[idx] || (idx + 1);
+      var clean = (opt || '').trim();
+      if (!/[。！？.!?]$/.test(clean)) clean += '。';
+      return '選項' + num + '，' + clean;
+    });
+    return qText + (optTexts.length ? ' ' + optTexts.join(' ') : '');
+  }
   var userAnswers = {}; // { [qid]: optionIndex }
   var currentIndex = 0;
   var showGrid = false;
@@ -249,7 +264,7 @@
     speakBtn.innerHTML = ICONS.volume;
     speakBtn.onclick = function () {
       if (window.Settings && Settings.speak) {
-        Settings.speak(rawText);
+        Settings.speak(getExamQuestionSpeechText(q));
       }
     };
     titleWrap.appendChild(speakBtn);
