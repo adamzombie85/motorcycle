@@ -4,8 +4,9 @@
 import json, sys, html
 seq, sub = sys.argv[1], sys.argv[2]
 Q = {q['id']: q for q in json.load(open('data/questions.json'))}
-want = [i for i, q in Q.items() if q['subcategory'] == sub and q['source'] != '影片']
-cs = json.load(open(f'data/concepts/draft-{seq}-{sub}.json'))
+want = [i for i, q in Q.items() if q['subcategory'].startswith(sub) and q['source'] != '影片']
+import glob
+cs = json.load(open(glob.glob(f'data/concepts/draft-{seq}-*.json')[0]))
 got = [i for c in cs for i in c['questions']]
 assert sorted(got) == sorted(want), (set(want) - set(got), set(got) - set(want), '重複' if len(got) != len(set(got)) else '')
 e = html.escape
