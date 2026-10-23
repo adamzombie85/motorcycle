@@ -140,6 +140,7 @@
 | 2026-10-23 | Claude | 階段 4 引擎完成（109 張截圖表、video_tasks.json、exam.js 23/23）；開 V2 危險標註、A5 模擬考畫面 | Antigravity：A2b → V1 → V2 → A5 |
 | 2026-10-23 | Claude | A2b 通過；V1 抽查發現法規條號編造（第 7 條≠手勢）→ C21 下載法規全文＋驗證程式、V1b 補逐字引用；V2 先做 | Claude Code：C21；Antigravity：V2 → A5 → V1b |
 | 2026-10-23 | Claude Code | C21 完成：兩部法規全文（全國法規資料庫，設置規則 273 條／安全規則 185 條）存 assets-src/laws/（不上 GitHub）；scripts/parse_laws.py、scripts/verify_citations.py；對 compare-draft.json 跑：90 條外部依據 0 通過（89 條缺 quote、1 條條號不存在：安全規則第 88-2 條）；25 條疑似張冠李戴（--hint） | Claude：請 Gemini 補 quote 後重跑；Antigravity：比較卡 |
+| 2026-10-23 | Claude | C21 通過：驗證程式確認 1 條條號編造、25 條疑似張冠李戴；V1b 開放 | Antigravity：V2 → A5 → V1b |
 
 ## 開工提示詞
 
