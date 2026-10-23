@@ -1,0 +1,220 @@
+/* ==========================================================================
+   閱讀設定面板（C22）
+   標記與元件沿用 components.css（drawer-*、setting-card、toggle-*、segmented-*、reading-preview-*），
+   這裡只補：開關面板的狀態、尺寸、分組、進階區。顏色、間距、圓角全部用 tokens.css 的變數。
+   ========================================================================== */
+
+/* 面板開著時，鎖住背後頁面捲動 */
+html.settings-locked,
+html.settings-locked body {
+  overflow: hidden;
+}
+
+/* ---- 遮罩：半透明，關閉時看不見也點不到 ---- */
+#settings-backdrop {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-normal), visibility 0s linear 0.25s;
+}
+#settings-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--transition-normal), visibility 0s;
+}
+
+/* ---- 面板本體 ---- */
+#settings-drawer {
+  animation: none;            /* 滑動改由 transform 的過渡處理（樣板上的 keyframes 只在一建立就播） */
+  visibility: hidden;         /* 關閉時不可聚焦、不被讀屏 */
+  transition: transform var(--transition-normal), visibility 0s linear 0.25s;
+}
+#settings-drawer.is-open {
+  visibility: visible;
+  transform: none;
+  transition: transform var(--transition-normal), visibility 0s;
+}
+
+/* 手機（小於 768px）：從下方滑出，最高 85% 視窗，內容在面板內捲動 */
+@media (max-width: 767px) {
+  #settings-drawer {
+    max-height: 85vh;
+    max-height: 85dvh;
+    transform: translateY(100%);
+  }
+}
+
+/* 平板、電腦：從右側滑出，寬 420px */
+@media (min-width: 768px) {
+  #settings-drawer {
+    width: 420px;
+    max-width: 100vw;
+    transform: translateX(100%);
+  }
+}
+
+/* 標題列、下方按鈕列固定；只有中間捲動（flex 子元素要 min-height: 0 才會捲） */
+#settings-drawer .drawer-header,
+#settings-drawer .drawer-footer {
+  flex: 0 0 auto;
+}
+#settings-drawer .drawer-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+#settings-drawer .drawer-footer .btn {
+  white-space: nowrap;
+  min-height: var(--touch-target-min);
+}
+#settings-drawer .drawer-footer #btn-reset-settings {
+  flex: 0 0 auto;
+}
+#settings-drawer .drawer-footer #btn-done-settings {
+  flex: 1 1 auto;
+}
+#settings-drawer .drawer-title:focus,
+#settings-drawer .drawer-title:focus-visible {
+  outline: none;                       /* 開啟時焦點移到標題，只是讓讀屏念出面板名稱，不需要框線 */
+  box-shadow: none;
+}
+
+/* ---- 分組 ---- */
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+.settings-group-title {
+  margin: 0;
+  padding-bottom: var(--space-1);
+  border-bottom: 2px solid var(--color-border-subtle);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-black);
+  color: var(--color-primary-800);
+  letter-spacing: 0.08em;
+}
+.settings-zhuyin-mark {
+  font-weight: var(--font-weight-black);
+  font-size: 1.2em;
+  color: var(--color-primary-700);
+}
+.settings-subrow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.settings-subrow-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-slate-800);
+}
+
+/* 卡片標題和開關放不下同一列時，開關換到下一列（不讓文字被擠成直的） */
+#settings-drawer .setting-card-header {
+  flex-wrap: wrap;
+}
+#settings-drawer .toggle-wrapper {
+  flex-shrink: 0;
+}
+#settings-drawer .toggle-status-badge {
+  white-space: nowrap;
+}
+
+/* ---- 進階（可收合）：學習紀錄 ---- */
+.settings-advanced {
+  border: 2px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-slate-50);
+}
+.settings-advanced > summary {
+  display: flex;
+  align-items: center;
+  min-height: var(--touch-target-min);
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-black);
+  color: var(--color-slate-900);
+  cursor: pointer;
+  list-style: none;
+  border-radius: var(--radius-lg);
+}
+.settings-advanced > summary::-webkit-details-marker {
+  display: none;
+}
+.settings-advanced > summary::after {
+  content: "";
+  margin-left: auto;
+  width: 10px;
+  height: 10px;
+  border-right: 3px solid var(--color-slate-600);
+  border-bottom: 3px solid var(--color-slate-600);
+  transform: rotate(45deg);
+  transition: transform var(--transition-fast);
+}
+.settings-advanced[open] > summary::after {
+  transform: rotate(-135deg);
+}
+.settings-advanced > summary:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+.settings-advanced-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: 0 var(--space-5) var(--space-5);
+}
+.settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.settings-actions .btn {
+  flex: 1 1 140px;
+}
+
+/* 警示色按鈕（重設） */
+.settings-danger-btn {
+  color: var(--color-danger-700);
+  border-color: var(--color-danger-500);
+}
+.settings-danger-btn:hover {
+  background-color: var(--color-danger-50);
+  border-color: var(--color-danger-600);
+}
+.settings-danger-solid,
+.settings-danger-solid:hover {
+  background-color: var(--color-danger-600);
+  border-color: var(--color-danger-700);
+  color: var(--color-text-inverse);
+}
+.settings-confirm {
+  padding: var(--space-4);
+  border: 2px solid var(--color-danger-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger-text);
+}
+.settings-confirm[hidden] {
+  display: none;
+}
+.settings-confirm p {
+  margin: 0 0 var(--space-3);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ---- 減少動態：不做滑動，直接出現 ---- */
+@media (prefers-reduced-motion: reduce) {
+  #settings-drawer,
+  #settings-drawer.is-open,
+  #settings-backdrop,
+  #settings-backdrop.is-open {
+    transition: none;
+  }
+}
+body.mode-no-motion #settings-drawer,
+body.mode-no-motion #settings-backdrop {
+  transition: none;
+}

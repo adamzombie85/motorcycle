@@ -139,7 +139,8 @@ async function main() {
         })
     : [];
 
-  const pageEntries = [...designFiles, ...siteFiles];
+  // --only-settings：只跑「閱讀設定面板」檢查（C22），不重跑全部畫面
+  const pageEntries = process.argv.includes('--only-settings') ? [] : [...designFiles, ...siteFiles];
   console.log(`📋 找到 ${pageEntries.length} 個畫面 (設計樣板 ${designFiles.length} 個，網站頁面 ${siteFiles.length} 個)`);
 
   // 2. 啟動伺服器
@@ -550,6 +551,95 @@ async function main() {
         : `異常: ${errDetails.join(' | ')}`;
       console.log(`${mark} [${entry.group}/${entry.file}] @ ${vp.width}px ➔ ${statusText}`);
     }
+  }
+
+  // ---- C22：閱讀設定面板檢查（打開後截圖；360、1024px）----
+  // 檢查：面板 position 是 fixed、高度不超過視窗、背景頁面不能捲動、標題取得焦點、Esc 可關閉且焦點回到按鈕
+  console.log('--------------------------------------------------------------------------');
+  console.log('閱讀設定面板（site/index.html，360px 與 1024px）...');
+  for (const vp of VIEWPORTS.filter(v => v.width === 360 || v.width === 1024)) {
+    await send('Emulation.setDeviceMetricsOverride', { width: vp.width, height: vp.height, deviceScaleFactor: 1, mobile: vp.mobile });
+    pageErrors = [];
+    await send('Page.navigate', { url: `${baseUrl}/site/index.html` });
+    await new Promise(r => setTimeout(r, 1200));
+    const chk = await send('Runtime.evaluate', {
+      returnByValue: true, awaitPromise: true,
+      expression: `(async () => {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const out = { problems: [] };
+        const btn = document.getElementById('btn-reading-settings');
+        if (!btn) { out.problems.push('找不到 #btn-reading-settings'); return out; }
+        btn.click(); await wait(700);
+        const d = document.getElementById('settings-drawer');
+        if (!d) { out.problems.push('沒有出現 #settings-drawer'); return out; }
+        const cs = getComputedStyle(d), r = d.getBoundingClientRect();
+        out.position = cs.position; out.height = Math.round(r.height); out.viewport = innerHeight; out.width = Math.round(r.width);
+        if (cs.position !== 'fixed') out.problems.push('面板 position 不是 fixed（' + cs.position + '）');
+        if (r.height > innerHeight + 1) out.problems.push('面板高度 ' + Math.round(r.height) + ' 超過視窗 ' + innerHeight);
+        if (r.left < -1 || r.right > innerWidth + 1 || r.bottom > innerHeight + 1) out.problems.push('面板超出視窗範圍');
+        if (innerWidth < 768 && r.height > innerHeight * 0.85 + 1) out.problems.push('手機面板超過 85% 視窗高');
+        if (innerWidth >= 768 && Math.round(r.width) !== 420) out.problems.push('電腦版面板寬度不是 420px（' + Math.round(r.width) + '）');
+        const htmlOverflow = getComputedStyle(document.documentElement).overflow;
+        out.htmlOverflow = htmlOverflow;
+        if (htmlOverflow !== 'hidden') out.problems.push('背景頁面沒有鎖住捲動（html overflow=' + htmlOverflow + '）');
+        if (d.getAttribute('role') !== 'dialog' || d.getAttribute('aria-modal') !== 'true' || !d.getAttribute('aria-labelledby')) out.problems.push('缺少 role="dialog" / aria-modal / aria-labelledby');
+        if (document.activeElement.id !== 'settings-drawer-title') out.problems.push('開啟後焦點不在標題（' + document.activeElement.id + '）');
+        const body = d.querySelector('.drawer-body');
+        out.bodyScrollable = body.scrollHeight > body.clientHeight;
+        if (!d.querySelector('.drawer-header') || !d.querySelector('.drawer-footer')) out.problems.push('缺少固定的標題列或按鈕列');
+        const used = ['toggle-wrapper', 'toggle-input', 'toggle-track', 'toggle-thumb', 'segmented-group', 'segmented-btn', 'setting-card'];
+        for (const c of used) if (!d.querySelector('.' + c)) out.problems.push('沒有用到設計系統的 .' + c);
+        for (const bad of ['settings-drawer-header', 'toggle-btn', 'toggle-label-text', 'segmented-control', 'segment-btn']) if (d.querySelector('.' + bad)) out.problems.push('用了自己發明的 class：' + bad);
+        out.groups = Array.from(d.querySelectorAll('.settings-group-title')).map(e => e.textContent);
+        if (out.groups.join() !== '閱讀,聲音,作答') out.problems.push('分組不是 閱讀／聲音／作答：' + out.groups.join());
+        // 點開關：背景即時生效
+        const z = d.querySelector('#toggle-zhuyin'); z.click(); await wait(150);
+        if (!document.body.classList.contains('mode-zhuyin')) out.problems.push('開注音後背景沒有即時套用');
+        z.click(); await wait(100);
+        d.querySelector('[data-font="large"]').click(); await wait(100);
+        if (!document.documentElement.classList.contains('font-size-large')) out.problems.push('選「大」後字級沒有即時套用');
+        d.querySelector('[data-font="standard"]').click(); await wait(100);
+        out.ready = true;
+        return out;
+      })()`
+    });
+    const c = chk.result.value || { problems: ['檢查腳本沒有回傳'] };
+    // 真的用滑鼠滾輪滾背景（面板外），背景頁面不能動（程式呼叫 scrollTo 不算，使用者操作才算）
+    await send('Input.dispatchMouseEvent', { type: 'mouseWheel', x: 20, y: 20, deltaX: 0, deltaY: 600 });
+    await new Promise(r => setTimeout(r, 300));
+    const sy = await send('Runtime.evaluate', { returnByValue: true, expression: 'window.scrollY' });
+    c.pageScrollY = sy.result.value;
+    if (c.pageScrollY !== 0) c.problems.push('用滾輪滾背景，頁面動了（scrollY=' + c.pageScrollY + '）');
+    // 截圖 1：面板剛打開
+    const shot1 = await send('Page.captureScreenshot', { format: 'png' });
+    const f1 = `settings_${vp.width}.png`;
+    fs.writeFileSync(path.join(SCREENSHOTS_DIR, f1), Buffer.from(shot1.data, 'base64'));
+    // 截圖 2：捲到最下面，展開「進階」，看分組與紀錄區
+    await send('Runtime.evaluate', { expression: `(() => { const d = document.getElementById('settings-drawer'); const a = d.querySelector('#settings-advanced'); if (a) a.open = true; const b = d.querySelector('.drawer-body'); b.scrollTop = b.scrollHeight; })()` });
+    await new Promise(r => setTimeout(r, 300));
+    const shot2 = await send('Page.captureScreenshot', { format: 'png' });
+    const f2 = `settings_${vp.width}_bottom.png`;
+    fs.writeFileSync(path.join(SCREENSHOTS_DIR, f2), Buffer.from(shot2.data, 'base64'));
+    // Esc 關閉、焦點回到按鈕
+    const esc = await send('Runtime.evaluate', {
+      returnByValue: true, awaitPromise: true,
+      expression: `(async () => {
+        document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+        await new Promise(r => setTimeout(r, 500));
+        const d = document.getElementById('settings-drawer');
+        const probs = [];
+        if (d.classList.contains('is-open') || getComputedStyle(d).visibility !== 'hidden') probs.push('按 Esc 沒有關閉面板');
+        if (document.activeElement.id !== 'btn-reading-settings') probs.push('關閉後焦點沒有回到「閱讀設定」按鈕（' + document.activeElement.id + '）');
+        if (document.documentElement.classList.contains('settings-locked')) probs.push('關閉後背景仍被鎖住');
+        return probs;
+      })()`
+    });
+    c.problems.push(...(esc.result.value || []));
+    if (pageErrors.length) c.problems.push('Console 錯誤：' + pageErrors[0]);
+    const ok = c.problems.length === 0;
+    if (!ok) totalIssues++;
+    results.push({ screen: 'site/index.html（閱讀設定面板）', width: vp.width, vpName: vp.name, isClean: ok, hasHScroll: false, overflowing: [], overlapping: [], truncated: [], consoleErrors: pageErrors.slice(), failureSamples: c.problems, image: f1 });
+    console.log(`${ok ? '✅' : '❌'} [設定面板] @ ${vp.width}px ➔ ${ok ? `正常（fixed、高 ${c.height}/${c.viewport}、寬 ${c.width}、背景鎖住、分組 ${c.groups && c.groups.join('／')}）` : '異常: ' + c.problems.join(' | ')}  → design/screenshots/${f1}、${f2}`);
   }
 
   // 關閉資源

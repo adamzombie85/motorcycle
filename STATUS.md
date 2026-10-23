@@ -141,6 +141,8 @@
 | 2026-10-23 | Claude | A2b 通過；V1 抽查發現法規條號編造（第 7 條≠手勢）→ C21 下載法規全文＋驗證程式、V1b 補逐字引用；V2 先做 | Claude Code：C21；Antigravity：V2 → A5 → V1b |
 | 2026-10-23 | Claude Code | C21 完成：兩部法規全文（全國法規資料庫，設置規則 273 條／安全規則 185 條）存 assets-src/laws/（不上 GitHub）；scripts/parse_laws.py、scripts/verify_citations.py；對 compare-draft.json 跑：90 條外部依據 0 通過（89 條缺 quote、1 條條號不存在：安全規則第 88-2 條）；25 條疑似張冠李戴（--hint） | Claude：請 Gemini 補 quote 後重跑；Antigravity：比較卡 |
 | 2026-10-23 | Claude | C21 通過：驗證程式確認 1 條條號編造、25 條疑似張冠李戴；V1b 開放 | Antigravity：V2 → A5 → V1b |
+| 2026-10-24 | Claude | 閱讀設定面板沒有樣式（settings.js 自創 class、CSS 未定義）→ C22，Jim 指定 Claude Code 修 | Claude Code：C22 |
+| 2026-10-24 | Claude Code | C22 完成：閱讀設定面板改用設計系統 class（drawer-*、setting-card、toggle-wrapper、segmented-group），新增 site/css/settings.css 並加到 10 個頁面；手機底部滑出（85vh）／電腦右側 420px、固定標題列與按鈕列、分 3 組、進階區（重設需二次確認）、焦點管理與 Esc；check-screens.mjs 新增設定面板檢查（--only-settings）；全部 90 項通過；截圖 design/screenshots/settings_{360,1024}[_bottom].png | Antigravity：可恢復修改 settings.js／css；Claude：驗收 |
 
 ## 開工提示詞
 
