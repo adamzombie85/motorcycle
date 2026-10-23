@@ -1,0 +1,72 @@
+rules_version = '2';
+
+// 機車駕照筆試題庫：Firestore 安全規則
+// 原則：沒登入一律拒絕；學生只能讀寫自己的資料（uid 相同）；
+//       管理者（adamzombie85@gmail.com，而且 email 已驗證）只能「讀」全部，不能寫；其他一律拒絕。
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+    // 兩個條件都要：email 相符、而且 email_verified 是 true
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email == 'adamzombie85@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+
+    // 個人資料＋摘要（管理者頁只讀這一份）
+    function validProfile(uid) {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['uid', 'email', 'createdAt', 'lastSeen', 'className', 'seat', 'summary'])
+        && (!('uid' in d) || d.uid == uid)
+        && (!('email' in d) || d.email == request.auth.token.email)
+        && (!('className' in d) || (d.className is string && d.className.size() <= 10))
+        && (!('seat' in d) || (d.seat is string && d.seat.size() <= 10))
+        && (!('summary' in d) || d.summary is map);
+    }
+
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+      allow create, update: if isOwner(uid) && validProfile(uid);
+      allow delete: if false;
+
+      // mistakes、srs、doc_xxx：{ json: 字串, updatedAt }
+      match /data/{docId} {
+        allow read: if isOwner(uid) || isAdmin();
+        allow create, update: if isOwner(uid)
+          && request.resource.data.keys().hasOnly(['json', 'updatedAt'])
+          && request.resource.data.json is string
+          && request.resource.data.json.size() < 900000;
+        allow delete: if false;
+      }
+
+      // 每月的作答紀錄、練習紀錄：{ items: [字串, ...] }
+      match /answers/{month} {
+        allow read: if isOwner(uid) || isAdmin();
+        allow create, update: if isOwner(uid)
+          && request.resource.data.keys().hasOnly(['items'])
+          && request.resource.data.items is list
+          && request.resource.data.items.size() <= 6000;
+        allow delete: if false;
+      }
+      match /attempts/{month} {
+        allow read: if isOwner(uid) || isAdmin();
+        allow create, update: if isOwner(uid)
+          && request.resource.data.keys().hasOnly(['items'])
+          && request.resource.data.items is list
+          && request.resource.data.items.size() <= 3000;
+        allow delete: if false;
+      }
+    }
+
+    // 其他所有路徑：拒絕
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
