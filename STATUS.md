@@ -134,6 +134,7 @@
 | 2026-10-23 | Claude Code | C19 完成：149 張文字卡改短／加白話（revised、before；審核頁顯示修改前後）；C20 完成：數字卡 80 筆、12 組易混淆（data/concepts/numbers-draft.json、docs/數字卡審核.html，產生器 make-numbers.py） | Jim：審核；Claude：抽查 |
 | 2026-10-23 | Claude | C19（149 張改寫）、C20（80 筆數字卡）抽查通過；5 筆弱出處其實有效；7 張超長卡要拆 → C19b | Claude Code：C19b；Jim：審文字概念卡 |
 | 2026-10-23 | Claude Code | C19b 完成：7 張超長卡拆成 34 張（題目跟著分，覆蓋 926 題 100%）；數字卡 5 筆弱出處改為有效並加 source_note，之後由程式自動判斷 | Jim：審核 |
+| 2026-10-23 | Claude Code | C10a 完成（預設 local、未啟用）：Store.setBackend／applyRemote／訪客匯入、config.js、store-firebase.js、firestore.rules、firebase-tests（需 Java，沒跑）、docs/Firebase建置步驟.md、docs/Firestore規則測試清單.md；game-test 58/58、firebase-sync-test 15/15 | Jim：試玩後照建置步驟建專案；Antigravity：登入頁、班級座號、訪客匯入詢問（C10 畫面） |
 
 ## 開工提示詞
 
