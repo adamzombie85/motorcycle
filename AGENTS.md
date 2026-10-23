@@ -80,6 +80,8 @@
 - 額度分配原則（2026-10-22 Jim 要求）：畫面和測試多給 Antigravity（Google 額度多），Claude Code 只做引擎，大腦只做規格與抽查
 - commit 訊息開頭標示是誰的工作：`[claude]` 資料與規劃、`[code]` 網站程式、`[agy]` 視覺設計、`[setup]` 環境設定
 - 每次交接前都要 commit 一次。做壞了可以回到上一個存檔點。
+- **回報前一律跑 `git status -sb`**，把第一行貼在回報裡（例如 `## main...origin/main`）。有「ahead」就寫「尚未 push」。push 統一由 Claude Code 做（Antigravity 在沙盒裡連不上 GitHub）
+- `site/assets/illustrations/` 的新圖由 Claude Code 在存檔時一併 add（Jim 放圖，AI 存檔）
 
 ## 交接規則
 1. 開工前：讀 AGENTS.md 和 STATUS.md。
