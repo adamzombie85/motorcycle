@@ -210,6 +210,67 @@
   function getDueMistakes() { return dueIds('mistake', 9999, Store.today()); }
   function getDueGraduation() { return dueIds('grad', 9999, Store.today()); }
 
+  /* ---------- 試玩重點（老師檢視頁用，吃 Store.exportMe()/importRecord() 的紀錄）---------- */
+  // 預設值要和 settings.js 的 DEFAULT_SETTINGS 一致
+  var READING_DEFAULTS = { fontSize: 'standard', zhuyin: false, speechAuto: false, speechRate: 'normal', reverseAlert: true, soundEffects: true, animation: true, confirmAnswer: false };
+  var FONT_LABEL = { large: '大', xlarge: '特大' }, RATE_LABEL = { slow: '慢', fast: '快' };
+
+  function readingSummary(rs) {
+    var items = [];
+    if (rs) {
+      if (rs.fontSize && rs.fontSize !== READING_DEFAULTS.fontSize) items.push('字級：' + (FONT_LABEL[rs.fontSize] || rs.fontSize));
+      if (rs.zhuyin) items.push('注音');
+      if (rs.speechAuto) items.push('自動朗讀');
+      if (rs.speechRate && rs.speechRate !== READING_DEFAULTS.speechRate) items.push('朗讀語速：' + (RATE_LABEL[rs.speechRate] || rs.speechRate));
+      if (rs.confirmAnswer) items.push('作答二次確認');
+      if (rs.reverseAlert === false) items.push('關閉反向題提醒');
+      if (rs.soundEffects === false) items.push('關閉音效');
+      if (rs.animation === false) items.push('關閉動效');
+    }
+    return { used: items.length > 0, items: items };
+  }
+
+  function summary(record) {
+    dataReady();
+    var d = (record && record.data) || {};
+    var log = d.answers || [], attempts = d.attempts || [], docs = d.docs || {};
+    var correct = log.filter(function (r) { return r.correct; }).length;
+    // 用了多少時間：各次練習的秒數加總（每次練習結算時才記秒數）
+    var seconds = attempts.reduce(function (n, a) { return n + (a.seconds || 0); }, 0);
+    var days = {};
+    log.forEach(function (r) { days[Store.dateStr(r.ts)] = true; });
+    // 做了哪些關卡
+    var lv = {};
+    attempts.filter(function (a) { return a.mode !== 'mistakes'; }).forEach(function (a) {
+      var e = lv[a.levelId] || (lv[a.levelId] = { levelId: a.levelId, tries: 0, best: 0, last: 0 });
+      e.tries++; e.best = Math.max(e.best, a.score || 0); e.last = a.score || 0;
+    });
+    // 錯在哪些題（答錯次數多的在前）
+    var wrong = {};
+    log.forEach(function (r) { if (!r.correct) wrong[r.qid] = (wrong[r.qid] || 0) + 1; });
+    var wrongList = Object.keys(wrong).map(function (id) {
+      var q = Data.getQuestion(id);
+      return { qid: id, wrong: wrong[id], subcategory: q ? q.subcategory : null, question: q ? q.question : null, inMistakes: Object.prototype.hasOwnProperty.call(d.mistakes || {}, id) };
+    }).sort(function (a, b) { return b.wrong - a.wrong || (a.qid < b.qid ? -1 : 1); });
+    var earned = docs.badges || {};
+    return {
+      student: record && record.student || '',
+      exportedAt: record && record.exportedAt || null,
+      device: record && record.device || {},
+      totalAnswers: log.length,
+      correctAnswers: correct,
+      accuracy: log.length ? Math.round(correct / log.length * 1000) / 10 : 0,   // %
+      seconds: seconds,
+      activeDays: Object.keys(days).length,
+      dailyAnswers: log.filter(function (r) { return r.src === 'daily'; }).length,
+      levels: Object.keys(lv).map(function (k) { return lv[k]; }),
+      wrongQuestions: wrongList,
+      mistakesNow: Object.keys(d.mistakes || {}).length,
+      badges: BADGES.filter(function (b) { return earned[b.code]; }).map(function (b) { return { code: b.code, name: b.name, date: earned[b.code] }; }),
+      reading: readingSummary(record && record.readingSettings)
+    };
+  }
+
   /* ---------- 地圖 ---------- */
   function getMap() {
     dataReady();
@@ -318,6 +379,7 @@
     getDueMistakes: getDueMistakes, getDueGraduation: getDueGraduation,
     getMap: getMap,
     checkBadges: checkBadges, getBadges: getBadges,
-    getAvatars: getAvatars, getAvatar: getAvatar, setAvatar: setAvatar
+    getAvatars: getAvatars, getAvatar: getAvatar, setAvatar: setAvatar,
+    summary: summary
   };
 })();

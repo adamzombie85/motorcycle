@@ -28,6 +28,14 @@
     return PREFIX + 'u:' + s + ':' + name;
   }
 
+  var READING_KEY = PREFIX + 'reading-settings';   // 閱讀設定（settings.js 管，整台裝置共用）
+  var RECORD_FORMAT = 'moto-record';
+  function userCode() {
+    var s = window.Store.getStudent();
+    if (!s) throw new Error('尚未設定學生代號');
+    return s;
+  }
+
   var clock = function () { return new Date(); };
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
   function dateStr(x) {
@@ -153,6 +161,63 @@
       write(userKey('srs'), srs);
       if (hadAny && !Object.keys(m).length) window.Store.setDoc('cleanedUp', true);
       return res;
+    },
+    // ---- 試玩用：重設、匯出、讀入別人的紀錄 ----
+    // 清掉目前使用者的所有紀錄（作答、錯題、每日挑戰、徽章、角色…）和這台裝置的閱讀設定；學生代號保留。
+    resetMe: function () {
+      var prefix = PREFIX + 'u:' + userCode() + ':', kill = [];
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && k.indexOf(prefix) === 0) kill.push(k);
+      }
+      kill.push(READING_KEY);
+      kill.forEach(function (k) { try { localStorage.removeItem(k); } catch (e) {} });
+      return kill.length - 1;
+    },
+    // 把目前使用者的全部紀錄匯出成一個 JSON 物件（含匯出時間、裝置資訊、閱讀設定）。
+    exportMe: function () {
+      var code = userCode(), prefix = PREFIX + 'u:' + code + ':', docs = {};
+      window.Store.getAnswerLog();   // 先把舊 attempts 轉進作答紀錄
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && k.indexOf(prefix + 'doc:') === 0) docs[k.slice((prefix + 'doc:').length)] = read(k, null);
+      }
+      var nav = typeof navigator !== 'undefined' ? navigator : {}, scr = typeof screen !== 'undefined' ? screen : {};
+      return {
+        format: RECORD_FORMAT, version: 1,
+        exportedAt: window.Store.now().toISOString(),
+        student: code,
+        device: {
+          userAgent: nav.userAgent || '', language: nav.language || '',
+          screenWidth: scr.width || null, screenHeight: scr.height || null,
+          viewportWidth: typeof window.innerWidth === 'number' ? window.innerWidth : null
+        },
+        readingSettings: read(READING_KEY, null),
+        data: {
+          attempts: read(prefix + 'attempts', []),
+          mistakes: read(prefix + 'mistakes', {}),
+          answers: read(prefix + 'answers', []),
+          srs: read(prefix + 'srs', {}),
+          docs: docs
+        }
+      };
+    },
+    // 讀入匯出的紀錄（物件或 JSON 字串），驗證後回傳。只給老師的檢視頁用：不會寫入、不會覆蓋目前使用者。
+    importRecord: function (json) {
+      var r = typeof json === 'string' ? JSON.parse(json) : json;
+      if (!r || r.format !== RECORD_FORMAT || !r.data) throw new Error('不是試玩紀錄檔');
+      var d = r.data;
+      return {
+        format: r.format, version: r.version || 1, exportedAt: r.exportedAt || null,
+        student: r.student || '', device: r.device || {}, readingSettings: r.readingSettings || null,
+        data: {
+          attempts: Array.isArray(d.attempts) ? d.attempts : [],
+          mistakes: d.mistakes && typeof d.mistakes === 'object' ? d.mistakes : {},
+          answers: Array.isArray(d.answers) ? d.answers : [],
+          srs: d.srs && typeof d.srs === 'object' ? d.srs : {},
+          docs: d.docs && typeof d.docs === 'object' ? d.docs : {}
+        }
+      };
     },
     MISTAKE_CLEAR_STREAK: 2,
     MISTAKE_RETEST_SIZE: 10

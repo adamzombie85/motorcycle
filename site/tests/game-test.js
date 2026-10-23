@@ -4,7 +4,7 @@ const root = path.join(__dirname, '..', '..');
 const store = {};
 const ctx = {
   fetch: async () => ({ ok: true, json: async () => JSON.parse(fs.readFileSync(path.join(root, 'data/questions.json'), 'utf8')) }),
-  localStorage: { getItem: k => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = String(v); }, removeItem: k => { delete store[k]; } },
+  localStorage: { getItem: k => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = String(v); }, removeItem: k => { delete store[k]; }, key: i => Object.keys(store)[i] || null, get length() { return Object.keys(store).length; } },
   Promise, JSON, Date, Object, Error, Math, Array, String, Number, setTimeout
 };
 ctx.window = ctx;
@@ -96,6 +96,43 @@ function answer(date, n, correct) {
   t('角色：預設 rider-1；4 位開放，2 位要徽章', () => { fresh(); eq(Game.getAvatar(), 'rider-1'); eq(Game.getAvatars().filter(a => a.unlocked).length, 4); eq(Game.setAvatar('rider-5'), false); eq(Game.setAvatar('rider-3'), true); eq(Game.getAvatar(), 'rider-3'); });
   t('取得一週騎士 → rider-5 解鎖', () => { fresh(); ['19', '20', '21', '22', '23', '24', '25'].forEach(d => answer('2026-10-' + d, 5)); Game.checkBadges(); eq(Game.setAvatar('rider-5'), true); eq(Game.getAvatar(), 'rider-5'); eq(Game.setAvatar('rider-6'), false); });
   t('紀錄依學生分開', () => { fresh(); answer('2026-10-19', 5); const u1 = Store.getStudent(); Store.setStudent('other'); eq(Store.getAnswerLog().length, 0); Store.setStudent(u1); eq(Store.getAnswerLog().length, 5); });
+
+  console.log('試玩：重設、匯出、檢視（C16）');
+  const sample = JSON.parse(fs.readFileSync(path.join(__dirname, 'sample-record.json'), 'utf8'));
+  t('resetMe 清掉自己的全部紀錄與閱讀設定，保留學生代號，不動別人', () => {
+    fresh(); at('2026-10-19'); const me = Store.getStudent();
+    Store.recordAnswer(qs()[0].id, false); Store.addAttempt({ levelId: 'x', mode: 'level', answers: [], score: 50 }); Game.getDaily(); Store.setDoc('avatar', 'rider-2'); ctx.localStorage.setItem('moto:reading-settings', '{"zhuyin":true}');
+    Store.setStudent('other-user'); Store.recordAnswer(qs()[1].id, true); Store.setStudent(me);
+    Store.resetMe();
+    eq(Store.getAnswerLog(), []); eq(Store.getAttempts(), []); eq(Store.getMistakeIds(), []); eq(Store.getSrs(), {}); eq(Store.getDoc('daily', null), null); eq(Store.getDoc('avatar', null), null);
+    eq(ctx.localStorage.getItem('moto:reading-settings'), null); eq(Store.getStudent(), me);
+    Store.setStudent('other-user'); eq(Store.getAnswerLog().length, 1, '別的使用者紀錄還在'); Store.setStudent(me);
+  });
+  t('resetMe 之後回到全新狀態（連續天數 0、徽章全無）', () => { fresh(); answer('2026-10-19', 5); Game.checkBadges(); Store.resetMe(); eq(Game.getStreak().current, 0); eq(Game.getBadges().some(b => b.earned), false); });
+  t('exportMe 含格式、匯出時間、裝置資訊與全部紀錄', () => {
+    fresh(); at('2026-10-19', 9); Store.recordAnswer(qs()[0].id, false); Store.addAttempt({ levelId: 'x', mode: 'level', answers: [], score: 50, seconds: 30 }); Game.getDaily(); ctx.localStorage.setItem('moto:reading-settings', '{"zhuyin":true}');
+    const r = JSON.parse(JSON.stringify(Store.exportMe()));
+    eq(r.format, 'moto-record'); eq(r.student, Store.getStudent()); eq(r.exportedAt, Store.now().toISOString());
+    eq(Object.keys(r.device).sort(), ['language', 'screenHeight', 'screenWidth', 'userAgent', 'viewportWidth']);
+    eq(r.data.answers.length, 1); eq(r.data.attempts.length, 1); eq(Object.keys(r.data.mistakes).length, 1); eq(typeof r.data.docs.daily, 'object'); eq(r.readingSettings.zhuyin, true);
+    ctx.localStorage.removeItem('moto:reading-settings');
+  });
+  t('importRecord 讀得進匯出檔（物件或字串），壞檔會報錯，且不動目前使用者', () => {
+    fresh(); answer('2026-10-19', 3); const before = JSON.stringify(Store.getAnswerLog());
+    const a = Store.importRecord(sample), b = Store.importRecord(JSON.stringify(sample));
+    eq(a.student, 'sample01'); eq(b.data.answers.length, sample.data.answers.length);
+    let threw = 0; [{}, 'x', null, { format: 'other', data: {} }].forEach(x => { try { Store.importRecord(x); } catch (e) { threw++; } }); eq(threw, 4);
+    eq(JSON.stringify(Store.getAnswerLog()), before, '目前使用者的紀錄不變'); eq(Store.getStudent() !== 'sample01', true);
+  });
+  t('importRecord 缺欄位也能補成空值', () => { const r = Store.importRecord({ format: 'moto-record', data: {} }); eq(r.data.answers, []); eq(r.data.mistakes, {}); eq(r.readingSettings, null); });
+  t('Game.summary：答題數、答對率、時間、天數', () => { const m = Game.summary(Store.importRecord(sample)); eq(m.totalAnswers, 25); eq(m.correctAnswers, 19); eq(m.accuracy, 76); eq(m.seconds, 335); eq(m.activeDays, 2); eq(m.dailyAnswers, 5); });
+  t('Game.summary：關卡、錯題、徽章、閱讀設定', () => {
+    const m = Game.summary(sample); eq(m.levels.length, 1); eq(m.levels[0].tries, 2); eq(m.levels[0].best, 80);
+    eq(m.wrongQuestions[0].wrong, 2, '錯最多次的在最前面'); eq(m.wrongQuestions.length >= 4, true); eq(typeof m.wrongQuestions[0].question, 'string');
+    eq(m.badges.map(b => b.code).indexOf('first-ride') !== -1, true); eq(m.reading.used, true); eq(m.reading.items, ['字級：大', '注音']);
+  });
+  t('Game.summary：空紀錄不報錯、沒開閱讀設定', () => { const m = Game.summary(Store.importRecord({ format: 'moto-record', data: {} })); eq(m.totalAnswers, 0); eq(m.accuracy, 0); eq(m.reading.used, false); eq(m.badges, []); });
+  t('Game.summary 不依賴目前使用者（不需登入）', () => { Store.logout(); eq(Game.summary(sample).totalAnswers, 25); });
 
   console.log('\n通過 ' + pass + '，失敗 ' + fail);
   process.exit(fail ? 1 : 0);

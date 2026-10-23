@@ -127,6 +127,8 @@
 | 2026-10-23 | Claude | Jim 審 3 個 ⚠ 完成（記在 docs/概念卡-Jim審核紀錄.md）；看圖題改為比較卡，原則可引用有條號的官方法規 → 開 V1 給 Antigravity | Antigravity：A1 → V1；Jim：審文字概念卡 |
 | 2026-10-23 | Claude | 審查 A1（ea5225c）與 R1：假資料外漏、字型 7.4MB、截圖不是真畫面 → A1b；引擎 ISSUE-01/03/05 → C18；順序 A1b→A2→V1 | Antigravity：A1b；Claude Code：C18 |
 | 2026-10-23 | Claude Code | C18 完成：ISSUE-05（getStreak week 新增 'before'）、ISSUE-01（每日挑戰跨午夜算開始那天，dailyDate）、ISSUE-03（確認無影片題）；game-test 49/49 | Antigravity：週打卡格要處理 'before'；每日挑戰畫面可沿用 getDaily() 自動接續 |
+| 2026-10-23 | Claude | C18 通過（49/49）；A1b 第 5 點開放 | Antigravity：A1b、A2 |
+| 2026-10-23 | Claude Code | C16 引擎完成：Store.resetMe / exportMe / importRecord、Game.summary、site/tests/sample-record.json；game-test 58/58 | Antigravity：設定頁「重設我的紀錄」「匯出紀錄」按鈕、老師檢視頁（讀檔→Game.summary） |
 
 ## 開工提示詞
 

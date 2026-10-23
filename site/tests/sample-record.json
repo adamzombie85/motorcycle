@@ -1,0 +1,358 @@
+{
+ "format": "moto-record",
+ "version": 1,
+ "exportedAt": "2026-10-27T02:00:00.000Z",
+ "student": "sample01",
+ "device": {
+  "userAgent": "Mozilla/5.0 (Linux; Android 13; sample) Chrome/120 Mobile",
+  "language": "zh-TW",
+  "screenWidth": 390,
+  "screenHeight": 844,
+  "viewportWidth": 390
+ },
+ "readingSettings": {
+  "fontSize": "large",
+  "zhuyin": true,
+  "speechAuto": false,
+  "speechRate": "normal",
+  "reverseAlert": true,
+  "soundEffects": true,
+  "animation": true,
+  "confirmAnswer": false
+ },
+ "data": {
+  "attempts": [
+   {
+    "levelId": "貨物裝載-1",
+    "mode": "level",
+    "answers": [
+     {
+      "qid": "M0001",
+      "choice": 0,
+      "correct": false
+     },
+     {
+      "qid": "M0002",
+      "choice": 0,
+      "correct": true
+     },
+     {
+      "qid": "M0003",
+      "choice": 0,
+      "correct": true
+     },
+     {
+      "qid": "M0004",
+      "choice": 0,
+      "correct": true
+     },
+     {
+      "qid": "M0005",
+      "choice": 0,
+      "correct": false
+     },
+     {
+      "qid": "M0006",
+      "choice": 0,
+      "correct": true
+     },
+     {
+      "qid": "M0007",
+      "choice": 0,
+      "correct": true
+     },
+     {
+      "qid": "M0008",
+      "choice": 0,
+      "correct": true
+     },
+     {
+      "qid": "M0009",
+      "choice": 0,
+      "correct": false
+     },
+     {
+      "qid": "M0010",
+      "choice": 0,
+      "correct": true
+     }
+    ],
+    "correctCount": 7,
+    "total": 10,
+    "score": 70,
+    "seconds": 185,
+    "date": "2026-10-26T02:05:00.000Z"
+   },
+   {
+    "levelId": "貨物裝載-1",
+    "mode": "level",
+    "answers": [
+     {
+      "qid": "M0001",
+      "choice": 0,
+      "correct": false
+     },
+     {
+      "qid": "M0002",
+      "choice": 0,
+      "correct": true
+     },
+     {
+      "qid": "M0003",
+      "choice": 0,
+      "correct": true
+     },
+     {
+      "qid": "M0004",
+      "choice": 0,
+      "correct": true
+     },
+     {
+      "qid": "M0005",
+      "choice": 0,
+      "correct": true
+     },
+     {
+      "qid": "M0006",
+      "choice": 0,
+      "correct": false
+     },
+     {
+      "qid": "M0007",
+      "choice": 0,
+      "correct": true
+     },
+     {
+      "qid": "M0008",
+      "choice": 0,
+      "correct": true
+     },
+     {
+      "qid": "M0009",
+      "choice": 0,
+      "correct": true
+     },
+     {
+      "qid": "M0010",
+      "choice": 0,
+      "correct": true
+     }
+    ],
+    "correctCount": 8,
+    "total": 10,
+    "score": 80,
+    "seconds": 150,
+    "date": "2026-10-27T02:05:00.000Z"
+   }
+  ],
+  "mistakes": {
+   "M0001": 0,
+   "M0005": 1,
+   "M0009": 1,
+   "M0006": 0,
+   "M0012": 0
+  },
+  "answers": [
+   {
+    "qid": "M0001",
+    "correct": false,
+    "ts": 1792980000000,
+    "choice": 0
+   },
+   {
+    "qid": "M0002",
+    "correct": true,
+    "ts": 1792980000000,
+    "choice": 0
+   },
+   {
+    "qid": "M0003",
+    "correct": true,
+    "ts": 1792980000000,
+    "choice": 0
+   },
+   {
+    "qid": "M0004",
+    "correct": true,
+    "ts": 1792980000000,
+    "choice": 0
+   },
+   {
+    "qid": "M0005",
+    "correct": false,
+    "ts": 1792980000000,
+    "choice": 0
+   },
+   {
+    "qid": "M0006",
+    "correct": true,
+    "ts": 1792980000000,
+    "choice": 0
+   },
+   {
+    "qid": "M0007",
+    "correct": true,
+    "ts": 1792980000000,
+    "choice": 0
+   },
+   {
+    "qid": "M0008",
+    "correct": true,
+    "ts": 1792980000000,
+    "choice": 0
+   },
+   {
+    "qid": "M0009",
+    "correct": false,
+    "ts": 1792980000000,
+    "choice": 0
+   },
+   {
+    "qid": "M0010",
+    "correct": true,
+    "ts": 1792980000000,
+    "choice": 0
+   },
+   {
+    "qid": "M0001",
+    "correct": false,
+    "ts": 1793066400000,
+    "choice": 0
+   },
+   {
+    "qid": "M0002",
+    "correct": true,
+    "ts": 1793066400000,
+    "choice": 0
+   },
+   {
+    "qid": "M0003",
+    "correct": true,
+    "ts": 1793066400000,
+    "choice": 0
+   },
+   {
+    "qid": "M0004",
+    "correct": true,
+    "ts": 1793066400000,
+    "choice": 0
+   },
+   {
+    "qid": "M0005",
+    "correct": true,
+    "ts": 1793066400000,
+    "choice": 0
+   },
+   {
+    "qid": "M0006",
+    "correct": false,
+    "ts": 1793066400000,
+    "choice": 0
+   },
+   {
+    "qid": "M0007",
+    "correct": true,
+    "ts": 1793066400000,
+    "choice": 0
+   },
+   {
+    "qid": "M0008",
+    "correct": true,
+    "ts": 1793066400000,
+    "choice": 0
+   },
+   {
+    "qid": "M0009",
+    "correct": true,
+    "ts": 1793066400000,
+    "choice": 0
+   },
+   {
+    "qid": "M0010",
+    "correct": true,
+    "ts": 1793066400000,
+    "choice": 0
+   },
+   {
+    "qid": "M0011",
+    "correct": true,
+    "ts": 1793066400000,
+    "choice": 0,
+    "src": "daily",
+    "dailyDate": "2026-10-27"
+   },
+   {
+    "qid": "M0012",
+    "correct": false,
+    "ts": 1793066400000,
+    "choice": 0,
+    "src": "daily",
+    "dailyDate": "2026-10-27"
+   },
+   {
+    "qid": "M0013",
+    "correct": true,
+    "ts": 1793066400000,
+    "choice": 0,
+    "src": "daily",
+    "dailyDate": "2026-10-27"
+   },
+   {
+    "qid": "M0014",
+    "correct": true,
+    "ts": 1793066400000,
+    "choice": 0,
+    "src": "daily",
+    "dailyDate": "2026-10-27"
+   },
+   {
+    "qid": "M0015",
+    "correct": true,
+    "ts": 1793066400000,
+    "choice": 0,
+    "src": "daily",
+    "dailyDate": "2026-10-27"
+   }
+  ],
+  "srs": {
+   "M0001": {
+    "kind": "mistake",
+    "due": "2026-10-28"
+   },
+   "M0005": {
+    "kind": "mistake",
+    "due": "2026-10-30"
+   },
+   "M0009": {
+    "kind": "mistake",
+    "due": "2026-10-30"
+   },
+   "M0006": {
+    "kind": "mistake",
+    "due": "2026-10-28"
+   },
+   "M0012": {
+    "kind": "mistake",
+    "due": "2026-10-28"
+   }
+  },
+  "docs": {
+   "daily": {
+    "2026-10-27": [
+     "M0011",
+     "M0012",
+     "M0013",
+     "M0014",
+     "M0015"
+    ]
+   },
+   "dailyActive": {
+    "date": "2026-10-27",
+    "ts": 1793066400000
+   },
+   "badges": {
+    "first-ride": "2026-10-27"
+   }
+  }
+ }
+}
