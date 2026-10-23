@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>機車筆試好過關 - 成就徽章館</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="components.css">
+</head>
+<body>
+
+  <!-- 頂部通用導覽列 -->
+  <header class="site-header">
+    <div class="app-container nav-bar">
+      <a href="screen-home.html" class="brand-badge" aria-label="返回學習首頁">
+        <span class="brand-icon" aria-hidden="true">
+          <svg class="icon icon-lg" viewBox="0 0 24 24"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg>
+        </span>
+        <span class="text-nowrap">機車筆試好過關</span>
+      </a>
+
+      <!-- 學生身分標籤 -->
+      <a href="screen-login.html" class="user-chip" title="點擊前往登入或設定身分" style="text-decoration: none; color: inherit;">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="text-nowrap">301 班 12 號</span>
+      </a>
+
+      <!-- 閱讀設定按鈕 -->
+      <a href="screen-settings.html" class="btn-settings" id="btn-reading-settings" aria-label="開啟閱讀設定面板" title="開啟閱讀設定面板">
+        <span class="btn-settings-icon" aria-hidden="true">
+          <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        </span>
+        <span class="btn-settings-text text-nowrap">閱讀設定</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="app-container">
+
+      <!-- 頁面頂部資訊列 -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-6); flex-wrap: wrap; gap: var(--space-3);">
+        <div>
+          <nav aria-label="麵包屑導航" style="margin-bottom: var(--space-2);">
+            <a href="screen-home.html" style="color: var(--color-primary-700); font-size: var(--font-size-sm); text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+              <span>回首頁</span>
+            </a>
+          </nav>
+          <h1 style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-black); color: var(--color-slate-900);">
+            成就徽章館
+          </h1>
+          <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: 4px;">
+            累積作答、連續練習與突破障礙。獲得的徽章將永久珍藏！
+          </p>
+        </div>
+
+        <div style="background-color: var(--color-bg-card); border: 1px solid var(--color-border-card); border-radius: var(--radius-full); padding: 8px 20px; box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 8px;">
+          <svg class="icon icon-md" viewBox="0 0 24 24" style="color: var(--color-accent-600);"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+          <span style="font-size: var(--font-size-md); font-weight: var(--font-weight-black); color: var(--color-slate-900);">
+            已獲得 <span style="color: var(--color-primary-700);">7</span> / 12 個
+          </span>
+        </div>
+      </div>
+
+      <!-- 12 個徽章清單 (已取得 / 未取得灰色剪影與條件) -->
+      <section class="badges-grid" aria-label="12 個騎士成就徽章列表">
+
+        <!-- 1. 出發了！ (已取得) -->
+        <article class="badge-card">
+          <div class="badge-icon-box" title="badge-first-ride.png">
+            <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: #B45309;"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg>
+          </div>
+          <div class="badge-info">
+            <h2 class="badge-title">出發了！</h2>
+            <p class="badge-condition">完成第 1 關練習</p>
+            <span class="badge-status-pill is-unlocked">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>已解鎖 · 2026/10/21</span>
+            </span>
+            <div class="asset-placeholder-tag" style="margin-top: 6px; display: inline-block;">badge-first-ride.png</div>
+          </div>
+        </article>
+
+        <!-- 2. 全對達人 (已取得) -->
+        <article class="badge-card">
+          <div class="badge-icon-box" title="badge-perfect.png">
+            <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: #B45309;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="badge-info">
+            <h2 class="badge-title">全對達人</h2>
+            <p class="badge-condition">任一關取得 100 分滿分</p>
+            <span class="badge-status-pill is-unlocked">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>已解鎖 · 2026/10/21</span>
+            </span>
+            <div class="asset-placeholder-tag" style="margin-top: 6px; display: inline-block;">badge-perfect.png</div>
+          </div>
+        </article>
+
+        <!-- 3. 三天不間斷 (已取得) -->
+        <article class="badge-card">
+          <div class="badge-icon-box" title="badge-streak-3.png">
+            <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: #B45309;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+          </div>
+          <div class="badge-info">
+            <h2 class="badge-title">三天不間斷</h2>
+            <p class="badge-condition">連續練習滿 3 天</p>
+            <span class="badge-status-pill is-unlocked">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>已解鎖 · 今日達成</span>
+            </span>
+            <div class="asset-placeholder-tag" style="margin-top: 6px; display: inline-block;">badge-streak-3.png</div>
+          </div>
+        </article>
+
+        <!-- 4. 一週騎士 (未取得 - 鎖定中) -->
+        <article class="badge-card is-locked">
+          <div class="badge-icon-box" title="badge-streak-7.png">
+            <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: var(--color-slate-500);"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div class="badge-info">
+            <h2 class="badge-title">一週騎士</h2>
+            <p class="badge-condition">連續練習滿 7 天（解鎖綠騎士角色）</p>
+            <span class="badge-status-pill is-locked">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+              <span>解鎖進度 3 / 7 天</span>
+            </span>
+            <div class="asset-placeholder-tag" style="margin-top: 6px; display: inline-block;">badge-streak-7.png</div>
+          </div>
+        </article>
+
+        <!-- 5. 月度車神 (未取得 - 鎖定中) -->
+        <article class="badge-card is-locked">
+          <div class="badge-icon-box" title="badge-streak-30.png">
+            <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: var(--color-slate-500);"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div class="badge-info">
+            <h2 class="badge-title">月度車神</h2>
+            <p class="badge-condition">連續練習滿 30 天（解鎖金騎士角色）</p>
+            <span class="badge-status-pill is-locked">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+              <span>解鎖進度 3 / 30 天</span>
+            </span>
+            <div class="asset-placeholder-tag" style="margin-top: 6px; display: inline-block;">badge-streak-30.png</div>
+          </div>
+        </article>
+
+        <!-- 6. 反向題剋星 (已取得) -->
+        <article class="badge-card">
+          <div class="badge-icon-box" title="badge-reverse-20.png">
+            <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: #B45309;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+          </div>
+          <div class="badge-info">
+            <h2 class="badge-title">反向題剋星</h2>
+            <p class="badge-condition">反向題累計答對 20 題</p>
+            <span class="badge-status-pill is-unlocked">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>已解鎖 (20/20 題)</span>
+            </span>
+            <div class="asset-placeholder-tag" style="margin-top: 6px; display: inline-block;">badge-reverse-20.png</div>
+          </div>
+        </article>
+
+        <!-- 7. 錯題清道夫 (未取得 - 鎖定中) -->
+        <article class="badge-card is-locked">
+          <div class="badge-icon-box" title="badge-clean-up.png">
+            <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: var(--color-slate-500);"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+          </div>
+          <div class="badge-info">
+            <h2 class="badge-title">錯題清道夫</h2>
+            <p class="badge-condition">將錯題特訓庫完全清空為 0 題</p>
+            <span class="badge-status-pill is-locked">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+              <span>尚有 3 題待消除</span>
+            </span>
+            <div class="asset-placeholder-tag" style="margin-top: 6px; display: inline-block;">badge-clean-up.png</div>
+          </div>
+        </article>
+
+        <!-- 8. 看圖高手 (已取得) -->
+        <article class="badge-card">
+          <div class="badge-icon-box" title="badge-sign-30.png">
+            <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: #B45309;"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+          </div>
+          <div class="badge-info">
+            <h2 class="badge-title">看圖高手</h2>
+            <p class="badge-condition">標誌標線有圖題累計答對 30 題</p>
+            <span class="badge-status-pill is-unlocked">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>已解鎖 (30/30 題)</span>
+            </span>
+            <div class="asset-placeholder-tag" style="margin-top: 6px; display: inline-block;">badge-sign-30.png</div>
+          </div>
+        </article>
+
+        <!-- 9. 路段制霸 (已取得) -->
+        <article class="badge-card">
+          <div class="badge-icon-box" title="badge-region.png">
+            <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: #B45309;"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
+          </div>
+          <div class="badge-info">
+            <h2 class="badge-title">路段制霸</h2>
+            <p class="badge-condition">任一路段的關卡全部過關</p>
+            <span class="badge-status-pill is-unlocked">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>已解鎖 · 路段 1 制霸</span>
+            </span>
+            <div class="asset-placeholder-tag" style="margin-top: 6px; display: inline-block;">badge-region.png</div>
+          </div>
+        </article>
+
+        <!-- 10. 百題里程 (已取得) -->
+        <article class="badge-card">
+          <div class="badge-icon-box" title="badge-q-100.png">
+            <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: #B45309;"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+          </div>
+          <div class="badge-info">
+            <h2 class="badge-title">百題里程</h2>
+            <p class="badge-condition">累計作答達 100 題</p>
+            <span class="badge-status-pill is-unlocked">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>已解鎖 (160 題)</span>
+            </span>
+            <div class="asset-placeholder-tag" style="margin-top: 6px; display: inline-block;">badge-q-100.png</div>
+          </div>
+        </article>
+
+        <!-- 11. 五百題里程 (未取得 - 鎖定中) -->
+        <article class="badge-card is-locked">
+          <div class="badge-icon-box" title="badge-q-500.png">
+            <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: var(--color-slate-500);"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div class="badge-info">
+            <h2 class="badge-title">五百題里程</h2>
+            <p class="badge-condition">累計作答達 500 題</p>
+            <span class="badge-status-pill is-locked">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+              <span>進度 160 / 500 題</span>
+            </span>
+            <div class="asset-placeholder-tag" style="margin-top: 6px; display: inline-block;">badge-q-500.png</div>
+          </div>
+        </article>
+
+        <!-- 12. 挑戰常客 (未取得 - 鎖定中) -->
+        <article class="badge-card is-locked">
+          <div class="badge-icon-box" title="badge-daily-7.png">
+            <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: var(--color-slate-500);"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </div>
+          <div class="badge-info">
+            <h2 class="badge-title">挑戰常客</h2>
+            <p class="badge-condition">累計完成 7 次每日挑戰</p>
+            <span class="badge-status-pill is-locked">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+              <span>進度 2 / 7 次</span>
+            </span>
+            <div class="asset-placeholder-tag" style="margin-top: 6px; display: inline-block;">badge-daily-7.png</div>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- 底部返回按鈕 -->
+      <div style="display: flex; justify-content: center; gap: var(--space-4); margin-top: var(--space-8);">
+        <a href="screen-home.html" class="btn btn-primary btn-lg">
+          <svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>回學習首頁</span>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 頁尾宣告 -->
+  <footer style="background-color: var(--color-bg-card); border-top: 1px solid var(--color-border-subtle); padding: var(--space-6) 0; text-align: center; color: var(--color-text-secondary); font-size: var(--font-size-sm);">
+    <div class="app-container">
+      <p>© 2026 41 研究室｜版權所有</p>
+      <p style="margin-top: 4px; color: var(--color-text-muted);">通用無障礙設計規範落實 · 支援手機與平板觸控</p>
+    </div>
+  </footer>
+
+</body>
+</html>

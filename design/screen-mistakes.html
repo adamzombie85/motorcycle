@@ -38,6 +38,7 @@
       display: flex;
       align-items: center;
       gap: var(--space-2);
+      text-wrap: balance;
     }
 
     .mistakes-desc {
@@ -112,18 +113,27 @@
   <header class="site-header">
     <div class="app-container nav-bar">
       <a href="screen-home.html" class="brand-badge" style="font-size: var(--font-size-base);">
-        <span class="brand-icon" style="width: 36px; height: 36px; font-size: 20px;">🛵</span>
-        <span>回首頁</span>
+        <span class="brand-icon" style="width: 36px; height: 36px;">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
+          </svg>
+        </span>
+        <span class="text-nowrap">回首頁</span>
       </a>
 
       <!-- 學生識別 -->
       <a href="screen-login.html" class="user-chip" title="點擊前往設定身分" style="text-decoration: none; color: inherit;">
-        <span>👤 學生：301 班 12 號</span>
+        <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span>301 班 12 號</span>
       </a>
 
-      <!-- 閱讀設定按鈕 (點擊開啟閱讀設定面板) -->
+      <!-- 閱讀設定按鈕 -->
       <a href="screen-settings.html" class="btn-settings" id="btn-reading-settings" aria-label="開啟閱讀設定面板" title="開啟閱讀設定面板">
-        <span class="btn-settings-icon" aria-hidden="true">⚙️</span>
+        <svg class="icon btn-settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
         <span class="btn-settings-text">閱讀設定</span>
       </a>
     </div>
@@ -135,10 +145,16 @@
       <!-- 狀態切換列：方便 Jim 與工程端同時驗收「有錯題」與「無錯題」兩種畫面 -->
       <div class="state-toggle-bar" role="tablist" aria-label="畫面狀態切換">
         <button type="button" class="state-toggle-btn is-active" id="tab-has-mistakes" onclick="switchMistakeView('has')">
-          <span>🔁 狀態 A：有錯題 (4 題待複習)</span>
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>
+          </svg>
+          <span>狀態 A：有錯題 (4 題待複習)</span>
         </button>
         <button type="button" class="state-toggle-btn" id="tab-no-mistakes" onclick="switchMistakeView('none')">
-          <span>🎉 狀態 B：沒有錯題 (鼓勵畫面)</span>
+          <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+          </svg>
+          <span>狀態 B：沒有錯題 (鼓勵畫面)</span>
         </button>
       </div>
 
@@ -150,20 +166,31 @@
         <!-- 錯題總覽大卡片 -->
         <section class="mistakes-hero-card">
           <h1 class="mistakes-title">
-            <span>🔁</span> 錯題特訓庫 (4 題待複習)
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-danger-600);">
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>
+            </svg>
+            <span>錯題特訓庫 (4 題待複習)</span>
           </h1>
           <p class="mistakes-desc">
-            做錯的題目會自動保存在這裡。只要<strong>連續答對 2 次</strong>就會光榮移出！消除所有錯題，駕照輕鬆到手！💪
+            做錯的題目會自動保存在這裡。只要<strong>連續答對 2 次</strong>就會光榮移出！消除所有錯題，駕照輕鬆到手！
           </p>
 
           <!-- 移出規則提示 -->
           <div style="background-color: var(--color-primary-50); border: 2px solid var(--color-primary-200); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); display: flex; align-items: center; gap: var(--space-3); font-size: var(--font-size-sm); color: var(--color-primary-900); font-weight: bold; margin-bottom: var(--space-4);">
-            <span style="font-size: 20px;">💡</span>
-            <span>移出機制：每題只要連續答對 2 次（✔✔），系統就會自動移出錯題庫！</span>
+            <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary-700); flex-shrink: 0;">
+              <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+            </svg>
+            <span>移出機制：每題只要連續答對 2 次，系統就會自動移出錯題庫！</span>
           </div>
 
           <a href="screen-quiz.html" class="btn btn-danger btn-lg" style="width: 100%; justify-content: center; font-size: var(--font-size-md);">
-            🚀 一鍵複習全部 4 題 ➔
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            <span>一鍵複習全部 4 題</span>
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+            </svg>
           </a>
         </section>
 
@@ -176,24 +203,40 @@
               <div class="tag-list">
                 <span class="tag tag-category">正確觀念與態度</span>
                 <span class="tag tag-sub">貨物裝載</span>
-                <span class="tag tag-reverse">⚠️ 反向題</span>
+                <span class="tag tag-reverse">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                  </svg>
+                  <span>反向題</span>
+                </span>
                 <span class="tag" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">題號 Q6</span>
               </div>
-              <button type="button" class="btn-icon" title="朗讀題目與選項" aria-label="朗讀本題">🔊</button>
+              <button type="button" class="btn-icon" title="朗讀題目與選項" aria-label="朗讀本題">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                </svg>
+              </button>
             </div>
 
             <!-- 連續答對次數進度條 -->
             <div class="mistake-streak-box">
               <div class="mistake-streak-header">
-                <span style="color: var(--color-success-700);">
-                  🎯 連續答對進度：<strong>1 / 2 次</strong>
+                <span style="color: var(--color-success-700); display: flex; align-items: center; gap: var(--space-1);">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+                  </svg>
+                  <span>連續答對進度：<strong>1 / 2 次</strong></span>
                 </span>
                 <span style="color: var(--color-primary-700);">
                   再答對 1 次即可移出！
                 </span>
               </div>
               <div class="streak-dots">
-                <div class="streak-dot is-active" title="第 1 次答對">✔</div>
+                <div class="streak-dot is-active" title="第 1 次答對">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
                 <div class="streak-dot" title="還需答對 1 次">2</div>
               </div>
             </div>
@@ -210,7 +253,10 @@
               <div class="option-card is-correct" style="cursor: default;">
                 <span class="option-badge">1</span>
                 <span class="option-label">得載運高於騎士肩膀以上之貨物</span>
-                <span class="option-indicator">✔ 正確解答</span>
+                <span class="option-indicator" style="display: flex; align-items: center; gap: 4px;">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>正確解答</span>
+                </span>
               </div>
               <div class="option-card" style="cursor: default; opacity: 0.65;">
                 <span class="option-badge">2</span>
@@ -219,14 +265,18 @@
               <div class="option-card is-wrong" style="cursor: default;">
                 <span class="option-badge">3</span>
                 <span class="option-label">伸出車尾部分，自後輪軸起不得超過 50公分</span>
-                <span class="option-indicator">✖ 你的上次選擇</span>
+                <span class="option-indicator" style="display: flex; align-items: center; gap: 4px;">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <span>你的上次選擇</span>
+                </span>
               </div>
             </div>
 
             <!-- 單題練習按鈕 -->
             <div style="display: flex; justify-content: flex-end; padding-top: var(--space-2);">
               <a href="screen-quiz.html" class="btn btn-secondary">
-                單獨複習此題 ➔
+                <span>單獨複習此題</span>
+                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
               </a>
             </div>
           </article>
@@ -237,17 +287,24 @@
               <div class="tag-list">
                 <span class="tag tag-category">正確觀念與態度</span>
                 <span class="tag tag-sub">事故預防及處理</span>
-                <span class="tag" style="background-color: var(--color-primary-100); color: var(--color-primary-800);">🖼️ 官方圖片題</span>
+                <span class="tag" style="background-color: var(--color-primary-100); color: var(--color-primary-800);">官方圖片題</span>
                 <span class="tag" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">題號 Q67</span>
               </div>
-              <button type="button" class="btn-icon" title="朗讀提示與選項" aria-label="朗讀本題">🔊</button>
+              <button type="button" class="btn-icon" title="朗讀提示與選項" aria-label="朗讀本題">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                </svg>
+              </button>
             </div>
 
             <!-- 連續答對次數進度條 -->
             <div class="mistake-streak-box">
               <div class="mistake-streak-header">
-                <span style="color: var(--color-danger-700);">
-                  🎯 連續答對進度：<strong>0 / 2 次</strong>
+                <span style="color: var(--color-danger-700); display: flex; align-items: center; gap: var(--space-1);">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+                  </svg>
+                  <span>連續答對進度：<strong>0 / 2 次</strong></span>
                 </span>
                 <span style="color: var(--color-text-secondary);">
                   還需連續答對 2 次
@@ -261,7 +318,7 @@
 
             <!-- 無題幹題目提示句 (D2 規範) -->
             <div class="question-stem-prompt">
-              <span>👉</span> 請看圖，選出正確的答案。
+              <span>請看圖，選出正確的答案。</span>
             </div>
 
             <!-- 官方抽出圖檔展示框 -->
@@ -277,12 +334,18 @@
               <div class="option-card is-wrong" style="cursor: default;">
                 <span class="option-badge">1</span>
                 <span class="option-label">路面高突</span>
-                <span class="option-indicator">✖ 你的上次選擇</span>
+                <span class="option-indicator" style="display: flex; align-items: center; gap: 4px;">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <span>你的上次選擇</span>
+                </span>
               </div>
               <div class="option-card is-correct" style="cursor: default;">
                 <span class="option-badge">2</span>
                 <span class="option-label">路滑</span>
-                <span class="option-indicator">✔ 正確解答</span>
+                <span class="option-indicator" style="display: flex; align-items: center; gap: 4px;">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>正確解答</span>
+                </span>
               </div>
               <div class="option-card" style="cursor: default; opacity: 0.65;">
                 <span class="option-badge">3</span>
@@ -292,7 +355,8 @@
 
             <div style="display: flex; justify-content: flex-end; padding-top: var(--space-2);">
               <a href="screen-quiz.html" class="btn btn-secondary">
-                單獨複習此題 ➔
+                <span>單獨複習此題</span>
+                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
               </a>
             </div>
           </article>
@@ -303,23 +367,34 @@
               <div class="tag-list">
                 <span class="tag tag-category">正確觀念與態度</span>
                 <span class="tag tag-sub">貨物裝載</span>
-                <span class="tag" style="background-color: var(--color-accent-100); color: var(--color-accent-800);">🔢 數字題</span>
+                <span class="tag" style="background-color: var(--color-accent-100); color: var(--color-accent-800);">數字題</span>
                 <span class="tag" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">題號 Q2</span>
               </div>
-              <button type="button" class="btn-icon" title="朗讀題目與選項" aria-label="朗讀本題">🔊</button>
+              <button type="button" class="btn-icon" title="朗讀題目與選項" aria-label="朗讀本題">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                </svg>
+              </button>
             </div>
 
             <div class="mistake-streak-box">
               <div class="mistake-streak-header">
-                <span style="color: var(--color-success-700);">
-                  🎯 連續答對進度：<strong>1 / 2 次</strong>
+                <span style="color: var(--color-success-700); display: flex; align-items: center; gap: var(--space-1);">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+                  </svg>
+                  <span>連續答對進度：<strong>1 / 2 次</strong></span>
                 </span>
                 <span style="color: var(--color-primary-700);">
                   再答對 1 次即可移出！
                 </span>
               </div>
               <div class="streak-dots">
-                <div class="streak-dot is-active" title="第 1 次答對">✔</div>
+                <div class="streak-dot is-active" title="第 1 次答對">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
                 <div class="streak-dot" title="還需答對 1 次">2</div>
               </div>
             </div>
@@ -334,12 +409,18 @@
               <div class="option-card is-correct" style="cursor: default;">
                 <span class="option-badge">1</span>
                 <span class="option-label">10公分</span>
-                <span class="option-indicator">✔ 正確解答</span>
+                <span class="option-indicator" style="display: flex; align-items: center; gap: 4px;">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>正確解答</span>
+                </span>
               </div>
               <div class="option-card is-wrong" style="cursor: default;">
                 <span class="option-badge">2</span>
                 <span class="option-label">2 公尺</span>
-                <span class="option-indicator">✖ 你的上次選擇</span>
+                <span class="option-indicator" style="display: flex; align-items: center; gap: 4px;">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <span>你的上次選擇</span>
+                </span>
               </div>
               <div class="option-card" style="cursor: default; opacity: 0.65;">
                 <span class="option-badge">3</span>
@@ -349,7 +430,8 @@
 
             <div style="display: flex; justify-content: flex-end; padding-top: var(--space-2);">
               <a href="screen-quiz.html" class="btn btn-secondary">
-                單獨複習此題 ➔
+                <span>單獨複習此題</span>
+                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
               </a>
             </div>
           </article>
@@ -363,13 +445,20 @@
                 <span class="tag" style="background-color: var(--color-primary-100); color: var(--color-primary-800);">法規題</span>
                 <span class="tag" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">題號 Q16</span>
               </div>
-              <button type="button" class="btn-icon" title="朗讀題目與選項" aria-label="朗讀本題">🔊</button>
+              <button type="button" class="btn-icon" title="朗讀題目與選項" aria-label="朗讀本題">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                </svg>
+              </button>
             </div>
 
             <div class="mistake-streak-box">
               <div class="mistake-streak-header">
-                <span style="color: var(--color-danger-700);">
-                  🎯 連續答對進度：<strong>0 / 2 次</strong>
+                <span style="color: var(--color-danger-700); display: flex; align-items: center; gap: var(--space-1);">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+                  </svg>
+                  <span>連續答對進度：<strong>0 / 2 次</strong></span>
                 </span>
                 <span style="color: var(--color-text-secondary);">
                   還需連續答對 2 次
@@ -395,18 +484,25 @@
               <div class="option-card is-correct" style="cursor: default;">
                 <span class="option-badge">2</span>
                 <span class="option-label">機車駕駛人</span>
-                <span class="option-indicator">✔ 正確解答</span>
+                <span class="option-indicator" style="display: flex; align-items: center; gap: 4px;">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>正確解答</span>
+                </span>
               </div>
               <div class="option-card is-wrong" style="cursor: default;">
                 <span class="option-badge">3</span>
                 <span class="option-label">機車駕駛人及乘客</span>
-                <span class="option-indicator">✖ 你的上次選擇</span>
+                <span class="option-indicator" style="display: flex; align-items: center; gap: 4px;">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <span>你的上次選擇</span>
+                </span>
               </div>
             </div>
 
             <div style="display: flex; justify-content: flex-end; padding-top: var(--space-2);">
               <a href="screen-quiz.html" class="btn btn-secondary">
-                單獨複習此題 ➔
+                <span>單獨複習此題</span>
+                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
               </a>
             </div>
           </article>
@@ -416,7 +512,10 @@
         <!-- 底部導覽回首頁 -->
         <div style="text-align: center; margin-top: var(--space-8); margin-bottom: var(--space-8);">
           <a href="screen-home.html" class="btn btn-outline btn-lg">
-            🏠 回學習首頁
+            <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <span>回學習首頁</span>
           </a>
         </div>
 
@@ -427,7 +526,14 @@
            ==================================================================== -->
       <div id="view-no-mistakes" style="display: none;">
         <div class="empty-state-card">
-          <div class="empty-state-icon">🏆✨</div>
+          <div class="empty-state-icon" style="color: var(--color-accent-500); display: flex; justify-content: center; align-items: center; gap: 8px;">
+            <svg class="icon icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+            </svg>
+            <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/>
+            </svg>
+          </div>
           <h2 class="empty-state-title">
             太棒了！目前沒有任何錯題！
           </h2>
@@ -436,17 +542,27 @@
           </p>
 
           <div style="background-color: var(--color-success-50); border: 2px solid var(--color-success-200); border-radius: var(--radius-md); padding: var(--space-4); max-width: 460px; margin: var(--space-2) 0;">
-            <p style="font-size: var(--font-size-base); color: var(--color-success-800); font-weight: bold; margin: 0;">
-              🌟 錯題清空成就達成 · 信心滿滿迎戰考驗！
+            <p style="font-size: var(--font-size-base); color: var(--color-success-800); font-weight: bold; margin: 0; display: flex; align-items: center; justify-content: center; gap: var(--space-2);">
+              <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" style="color: var(--color-accent-600);">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              <span>錯題清空成就達成 · 信心滿滿迎戰考驗！</span>
             </p>
           </div>
 
           <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center; margin-top: var(--space-4);">
             <a href="screen-levels.html" class="btn btn-primary btn-lg">
-              🎯 繼續挑戰小關卡 ➔
+              <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+              </svg>
+              <span>繼續挑戰小關卡</span>
+              <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </a>
             <a href="screen-home.html" class="btn btn-outline btn-lg">
-              🏠 返回學習首頁
+              <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+              <span>返回學習首頁</span>
             </a>
           </div>
         </div>
@@ -483,28 +599,6 @@
         tabNone.classList.add('is-active');
       }
     }
-
-    // A11y 工具列簡單互動示範
-    const btnSpeech = document.getElementById('btn-mistakes-speech');
-    const btnZhuyin = document.getElementById('btn-mistakes-zhuyin');
-    const btnZoom = document.getElementById('btn-mistakes-zoom');
-
-    btnSpeech.addEventListener('click', () => {
-      btnSpeech.classList.toggle('is-active');
-      alert('語音朗讀錯題：已啟用點讀朗讀功能。');
-    });
-
-    btnZhuyin.addEventListener('click', () => {
-      btnZhuyin.classList.toggle('is-active');
-      alert('注音模式：已切換注音字型顯示。');
-    });
-
-    let zoomed = false;
-    btnZoom.addEventListener('click', () => {
-      zoomed = !zoomed;
-      document.documentElement.style.fontSize = zoomed ? '18px' : '16px';
-      btnZoom.classList.toggle('is-active', zoomed);
-    });
   </script>
 </body>
 </html>

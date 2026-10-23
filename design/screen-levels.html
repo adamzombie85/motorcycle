@@ -94,18 +94,18 @@
   <header class="site-header">
     <div class="app-container nav-bar">
       <a href="screen-home.html" class="brand-badge" style="font-size: var(--font-size-base);">
-        <span class="brand-icon" style="width: 36px; height: 36px; font-size: 20px;">🛵</span>
+        <span class="brand-icon" style="width: 36px; height: 36px;" aria-hidden="true"><svg class="icon icon-md" viewBox="0 0 24 24"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg></span>
         <span>回首頁</span>
       </a>
 
       <!-- 學生識別 -->
       <a href="screen-login.html" class="user-chip" title="點擊前往設定身分" style="text-decoration: none; color: inherit;">
-        <span>👤 學生：301 班 12 號</span>
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="text-nowrap">301 班 12 號</span>
       </a>
 
       <!-- 閱讀設定按鈕 (點擊開啟閱讀設定面板) -->
       <a href="screen-settings.html" class="btn-settings" id="btn-reading-settings" aria-label="開啟閱讀設定面板" title="開啟閱讀設定面板">
-        <span class="btn-settings-icon" aria-hidden="true">⚙️</span>
+        <span class="btn-settings-icon" aria-hidden="true"><svg class="icon icon-md" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span>
         <span class="btn-settings-text">閱讀設定</span>
       </a>
     </div>
@@ -133,8 +133,8 @@
 
         <!-- 規範與通過標準提示 -->
         <div class="rules-banner">
-          <span style="font-size: 22px;">🎯</span>
-          <span>過關規則：每關 10 題，做完立刻看成績，85 分以上即獲「已過關 ✔」星星勳章！</span>
+          <svg class="icon icon-md" viewBox="0 0 24 24" style="color: var(--color-primary-700);"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <span>過關規則：每關 10 題，做完立即結算，85 分以上即判定過關！</span>
         </div>
 
         <!-- 小類總進度條 -->
@@ -152,23 +152,23 @@
       <!-- 篩選與檢視標籤列 (可橫向捲動，方便手機觸控) -->
       <div class="level-filter-bar" role="tablist" aria-label="關卡篩選">
         <button type="button" class="level-filter-tab is-active" onclick="filterLevels('all', this)">
-          <span>📋 全部關卡 (25)</span>
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg><span>全部關卡 (25)</span>
         </button>
         <button type="button" class="level-filter-tab" onclick="filterLevels('passed', this)">
-          <span style="color: var(--color-success-700);">✔ 已過關 (12)</span>
+          <span style="color: var(--color-success-700); display: inline-flex; align-items: center; gap: 4px;"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>已過關 (12)</span></span>
         </button>
         <button type="button" class="level-filter-tab" onclick="filterLevels('progress', this)">
-          <span style="color: var(--color-accent-700);">⚡ 練習中 (5)</span>
+          <span style="color: var(--color-accent-700); display: inline-flex; align-items: center; gap: 4px;"><svg class="icon icon-sm" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span>練習中 (5)</span></span>
         </button>
         <button type="button" class="level-filter-tab" onclick="filterLevels('not-started', this)">
-          <span style="color: var(--color-slate-600);">⚪ 未開始 (8)</span>
+          <span style="color: var(--color-slate-600); display: inline-flex; align-items: center; gap: 4px;"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg><span>未開始 (8)</span></span>
         </button>
       </div>
 
       <!-- ====================================================================
            25 個微關卡清單網格 (全部皆可點擊作答，不鎖關)
            狀態展示：
-           - 第 01 ~ 12 關：已過關 ✔ (最高分 >= 85)
+           - 第 01 ~ 12 關：已過關 (最高分 >= 85)
            - 第 13 ~ 17 關：已練習＋最高分 (練習中，最高分 60~80)
            - 第 18 ~ 25 關：未開始
            ==================================================================== -->
@@ -179,7 +179,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 01 關</span>
-              <span class="level-item-badge is-passed">✔ 已過關 · 100 分</span>
+              <span class="level-item-badge is-passed"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 已過關 · 100 分</span>
             </div>
             <h3 class="level-item-title">鐵路平交道通行規定 (一)</h3>
             <p class="level-item-desc">警鈴已響、閃光號誌顯示時的煞停距離與標誌認知。</p>
@@ -187,10 +187,10 @@
           <div>
             <div class="level-item-footer">
               <span style="color: var(--color-text-secondary);">題數：10 題</span>
-              <span style="color: var(--color-success-700);">滿分通過 ★★★</span>
+              <span style="color: var(--color-success-700);">滿分通過 (100分)</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-outline">
-              再次練習 ➔
+              <span>再次練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -200,7 +200,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 02 關</span>
-              <span class="level-item-badge is-passed">✔ 已過關 · 90 分</span>
+              <span class="level-item-badge is-passed"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 已過關 · 90 分</span>
             </div>
             <h3 class="level-item-title">鐵路平交道通行規定 (二)</h3>
             <p class="level-item-desc">平交道拋錨故障應變程序：推、按、跑三大原則。</p>
@@ -208,10 +208,10 @@
           <div>
             <div class="level-item-footer">
               <span style="color: var(--color-text-secondary);">題數：10 題</span>
-              <span style="color: var(--color-success-700);">合格通過 ★★☆</span>
+              <span style="color: var(--color-success-700);">合格通過</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-outline">
-              再次練習 ➔
+              <span>再次練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -221,7 +221,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 03 關</span>
-              <span class="level-item-badge is-passed">✔ 已過關 · 90 分</span>
+              <span class="level-item-badge is-passed"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 已過關 · 90 分</span>
             </div>
             <h3 class="level-item-title">鐵路平交道超車與迴轉禁令</h3>
             <p class="level-item-desc">平交道範圍內嚴禁超車、倒車、迴轉及臨時停車。</p>
@@ -229,10 +229,10 @@
           <div>
             <div class="level-item-footer">
               <span style="color: var(--color-text-secondary);">題數：10 題</span>
-              <span style="color: var(--color-success-700);">合格通過 ★★☆</span>
+              <span style="color: var(--color-success-700);">合格通過</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-outline">
-              再次練習 ➔
+              <span>再次練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -242,7 +242,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 04 關</span>
-              <span class="level-item-badge is-passed">✔ 已過關 · 100 分</span>
+              <span class="level-item-badge is-passed"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 已過關 · 100 分</span>
             </div>
             <h3 class="level-item-title">強制汽車責任保險基礎 (一)</h3>
             <p class="level-item-desc">投保義務、保險卡隨車攜帶與有效期限認知。</p>
@@ -250,10 +250,10 @@
           <div>
             <div class="level-item-footer">
               <span style="color: var(--color-text-secondary);">題數：10 題</span>
-              <span style="color: var(--color-success-700);">滿分通過 ★★★</span>
+              <span style="color: var(--color-success-700);">滿分通過 (100分)</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-outline">
-              再次練習 ➔
+              <span>再次練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -263,7 +263,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 05 關</span>
-              <span class="level-item-badge is-passed">✔ 已過關 · 90 分</span>
+              <span class="level-item-badge is-passed"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 已過關 · 90 分</span>
             </div>
             <h3 class="level-item-title">強制險理賠與過戶規定</h3>
             <p class="level-item-desc">車輛過戶前強制險移轉規定及未投保行駛罰鍰。</p>
@@ -271,10 +271,10 @@
           <div>
             <div class="level-item-footer">
               <span style="color: var(--color-text-secondary);">題數：10 題</span>
-              <span style="color: var(--color-success-700);">合格通過 ★★☆</span>
+              <span style="color: var(--color-success-700);">合格通過</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-outline">
-              再次練習 ➔
+              <span>再次練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -284,7 +284,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 06 關</span>
-              <span class="level-item-badge is-passed">✔ 已過關 · 90 分</span>
+              <span class="level-item-badge is-passed"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 已過關 · 90 分</span>
             </div>
             <h3 class="level-item-title">強制險事故受害人權益保障</h3>
             <p class="level-item-desc">體傷醫療給付、失能與死亡給付申請原則。</p>
@@ -292,10 +292,10 @@
           <div>
             <div class="level-item-footer">
               <span style="color: var(--color-text-secondary);">題數：10 題</span>
-              <span style="color: var(--color-success-700);">合格通過 ★★☆</span>
+              <span style="color: var(--color-success-700);">合格通過</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-outline">
-              再次練習 ➔
+              <span>再次練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -305,7 +305,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 07 關</span>
-              <span class="level-item-badge is-passed">✔ 已過關 · 100 分</span>
+              <span class="level-item-badge is-passed"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 已過關 · 100 分</span>
             </div>
             <h3 class="level-item-title">節能駕駛與環保行車習慣 (一)</h3>
             <p class="level-item-desc">平順起步、避免急加速急煞車之省油要領。</p>
@@ -313,10 +313,10 @@
           <div>
             <div class="level-item-footer">
               <span style="color: var(--color-text-secondary);">題數：10 題</span>
-              <span style="color: var(--color-success-700);">滿分通過 ★★★</span>
+              <span style="color: var(--color-success-700);">滿分通過 (100分)</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-outline">
-              再次練習 ➔
+              <span>再次練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -326,7 +326,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 08 關</span>
-              <span class="level-item-badge is-passed">✔ 已過關 · 90 分</span>
+              <span class="level-item-badge is-passed"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 已過關 · 90 分</span>
             </div>
             <h3 class="level-item-title">機車排氣定檢與環保法規</h3>
             <p class="level-item-desc">出廠滿五年每年排氣檢驗規定與烏賊車防制。</p>
@@ -334,10 +334,10 @@
           <div>
             <div class="level-item-footer">
               <span style="color: var(--color-text-secondary);">題數：10 題</span>
-              <span style="color: var(--color-success-700);">合格通過 ★★☆</span>
+              <span style="color: var(--color-success-700);">合格通過</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-outline">
-              再次練習 ➔
+              <span>再次練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -347,7 +347,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 09 關</span>
-              <span class="level-item-badge is-passed">✔ 已過關 · 90 分</span>
+              <span class="level-item-badge is-passed"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 已過關 · 90 分</span>
             </div>
             <h3 class="level-item-title">怠速熄火與噪音防制</h3>
             <p class="level-item-desc">停等長時間怠速熄火規範與非原廠排氣管噪音噪音管制。</p>
@@ -355,10 +355,10 @@
           <div>
             <div class="level-item-footer">
               <span style="color: var(--color-text-secondary);">題數：10 題</span>
-              <span style="color: var(--color-success-700);">合格通過 ★★☆</span>
+              <span style="color: var(--color-success-700);">合格通過</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-outline">
-              再次練習 ➔
+              <span>再次練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -368,7 +368,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 10 關</span>
-              <span class="level-item-badge is-passed">✔ 已過關 · 100 分</span>
+              <span class="level-item-badge is-passed"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 已過關 · 100 分</span>
             </div>
             <h3 class="level-item-title">雨天騎乘與水漂現象防範</h3>
             <p class="level-item-desc">雨天輪胎抓地力下降、路面標線滑溜之減速要領。</p>
@@ -376,10 +376,10 @@
           <div>
             <div class="level-item-footer">
               <span style="color: var(--color-text-secondary);">題數：10 題</span>
-              <span style="color: var(--color-success-700);">滿分通過 ★★★</span>
+              <span style="color: var(--color-success-700);">滿分通過 (100分)</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-outline">
-              再次練習 ➔
+              <span>再次練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -389,7 +389,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 11 關</span>
-              <span class="level-item-badge is-passed">✔ 已過關 · 90 分</span>
+              <span class="level-item-badge is-passed"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 已過關 · 90 分</span>
             </div>
             <h3 class="level-item-title">濃霧與視線不良應變</h3>
             <p class="level-item-desc">開啓頭燈與前後霧燈、加大行車安全距離。</p>
@@ -397,10 +397,10 @@
           <div>
             <div class="level-item-footer">
               <span style="color: var(--color-text-secondary);">題數：10 題</span>
-              <span style="color: var(--color-success-700);">合格通過 ★★☆</span>
+              <span style="color: var(--color-success-700);">合格通過</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-outline">
-              再次練習 ➔
+              <span>再次練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -410,7 +410,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 12 關</span>
-              <span class="level-item-badge is-passed">✔ 已過關 · 90 分</span>
+              <span class="level-item-badge is-passed"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 已過關 · 90 分</span>
             </div>
             <h3 class="level-item-title">強風與颱風天駕駛要點</h3>
             <p class="level-item-desc">高架橋與空曠路段側風因應、遠離廣告招牌。</p>
@@ -418,10 +418,10 @@
           <div>
             <div class="level-item-footer">
               <span style="color: var(--color-text-secondary);">題數：10 題</span>
-              <span style="color: var(--color-success-700);">合格通過 ★★☆</span>
+              <span style="color: var(--color-success-700);">合格通過</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-outline">
-              再次練習 ➔
+              <span>再次練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -431,7 +431,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 13 關</span>
-              <span class="level-item-badge is-in-progress">⚡ 練習中 · 最高 70 分</span>
+              <span class="level-item-badge is-in-progress"><svg class="icon icon-sm" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> 練習中 · 最高 70 分</span>
             </div>
             <h3 class="level-item-title">夜間行駛與視線死角</h3>
             <p class="level-item-desc">遠近光燈切換時機、對向會車不開遠光燈禮儀。</p>
@@ -442,7 +442,7 @@
               <span style="color: var(--color-accent-700);">差 15 分及格</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-secondary">
-              繼續挑戰 ➔
+              <span>繼續挑戰</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -452,7 +452,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 14 關</span>
-              <span class="level-item-badge is-in-progress">⚡ 練習中 · 最高 80 分</span>
+              <span class="level-item-badge is-in-progress"><svg class="icon icon-sm" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> 練習中 · 最高 80 分</span>
             </div>
             <h3 class="level-item-title">行經隧道與長下坡應變</h3>
             <p class="level-item-desc">進入隧道提早開燈、下長坡善用引擎煞車切勿空檔。</p>
@@ -463,7 +463,7 @@
               <span style="color: var(--color-accent-700);">差 5 分及格</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-secondary">
-              繼續挑戰 ➔
+              <span>繼續挑戰</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -473,7 +473,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 15 關</span>
-              <span class="level-item-badge is-in-progress">⚡ 練習中 · 最高 60 分</span>
+              <span class="level-item-badge is-in-progress"><svg class="icon icon-sm" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> 練習中 · 最高 60 分</span>
             </div>
             <h3 class="level-item-title">駕駛道德與用路禮貌 (一)</h3>
             <p class="level-item-desc">不逼車、不隨意鳴按喇叭、不以遠光燈閃爍前車。</p>
@@ -484,7 +484,7 @@
               <span style="color: var(--color-accent-700);">差 25 分及格</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-secondary">
-              繼續挑戰 ➔
+              <span>繼續挑戰</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -494,7 +494,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 16 關</span>
-              <span class="level-item-badge is-in-progress">⚡ 練習中 · 最高 70 分</span>
+              <span class="level-item-badge is-in-progress"><svg class="icon icon-sm" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> 練習中 · 最高 70 分</span>
             </div>
             <h3 class="level-item-title">駕駛道德與路權尊重 (二)</h3>
             <p class="level-item-desc">主動禮讓老弱婦孺、遇救護車消防車迅速避讓。</p>
@@ -505,7 +505,7 @@
               <span style="color: var(--color-accent-700);">差 15 分及格</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-secondary">
-              繼續挑戰 ➔
+              <span>繼續挑戰</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -515,7 +515,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 17 關</span>
-              <span class="level-item-badge is-in-progress">⚡ 練習中 · 最高 80 分</span>
+              <span class="level-item-badge is-in-progress"><svg class="icon icon-sm" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> 練習中 · 最高 80 分</span>
             </div>
             <h3 class="level-item-title">行車情緒管理與防衛心態</h3>
             <p class="level-item-desc">不與他人競速爭道、保持平穩平和騎乘心態。</p>
@@ -526,7 +526,7 @@
               <span style="color: var(--color-accent-700);">差 5 分及格</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-secondary">
-              繼續挑戰 ➔
+              <span>繼續挑戰</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -536,7 +536,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 18 關</span>
-              <span class="level-item-badge is-not-started">⚪ 尚未挑戰</span>
+              <span class="level-item-badge is-not-started"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 尚未挑戰</span>
             </div>
             <h3 class="level-item-title">山區道路騎乘安全規定</h3>
             <p class="level-item-desc">靠右行駛、盲彎不超車、注意落石與路面濕滑。</p>
@@ -547,7 +547,7 @@
               <span style="color: var(--color-slate-500);">自由挑戰 · 不鎖關</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-primary">
-              開始練習 ➔
+              <span>開始練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -557,7 +557,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 19 關</span>
-              <span class="level-item-badge is-not-started">⚪ 尚未挑戰</span>
+              <span class="level-item-badge is-not-started"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 尚未挑戰</span>
             </div>
             <h3 class="level-item-title">施工路段與交管指揮禮儀</h3>
             <p class="level-item-desc">遵行交管人員引導、路面鋪設鐵板慢行減速。</p>
@@ -568,7 +568,7 @@
               <span style="color: var(--color-slate-500);">自由挑戰 · 不鎖關</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-primary">
-              開始練習 ➔
+              <span>開始練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -578,7 +578,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 20 關</span>
-              <span class="level-item-badge is-not-started">⚪ 尚未挑戰</span>
+              <span class="level-item-badge is-not-started"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 尚未挑戰</span>
             </div>
             <h3 class="level-item-title">低溫寒流與路面結冰要領</h3>
             <p class="level-item-desc">高山路面結霜防滑技巧、身體保暖防止手指僵硬。</p>
@@ -589,7 +589,7 @@
               <span style="color: var(--color-slate-500);">自由挑戰 · 不鎖關</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-primary">
-              開始練習 ➔
+              <span>開始練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -599,7 +599,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 21 關</span>
-              <span class="level-item-badge is-not-started">⚪ 尚未挑戰</span>
+              <span class="level-item-badge is-not-started"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 尚未挑戰</span>
             </div>
             <h3 class="level-item-title">行車噪音管制與環境關懷</h3>
             <p class="level-item-desc">住宅區低速慢行、不在夜間巷道拉轉催油門。</p>
@@ -610,7 +610,7 @@
               <span style="color: var(--color-slate-500);">自由挑戰 · 不鎖關</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-primary">
-              開始練習 ➔
+              <span>開始練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -620,7 +620,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 22 關</span>
-              <span class="level-item-badge is-not-started">⚪ 尚未挑戰</span>
+              <span class="level-item-badge is-not-started"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 尚未挑戰</span>
             </div>
             <h3 class="level-item-title">廢棄物與煙蒂棄置防制</h3>
             <p class="level-item-desc">行駛中禁止拋擲煙蒂、垃圾防制與道路清潔維護。</p>
@@ -631,7 +631,7 @@
               <span style="color: var(--color-slate-500);">自由挑戰 · 不鎖關</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-primary">
-              開始練習 ➔
+              <span>開始練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -641,7 +641,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 23 關</span>
-              <span class="level-item-badge is-not-started">⚪ 尚未挑戰</span>
+              <span class="level-item-badge is-not-started"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 尚未挑戰</span>
             </div>
             <h3 class="level-item-title">特殊路況與砂石路段騎乘</h3>
             <p class="level-item-desc">鬆軟砂石路段含油門直線行駛、切忌急轉龍頭。</p>
@@ -652,7 +652,7 @@
               <span style="color: var(--color-slate-500);">自由挑戰 · 不鎖關</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-primary">
-              開始練習 ➔
+              <span>開始練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -662,7 +662,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 24 關</span>
-              <span class="level-item-badge is-not-started">⚪ 尚未挑戰</span>
+              <span class="level-item-badge is-not-started"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 尚未挑戰</span>
             </div>
             <h3 class="level-item-title">行人優先與行動不便者禮讓</h3>
             <p class="level-item-desc">遇攜帶白手杖或導盲犬之視覺障礙者全時暫停禮讓。</p>
@@ -673,7 +673,7 @@
               <span style="color: var(--color-slate-500);">自由挑戰 · 不鎖關</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-primary">
-              開始練習 ➔
+              <span>開始練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -683,7 +683,7 @@
           <div>
             <div class="level-item-header">
               <span class="level-item-num">第 25 關</span>
-              <span class="level-item-badge is-not-started">⚪ 尚未挑戰</span>
+              <span class="level-item-badge is-not-started"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 尚未挑戰</span>
             </div>
             <h3 class="level-item-title">小類精選總結複習</h3>
             <p class="level-item-desc">平交道與道德綜合觀念最後衝刺收尾題組。</p>
@@ -694,7 +694,7 @@
               <span style="color: var(--color-slate-500);">自由挑戰 · 不鎖關</span>
             </div>
             <a href="screen-quiz.html" class="level-action-btn btn btn-primary">
-              開始練習 ➔
+              <span>開始練習</span> <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>
@@ -711,10 +711,10 @@
         </p>
         <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center;">
           <a href="screen-mistakes.html" class="btn btn-secondary btn-lg">
-            🔁 前往錯題特訓庫 (3 題)
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span>前往錯題特訓庫 (3 題)</span>
           </a>
           <a href="screen-home.html" class="btn btn-outline btn-lg">
-            🏠 回學習首頁
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>回學習首頁</span>
           </a>
         </div>
       </div>

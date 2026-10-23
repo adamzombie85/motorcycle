@@ -1,226 +1,161 @@
 <!DOCTYPE html>
-<html lang="zh-Hant-TW">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>閱讀設定面板樣板 - 機車駕照筆試題庫</title>
-  
-  <!-- 設計系統 Design Tokens 與核心元件庫 -->
+  <title>機車筆試好過關 - 閱讀與學習設定</title>
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="components.css">
-
   <style>
-    /* 閱讀設定樣板專用視覺佈局 */
-    body {
+    /* 閱讀設定展示頁背景底層 (模擬實際作答場景以即時檢驗字級與注音) */
+    .demo-scene-wrapper {
+      position: relative;
+      min-height: calc(100vh - 140px);
       background-color: var(--color-bg-page);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      padding: var(--space-4) 0;
     }
 
-    /* 樣板展示切換工具列 (固定於畫面左上方) */
-    .view-mode-bar {
-      background-color: var(--color-slate-900);
-      color: #FFFFFF;
-      padding: var(--space-2) var(--space-4);
+    .demo-quiz-card {
+      background-color: var(--color-bg-card);
+      border-radius: var(--radius-xl);
+      border: 2px solid var(--color-border-card);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-card);
+      max-width: 800px;
+      margin: 0 auto var(--space-6) auto;
+    }
+
+    .demo-control-bar {
+      background-color: #FFFFFF;
+      border-bottom: 2px solid var(--color-border-subtle);
+      padding: var(--space-3) var(--space-4);
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: var(--space-3);
       flex-wrap: wrap;
-      gap: var(--space-2);
-      font-size: var(--font-size-sm);
-      z-index: 1050;
-      position: relative;
     }
 
-    .view-mode-buttons {
+    .view-mode-badge {
       display: inline-flex;
-      gap: var(--space-2);
-    }
-
-    .view-mode-btn {
-      padding: 6px 12px;
-      border-radius: var(--radius-full);
-      background-color: var(--color-slate-800);
-      color: #FFFFFF;
-      border: 1px solid var(--color-slate-600);
-      font-size: var(--font-size-sm);
-      cursor: pointer;
-      transition: all var(--transition-fast);
-      min-height: 38px;
-    }
-
-    .view-mode-btn.is-active {
-      background-color: var(--color-primary-500);
-      border-color: var(--color-primary-300);
-      font-weight: bold;
-    }
-
-    /* 底層真實題型背景展示區 (模擬作答環境) */
-    .mock-quiz-background {
-      position: relative;
-      flex: 1;
-      padding: var(--space-5) 0 var(--space-10) 0;
-      filter: blur(0px);
-      transition: filter var(--transition-normal);
-    }
-
-    .quiz-container {
-      max-width: var(--container-max-tablet);
-      margin: 0 auto;
-      padding: 0 var(--space-4);
-    }
-
-    /* 浮動底層提示 */
-    .bg-context-banner {
-      background-color: var(--color-primary-50);
-      border: 1px solid var(--color-primary-200);
-      border-radius: var(--radius-md);
-      padding: var(--space-3) var(--space-4);
-      margin-bottom: var(--space-4);
+      align-items: center;
+      gap: 6px;
       font-size: var(--font-size-sm);
       color: var(--color-primary-900);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-2);
-    }
-
-    /* 頁尾版權宣告 */
-    .site-footer {
-      background-color: #FFFFFF;
-      border-top: 1px solid var(--color-border-subtle);
-      padding: var(--space-4) 0;
-      margin-top: auto;
-      text-align: center;
-      font-size: var(--font-size-sm);
-      color: var(--color-text-secondary);
+      background-color: var(--color-primary-100);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-weight: var(--font-weight-bold);
     }
   </style>
 </head>
 <body>
 
-  <!-- ====================================================================
-       樣板檢視切換工具列 (方便在桌機或手機上快速驗收兩種抽屜佈局)
-       ==================================================================== -->
-  <div class="view-mode-bar">
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <span style="font-weight: bold;">🖥️ 樣板檢視模式：</span>
-      <span>自由切換以驗證手機下方滑出 (Bottom Sheet) 與桌機右側滑出 (Side Sheet)</span>
+  <!-- 控制列：供檢視者測試面板在不同尺寸下的表現 -->
+  <div class="demo-control-bar">
+    <div class="view-mode-badge">
+      <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+      <span>閱讀設定面板展示模式</span>
     </div>
-    <div class="view-mode-buttons">
-      <button type="button" class="view-mode-btn is-active" id="btn-mode-responsive" onclick="setDrawerMode('responsive')">
-        📱/💻 自動響應 (RWD 預設)
+
+    <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+      <button type="button" class="btn btn-outline" style="min-height: 38px; padding: 4px 12px; font-size: var(--font-size-sm);" onclick="openDrawer()">
+        開啟面板
       </button>
-      <button type="button" class="view-mode-btn" id="btn-mode-bottom" onclick="setDrawerMode('bottom')">
-        📱 手機底部抽屜 (Bottom Sheet)
-      </button>
-      <button type="button" class="view-mode-btn" id="btn-mode-side" onclick="setDrawerMode('side')">
-        💻 桌機右側面板 (Side Sheet)
+      <button type="button" class="btn btn-outline" style="min-height: 38px; padding: 4px 12px; font-size: var(--font-size-sm);" onclick="closeDrawer()">
+        收合面板
       </button>
     </div>
   </div>
 
-  <!-- ====================================================================
-       頂部通用導覽列 (Site Header) - 單一「⚙️ 閱讀設定」按鈕示範
-       ==================================================================== -->
+  <!-- 頂部通用導覽列 -->
   <header class="site-header">
     <div class="app-container nav-bar">
-      <a href="screen-home.html" class="brand-badge" style="font-size: var(--font-size-base);">
-        <span class="brand-icon" style="width: 36px; height: 36px; font-size: 20px;">🛵</span>
-        <span>機車筆試好過關</span>
+      <a href="screen-home.html" class="brand-badge">
+        <span class="brand-icon" aria-hidden="true">
+          <svg class="icon icon-lg" viewBox="0 0 24 24"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg>
+        </span>
+        <span class="text-nowrap">機車筆試好過關</span>
       </a>
 
-      <!-- 學生識別 (全校通用無特殊標籤) -->
+      <!-- 學生識別 -->
       <a href="screen-login.html" class="user-chip" title="點擊設定身分" style="text-decoration: none; color: inherit;">
-        <span>👤 學生：301 班 12 號</span>
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="text-nowrap">301 班 12 號</span>
       </a>
 
-      <!-- 閱讀設定觸發按鈕 (單一按鈕，圖示＋文字，點擊可開啟／關閉面板) -->
+      <!-- 閱讀設定觸發按鈕 -->
       <button type="button" class="btn-settings" id="btn-header-settings" aria-label="閱讀設定" title="點擊開啟或收合閱讀設定面板" onclick="toggleDrawer()">
-        <span class="btn-settings-icon" aria-hidden="true">⚙️</span>
-        <span class="btn-settings-text">閱讀設定</span>
+        <span class="btn-settings-icon" aria-hidden="true">
+          <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        </span>
+        <span class="btn-settings-text text-nowrap">閱讀設定</span>
       </button>
     </div>
   </header>
 
   <!-- ====================================================================
-       底層作答場景背景 (Mock Quiz Environment)
-       讓學生與審查者在調整字級與注音時，能即時看見下方題型與選項的真實排版變化！
+       底層作答場景示範 (供即時驗證字級、注音、反向題提醒切換)
        ==================================================================== -->
-  <div class="mock-quiz-background">
-    <div class="quiz-container">
-      
-      <div class="bg-context-banner">
-        <div>
-          <strong>💡 實際背景驗證場景：</strong>
-          當你在前方調整字級（標準／大／特大）或注音時，下方真實題目會同步縮放，確保題目、選項絕不破版。
-        </div>
-        <button type="button" class="btn btn-outline" style="min-height: 40px; padding: 4px 12px; font-size: var(--font-size-sm);" onclick="openDrawer()">
-          開啟面板 ⚙️
-        </button>
-      </div>
+  <div class="demo-scene-wrapper">
+    <div class="app-container">
 
-      <!-- 關卡標題列 -->
-      <div class="quiz-top-bar" style="margin-bottom: var(--space-4);">
-        <div class="level-title-chip">
-          🎯 第 1 大類 · 第 12 關：貨物裝載法規
-        </div>
-        <a href="screen-home.html" class="btn btn-outline" style="min-height: var(--touch-target-min); padding: 8px 16px; font-size: var(--font-size-sm);">
-          暫停離開
-        </a>
-      </div>
-
-      <!-- 反向題醒目橫幅 (由反向題設定開關控制顯示) -->
-      <div class="alert-reverse" id="bg-alert-reverse">
-        <span class="alert-reverse-icon">⚠️</span>
-        <div class="alert-reverse-content">
-          <strong>反向題提醒：</strong>這題是問<strong>「何者不正確」</strong>喔！請選出<strong>錯誤</strong>的敘述，不要選到正確的規定！
-        </div>
-      </div>
-
-      <!-- 題目卡 (真實題目 M0006) -->
-      <div class="question-card" id="bg-question-card">
-        <div class="question-meta-row">
-          <div class="tag-list">
-            <span class="tag tag-category">正確觀念與態度</span>
-            <span class="tag tag-sub">貨物裝載</span>
-            <span class="tag tag-reverse" id="bg-tag-reverse">⚠️ 反向題</span>
-            <span class="tag" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">🔢 數字題</span>
+      <div class="demo-quiz-card">
+        <!-- 標籤列 -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
+          <div style="display: flex; gap: var(--space-2); align-items: center;">
+            <span class="badge badge-primary">第 6 題</span>
+            <span class="badge badge-warning" id="bg-tag-reverse">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+              <span>反向題</span>
+            </span>
           </div>
 
-          <!-- 單題朗讀按鈕 (符合無障礙規範：手動朗讀本題，文字＋圖示) -->
-          <button type="button" class="btn btn-outline" style="min-height: 44px; padding: 6px 14px; font-size: var(--font-size-sm); gap: 6px;" title="手動朗讀本題題目與選項" aria-label="朗讀本題" onclick="speakCurrentQuestion()">
-            <span aria-hidden="true">🔊</span>
+          <!-- 手動朗讀本題按鈕 -->
+          <button type="button" class="btn btn-outline" style="min-height: 40px; padding: 4px 14px; font-size: var(--font-size-sm);" onclick="speakCurrentQuestion()">
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
             <span>朗讀本題</span>
           </button>
         </div>
 
-        <div class="question-title-wrapper">
-          <h2 class="question-title" id="bg-question-title">
-            Q6. 關於機車載物的規定，下列何者<mark class="highlight-reverse" id="bg-highlight-reverse">不正確</mark>？
-          </h2>
+        <!-- 反向題醒目標示橫幅 -->
+        <div class="feedback-card feedback-warning" id="bg-alert-reverse" style="margin-bottom: var(--space-4); display: flex;">
+          <div class="feedback-icon-box" style="background-color: var(--color-warning-500); color: white;">
+            <svg class="icon icon-md" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+          </div>
+          <div class="feedback-content">
+            <h3 class="feedback-title" style="color: var(--color-warning-800);">反向題注意：請選出「錯誤」的敘述！</h3>
+            <p class="feedback-desc" style="color: var(--color-warning-800);">這題是要找出<strong>不符合規定</strong>的做法，請仔細比對選項。</p>
+          </div>
         </div>
 
+        <!-- 題目內文 (含注音 ruby 結構) -->
+        <h2 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); line-height: var(--line-height-relaxed); margin-bottom: var(--space-5);" id="bg-question-text">
+          <ruby>機<rt>ㄐㄧ</rt></ruby><ruby>車<rt>ㄔㄜ</rt></ruby><ruby>附<rt>ㄈㄨˋ</rt></ruby><ruby>載<rt>ㄗㄞˋ</rt></ruby><ruby>物<rt>ㄨˋ</rt></ruby><ruby>品<rt>ㄆㄧㄣˇ</rt></ruby>，<ruby>以<rt>ㄧˇ</rt></ruby><ruby>下<rt>ㄒㄧㄚˋ</rt></ruby><ruby>規<rt>ㄍㄨㄟ</rt></ruby><ruby>定<rt>ㄉㄧㄥˋ</rt></ruby><ruby>何<rt>ㄏㄜˊ</rt></ruby><ruby>者<rt>ㄓㄜˇ</rt></ruby><mark class="highlight-reverse" id="bg-highlight-reverse"><ruby>不<rt>ㄅㄨˋ</rt></ruby><ruby>正<rt>ㄓㄥˋ</rt></ruby><ruby>確<rt>ㄑㄩㄝˋ</rt></ruby></mark>？
+        </h2>
+
         <!-- 選項清單 -->
-        <div class="options-list">
-          <button type="button" class="option-card" id="opt-1">
-            <span class="option-badge">1</span>
-            <span class="option-label" id="opt-label-1">得載運高於騎士肩膀以上之貨物</span>
-            <span class="option-indicator">點擊作答</span>
-          </button>
+        <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+          <div class="option-card" tabindex="0">
+            <span class="option-index">1</span>
+            <span class="option-text">
+              <ruby>高<rt>ㄍㄠ</rt></ruby><ruby>度<rt>ㄉㄨˋ</rt></ruby><ruby>得<rt>ㄉㄜˊ</rt></ruby><ruby>超<rt>ㄔㄠ</rt></ruby><ruby>過<rt>ㄍㄨㄛˋ</rt></ruby><ruby>駕<rt>ㄐㄧㄚˋ</rt></ruby><ruby>駛<rt>ㄕˇ</rt></ruby><ruby>人<rt>ㄖㄣˊ</rt></ruby><ruby>肩<rt>ㄐㄧㄢ</rt></ruby><ruby>膀<rt>ㄅㄤˇ</rt></ruby><ruby>以<rt>ㄧˇ</rt></ruby><ruby>上<rt>ㄕㄤˋ</rt></ruby>。
+            </span>
+          </div>
 
-          <button type="button" class="option-card" id="opt-2">
-            <span class="option-badge">2</span>
-            <span class="option-label" id="opt-label-2">寬度不得超過把手外緣 10公分</span>
-            <span class="option-indicator">點擊作答</span>
-          </button>
+          <div class="option-card" tabindex="0">
+            <span class="option-index">2</span>
+            <span class="option-text">
+              <ruby>寬<rt>ㄎㄨㄢ</rt></ruby><ruby>度<rt>ㄉㄨˋ</rt></ruby><ruby>不<rt>ㄅㄨˋ</rt></ruby><ruby>得<rt>ㄉㄜˊ</rt></ruby><ruby>超<rt>ㄔㄠ</rt></ruby><ruby>過<rt>ㄍㄨㄛˋ</rt></ruby><ruby>把<rt>ㄅㄚˇ</rt></ruby><ruby>手<rt>ㄕㄡˇ</rt></ruby><ruby>外<rt>ㄨㄞˋ</rt></ruby><ruby>緣<rt>ㄩㄢˊ</rt></ruby> 10 <ruby>公<rt>ㄍㄨㄥ</rt></ruby><ruby>分<rt>ㄈㄣ</rt></ruby>。
+            </span>
+          </div>
 
-          <button type="button" class="option-card" id="opt-3">
-            <span class="option-badge">3</span>
-            <span class="option-label" id="opt-label-3">伸出車尾部分，自後輪軸起不得超過 50公分</span>
-            <span class="option-indicator">點擊作答</span>
-          </button>
+          <div class="option-card" tabindex="0">
+            <span class="option-index">3</span>
+            <span class="option-text">
+              <ruby>伸<rt>ㄕㄣ</rt></ruby><ruby>出<rt>ㄔㄨ</rt></ruby><ruby>車<rt>ㄔㄜ</rt></ruby><ruby>尾<rt>ㄨㄟˇ</rt></ruby><ruby>部<rt>ㄅㄨˋ</rt></ruby><ruby>分<rt>ㄈㄣ</rt></ruby>，<ruby>自<rt>ㄗˋ</rt></ruby><ruby>後<rt>ㄏㄡˋ</rt></ruby><ruby>輪<rt>ㄌㄨㄣˊ</rt></ruby><ruby>軸<rt>ㄓㄡˊ</rt></ruby><ruby>起<rt>ㄑㄧˇ</rt></ruby><ruby>不<rt>ㄅㄨˋ</rt></ruby><ruby>得<rt>ㄉㄜˊ</rt></ruby><ruby>超<rt>ㄔㄠ</rt></ruby><ruby>過<rt>ㄍㄨㄛˋ</rt></ruby> 50 <ruby>公<rt>ㄍㄨㄥ</rt></ruby><ruby>分<rt>ㄈㄣ</rt></ruby>。
+            </span>
+          </div>
         </div>
       </div>
 
@@ -228,48 +163,42 @@
   </div>
 
   <!-- ====================================================================
-       全螢幕半透明遮罩 (Drawer Backdrop)
+       閱讀與學習設定抽屜面板 (Drawer Component)
+       手機端自底部滑出 (Bottom Sheet)；平板/電腦端自右側滑出 (Side Sheet)
        ==================================================================== -->
-  <div class="drawer-backdrop" id="settings-backdrop" onclick="closeDrawer()" title="點擊灰色遮罩可關閉設定面板"></div>
+  <div class="drawer-backdrop" id="settings-backdrop" onclick="closeDrawer()" aria-hidden="true"></div>
 
-  <!-- ====================================================================
-       閱讀設定抽屜面板本體 (Reading Settings Drawer Panel)
-       - 手機預設：底部滑出 (Bottom Sheet)
-       - 電腦預設：右側滑出 (Side Sheet Drawer)
-       ==================================================================== -->
   <div class="drawer-panel" id="settings-drawer" role="dialog" aria-modal="true" aria-labelledby="settings-drawer-title">
     
-    <!-- 手機端頂部拖曳把手 (視覺提示) -->
+    <!-- 手機端頂部拖曳把手 -->
     <div class="drawer-handle-bar" aria-hidden="true"></div>
 
     <!-- 面板頂部標題列 -->
     <div class="drawer-header">
       <div class="drawer-title-group">
         <h2 class="drawer-title" id="settings-drawer-title">
-          <span>⚙️</span>
-          <span>閱讀設定</span>
+          <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>閱讀與學習設定</span>
         </h2>
         <div class="drawer-subtitle">
-          每個人皆可依視力與閱讀習慣調整，設定會自動保存
+          依視力與閱讀習慣調整，所有設定自動保存
         </div>
       </div>
 
-      <!-- 關閉按鈕 (觸控尺寸 >= 44px) -->
+      <!-- 關閉按鈕 -->
       <button type="button" class="btn-drawer-close" aria-label="關閉閱讀設定面板" title="關閉面板" onclick="closeDrawer()">
-        ✕
+        <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
       </button>
     </div>
 
     <!-- 面板滾動設定內容區 (Drawer Body) -->
     <div class="drawer-body">
 
-      <!-- ------------------------------------------------------------------
-           設定項 1：字級大小 (標準 / 大 / 特大) - 三段選擇
-           ------------------------------------------------------------------ -->
+      <!-- 設定項 1：字級大小 (標準 / 大 / 特大) -->
       <section class="setting-card">
         <div class="setting-card-header">
           <div class="setting-card-label">
-            <span>🔤</span>
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg>
             <span>字級大小</span>
           </div>
           <span style="font-size: var(--font-size-sm); color: var(--color-primary-800); font-weight: bold;" id="current-fontsize-tag">
@@ -278,10 +207,9 @@
         </div>
 
         <div class="setting-card-desc">
-          調整所有題目、選項與說明的字體大小。標準尺寸不低於 18px，大字與特大字清晰舒適不破版。
+          調整所有題目、選項與說明的字體大小。基準字級不低於 18px，排版舒適不折損破版。
         </div>
 
-        <!-- 三段選擇元件 (Segmented Control) -->
         <div class="segmented-group" role="radiogroup" aria-label="選擇字級大小">
           <button type="button" class="segmented-btn is-active" id="seg-font-normal" role="radio" aria-checked="true" onclick="changeFontSize('normal')">
             <span>標準</span>
@@ -297,10 +225,11 @@
           </button>
         </div>
 
-        <!-- 面板內即時預覽文字框 (Live Preview) -->
+        <!-- 面板內即時預覽文字框 -->
         <div class="reading-preview-box">
           <div class="reading-preview-label">
-            <span>👁️</span> 字級即時預覽（點選上方分段即時更新）：
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span>字級即時預覽：</span>
           </div>
           <div class="reading-preview-content" id="panel-preview-text" style="font-size: var(--font-size-base);">
             騎乘機車應依規定配戴合格安全帽，行經交叉路口應減速慢行、主動禮讓行人。
@@ -308,17 +237,14 @@
         </div>
       </section>
 
-      <!-- ------------------------------------------------------------------
-           設定項 2：注音符號輔助 (開／關) - 芫荽注音 (SIL OFL 1.1)
-           ------------------------------------------------------------------ -->
+      <!-- 設定項 2：注音符號輔助 (開／關) -->
       <section class="setting-card">
         <div class="setting-card-header">
           <div class="setting-card-label">
-            <span>ㄅ</span>
+            <span style="font-family: var(--font-family-sans); font-weight: 800; font-size: 1.2em; color: var(--color-primary-700);">ㄅ</span>
             <span>注音符號標註</span>
           </div>
 
-          <!-- 開關元件 (Toggle Switch) - 雙重辨識，具備開/關文字與狀態徽章 -->
           <label class="toggle-wrapper" title="切換注音符號標註">
             <input type="checkbox" class="toggle-input" id="toggle-zhuyin" onchange="toggleZhuyinMode(this)">
             <span class="toggle-track" aria-hidden="true">
@@ -326,18 +252,18 @@
               <span class="toggle-label-on">開</span>
               <span class="toggle-label-off">關</span>
             </span>
-            <span class="toggle-status-badge" id="badge-zhuyin">已關閉 ✕</span>
+            <span class="toggle-status-badge" id="badge-zhuyin">已關閉</span>
           </label>
         </div>
 
         <div class="setting-card-desc">
-          在題目與選項的國字上方標註清晰注音。採用<strong>開放授權（SIL OFL 1.1）之芫荽注音字型</strong>，輔助不熟字詞之發音辨識。
+          在題目與選項文字上方顯示注音標註。採用<strong>開源芫荽注音字型 (SIL OFL 1.1)</strong>，輔助生字發音。
         </div>
 
-        <!-- 注音即時預覽 -->
         <div class="reading-preview-box" id="zhuyin-preview-box">
           <div class="reading-preview-label">
-            <span>📖</span> 注音呈現預覽：
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
+            <span>注音呈現預覽：</span>
           </div>
           <div class="reading-preview-content" style="font-size: var(--font-size-md);">
             <ruby>騎<rt>ㄑㄧˊ</rt></ruby><ruby>乘<rt>ㄔㄥˊ</rt></ruby><ruby>機<rt>ㄐㄧ</rt></ruby><ruby>車<rt>ㄔㄜ</rt></ruby><ruby>依<rt>ㄧ</rt></ruby><ruby>規<rt>ㄍㄨㄟ</rt></ruby><ruby>定<rt>ㄉㄧㄥˋ</rt></ruby><ruby>配<rt>ㄆㄟˋ</rt></ruby><ruby>戴<rt>ㄉㄞˋ</rt></ruby><ruby>安<rt>ㄢ</rt></ruby><ruby>全<rt>ㄑㄩㄢˊ</rt></ruby><ruby>帽<rt>ㄇㄠˋ</rt></ruby>。
@@ -345,17 +271,14 @@
         </div>
       </section>
 
-      <!-- ------------------------------------------------------------------
-           設定項 3：語音朗讀設定 (自動朗讀開關 ＋ 朗讀語速三段選擇)
-           ------------------------------------------------------------------ -->
+      <!-- 設定項 3：語音朗讀設定 -->
       <section class="setting-card">
         <div class="setting-card-header">
           <div class="setting-card-label">
-            <span>🔊</span>
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
             <span>自動朗讀題目</span>
           </div>
 
-          <!-- 開關元件 (Toggle Switch) -->
           <label class="toggle-wrapper" title="切換進入題目時自動朗讀">
             <input type="checkbox" class="toggle-input" id="toggle-speech" onchange="toggleSpeechAuto(this)">
             <span class="toggle-track" aria-hidden="true">
@@ -363,18 +286,18 @@
               <span class="toggle-label-on">開</span>
               <span class="toggle-label-off">關</span>
             </span>
-            <span class="toggle-status-badge" id="badge-speech">已關閉 ✕</span>
+            <span class="toggle-status-badge" id="badge-speech">已關閉</span>
           </label>
         </div>
 
         <div class="setting-card-desc">
-          切換至新題目時自動以清晰語音朗讀題目與選項。（關閉時，您仍可隨時點選題目旁的<strong>「🔊 朗讀本題」</strong>按鈕手動播放）。
+          切換至新題目時自動以語音朗讀題目與選項。（關閉時仍可隨時點題目旁「朗讀本題」播放）。
         </div>
 
-        <!-- 語速三段選擇 (慢 / 正常 / 快) -->
+        <!-- 語速調整 -->
         <div style="margin-top: var(--space-2);">
           <div style="font-size: var(--font-size-sm); font-weight: bold; margin-bottom: var(--space-2); color: var(--color-slate-800);">
-            ⏱️ 朗讀速度調整：
+            朗讀速度調整：
           </div>
           <div class="segmented-group" role="radiogroup" aria-label="選擇朗讀語速">
             <button type="button" class="segmented-btn" id="seg-speed-slow" role="radio" aria-checked="false" onclick="changeSpeechSpeed('slow')">
@@ -393,17 +316,14 @@
         </div>
       </section>
 
-      <!-- ------------------------------------------------------------------
-           設定項 4：反向題醒目提醒 (開／關，預設開)
-           ------------------------------------------------------------------ -->
+      <!-- 設定項 4：反向題提醒標記 -->
       <section class="setting-card">
         <div class="setting-card-header">
           <div class="setting-card-label">
-            <span>⚠️</span>
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
             <span>反向題提醒標記</span>
           </div>
 
-          <!-- 開關元件 (Toggle Switch，預設開) -->
           <label class="toggle-wrapper" title="切換反向題提醒">
             <input type="checkbox" class="toggle-input" checked id="toggle-reverse" onchange="toggleReverseWarning(this)">
             <span class="toggle-track" aria-hidden="true">
@@ -411,53 +331,124 @@
               <span class="toggle-label-on">開</span>
               <span class="toggle-label-off">關</span>
             </span>
-            <span class="toggle-status-badge is-active" id="badge-reverse">已開啟 ✔</span>
+            <span class="toggle-status-badge is-active" id="badge-reverse">已開啟</span>
           </label>
         </div>
 
         <div class="setting-card-desc">
-          當遇到「下列何者<strong>不正確</strong>、<strong>不得</strong>、<strong>何者非</strong>」等容易誤讀的題目時，顯示黃底紅字警示條與底線標記，避免粗心答錯。
+          當遇到「下列何者<strong>不正確</strong>、<strong>不得</strong>、<strong>何者非</strong>」題目時，顯示警示條與底線標記，避免粗心看錯。
+        </div>
+      </section>
+
+      <!-- 設定項 5：音效回饋 (新功能 D4) -->
+      <section class="setting-card">
+        <div class="setting-card-header">
+          <div class="setting-card-label">
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            <span>音效回饋</span>
+          </div>
+
+          <label class="toggle-wrapper" title="切換作答音效">
+            <input type="checkbox" class="toggle-input" checked id="toggle-sound" onchange="toggleSoundMode(this)">
+            <span class="toggle-track" aria-hidden="true">
+              <span class="toggle-thumb"></span>
+              <span class="toggle-label-on">開</span>
+              <span class="toggle-label-off">關</span>
+            </span>
+            <span class="toggle-status-badge is-active" id="badge-sound">已開啟</span>
+          </label>
+        </div>
+
+        <div class="setting-card-desc">
+          答對、答錯與過關時播放輕快提示音。採用瀏覽器 Web Audio 即時合成，無額外音檔載入。
+        </div>
+      </section>
+
+      <!-- 設定項 6：動態動畫效果 (新功能 D4) -->
+      <section class="setting-card">
+        <div class="setting-card-header">
+          <div class="setting-card-label">
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+            <span>動態動畫效果</span>
+          </div>
+
+          <label class="toggle-wrapper" title="切換過關彩帶與彈跳動畫">
+            <input type="checkbox" class="toggle-input" checked id="toggle-motion" onchange="toggleMotionMode(this)">
+            <span class="toggle-track" aria-hidden="true">
+              <span class="toggle-thumb"></span>
+              <span class="toggle-label-on">開</span>
+              <span class="toggle-label-off">關</span>
+            </span>
+            <span class="toggle-status-badge is-active" id="badge-motion">已開啟</span>
+          </label>
+        </div>
+
+        <div class="setting-card-desc">
+          包含選項彈跳回饋與通關彩帶效果。關閉時將切換至無動態靜態模式，體貼對動態敏感者。
+        </div>
+      </section>
+
+      <!-- 設定項 7：確認作答按鈕 (新功能 D4) -->
+      <section class="setting-card">
+        <div class="setting-card-header">
+          <div class="setting-card-label">
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            <span>確認作答功能</span>
+          </div>
+
+          <label class="toggle-wrapper" title="切換確認作答防誤觸模式">
+            <input type="checkbox" class="toggle-input" id="toggle-confirm" onchange="toggleConfirmMode(this)">
+            <span class="toggle-track" aria-hidden="true">
+              <span class="toggle-thumb"></span>
+              <span class="toggle-label-on">開</span>
+              <span class="toggle-label-off">關</span>
+            </span>
+            <span class="toggle-status-badge" id="badge-confirm">已關閉</span>
+          </label>
+        </div>
+
+        <div class="setting-card-desc">
+          預設關閉（點選項即送出）。開啟後，點選選項僅標示選取狀態，需按下「確認作答」按鈕才送出，防止手滑誤觸。
         </div>
       </section>
 
     </div>
 
-    <!-- 面板底部操作列 (Footer Action Bar) -->
+    <!-- 面板底部操作列 -->
     <div class="drawer-footer">
       <button type="button" class="btn btn-outline" id="btn-reset-defaults" style="min-height: var(--touch-target-min); padding: 8px 18px;" onclick="resetToDefaults()">
-        <span>🔄</span>
+        <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
         <span>恢復預設</span>
       </button>
 
       <button type="button" class="btn btn-primary" id="btn-save-settings" style="min-height: var(--touch-target-min); padding: 8px 24px;" onclick="saveAndClose()">
-        <span>✔</span>
+        <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
         <span>完成設定</span>
       </button>
     </div>
 
   </div>
 
-  <!-- 頁尾版權宣告 -->
-  <footer class="site-footer">
+  <!-- 頁尾宣告 -->
+  <footer style="background-color: var(--color-bg-card); border-top: 1px solid var(--color-border-subtle); padding: var(--space-6) 0; text-align: center; color: var(--color-text-secondary); font-size: var(--font-size-sm);">
     <div class="app-container">
-      © 2026 41 研究室｜版權所有
+      <p>© 2026 41 研究室｜版權所有</p>
+      <p style="margin-top: 4px; color: var(--color-text-muted);">通用無障礙設計規範落實 · 支援手機與平板觸控</p>
     </div>
   </footer>
 
-  <!-- ====================================================================
-       樣板互動與切換邏輯 (純靜態示範，供檢視與驗收)
-       ==================================================================== -->
   <script>
-    // 預設狀態物件
     const currentSettings = {
-      fontSize: 'normal',   // normal, large, xlarge
-      zhuyin: false,        // true / false
-      speechAuto: false,    // true / false
-      speechSpeed: 'normal',// slow, normal, fast
-      reverseAlert: true    // true / false (預設開啟)
+      fontSize: 'normal',
+      zhuyin: false,
+      speechAuto: false,
+      speechSpeed: 'normal',
+      reverseAlert: true,
+      sound: true,
+      motion: true,
+      confirmAnswer: false
     };
 
-    // 抽屜面板開關控制
     const drawer = document.getElementById('settings-drawer');
     const backdrop = document.getElementById('settings-backdrop');
 
@@ -479,35 +470,16 @@
       }
     }
 
-    // 樣板展示：手動切換手機底部 vs 電腦右側模式
-    function setDrawerMode(mode) {
-      document.querySelectorAll('.view-mode-btn').forEach(b => b.classList.remove('is-active'));
-      drawer.classList.remove('is-force-bottom', 'is-force-side');
-
-      if (mode === 'responsive') {
-        document.getElementById('btn-mode-responsive').classList.add('is-active');
-      } else if (mode === 'bottom') {
-        drawer.classList.add('is-force-bottom');
-        document.getElementById('btn-mode-bottom').classList.add('is-active');
-      } else if (mode === 'side') {
-        drawer.classList.add('is-force-side');
-        document.getElementById('btn-mode-side').classList.add('is-active');
-      }
-    }
-
-    // 1. 字級切換示範 (即時改變預覽文字框與底層答題場景)
     function changeFontSize(size) {
       currentSettings.fontSize = size;
       const previewText = document.getElementById('panel-preview-text');
       const tag = document.getElementById('current-fontsize-tag');
       
-      // 更新 segmented 按鈕樣式
       document.querySelectorAll('.setting-card:nth-of-type(1) .segmented-btn').forEach(btn => {
         btn.classList.remove('is-active');
         btn.setAttribute('aria-checked', 'false');
       });
 
-      // 移除 html 上的縮放類別
       document.documentElement.classList.remove('font-size-large', 'font-size-xlarge');
 
       if (size === 'normal') {
@@ -530,35 +502,32 @@
       }
     }
 
-    // 2. 注音符號切換
     function toggleZhuyinMode(checkbox) {
       currentSettings.zhuyin = checkbox.checked;
       const badge = document.getElementById('badge-zhuyin');
       if (checkbox.checked) {
-        badge.textContent = '已開啟 ✔';
+        badge.textContent = '已開啟';
         badge.classList.add('is-active');
         document.body.classList.add('mode-zhuyin');
       } else {
-        badge.textContent = '已關閉 ✕';
+        badge.textContent = '已關閉';
         badge.classList.remove('is-active');
         document.body.classList.remove('mode-zhuyin');
       }
     }
 
-    // 3. 自動朗讀切換
     function toggleSpeechAuto(checkbox) {
       currentSettings.speechAuto = checkbox.checked;
       const badge = document.getElementById('badge-speech');
       if (checkbox.checked) {
-        badge.textContent = '已開啟 ✔';
+        badge.textContent = '已開啟';
         badge.classList.add('is-active');
       } else {
-        badge.textContent = '已關閉 ✕';
+        badge.textContent = '已關閉';
         badge.classList.remove('is-active');
       }
     }
 
-    // 語速切換
     function changeSpeechSpeed(speed) {
       currentSettings.speechSpeed = speed;
       document.querySelectorAll('.setting-card:nth-of-type(3) .segmented-btn').forEach(btn => {
@@ -578,7 +547,6 @@
       }
     }
 
-    // 4. 反向題提醒切換
     function toggleReverseWarning(checkbox) {
       currentSettings.reverseAlert = checkbox.checked;
       const badge = document.getElementById('badge-reverse');
@@ -587,13 +555,13 @@
       const highlight = document.getElementById('bg-highlight-reverse');
 
       if (checkbox.checked) {
-        badge.textContent = '已開啟 ✔';
+        badge.textContent = '已開啟';
         badge.classList.add('is-active');
         if (alertBox) alertBox.style.display = 'flex';
         if (tagReverse) tagReverse.style.display = 'inline-flex';
         if (highlight) highlight.className = 'highlight-reverse';
       } else {
-        badge.textContent = '已關閉 ✕';
+        badge.textContent = '已關閉';
         badge.classList.remove('is-active');
         if (alertBox) alertBox.style.display = 'none';
         if (tagReverse) tagReverse.style.display = 'none';
@@ -601,45 +569,83 @@
       }
     }
 
-    // 5. 恢復預設設定
+    function toggleSoundMode(checkbox) {
+      currentSettings.sound = checkbox.checked;
+      const badge = document.getElementById('badge-sound');
+      if (checkbox.checked) {
+        badge.textContent = '已開啟';
+        badge.classList.add('is-active');
+      } else {
+        badge.textContent = '已關閉';
+        badge.classList.remove('is-active');
+      }
+    }
+
+    function toggleMotionMode(checkbox) {
+      currentSettings.motion = checkbox.checked;
+      const badge = document.getElementById('badge-motion');
+      if (checkbox.checked) {
+        badge.textContent = '已開啟';
+        badge.classList.add('is-active');
+        document.body.classList.remove('mode-no-motion');
+      } else {
+        badge.textContent = '已關閉';
+        badge.classList.remove('is-active');
+        document.body.classList.add('mode-no-motion');
+      }
+    }
+
+    function toggleConfirmMode(checkbox) {
+      currentSettings.confirmAnswer = checkbox.checked;
+      const badge = document.getElementById('badge-confirm');
+      if (checkbox.checked) {
+        badge.textContent = '已開啟';
+        badge.classList.add('is-active');
+      } else {
+        badge.textContent = '已關閉';
+        badge.classList.remove('is-active');
+      }
+    }
+
     function resetToDefaults() {
-      // 字級回標準
       changeFontSize('normal');
 
-      // 注音關閉
       const zhuyinCheckbox = document.getElementById('toggle-zhuyin');
       zhuyinCheckbox.checked = false;
       toggleZhuyinMode(zhuyinCheckbox);
 
-      // 自動朗讀關閉
       const speechCheckbox = document.getElementById('toggle-speech');
       speechCheckbox.checked = false;
       toggleSpeechAuto(speechCheckbox);
 
-      // 語速回正常
       changeSpeechSpeed('normal');
 
-      // 反向題提醒開啟 (預設開)
       const reverseCheckbox = document.getElementById('toggle-reverse');
       reverseCheckbox.checked = true;
       toggleReverseWarning(reverseCheckbox);
 
-      alert('已恢復為預設閱讀設定：\n· 字級：標準 (20px)\n· 注音：關閉\n· 自動朗讀：關閉\n· 朗讀語速：正常 (1.0x)\n· 反向題提醒：開啟');
+      const soundCheckbox = document.getElementById('toggle-sound');
+      soundCheckbox.checked = true;
+      toggleSoundMode(soundCheckbox);
+
+      const motionCheckbox = document.getElementById('toggle-motion');
+      motionCheckbox.checked = true;
+      toggleMotionMode(motionCheckbox);
+
+      const confirmCheckbox = document.getElementById('toggle-confirm');
+      confirmCheckbox.checked = false;
+      toggleConfirmMode(confirmCheckbox);
     }
 
-    // 儲存並關閉
     function saveAndClose() {
       closeDrawer();
-      alert('閱讀設定已套用並保存！');
     }
 
-    // 單題朗讀示範
     function speakCurrentQuestion() {
       const speedName = currentSettings.speechSpeed === 'slow' ? '慢速 0.8x' : (currentSettings.speechSpeed === 'fast' ? '快速 1.2x' : '正常 1.0x');
-      alert(`🔊 語音朗讀本題（語速：${speedName}）：\n「第 6 題，關於機車載物的規定，下列何者不正確？\n選項一：得載運高於騎士肩膀以上之貨物。\n選項二：寬度不得超過把手外緣 10公分。\n選項三：伸出車尾部分，自後輪軸起不得超過 50公分。」`);
+      alert(`語音朗讀本題（語速：${speedName}）：\n「第 6 題，關於機車附載物品規定，下列何者不正確？」`);
     }
 
-    // 頁面載入時預設呈現開啟面板狀態
     window.addEventListener('DOMContentLoaded', () => {
       openDrawer();
     });

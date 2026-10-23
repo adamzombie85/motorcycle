@@ -3,140 +3,148 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>機車筆試好過關 - 首頁 (Home)</title>
+  <title>機車筆試好過關 - 學習首頁</title>
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="components.css">
   <style>
-    /* 首頁專屬微調樣式 (全數引用 tokens.css 變數) */
-    .hero-banner {
-      background: linear-gradient(135deg, var(--color-primary-50) 0%, #FFFFFF 100%);
-      border: 2px solid var(--color-primary-200);
-      border-radius: var(--radius-xl);
-      padding: var(--space-6);
-      margin-bottom: var(--space-8);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-6);
-      box-shadow: var(--shadow-card);
+    /* 首頁自適應版面微調 */
+    .home-top-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
     }
 
-    @media (min-width: 768px) {
-      .hero-banner {
-        flex-direction: row;
-        padding: var(--space-8);
-        gap: var(--space-8);
+    @media (min-width: 840px) {
+      .home-top-grid {
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: var(--space-6);
       }
     }
 
-    .hero-illustration {
-      flex: 1;
-      max-width: 380px;
-      display: flex;
-      justify-content: center;
+    /* 主角與統計排版 */
+    .profile-summary-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
     }
 
-    .hero-illustration img {
-      width: 100%;
-      height: auto;
-      border-radius: var(--radius-lg);
-      filter: drop-shadow(0 8px 16px rgba(44, 157, 176, 0.2));
+    @media (min-width: 768px) {
+      .profile-summary-grid {
+        grid-template-columns: 300px 1fr;
+        gap: var(--space-6);
+        align-items: stretch;
+      }
     }
 
-    .hero-content {
-      flex: 1.2;
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);
-    }
-
-    .hero-title {
-      font-size: var(--font-size-2xl);
-      font-weight: var(--font-weight-black);
-      color: var(--color-slate-900);
-      line-height: 1.25;
-    }
-
-    .hero-title span {
-      color: var(--color-primary);
-    }
-
-    .hero-desc {
-      font-size: var(--font-size-base);
-      color: var(--color-text-secondary);
-      line-height: var(--line-height-relaxed);
-    }
-
-    .hero-quick-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-3);
-      margin-top: var(--space-2);
-    }
-
-    /* 區塊標題 */
-    .section-heading {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: var(--space-4);
-      flex-wrap: wrap;
-      gap: var(--space-2);
-    }
-
-    .section-heading-title {
-      font-size: var(--font-size-xl);
-      font-weight: var(--font-weight-black);
-      color: var(--color-text-main);
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-    }
-
-    .section-heading-subtitle {
-      font-size: var(--font-size-sm);
-      color: var(--color-text-secondary);
-    }
-
-    /* 關卡卡片進度細節 */
-    .level-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: var(--font-size-sm);
-      font-weight: var(--font-weight-bold);
-      color: var(--color-text-secondary);
-      margin-top: var(--space-2);
-    }
-
-    /* 特訓專區卡片 */
-    .feature-card {
+    .rider-card {
       background-color: var(--color-bg-card);
-      border: 2px solid var(--color-border-subtle);
+      border: 1px solid var(--color-border-card);
       border-radius: var(--radius-lg);
       padding: var(--space-5);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .stats-trio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-3);
+      height: 100%;
+    }
+
+    @media (max-width: 420px) {
+      .stats-trio-grid {
+        gap: var(--space-2);
+      }
+      .stat-mini-card {
+        padding: var(--space-3) var(--space-1);
+      }
+      .stat-mini-label {
+        font-size: 0.75rem;
+      }
+    }
+
+    .stat-mini-card {
+      background-color: var(--color-bg-card);
+      border: 1px solid var(--color-border-card);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4) var(--space-2);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 0;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .stat-mini-num {
+      font-size: clamp(1.375rem, 5vw, 1.875rem);
+      font-weight: var(--font-weight-black);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .stat-mini-label {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-slate-600);
+      white-space: nowrap;
+    }
+
+    /* 快捷功能卡 */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+
+    @media (min-width: 640px) {
+      .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 992px) {
+      .feature-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .feature-item-card {
+      background-color: var(--color-bg-card);
+      border: 1px solid var(--color-border-card);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      box-shadow: var(--shadow-card);
+      text-decoration: none;
+      color: inherit;
       display: flex;
       gap: var(--space-4);
       align-items: flex-start;
-      transition: all var(--transition-normal);
-      text-decoration: none;
-      color: inherit;
+      transition: all var(--transition-fast);
     }
 
-    .feature-card:hover {
+    .feature-item-card:hover {
+      transform: translateY(-2px);
       border-color: var(--color-primary-400);
       box-shadow: var(--shadow-hover);
-      transform: translateY(-2px);
     }
 
-    .feature-icon-box {
-      width: 52px;
-      height: 52px;
+    .feature-icon-wrapper {
+      width: 48px;
+      height: 48px;
       border-radius: var(--radius-md);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
       flex-shrink: 0;
     }
   </style>
@@ -146,20 +154,26 @@
   <!-- 頂部通用導覽列 -->
   <header class="site-header">
     <div class="app-container nav-bar">
-      <a href="screen-home.html" class="brand-badge">
-        <span class="brand-icon">🛵</span>
-        <span>機車筆試好過關</span>
+      <a href="screen-home.html" class="brand-badge" aria-label="機車筆試好過關首頁">
+        <span class="brand-icon" aria-hidden="true">
+          <svg class="icon icon-lg" viewBox="0 0 24 24"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg>
+        </span>
+        <span class="brand-title-full text-nowrap">機車筆試好過關</span>
+        <span class="brand-title-short text-nowrap">好過關</span>
       </a>
 
       <!-- 學生身分標籤 (點擊可切換學生或登入) -->
       <a href="screen-login.html" class="user-chip" title="點擊前往登入或設定身分" style="text-decoration: none; color: inherit;">
-        <span>👤 學生：301 班 12 號</span>
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="text-nowrap">301 班 12 號</span>
       </a>
 
       <!-- 閱讀設定按鈕 (點擊開啟閱讀設定面板) -->
       <a href="screen-settings.html" class="btn-settings" id="btn-reading-settings" aria-label="開啟閱讀設定面板" title="開啟閱讀設定面板">
-        <span class="btn-settings-icon" aria-hidden="true">⚙️</span>
-        <span class="btn-settings-text">閱讀設定</span>
+        <span class="btn-settings-icon" aria-hidden="true">
+          <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        </span>
+        <span class="btn-settings-text text-nowrap">閱讀設定</span>
       </a>
     </div>
   </header>
@@ -168,244 +182,267 @@
     <div class="app-container">
 
       <!-- ====================================================================
-           主視覺橫幅 (Hero Banner) - 引用 hero.jpg 與友善標語
+           上方區塊：今日挑戰大卡 ＋ 連續天數打卡格
            ==================================================================== -->
-      <section class="hero-banner">
-        <div class="hero-illustration">
-          <img src="../site/assets/illustrations/hero.jpg" alt="高中生戴安全帽騎著淺藍色速克達的扁平插畫">
-        </div>
-        <div class="hero-content">
-          <div style="display: inline-flex; align-items: center; gap: 6px; background-color: var(--color-primary-100); color: var(--color-primary-800); padding: 4px 12px; border-radius: var(--radius-full); font-size: var(--font-size-sm); font-weight: bold; width: fit-content;">
-            ✨ 一次 10 題 · 輕鬆過關無壓力
+      <section class="home-top-grid">
+
+        <!-- 今日 3 分鐘挑戰大卡 -->
+        <div class="card-daily-challenge">
+          <div class="daily-challenge-badge">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            <span>今日挑戰</span>
           </div>
-          <h1 class="hero-title">
-            輕鬆學騎車，<span>安心考駕照</span>！
-          </h1>
-          <p class="hero-desc">
-            不用死背 1,052 題！專為你規劃的「概念微關卡」，每關只要 3 分鐘。還有語音朗讀、反向題提醒，帶你自信迎戰新制筆試。
+          <h1 class="daily-challenge-title">每日 3 分鐘挑戰</h1>
+          <p class="daily-challenge-meta">
+            今天量身精選 5 題：含 2 題複習錯題 ＋ 3 題弱點突破。做完立即維持連續天數！不計時、零負擔。
           </p>
-          <div class="hero-quick-actions">
-            <a href="screen-quiz.html" class="btn btn-primary btn-lg">
-              ▶ 繼續練習：第 6 關 (貨物裝載)
+          <div class="daily-challenge-actions">
+            <a href="screen-quiz.html?mode=daily" class="btn btn-primary btn-lg" style="background-color: #FFFFFF; color: var(--color-primary-900); font-weight: 800; border: none;">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span>開始今日練習 (0/5)</span>
             </a>
-            <a href="screen-result.html" class="btn btn-secondary btn-lg">
-              📊 查看最近成績分析
-            </a>
+            <span style="font-size: var(--font-size-sm); color: var(--color-primary-100);" class="text-nowrap">
+              今日尚未作答
+            </span>
           </div>
         </div>
+
+        <!-- 連續練習天數與 7 天打卡格 -->
+        <div class="streak-hero-card">
+          <div class="streak-header">
+            <div class="streak-count-box">
+              <div class="streak-flame-icon" aria-hidden="true">
+                <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+              </div>
+              <div>
+                <div class="streak-count-text">連續 <span class="text-nowrap">3 天</span></div>
+                <div class="streak-subtext">每週配備 1 張自動休息卡</div>
+              </div>
+            </div>
+            <span class="badge badge-success text-nowrap">進行中</span>
+          </div>
+
+          <!-- 7 天打卡格 (打卡 / 休息卡 / 未來 三種狀態不能只靠顏色) -->
+          <div class="streak-week-grid">
+            <!-- 週一：完成 -->
+            <div class="punch-cell is-completed" title="週一：已完成挑戰">
+              <span class="punch-day-label">一</span>
+              <div class="punch-status-icon" aria-hidden="true">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span class="punch-status-text">完成</span>
+            </div>
+
+            <!-- 週二：完成 -->
+            <div class="punch-cell is-completed" title="週二：已完成挑戰">
+              <span class="punch-day-label">二</span>
+              <div class="punch-status-icon" aria-hidden="true">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span class="punch-status-text">完成</span>
+            </div>
+
+            <!-- 週三：今天待打卡 -->
+            <div class="punch-cell is-today" title="週三：今天待完成">
+              <span class="punch-day-label">三</span>
+              <div class="punch-status-icon" aria-hidden="true">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+              </div>
+              <span class="punch-status-text">今天</span>
+            </div>
+
+            <!-- 週四：休息卡預備 -->
+            <div class="punch-cell is-rest" title="週四：備有休息卡保障">
+              <span class="punch-day-label">四</span>
+              <div class="punch-status-icon" aria-hidden="true">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" x2="6" y1="2" y2="4"/><line x1="10" x2="10" y1="2" y2="4"/><line x1="14" x2="14" y1="2" y2="4"/></svg>
+              </div>
+              <span class="punch-status-text">休息卡</span>
+            </div>
+
+            <!-- 週五：未來 -->
+            <div class="punch-cell is-future" title="週五：尚未到來">
+              <span class="punch-day-label">五</span>
+              <div class="punch-status-icon" aria-hidden="true">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+              </div>
+              <span class="punch-status-text">待打卡</span>
+            </div>
+
+            <!-- 週六：未來 -->
+            <div class="punch-cell is-future" title="週六：尚未到來">
+              <span class="punch-day-label">六</span>
+              <div class="punch-status-icon" aria-hidden="true">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+              </div>
+              <span class="punch-status-text">待打卡</span>
+            </div>
+
+            <!-- 週日：未來 -->
+            <div class="punch-cell is-future" title="週日：尚未到來">
+              <span class="punch-day-label">日</span>
+              <div class="punch-status-icon" aria-hidden="true">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+              </div>
+              <span class="punch-status-text">待打卡</span>
+            </div>
+          </div>
+        </div>
+
       </section>
 
       <!-- ====================================================================
-           學習進度簡覽 (Progress Overview)
+           主角機車騎士展示 ＋ 核心統計簡覽 (文字簡短直接、無折行)
+           ==================================================================== -->
+      <section class="profile-summary-grid">
+
+        <!-- 騎士角色卡 (插圖佔位框) -->
+        <div class="rider-card">
+          <div class="asset-placeholder-circle" style="width: 96px; height: 96px;" aria-label="角色插圖佔位框">
+            <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: var(--color-slate-400);"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="asset-placeholder-tag">character-rider-1.png</div>
+          <div style="font-size: var(--font-size-md); font-weight: bold; margin-top: 8px; color: var(--color-slate-900);">
+            活力藍騎士
+          </div>
+          <a href="screen-character.html" class="btn btn-outline" style="min-height: 40px; padding: 6px 14px; margin-top: 10px; font-size: var(--font-size-sm);" title="前往選擇角色">
+            <span>更換角色</span>
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <!-- 3 個核心統計卡 (精簡標籤、防折行) -->
+        <div class="stats-trio-grid">
+          <!-- 已過關 -->
+          <div class="stat-mini-card">
+            <div class="stat-mini-num" style="color: var(--color-primary-600);">
+              <span class="text-nowrap">16 / 92</span>
+            </div>
+            <div class="stat-mini-label text-nowrap">已過關</div>
+          </div>
+
+          <!-- 答對率 -->
+          <div class="stat-mini-card">
+            <div class="stat-mini-num" style="color: var(--color-success-600);">
+              <span class="text-nowrap">92%</span>
+            </div>
+            <div class="stat-mini-label text-nowrap">答對率</div>
+          </div>
+
+          <!-- 待練錯題 -->
+          <div class="stat-mini-card">
+            <div class="stat-mini-num" style="color: var(--color-danger-600);">
+              <span class="text-nowrap">3 題</span>
+            </div>
+            <div class="stat-mini-label text-nowrap">待練錯題</div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ====================================================================
+           主功能導覽入口 (App 式導覽，無廣告標語)
            ==================================================================== -->
       <section style="margin-bottom: var(--space-8);">
-        <div class="stats-summary-row" style="margin: 0;">
-          <div class="stat-box">
-            <div class="stat-box-num" style="color: var(--color-primary-600);">16 / 92</div>
-            <div class="stat-box-label">已通關小關卡</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-box-num" style="color: var(--color-success-600);">92%</div>
-            <div class="stat-box-label">平均答對率</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-box-num" style="color: var(--color-accent-600);">3 題</div>
-            <div class="stat-box-label">待複習錯題庫</div>
-          </div>
-        </div>
-      </section>
+        <h2 style="font-size: var(--font-size-xl); font-weight: var(--font-weight-black); margin-bottom: var(--space-4); color: var(--color-slate-900);">
+          學習與練習入口
+        </h2>
 
-      <!-- ====================================================================
-           主關卡模式 (Micro Levels) - 四大類小關卡 (每關 10 題)
-           ==================================================================== -->
-      <section style="margin-bottom: var(--space-10);">
-        <div class="section-heading">
-          <div>
-            <h2 class="section-heading-title"><span>🎯</span> 核心關卡學習 (一關 10 題)</h2>
-            <div class="section-heading-subtitle">集中火力練習一個重點，做完馬上看解說！</div>
-          </div>
-          <span style="font-size: var(--font-size-sm); color: var(--color-primary-700); font-weight: bold;">
-            共 1,052 題 · 官方正式新制題庫
-          </span>
-        </div>
+        <div class="feature-grid">
 
-        <div class="grid-2">
-          <!-- 關卡 1：正確觀念與態度 -->
-          <div class="level-card" style="border-left: 8px solid var(--color-primary);">
-            <div class="level-card-top">
-              <span class="level-badge">01</span>
-              <span class="level-stars">★★★</span>
+          <!-- 1. 考照之路地圖 (新功能) -->
+          <a href="screen-map.html" class="feature-item-card" style="border-left: 6px solid var(--color-primary);">
+            <div class="feature-icon-wrapper" style="background-color: var(--color-primary-100); color: var(--color-primary-700);">
+              <svg class="icon icon-lg" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
             </div>
             <div>
-              <h3 class="level-title">第 1 大類：正確觀念與態度</h3>
-              <p class="level-desc">駕駛心理、行車道德、標誌標線、道路急救處理常識</p>
-            </div>
-            <div>
-              <div class="progress-bar-track">
-                <div class="progress-bar-fill" style="width: 65%;"></div>
-              </div>
-              <div class="level-meta">
-                <span>進度：第 12 / 18 小關</span>
-                <span style="color: var(--color-primary-700);">進行中</span>
-              </div>
-            </div>
-            <div style="display: flex; gap: var(--space-2);">
-              <a href="screen-quiz.html" class="btn btn-primary" style="flex: 1;">
-                進入練習 (第 12 關) ➔
-              </a>
-              <a href="screen-levels.html" class="btn btn-outline" style="white-space: nowrap;" title="查看完整 25 關清單">
-                關卡清單
-              </a>
-            </div>
-          </div>
-
-          <!-- 關卡 2：主動停讓文化 -->
-          <div class="level-card" style="border-left: 8px solid var(--color-accent);">
-            <div class="level-card-top">
-              <span class="level-badge" style="background-color: var(--color-accent-100); color: var(--color-accent-700);">02</span>
-              <span class="level-stars">★★☆</span>
-            </div>
-            <div>
-              <h3 class="level-title">第 2 大類：主動停讓文化</h3>
-              <p class="level-desc">無號誌路口停讓、行人穿越道禮讓、路權先後順序</p>
-            </div>
-            <div>
-              <div class="progress-bar-track">
-                <div class="progress-bar-fill" style="width: 40%; background: var(--color-accent);"></div>
-              </div>
-              <div class="level-meta">
-                <span>進度：第 4 / 10 小關</span>
-                <span style="color: var(--color-accent-700);">進行中</span>
-              </div>
-            </div>
-            <a href="screen-levels.html" class="btn btn-secondary" style="width: 100%;">
-              進入練習 (第 4 關：路口停看聽) ➔
-            </a>
-          </div>
-
-          <!-- 關卡 3：安全駕駛能力 -->
-          <div class="level-card" style="border-left: 8px solid var(--color-slate-400);">
-            <div class="level-card-top">
-              <span class="level-badge" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">03</span>
-              <span class="level-stars">☆☆☆</span>
-            </div>
-            <div>
-              <h3 class="level-title">第 3 大類：安全駕駛能力</h3>
-              <p class="level-desc">防衛駕駛技巧、大型車內輪差與視野死角、惡劣天候應變</p>
-            </div>
-            <div>
-              <div class="progress-bar-track">
-                <div class="progress-bar-fill" style="width: 0%;"></div>
-              </div>
-              <div class="level-meta">
-                <span>進度：尚未開始</span>
-                <span style="color: var(--color-slate-500);">待挑戰</span>
-              </div>
-            </div>
-            <a href="screen-levels.html" class="btn btn-outline" style="width: 100%;">
-              開始挑戰 ➔
-            </a>
-          </div>
-
-          <!-- 關卡 4：危險感知情境題 (新制重點) -->
-          <div class="level-card" style="border-left: 8px solid var(--color-success);">
-            <div class="level-card-top">
-              <span class="level-badge" style="background-color: var(--color-success-100); color: var(--color-success-700);">04</span>
-              <span style="background-color: var(--color-success-100); color: var(--color-success-700); padding: 4px 12px; border-radius: var(--radius-full); font-size: var(--font-size-sm); font-weight: bold;">
-                ★ 15 題新制必考
-              </span>
-            </div>
-            <div>
-              <h3 class="level-title">第 4 大類：危險感知與情境題</h3>
-              <p class="level-desc">109 支實境短片、120 題情境圖。一眼找出馬路上的突發危機！</p>
-            </div>
-            <div>
-              <div class="progress-bar-track">
-                <div class="progress-bar-fill" style="width: 25%; background: var(--color-success-500);"></div>
-              </div>
-              <div class="level-meta">
-                <span>進度：第 3 / 12 小關</span>
-                <span style="color: var(--color-success-700);">熱門推薦</span>
-              </div>
-            </div>
-            <a href="screen-quiz.html" class="btn btn-secondary" style="width: 100%;">
-              看短片練習 (危險感知) ➔
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====================================================================
-           重點強化專區 (Special Training Modes)
-           ==================================================================== -->
-      <section style="margin-bottom: var(--space-10);">
-        <div class="section-heading">
-          <div>
-            <h2 class="section-heading-title"><span>⚡</span> 專屬強化專區 (降低失分陷阱)</h2>
-            <div class="section-heading-subtitle">針對學生最容易卡關的題型量身設計</div>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <!-- 錯題特訓 -->
-          <a href="screen-mistakes.html" class="feature-card">
-            <div class="feature-icon-box" style="background-color: var(--color-danger-100); color: var(--color-danger-600);">
-              🔁
-            </div>
-            <div>
-              <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: 4px;">
-                錯題特訓庫 (3 題待練)
+              <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: 4px; color: var(--color-slate-900);">
+                考照之路地圖
               </h3>
-              <p style="font-size: var(--font-size-base); color: var(--color-text-secondary); line-height: var(--line-height-normal);">
-                只要答錯的題目都會收進這裡！<strong>連續答對 2 次</strong>即算真正掌握。
+              <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: 1.5;">
+                5 大路段、92 關路線圖，跟著騎士一起邁向考場！
               </p>
             </div>
           </a>
 
-          <!-- 反向題特訓 -->
-          <a href="screen-quiz.html" class="feature-card">
-            <div class="feature-icon-box" style="background-color: var(--color-warning-100); color: var(--color-warning-700);">
-              ⚠️
+          <!-- 2. 徽章成就館 (新功能) -->
+          <a href="screen-badges.html" class="feature-item-card" style="border-left: 6px solid var(--color-accent);">
+            <div class="feature-icon-wrapper" style="background-color: var(--color-accent-100); color: var(--color-accent-700);">
+              <svg class="icon icon-lg" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
             </div>
             <div>
-              <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: 4px;">
-                反向題專區 (54 題)
+              <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: 4px; color: var(--color-slate-900);">
+                成就徽章館 (6 / 12)
               </h3>
-              <p style="font-size: var(--font-size-base); color: var(--color-text-secondary); line-height: var(--line-height-normal);">
-                題目問「不正確」常常看反？醒目標記 + 專題練習，破除看錯題目的陷阱！
+              <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: 1.5;">
+                完成關卡與連續練習解鎖專屬徽章，紀錄努力痕跡。
               </p>
             </div>
           </a>
 
-          <!-- 數字與罰鍰翻卡記憶 -->
-          <a href="#" class="feature-card">
-            <div class="feature-icon-box" style="background-color: var(--color-primary-100); color: var(--color-primary-700);">
-              🃏
+          <!-- 3. 小關卡清單 -->
+          <a href="screen-levels.html" class="feature-item-card" style="border-left: 6px solid var(--color-slate-400);">
+            <div class="feature-icon-wrapper" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">
+              <svg class="icon icon-lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
             </div>
             <div>
-              <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: 4px;">
-                數字與罰鍰記憶翻卡
+              <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: 4px; color: var(--color-slate-900);">
+                全部關卡清單
               </h3>
-              <p style="font-size: var(--font-size-base); color: var(--color-text-secondary); line-height: var(--line-height-normal);">
-                不用死背法規條文！整理公分、公斤、罰鍰對照卡，翻卡輕鬆記住。
+              <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: 1.5;">
+                依 11 個小類自主選擇關卡練習，自由不鎖關。
               </p>
             </div>
           </a>
 
-          <!-- 50 題全真模擬考 -->
-          <a href="screen-quiz.html" class="feature-card" style="border: 2px solid var(--color-primary-300); background-color: var(--color-primary-50);">
-            <div class="feature-icon-box" style="background-color: var(--color-primary); color: white;">
-              🏁
+          <!-- 4. 錯題特訓庫 -->
+          <a href="screen-mistakes.html" class="feature-item-card" style="border-left: 6px solid var(--color-danger);">
+            <div class="feature-icon-wrapper" style="background-color: var(--color-danger-100); color: var(--color-danger-700);">
+              <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
             </div>
             <div>
-              <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: 4px; color: var(--color-primary-900);">
-                50 題全真模擬考 (新制)
+              <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: 4px; color: var(--color-slate-900);">
+                錯題特訓庫 (3 題)
               </h3>
-              <p style="font-size: var(--font-size-base); color: var(--color-text-secondary); line-height: var(--line-height-normal);">
-                比照官方新制：50 題選擇題（含 15 題危險感知），<strong>85 分及格</strong>，模擬正式考場！
+              <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: 1.5;">
+                連續答對 2 次成功移出，採用間隔複習機制加深記憶。
               </p>
             </div>
           </a>
+
+          <!-- 5. 學習成果報告 -->
+          <a href="screen-report.html" class="feature-item-card" style="border-left: 6px solid var(--color-success);">
+            <div class="feature-icon-wrapper" style="background-color: var(--color-success-100); color: var(--color-success-700);">
+              <svg class="icon icon-lg" viewBox="0 0 24 24"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size: var(--font-size-lg); font-weight: bold; margin-bottom: 4px; color: var(--color-slate-900);">
+                我的學習成果報告
+              </h3>
+              <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: 1.5;">
+                產生直式成績圖片，包含各類答對率與進度分析。
+              </p>
+            </div>
+          </a>
+
+          <!-- 6. 50 題全真模擬考 (即將推出) -->
+          <div class="feature-item-card" style="border-left: 6px solid var(--color-slate-300); background-color: var(--color-slate-50); opacity: 0.85;">
+            <div class="feature-icon-wrapper" style="background-color: var(--color-slate-200); color: var(--color-slate-600);">
+              <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+            </div>
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                <h3 style="font-size: var(--font-size-lg); font-weight: bold; color: var(--color-slate-700);">
+                  50 題全真模擬考
+                </h3>
+                <span class="badge" style="background-color: var(--color-slate-200); color: var(--color-slate-700); font-size: 0.85rem;">即將推出</span>
+              </div>
+              <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: 1.5;">
+                比照正式新制：50 題（含 15 題危險感知影片題），85 分及格。
+              </p>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -420,28 +457,5 @@
     </div>
   </footer>
 
-  <script>
-    // A11y 工具列簡單互動示範
-    const btnSpeech = document.getElementById('btn-speech');
-    const btnZhuyin = document.getElementById('btn-zhuyin');
-    const btnZoom = document.getElementById('btn-zoom');
-
-    btnSpeech.addEventListener('click', () => {
-      btnSpeech.classList.toggle('is-active');
-      alert('語音朗讀模式：點擊介面任意文字即可啟動語音。');
-    });
-
-    btnZhuyin.addEventListener('click', () => {
-      btnZhuyin.classList.toggle('is-active');
-      alert('注音模式：已啟用注音輔助字型顯示。');
-    });
-
-    let zoomed = false;
-    btnZoom.addEventListener('click', () => {
-      zoomed = !zoomed;
-      document.documentElement.style.fontSize = zoomed ? '18px' : '16px';
-      btnZoom.classList.toggle('is-active', zoomed);
-    });
-  </script>
 </body>
 </html>

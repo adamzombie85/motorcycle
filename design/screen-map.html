@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>機車筆試好過關 - 考照之路地圖</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="components.css">
+  <style>
+    .map-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-6);
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .map-legend {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      background-color: var(--color-bg-card);
+      border: 1px solid var(--color-border-card);
+      border-radius: var(--radius-full);
+      padding: var(--space-2) var(--space-4);
+      box-shadow: var(--shadow-sm);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      flex-wrap: wrap;
+    }
+
+    .map-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部通用導覽列 -->
+  <header class="site-header">
+    <div class="app-container nav-bar">
+      <a href="screen-home.html" class="brand-badge" aria-label="返回學習首頁">
+        <span class="brand-icon" aria-hidden="true">
+          <svg class="icon icon-lg" viewBox="0 0 24 24"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg>
+        </span>
+        <span class="text-nowrap">機車筆試好過關</span>
+      </a>
+
+      <!-- 學生身分標籤 -->
+      <a href="screen-login.html" class="user-chip" title="點擊前往登入或設定身分" style="text-decoration: none; color: inherit;">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="text-nowrap">301 班 12 號</span>
+      </a>
+
+      <!-- 閱讀設定按鈕 -->
+      <a href="screen-settings.html" class="btn-settings" id="btn-reading-settings" aria-label="開啟閱讀設定面板" title="開啟閱讀設定面板">
+        <span class="btn-settings-icon" aria-hidden="true">
+          <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        </span>
+        <span class="btn-settings-text text-nowrap">閱讀設定</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="app-container">
+
+      <!-- 頁面頂部導航與標題 -->
+      <div class="map-header-bar">
+        <div>
+          <nav aria-label="麵包屑導航" style="margin-bottom: var(--space-2);">
+            <a href="screen-home.html" style="color: var(--color-primary-700); font-size: var(--font-size-sm); text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+              <span>回首頁</span>
+            </a>
+          </nav>
+          <h1 style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-black); color: var(--color-slate-900);">
+            考照之路地圖
+          </h1>
+          <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: 4px;">
+            全線 5 個路段、92 關巡迴。不鎖關，點擊任意站點隨時啟程！
+          </p>
+        </div>
+
+        <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center;">
+          <!-- 圖例標示 -->
+          <div class="map-legend">
+            <div class="map-legend-item">
+              <span style="color: var(--color-success-700); display: inline-flex; align-items: center;">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span>已過關 (16)</span>
+            </div>
+            <div class="map-legend-item">
+              <span style="color: var(--color-accent-700); display: inline-flex; align-items: center;">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/></svg>
+              </span>
+              <span>練習中 (5)</span>
+            </div>
+            <div class="map-legend-item">
+              <span style="color: var(--color-slate-400); display: inline-flex; align-items: center;">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+              </span>
+              <span>未練習 (71)</span>
+            </div>
+          </div>
+
+          <!-- 切換清單檢視 -->
+          <a href="screen-levels.html" class="btn btn-outline" style="min-height: 40px; padding: 6px 14px; font-size: var(--font-size-sm);" title="切換為清單檢視模式">
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+            <span class="text-nowrap">清單檢視</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 地圖主要路段巡迴路線 (5 個路段垂直展開) -->
+      <div class="map-container">
+
+        <!-- ==================================================================
+             路段 1：出發前準備 (第 1 ~ 12 關)
+             場景圖：map-1-garage.jpg
+             ================================================================== -->
+        <section class="map-road-section" aria-label="路段 1：出發前準備">
+          <div class="map-scene-banner">
+            <div class="asset-placeholder" style="width: 100%; height: 100%; border: none; border-radius: 0;">
+              <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: var(--color-slate-400);"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              <div class="asset-placeholder-tag">map-1-garage.jpg</div>
+              <div style="font-size: var(--font-size-sm); color: var(--color-slate-500); margin-top: 4px;">場景 1：車庫與出發前檢查</div>
+            </div>
+          </div>
+          <div class="map-scene-header">
+            <h2 class="map-scene-title">路段 1：出發前準備</h2>
+            <div class="map-scene-subtitle">行車安全檢查、輪胎煞車確認、貨物裝載規範 (第 01 ~ 12 關)</div>
+          </div>
+          <div class="map-stations-grid">
+            <!-- 站點 01 ~ 12 (皆過關) -->
+            <a href="screen-quiz.html" class="map-station-card is-passed">
+              <span class="map-station-num">第 01 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 100 分</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-passed">
+              <span class="map-station-num">第 02 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 90 分</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-passed">
+              <span class="map-station-num">第 03 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 95 分</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-passed">
+              <span class="map-station-num">第 04 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 100 分</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-passed">
+              <span class="map-station-num">第 05 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 90 分</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-passed">
+              <span class="map-station-num">第 06 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 90 分</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-passed">
+              <span class="map-station-num">第 07 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 100 分</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-passed">
+              <span class="map-station-num">第 08 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 90 分</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-passed">
+              <span class="map-station-num">第 09 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 95 分</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-passed">
+              <span class="map-station-num">第 10 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 100 分</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-passed">
+              <span class="map-station-num">第 11 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 90 分</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-passed">
+              <span class="map-station-num">第 12 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 90 分</span>
+            </a>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             路段 2：市區路口 (第 13 ~ 35 關)
+             場景圖：map-2-city.jpg
+             主角目前停留站點：第 16 關
+             ================================================================== -->
+        <section class="map-road-section" aria-label="路段 2：市區路口">
+          <div class="map-scene-banner">
+            <div class="asset-placeholder" style="width: 100%; height: 100%; border: none; border-radius: 0;">
+              <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: var(--color-slate-400);"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              <div class="asset-placeholder-tag">map-2-city.jpg</div>
+              <div style="font-size: var(--font-size-sm); color: var(--color-slate-500); margin-top: 4px;">場景 2：市區繁華路口與轉彎</div>
+            </div>
+          </div>
+          <div class="map-scene-header">
+            <h2 class="map-scene-title">路段 2：市區路口</h2>
+            <div class="map-scene-subtitle">號誌與標誌判定、兩段式左轉、注意大型車內輪差 (第 13 ~ 35 關)</div>
+          </div>
+          <div class="map-stations-grid">
+            <a href="screen-quiz.html" class="map-station-card is-passed">
+              <span class="map-station-num">第 13 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 90 分</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-passed">
+              <span class="map-station-num">第 14 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 90 分</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-passed">
+              <span class="map-station-num">第 15 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> 95 分</span>
+            </a>
+
+            <!-- 主角停在此站 (第 16 關) -->
+            <a href="screen-quiz.html" class="map-station-card is-practiced" style="border-width: 3px; box-shadow: var(--shadow-hover);">
+              <div class="station-rider-marker">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg>
+                <span>你在這裡</span>
+              </div>
+              <span class="map-station-num">第 16 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/></svg> 最高 80 分</span>
+            </a>
+
+            <a href="screen-quiz.html" class="map-station-card is-practiced">
+              <span class="map-station-num">第 17 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/></svg> 最高 70 分</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-unvisited">
+              <span class="map-station-num">第 18 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 未練習</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-unvisited">
+              <span class="map-station-num">第 19 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 未練習</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-unvisited">
+              <span class="map-station-num">第 20 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 未練習</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-unvisited">
+              <span class="map-station-num">第 21 ~ 35 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 待探索</span>
+            </a>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             路段 3：一般道路 (第 36 ~ 58 關)
+             場景圖：map-3-road.jpg
+             ================================================================== -->
+        <section class="map-road-section" aria-label="路段 3：一般道路">
+          <div class="map-scene-banner">
+            <div class="asset-placeholder" style="width: 100%; height: 100%; border: none; border-radius: 0;">
+              <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: var(--color-slate-400);"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              <div class="asset-placeholder-tag">map-3-road.jpg</div>
+              <div style="font-size: var(--font-size-sm); color: var(--color-slate-500); margin-top: 4px;">場景 3：一般公路與快慢車道</div>
+            </div>
+          </div>
+          <div class="map-scene-header">
+            <h2 class="map-scene-title">路段 3：一般道路</h2>
+            <div class="map-scene-subtitle">行駛中應注意事項、跟車安全距離、燈光正確使用 (第 36 ~ 58 關)</div>
+          </div>
+          <div class="map-stations-grid">
+            <a href="screen-quiz.html" class="map-station-card is-unvisited">
+              <span class="map-station-num">第 36 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 未練習</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-unvisited">
+              <span class="map-station-num">第 37 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 未練習</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-unvisited">
+              <span class="map-station-num">第 38 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 未練習</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-unvisited">
+              <span class="map-station-num">第 39 ~ 58 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 待探索</span>
+            </a>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             路段 4：特殊路況 (第 59 ~ 75 關)
+             場景圖：map-4-special.jpg
+             ================================================================== -->
+        <section class="map-road-section" aria-label="路段 4：特殊路況">
+          <div class="map-scene-banner">
+            <div class="asset-placeholder" style="width: 100%; height: 100%; border: none; border-radius: 0;">
+              <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: var(--color-slate-400);"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              <div class="asset-placeholder-tag">map-4-special.jpg</div>
+              <div style="font-size: var(--font-size-sm); color: var(--color-slate-500); margin-top: 4px;">場景 4：鐵路平交道與暴雨天候</div>
+            </div>
+          </div>
+          <div class="map-scene-header">
+            <h2 class="map-scene-title">路段 4：特殊路況</h2>
+            <div class="map-scene-subtitle">鐵路平交道通行禮節、特殊天候防滑、駕駛道德與禁止行為 (第 59 ~ 75 關)</div>
+          </div>
+          <div class="map-stations-grid">
+            <a href="screen-quiz.html" class="map-station-card is-unvisited">
+              <span class="map-station-num">第 59 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 未練習</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-unvisited">
+              <span class="map-station-num">第 60 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 未練習</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-unvisited">
+              <span class="map-station-num">第 61 ~ 75 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 待探索</span>
+            </a>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             路段 5：終點考場 (第 76 ~ 92 關)
+             場景圖：map-5-goal.jpg
+             ================================================================== -->
+        <section class="map-road-section" aria-label="路段 5：終點考場">
+          <div class="map-scene-banner">
+            <div class="asset-placeholder" style="width: 100%; height: 100%; border: none; border-radius: 0;">
+              <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: var(--color-slate-400);"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              <div class="asset-placeholder-tag">map-5-goal.jpg</div>
+              <div style="font-size: var(--font-size-sm); color: var(--color-slate-500); margin-top: 4px;">場景 5：監理站終點考場</div>
+            </div>
+          </div>
+          <div class="map-scene-header">
+            <h2 class="map-scene-title">路段 5：終點考場</h2>
+            <div class="map-scene-subtitle">事故預防及應變處理、120 題情境考驗 (第 76 ~ 92 關)</div>
+          </div>
+          <div class="map-stations-grid">
+            <a href="screen-quiz.html" class="map-station-card is-unvisited">
+              <span class="map-station-num">第 76 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 未練習</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-unvisited">
+              <span class="map-station-num">第 77 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 未練習</span>
+            </a>
+            <a href="screen-quiz.html" class="map-station-card is-unvisited">
+              <span class="map-station-num">第 78 ~ 92 關</span>
+              <span class="map-station-status"><svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> 待探索</span>
+            </a>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- 底部導航按鈕 -->
+      <div style="display: flex; justify-content: center; gap: var(--space-4); margin-top: var(--space-8); flex-wrap: wrap;">
+        <a href="screen-home.html" class="btn btn-secondary btn-lg">
+          <svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>回學習首頁</span>
+        </a>
+        <a href="screen-quiz.html" class="btn btn-primary btn-lg">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg>
+          <span>繼續挑戰：第 16 關</span>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 頁尾宣告 -->
+  <footer style="background-color: var(--color-bg-card); border-top: 1px solid var(--color-border-subtle); padding: var(--space-6) 0; text-align: center; color: var(--color-text-secondary); font-size: var(--font-size-sm);">
+    <div class="app-container">
+      <p>© 2026 41 研究室｜版權所有</p>
+      <p style="margin-top: 4px; color: var(--color-text-muted);">通用無障礙設計規範落實 · 支援手機與平板觸控</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -51,7 +51,7 @@
 
     .login-hero-img-box {
       width: 100%;
-      max-width: 260px;
+      max-width: 280px;
       margin: 0 auto;
       display: flex;
       justify-content: center;
@@ -59,7 +59,7 @@
 
     @media (min-width: 640px) {
       .login-hero-img-box {
-        max-width: 300px;
+        max-width: 320px;
       }
     }
 
@@ -67,7 +67,7 @@
       width: 100%;
       height: auto;
       border-radius: var(--radius-lg);
-      filter: drop-shadow(0 8px 16px rgba(44, 157, 176, 0.22));
+      box-shadow: var(--shadow-card);
     }
 
     .login-header-group {
@@ -82,6 +82,7 @@
       font-weight: var(--font-weight-black);
       color: var(--color-slate-900);
       line-height: var(--line-height-tight);
+      text-wrap: balance;
     }
 
     .login-title span {
@@ -119,14 +120,20 @@
   <!-- 頂部通用導覽列 -->
   <header class="site-header">
     <div class="app-container nav-bar">
-      <div class="brand-badge">
-        <span class="brand-icon">🛵</span>
-        <span>機車筆試好過關</span>
-      </div>
+      <a href="screen-home.html" class="brand-badge" style="text-decoration: none; color: inherit;">
+        <span class="brand-icon">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
+          </svg>
+        </span>
+        <span class="text-nowrap">機車筆試好過關</span>
+      </a>
 
-      <!-- 閱讀設定按鈕 (點擊開啟閱讀設定面板) -->
+      <!-- 閱讀設定按鈕 -->
       <a href="screen-settings.html" class="btn-settings" id="btn-reading-settings" aria-label="開啟閱讀設定面板" title="開啟閱讀設定面板">
-        <span class="btn-settings-icon" aria-hidden="true">⚙️</span>
+        <svg class="icon btn-settings-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
         <span class="btn-settings-text">閱讀設定</span>
       </a>
     </div>
@@ -154,13 +161,23 @@
           <div class="login-card">
             <!-- 主視覺插畫 (呼應 hero.jpg 淺藍色速克達) -->
             <div class="login-hero-img-box">
-              <img src="../site/assets/illustrations/hero.jpg" alt="高中生戴安全帽騎著淺藍色速克達的插畫" class="login-hero-img">
+              <img src="../site/assets/illustrations/hero.jpg" alt="高中生戴安全帽騎著淺藍色速克達的插畫" class="login-hero-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="asset-placeholder" style="display: none; width: 280px; height: 160px;">
+                <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
+                </svg>
+                <span class="asset-placeholder-label">首頁主視覺插畫</span>
+                <span class="asset-placeholder-tag">hero.jpg · 800×500</span>
+              </div>
             </div>
 
             <!-- 歡迎標題群 -->
             <div class="login-header-group">
               <div style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; background-color: var(--color-primary-100); color: var(--color-primary-800); padding: 4px 14px; border-radius: var(--radius-full); font-size: var(--font-size-sm); font-weight: bold; width: fit-content; margin: 0 auto;">
-                ✨ 通用學習系統 · 任何 Google 帳號皆可登入
+                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                </svg>
+                <span>通用設計 · 任何 Google 帳號皆可登入</span>
               </div>
               <h1 class="login-title">
                 登入帳號，<span>開始練習</span>
@@ -190,7 +207,9 @@
 
             <!-- 溫馨提示卡片 -->
             <div class="info-callout">
-              <span style="font-size: 24px; line-height: 1;">🔒</span>
+              <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary-700); flex-shrink: 0;">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
               <div style="font-size: var(--font-size-sm); color: var(--color-primary-900); line-height: var(--line-height-normal);">
                 <strong>學習安全保證：</strong> 不限學校網域，個人 Gmail 也可以登入。系統僅記錄題目答對率與通關星級，絕不讀取其他機密資訊。
               </div>
@@ -207,7 +226,9 @@
 
             <!-- 歡迎與身分識別 -->
             <div style="display: flex; align-items: center; gap: var(--space-3); background-color: var(--color-success-50); border: 2px solid var(--color-success-200); border-radius: var(--radius-lg); padding: var(--space-4);">
-              <span style="font-size: 32px; line-height: 1;">🎉</span>
+              <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-success-600); flex-shrink: 0;">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
               <div>
                 <div style="font-size: var(--font-size-base); font-weight: bold; color: var(--color-success-800);">
                   Google 帳號已成功登入！
@@ -233,7 +254,12 @@
               <!-- 班級欄位 -->
               <div class="login-field-group">
                 <label for="input-class" class="login-field-label">
-                  <span>🏫 班級名稱：</span>
+                  <span style="display: flex; align-items: center; gap: 6px;">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    <span>班級名稱：</span>
+                  </span>
                   <span class="login-badge-optional">選填</span>
                 </label>
                 <input
@@ -252,7 +278,12 @@
               <!-- 座號欄位 -->
               <div class="login-field-group">
                 <label for="input-seat" class="login-field-label">
-                  <span>🔢 座號：</span>
+                  <span style="display: flex; align-items: center; gap: 6px;">
+                    <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+                    </svg>
+                    <span>座號：</span>
+                  </span>
                   <span class="login-badge-optional">選填</span>
                 </label>
                 <input
@@ -271,16 +302,24 @@
               <!-- 行動操作按鈕組 (包含明顯的先跳過按鈕) -->
               <div style="display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-2);">
                 <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center; font-size: var(--font-size-md);">
-                  儲存並開始練習 ➔
+                  <span>儲存並開始練習</span>
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                  </svg>
                 </button>
                 <a href="screen-home.html" class="btn btn-outline btn-lg" style="width: 100%; justify-content: center; font-size: var(--font-size-base); text-decoration: none;">
-                  先跳過，直接進入練習 ➔
+                  <span>先跳過，直接進入練習</span>
+                  <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                  </svg>
                 </a>
               </div>
             </form>
 
             <div class="info-callout">
-              <span style="font-size: 24px; line-height: 1;">💡</span>
+              <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-primary-700); flex-shrink: 0;">
+                <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+              </svg>
               <div style="font-size: var(--font-size-sm); color: var(--color-primary-900); line-height: var(--line-height-normal);">
                 <strong>隨時可改：</strong> 之後在首頁或個人設定中，隨時都能隨意補充或更新班級座號。若未填寫，系統將親切稱呼你為「同學」。
               </div>
@@ -325,28 +364,6 @@
         tabFirst.setAttribute('aria-selected', 'true');
       }
     }
-
-    // A11y 工具列簡單互動示範
-    const btnSpeech = document.getElementById('btn-login-speech');
-    const btnZhuyin = document.getElementById('btn-login-zhuyin');
-    const btnZoom = document.getElementById('btn-login-zoom');
-
-    btnSpeech.addEventListener('click', () => {
-      btnSpeech.classList.toggle('is-active');
-      alert('語音朗讀模式：點擊介面任意文字即可啟動語音。');
-    });
-
-    btnZhuyin.addEventListener('click', () => {
-      btnZhuyin.classList.toggle('is-active');
-      alert('注音模式：已啟用注音輔助字型顯示。');
-    });
-
-    let zoomed = false;
-    btnZoom.addEventListener('click', () => {
-      zoomed = !zoomed;
-      document.documentElement.style.fontSize = zoomed ? '18px' : '16px';
-      btnZoom.classList.toggle('is-active', zoomed);
-    });
   </script>
 </body>
 </html>
