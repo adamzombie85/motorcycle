@@ -219,13 +219,13 @@
 
           <!-- 7 天打卡格 (打卡 / 休息卡 / 未來 三種狀態不能只靠顏色) -->
           <div class="streak-week-grid">
-            <!-- 週一：完成 -->
-            <div class="punch-cell is-completed" title="週一：已完成挑戰">
+            <!-- 週一：未開始 (學生第一次作答前) -->
+            <div class="punch-cell is-before" title="週一：未開始">
               <span class="punch-day-label">一</span>
               <div class="punch-status-icon" aria-hidden="true">
-                <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/></svg>
               </div>
-              <span class="punch-status-text">完成</span>
+              <span class="punch-status-text">未開始</span>
             </div>
 
             <!-- 週二：完成 -->
@@ -259,27 +259,27 @@
             <div class="punch-cell is-future" title="週五：尚未到來">
               <span class="punch-day-label">五</span>
               <div class="punch-status-icon" aria-hidden="true">
-                <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/></svg>
               </div>
-              <span class="punch-status-text">待打卡</span>
+              <span class="punch-status-text">—</span>
             </div>
 
             <!-- 週六：未來 -->
             <div class="punch-cell is-future" title="週六：尚未到來">
               <span class="punch-day-label">六</span>
               <div class="punch-status-icon" aria-hidden="true">
-                <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/></svg>
               </div>
-              <span class="punch-status-text">待打卡</span>
+              <span class="punch-status-text">—</span>
             </div>
 
             <!-- 週日：未來 -->
             <div class="punch-cell is-future" title="週日：尚未到來">
               <span class="punch-day-label">日</span>
               <div class="punch-status-icon" aria-hidden="true">
-                <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="5" x2="19" y1="12" y2="12"/></svg>
               </div>
-              <span class="punch-status-text">待打卡</span>
+              <span class="punch-status-text">—</span>
             </div>
           </div>
         </div>

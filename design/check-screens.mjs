@@ -301,6 +301,17 @@ async function main() {
       await send('Page.navigate', { url: pageUrl });
       await new Promise(r => setTimeout(r, 450));
 
+      if (entry.file === 'teacher-view.html') {
+        await send('Runtime.evaluate', {
+          expression: `(() => {
+            const btns = Array.from(document.querySelectorAll('button'));
+            const sampleBtn = btns.find(b => b.textContent && b.textContent.includes('載入範例資料'));
+            if (sampleBtn) sampleBtn.click();
+          })()`
+        });
+        await new Promise(r => setTimeout(r, 350));
+      }
+
       // 3. 檢查水平捲動與元素溢出
       const evalRes = await send('Runtime.evaluate', {
         returnByValue: true,

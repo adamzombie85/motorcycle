@@ -269,6 +269,19 @@
       '      <span class="toggle-label-text">關</span>' +
       '    </button>' +
       '  </div>' +
+      '  <!-- 9. 學習紀錄管理（試玩工具） -->' +
+      '  <div class="setting-group" style="border-top: 1px solid var(--color-border-subtle); padding-top: var(--space-4); margin-top: var(--space-4);">' +
+      '    <label class="setting-label">學習紀錄管理</label>' +
+      '    <div class="setting-subtext" style="margin-bottom: var(--space-3);">試玩測試與紀錄匯出</div>' +
+      '    <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">' +
+      '      <button type="button" class="btn btn-secondary" id="btn-export-record" style="flex: 1; min-width: 130px;">' +
+      '        <span>下載我的紀錄</span>' +
+      '      </button>' +
+      '      <button type="button" class="btn btn-outline" id="btn-reset-record" style="flex: 1; min-width: 130px; color: var(--color-danger-600); border-color: var(--color-danger-300);">' +
+      '        <span>重設我的紀錄</span>' +
+      '      </button>' +
+      '    </div>' +
+      '  </div>' +
       '</div>' +
       '<div class="settings-drawer-footer">' +
       '  <button type="button" class="btn btn-outline" id="btn-reset-settings" style="flex: 1;">' +
@@ -431,6 +444,44 @@
       applyAll(currentSettings);
       syncDrawerUI(drawer);
     });
+
+    // 下載我的紀錄（試玩工具）
+    var btnExport = drawer.querySelector('#btn-export-record');
+    if (btnExport) {
+      btnExport.addEventListener('click', function () {
+        if (window.Store && window.Store.exportMe) {
+          try {
+            var data = window.Store.exportMe();
+            var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            var dateStr = (data.exportedAt || new Date().toISOString()).slice(0, 10);
+            a.href = url;
+            a.download = 'moto-record-' + (data.student || 'guest') + '-' + dateStr + '.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          } catch (err) {
+            alert('匯出失敗：' + (err && err.message ? err.message : err));
+          }
+        }
+      });
+    }
+
+    // 重設我的紀錄（試玩工具，需二次確認）
+    var btnResetRec = drawer.querySelector('#btn-reset-record');
+    if (btnResetRec) {
+      btnResetRec.addEventListener('click', function () {
+        if (window.confirm('確定要清除所有練習紀錄、錯題與徽章嗎？此動作無法復原。')) {
+          if (window.Store && window.Store.resetMe) {
+            window.Store.resetMe();
+            alert('已成功清除所有練習紀錄！');
+            window.location.reload();
+          }
+        }
+      });
+    }
   }
 
   // 初始化入口

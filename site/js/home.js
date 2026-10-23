@@ -12,6 +12,8 @@
     check: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>',
     coffee: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" x2="6" y1="2" y2="4"/><line x1="10" x2="10" y1="2" y2="4"/><line x1="14" x2="14" y1="2" y2="4"/></svg>',
     circle: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>',
+    x: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>',
+    minus: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><line x1="5" x2="19" y1="12" y2="12"/></svg>',
     repeat: '<svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>',
     map: '<svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>',
     badge: '<svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>',
@@ -97,8 +99,8 @@
 
     weekDays.forEach(function (day, i) {
       var cellCls = 'punch-cell';
-      var iconHtml = ICONS.circle;
-      var statusText = '待打卡';
+      var iconHtml = ICONS.minus;
+      var statusText = '—';
 
       if (day.status === 'checked') {
         cellCls += ' is-completed';
@@ -112,14 +114,22 @@
         cellCls += ' is-rest';
         iconHtml = ICONS.coffee;
         statusText = '休息卡';
+      } else if (day.status === 'before') {
+        cellCls += ' is-before';
+        iconHtml = ICONS.minus;
+        statusText = '未開始';
+      } else if (day.status === 'missed') {
+        cellCls += ' is-missed';
+        iconHtml = ICONS.x;
+        statusText = '未打卡';
       } else {
         cellCls += ' is-future';
-        iconHtml = ICONS.circle;
-        statusText = '待打卡';
+        iconHtml = ICONS.minus;
+        statusText = '—';
       }
 
       var cell = el('div', cellCls);
-      cell.setAttribute('title', '週' + DAY_LABELS[i] + '：' + statusText);
+      cell.setAttribute('title', '週' + DAY_LABELS[i] + '：' + (statusText === '—' ? '未到來' : statusText));
       cell.appendChild(el('span', 'punch-day-label', DAY_LABELS[i]));
 
       var iconWrap = el('div', 'punch-status-icon');

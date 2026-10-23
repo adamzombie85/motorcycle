@@ -2293,6 +2293,38 @@
   color: var(--color-primary-800);
 }
 
+/* 打卡狀態 5: 未開始 (學生第一次作答之前的日子) - 灰底 */
+.punch-cell.is-before {
+  border-color: var(--color-slate-200);
+  background-color: var(--color-slate-100);
+}
+.punch-cell.is-before .punch-day-label {
+  color: var(--color-slate-500);
+}
+.punch-cell.is-before .punch-status-icon {
+  background-color: var(--color-slate-200);
+  color: var(--color-slate-500);
+}
+.punch-cell.is-before .punch-status-text {
+  color: var(--color-slate-500);
+}
+
+/* 打卡狀態 6: 未打卡 (錯過且無休息卡) */
+.punch-cell.is-missed {
+  border-color: #FECDD3;
+  background-color: #FFF1F2;
+}
+.punch-cell.is-missed .punch-day-label {
+  color: #BE123C;
+}
+.punch-cell.is-missed .punch-status-icon {
+  background-color: #FFE4E6;
+  color: #E11D48;
+}
+.punch-cell.is-missed .punch-status-text {
+  color: #BE123C;
+}
+
 /* ==========================================================================
    27. 遊戲化 - 角色選擇 (Character Chooser)
    ========================================================================== */
@@ -2850,3 +2882,62 @@ body.mode-no-motion * {
     font-size: 0.75rem;
   }
 }
+
+/* ==========================================================================
+   28. 數據表格與試玩檢視元件 (Table & Teacher View)
+   ========================================================================== */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-card);
+  background-color: var(--color-bg-card);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  min-width: 600px;
+}
+
+.data-table th,
+.data-table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.data-table th {
+  background-color: var(--color-slate-100);
+  color: var(--color-text-main);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tr:hover td {
+  background-color: var(--color-primary-50);
+}
+
+.upload-dropzone {
+  border: 2px dashed var(--color-primary-300);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-primary-50);
+  padding: var(--space-8) var(--space-4);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.upload-dropzone:hover,
+.upload-dropzone.is-dragover {
+  border-color: var(--color-primary-600);
+  background-color: var(--color-primary-100);
+}
+
