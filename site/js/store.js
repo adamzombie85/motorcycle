@@ -18,9 +18,20 @@
       return raw === null ? fallback : JSON.parse(raw);
     } catch (e) { return fallback; }
   }
+  // 儲存後端：預設 local（只有 localStorage）。BACKEND='firebase' 時，store-firebase.js 會用 Store.setBackend
+  // 掛上一個後端，每次使用者資料寫入本機後會通知它（write-behind：本機永遠是先寫、先讀的那一份）。
+  var backend = { name: 'local' };
+  var muted = false;   // 套用遠端資料時暫停通知，避免來回同步
+  function notify(fn, a, b, c) {
+    if (muted || typeof backend[fn] !== 'function') return;
+    try { backend[fn](a, b, c); } catch (e) { if (typeof console !== 'undefined') console.warn('儲存後端錯誤', e); }
+  }
   function write(key, value) {
-    try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+    try { localStorage.setItem(key, JSON.stringify(value)); }
     catch (e) { return false; }
+    var m = key.indexOf(PREFIX + 'u:') === 0 && key.slice((PREFIX + 'u:').length).match(/^([^:]+):(.+)$/);
+    if (m) notify('onWrite', m[1], m[2], value);
+    return true;
   }
   function userKey(name) {
     var s = window.Store.getStudent();
@@ -34,6 +45,50 @@
     var s = window.Store.getStudent();
     if (!s) throw new Error('尚未設定學生代號');
     return s;
+  }
+
+  // 讀某個學生代號在本機的全部紀錄（格式同 exportMe().data）
+  function readRecord(code) {
+    var pre = PREFIX + 'u:' + code + ':', docs = {}, cur = window.Store.getStudent();
+    if (cur !== code) window.Store.setStudent(code);   // 借用 getAnswerLog() 的舊資料轉換，再換回來
+    var answers;
+    try { answers = window.Store.getAnswerLog(); } finally { if (cur !== code) { if (cur) window.Store.setStudent(cur); else window.Store.logout(); } }
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (k && k.indexOf(pre + 'doc:') === 0) docs[k.slice((pre + 'doc:').length)] = read(k, null);
+    }
+    return {
+      attempts: read(pre + 'attempts', []), mistakes: read(pre + 'mistakes', {}), answers: answers,
+      srs: read(pre + 'srs', {}), docs: docs
+    };
+  }
+  // 把一份紀錄合併進目前使用者：作答、練習去重後相加；其他以「目前已有的為準，沒有才補」。
+  // 徽章取聯集（日期取較早）；cleanedUp 取 or。
+  function mergeRecord(rec) {
+    var S = window.Store, out = { answers: 0, attempts: 0, mistakes: 0, srs: 0, docs: 0 };
+    var log = S.getAnswerLog(), seen = {};
+    log.forEach(function (r) { seen[r.qid + '@' + r.ts] = true; });
+    (rec.answers || []).forEach(function (r) { if (!seen[r.qid + '@' + r.ts]) { log.push(r); seen[r.qid + '@' + r.ts] = true; out.answers++; } });
+    if (out.answers) { log.sort(function (a, b) { return a.ts - b.ts; }); write(userKey('answers'), log); }
+    var at = read(userKey('attempts'), []), aseen = {};
+    at.forEach(function (a) { aseen[a.levelId + '@' + a.date] = true; });
+    (rec.attempts || []).forEach(function (a) { if (!aseen[a.levelId + '@' + a.date]) { at.push(a); aseen[a.levelId + '@' + a.date] = true; out.attempts++; } });
+    if (out.attempts) { at.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; }); write(userKey('attempts'), at); }
+    ['mistakes', 'srs'].forEach(function (name) {
+      var cur = read(userKey(name), {}), add = rec[name] || {}, n = 0;
+      Object.keys(add).forEach(function (k) { if (!Object.prototype.hasOwnProperty.call(cur, k)) { cur[k] = add[k]; n++; } });
+      if (n) { write(userKey(name), cur); out[name] = n; }
+    });
+    Object.keys(rec.docs || {}).forEach(function (name) {
+      var cur = S.getDoc(name, null), add = rec.docs[name], next = cur;
+      if (add === null || add === undefined) return;
+      if (cur === null) next = add;
+      else if (name === 'badges') { next = {}; Object.keys(cur).forEach(function (k) { next[k] = cur[k]; }); Object.keys(add).forEach(function (k) { if (!next[k] || add[k] < next[k]) next[k] = add[k]; }); }
+      else if (name === 'cleanedUp') next = cur || add;
+      else if (name === 'daily') { next = {}; Object.keys(add).forEach(function (k) { next[k] = add[k]; }); Object.keys(cur).forEach(function (k) { next[k] = cur[k]; }); }
+      if (JSON.stringify(next) !== JSON.stringify(cur)) { S.setDoc(name, next); out.docs++; }
+    });
+    return out;
   }
 
   var clock = function () { return new Date(); };
@@ -162,6 +217,47 @@
       if (hadAny && !Object.keys(m).length) window.Store.setDoc('cleanedUp', true);
       return res;
     },
+    // ---- 儲存後端 ----
+    getBackend: function () { return backend; },
+    // b = { name, onWrite(student, name, value), onReset(student) }（都選填）
+    setBackend: function (b) { backend = b || { name: 'local' }; },
+    // 套用從雲端讀到的紀錄（合併進本機，不會再通知後端）
+    applyRemote: function (rec) {
+      muted = true;
+      try { return mergeRecord(rec); } finally { muted = false; }
+    },
+
+    // ---- 訪客紀錄匯入帳號（登入後，同一台裝置上才有）----
+    // 本機有哪些學生代號有紀錄（例如 'guest'）
+    listLocalStudents: function () {
+      var seen = {}, pre = PREFIX + 'u:';
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i), m = k && k.indexOf(pre) === 0 && k.slice(pre.length).match(/^([^:]+):/);
+        if (m) seen[m[1]] = true;
+      }
+      return Object.keys(seen);
+    },
+    // 這個本機代號的紀錄還沒匯入過、而且真的有作答／練習紀錄 → 值得問使用者要不要匯入
+    hasImportable: function (from) {
+      from = from || 'guest';
+      if (from === window.Store.getStudent() || read(PREFIX + 'imported:' + from, null)) return false;
+      var rec = readRecord(from);
+      return rec.answers.length > 0 || rec.attempts.length > 0;
+    },
+    // 把本機 from（預設 'guest'）的紀錄合併進目前使用者；不會刪掉原本的訪客紀錄（opts.removeSource 才刪）。
+    importLocalRecord: function (from, opts) {
+      from = from || 'guest'; opts = opts || {};
+      if (from === userCode()) throw new Error('不能匯入自己的紀錄');
+      var res = mergeRecord(readRecord(from));
+      write(PREFIX + 'imported:' + from, { to: userCode(), at: window.Store.now().toISOString() });
+      if (opts.removeSource) {
+        var pre = PREFIX + 'u:' + from + ':', kill = [];
+        for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && k.indexOf(pre) === 0) kill.push(k); }
+        kill.forEach(function (k) { try { localStorage.removeItem(k); } catch (e) {} });
+      }
+      return res;
+    },
+
     // ---- 試玩用：重設、匯出、讀入別人的紀錄 ----
     // 清掉目前使用者的所有紀錄（作答、錯題、每日挑戰、徽章、角色…）和這台裝置的閱讀設定；學生代號保留。
     resetMe: function () {
@@ -172,6 +268,7 @@
       }
       kill.push(READING_KEY);
       kill.forEach(function (k) { try { localStorage.removeItem(k); } catch (e) {} });
+      notify('onReset', userCode());
       return kill.length - 1;
     },
     // 把目前使用者的全部紀錄匯出成一個 JSON 物件（含匯出時間、裝置資訊、閱讀設定）。
@@ -222,4 +319,10 @@
     MISTAKE_CLEAR_STREAK: 2,
     MISTAKE_RETEST_SIZE: 10
   };
+
+  // 讀 config.js（BACKEND 切換）。頁面沒有自己載入時，在解析階段補載（所以不用改每一頁的 HTML）。
+  if (typeof document !== 'undefined' && !window.APP_CONFIG && document.readyState === 'loading') {
+    var cs = document.currentScript, base = cs && cs.src ? cs.src.replace(/store\.js(\?.*)?$/, '') : 'js/';
+    document.write('<script src="' + base + 'config.js"><\/script>');
+  }
 })();
