@@ -9,7 +9,8 @@
    "M0132"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-02",
@@ -20,7 +21,8 @@
    "M0126"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-03",
@@ -35,7 +37,8 @@
   "numbers": [
    "0.15毫克"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-04",
@@ -48,7 +51,8 @@
    "0.25毫克",
    "3年以下有期徒刑"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-05",
@@ -65,7 +69,8 @@
    "最高9萬元",
    "吊扣1~2年"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-06",
@@ -77,7 +82,8 @@
   "numbers": [
    "未滿12歲"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-07",
@@ -97,7 +103,8 @@
    "汽車12萬元",
    "吊銷3年"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-08",
@@ -111,19 +118,19 @@
   "numbers": [
    "18萬元"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-09",
-  "name": "酒駕致人傷亡",
-  "rule": "酒駕致人傷亡，依刑法處理並吊銷駕照；重傷或死亡者終身不得考領。",
+  "name": "酒駕致人傷亡的處罰",
+  "rule": "酒駕致人受傷或死亡，依刑法處理（如公共危險罪），並吊銷駕照。",
   "questions": [
-   "M0138",
-   "M0084",
-   "M0140"
+   "M0138"
   ],
   "numbers": [],
-  "conflict": "M0084、M0140 說「終身不得考領，無重新考領機會」；但 M0272、M0270（平交道等小類）寫「終身不得考領（但符合特定條件…不在此限）」，M0353 說終身吊銷逾 12年可申請考領。請 Jim／Claude 判斷現行規定"
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-10",
@@ -137,7 +144,8 @@
    "15,000～90,000元",
    "吊扣牌照2年"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-11",
@@ -150,7 +158,8 @@
   "numbers": [
    "二分之一"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-12",
@@ -161,7 +170,8 @@
    "M0085"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-13",
@@ -175,7 +185,8 @@
   "numbers": [
    "吊扣牌照6個月"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-14",
@@ -188,7 +199,8 @@
    "M0127"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-15",
@@ -200,7 +212,8 @@
    "M0105"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-16",
@@ -210,7 +223,8 @@
    "M0112"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-17",
@@ -223,7 +237,8 @@
   "numbers": [
    "1,800～3,000元"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-18",
@@ -239,7 +254,8 @@
   "numbers": [
    "慢車道40公里"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-19",
@@ -251,7 +267,8 @@
    "M0135"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-20",
@@ -264,18 +281,8 @@
   "numbers": [
    "3,600～10,800元"
   ],
-  "conflict": null
- },
- {
-  "id": "C-ban-21",
-  "name": "匝道會車標誌",
-  "rule": "圖中標誌是「匝道會車」。",
-  "questions": [
-   "M0119",
-   "M0120"
-  ],
-  "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-22",
@@ -286,7 +293,8 @@
    "M0131"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-23",
@@ -297,7 +305,8 @@
    "M0129"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-24",
@@ -307,7 +316,8 @@
    "M0133"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-25",
@@ -317,7 +327,8 @@
    "M0082"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-ban-26",
@@ -326,6 +337,43 @@
   "questions": [
    "M0123",
    "M0134"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-ban-09b",
+  "name": "酒駕致重傷死亡的駕照",
+  "rule": "酒駕致人重傷或死亡，吊銷駕照後終身不得考領，沒有重新考領的機會；酒駕不適用例外。",
+  "questions": [
+   "M0084",
+   "M0140"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-img-M0119",
+  "type": "image",
+  "image": "media/images/M0119.png",
+  "name": "匝道會車",
+  "rule": "這是「匝道會車」。",
+  "questions": [
+   "M0119"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0120",
+  "type": "image",
+  "image": "media/images/M0120.png",
+  "name": "匝道會車",
+  "rule": "這是「匝道會車」。",
+  "questions": [
+   "M0120"
   ],
   "numbers": [],
   "conflict": null

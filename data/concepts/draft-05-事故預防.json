@@ -1,27 +1,390 @@
 [
-{"id":"C-acc-01","name":"事故的定義與規模","rule":"車輛、動力機械在道路行駛致人傷亡是道路交通事故；死亡3人以上、死傷10人以上或受傷15人以上，或危險物品洩漏爆炸，是重大事故。","questions":["M0027","M0028","M0029"],"numbers":["死亡3人以上","死傷10人以上","受傷15人以上"],"conflict":null},
-{"id":"C-acc-02","name":"有人傷亡的處置","rule":"肇事致人傷亡，要立即救護、通知消防和警察，不得任意移動車輛與痕跡，違者罰鍰。","questions":["M0026","M0075"],"numbers":[],"conflict":null},
-{"id":"C-acc-03","name":"報案與清除現場","rule":"事故要立即打110說明地點與傷亡；現場要等肇事處理機關指示才可清除。","questions":["M0076","M0073"],"numbers":["110"],"conflict":null},
-{"id":"C-acc-04","name":"無人傷亡的移車","rule":"無人傷亡且車能動，先標繪位置或攝影再移到路邊，並通知警察；不移動妨礙交通要罰鍰。","questions":["M0030","M0031","M0032","M0074"],"numbers":[],"conflict":null},
-{"id":"C-acc-05","name":"事故現場的旁觀者","rule":"目睹車禍要暫留協助救護並作證；警察已處理就繞道，不停留觀看。","questions":["M0066","M0020"],"numbers":[],"conflict":null},
-{"id":"C-acc-06","name":"尋找目擊證人","rule":"發生事故，當事人應儘量在現場找目擊證人。","questions":["M0023"],"numbers":[],"conflict":null},
-{"id":"C-acc-07","name":"路權歸屬","rule":"轉彎車應讓直行車。","questions":["M0033"],"numbers":[],"conflict":null},
-{"id":"C-acc-08","name":"速度與停車距離","rule":"速度愈高，停車距離愈長。","questions":["M0021"],"numbers":[],"conflict":null},
-{"id":"C-acc-09","name":"下坡行駛","rule":"下坡不得將引擎熄火、空檔滑行。","questions":["M0024"],"numbers":[],"conflict":null},
-{"id":"C-acc-10","name":"高危險區不停駐","rule":"落石處、防落石柵、護欄受撞變形處是高危險區，要避免停駐。","questions":["M0025"],"numbers":[],"conflict":null},
-{"id":"C-acc-11","name":"油料著火","rule":"油料著火，用滅火器、泥沙，或用水浸濕的棉被衣服覆蓋撲滅，不用水。","questions":["M0022"],"numbers":[],"conflict":null},
-{"id":"C-acc-12","name":"吊銷後重考","rule":"駕照被吊銷後，除特定重大違規外，應經 1年才能重新考領。","questions":["M0077"],"numbers":["1年"],"conflict":null},
-{"id":"C-acc-13","name":"事故相關標誌","rule":"圖中標誌是路滑、注意左側落石、注意右側落石、右側斷崖、危險、救護站。","questions":["M0067","M0068","M0069","M0070","M0071","M0072"],"numbers":[],"conflict":null},
-{"id":"C-acc-14","name":"搬動傷患與骨折","rule":"傷患除非緊急不任意移動，頸部脊椎受傷要維持不動；骨折不隨意移動，斷骨穿出先止血。","questions":["M0018","M0037","M0051","M0065"],"numbers":[],"conflict":null},
-{"id":"C-acc-15","name":"休克與保暖","rule":"休克時臉色蒼白；昏迷患者用毛毯覆蓋保暖，不給熱飲。","questions":["M0019","M0057"],"numbers":[],"conflict":null},
-{"id":"C-acc-16","name":"止血與傷口處理","rule":"出血要加壓止血，止血帶每 15~20分鐘鬆開一次；噴狀鮮紅血是動脈出血；傷口用流動水清洗。","questions":["M0042","M0047","M0064","M0052"],"numbers":["15~20分鐘"],"conflict":null},
-{"id":"C-acc-17","name":"呼吸道阻塞與哈姆立克","rule":"手抓頸部無法說話是呼吸道阻塞，用哈姆立克法，握拳施力在肚臍與胸骨中間。","questions":["M0040","M0041","M0044"],"numbers":[],"conflict":null},
-{"id":"C-acc-18","name":"頸椎受傷的呼吸道","rule":"頸椎受傷時，用推下顎法暢通呼吸道。","questions":["M0038","M0079"],"numbers":[],"conflict":null},
-{"id":"C-acc-19","name":"急救前的評估","rule":"先輕拍並確認意識與脈搏；檢查呼吸不超過 10秒，不靠摸頸動脈。","questions":["M0045","M0053","M0034","M0050"],"numbers":["10秒"],"conflict":null},
-{"id":"C-acc-20","name":"CPR 操作數字","rule":"按壓位置在兩乳頭連線中央，按壓與吹氣 30：2，每分鐘 100次，不中斷超過 10秒。","questions":["M0035","M0036","M0039","M0060","M0043","M0058"],"numbers":["30：2","100次/分","10秒","心跳停後4~6分鐘內","每2分鐘先檢查脈搏"],"conflict":null},
-{"id":"C-acc-21","name":"人工呼吸","rule":"成人用口對口；吹不進氣就重新打開呼吸道再吹 1口氣。","questions":["M0059","M0061"],"numbers":[],"conflict":null},
-{"id":"C-acc-22","name":"CPR 流程與停止","rule":"CPR 的 D 是取得 AED 去顫；病人躺堅硬平面；救護人員接手或傷患恢復心跳才停。","questions":["M0062","M0063","M0078"],"numbers":[],"conflict":null},
-{"id":"C-acc-23","name":"復甦姿勢","rule":"意識不清或 CPR 後恢復呼吸心跳的患者，用復甦姿勢。","questions":["M0054","M0055"],"numbers":[],"conflict":null},
-{"id":"C-acc-24","name":"急救順序","rule":"急救順序是先維持呼吸道，再止血，最後固定骨折。","questions":["M0048"],"numbers":[],"conflict":null},
-{"id":"C-acc-25","name":"燒傷、化學傷害與一氧化碳","rule":"燒傷先大量沖水；化學傷害先沖洗；一氧化碳中毒要移出環境並吸氧。","questions":["M0056","M0046","M0049"],"numbers":["100%氧氣"],"conflict":null}
+ {
+  "id": "C-acc-01",
+  "name": "事故的定義與規模",
+  "rule": "車輛、動力機械在道路行駛致人傷亡是道路交通事故；死亡3人以上、死傷10人以上或受傷15人以上，或危險物品洩漏爆炸，是重大事故。",
+  "questions": [
+   "M0027",
+   "M0028",
+   "M0029"
+  ],
+  "numbers": [
+   "死亡3人以上",
+   "死傷10人以上",
+   "受傷15人以上"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-02",
+  "name": "有人傷亡的處置",
+  "rule": "肇事致人傷亡，要立即救護、通知消防和警察，不得任意移動車輛與痕跡，違者罰鍰。",
+  "questions": [
+   "M0026",
+   "M0075"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-03",
+  "name": "報案與清除現場",
+  "rule": "事故要立即打110說明地點與傷亡；現場要等肇事處理機關指示才可清除。",
+  "questions": [
+   "M0076",
+   "M0073"
+  ],
+  "numbers": [
+   "110"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-04",
+  "name": "無人傷亡的移車",
+  "rule": "無人傷亡且車能動，先標繪位置或攝影再移到路邊，並通知警察；不移動妨礙交通要罰鍰。",
+  "questions": [
+   "M0030",
+   "M0031",
+   "M0032",
+   "M0074"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-05",
+  "name": "事故現場的旁觀者",
+  "rule": "目睹車禍要暫留協助救護並作證；警察已處理就繞道，不停留觀看。",
+  "questions": [
+   "M0066",
+   "M0020"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-06",
+  "name": "尋找目擊證人",
+  "rule": "發生事故，當事人應儘量在現場找目擊證人。",
+  "questions": [
+   "M0023"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-07",
+  "name": "路權歸屬",
+  "rule": "轉彎車應讓直行車。",
+  "questions": [
+   "M0033"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-08",
+  "name": "速度與停車距離",
+  "rule": "速度愈高，停車距離愈長。",
+  "questions": [
+   "M0021"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-09",
+  "name": "下坡行駛",
+  "rule": "下坡不得將引擎熄火、空檔滑行。",
+  "questions": [
+   "M0024"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-10",
+  "name": "高危險區不停駐",
+  "rule": "落石處、防落石柵、護欄受撞變形處是高危險區，要避免停駐。",
+  "questions": [
+   "M0025"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-11",
+  "name": "油料著火",
+  "rule": "油料著火，用滅火器、泥沙，或用水浸濕的棉被衣服覆蓋撲滅，不用水。",
+  "questions": [
+   "M0022"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-12",
+  "name": "吊銷後重考",
+  "rule": "駕照被吊銷後，除特定重大違規外，應經 1年才能重新考領。",
+  "questions": [
+   "M0077"
+  ],
+  "numbers": [
+   "1年"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-14",
+  "name": "搬動傷患與骨折",
+  "rule": "傷患除非緊急不任意移動，頸部脊椎受傷要維持不動；骨折不隨意移動，斷骨穿出先止血。",
+  "questions": [
+   "M0018",
+   "M0037",
+   "M0051",
+   "M0065"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-15",
+  "name": "休克與保暖",
+  "rule": "休克時臉色蒼白；昏迷患者用毛毯覆蓋保暖，不給熱飲。",
+  "questions": [
+   "M0019",
+   "M0057"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-16",
+  "name": "止血與傷口處理",
+  "rule": "出血要加壓止血，止血帶每 15~20分鐘鬆開一次；噴狀鮮紅血是動脈出血；傷口用流動水清洗。",
+  "questions": [
+   "M0042",
+   "M0047",
+   "M0064",
+   "M0052"
+  ],
+  "numbers": [
+   "15~20分鐘"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-17",
+  "name": "呼吸道阻塞與哈姆立克",
+  "rule": "手抓頸部無法說話是呼吸道阻塞，用哈姆立克法，握拳施力在肚臍與胸骨中間。",
+  "questions": [
+   "M0040",
+   "M0041",
+   "M0044"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-18",
+  "name": "頸椎受傷的呼吸道",
+  "rule": "頸椎受傷時，用推下顎法暢通呼吸道。",
+  "questions": [
+   "M0038",
+   "M0079"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-19",
+  "name": "急救前的評估",
+  "rule": "先輕拍並確認意識與脈搏；檢查呼吸不超過 10秒，不靠摸頸動脈。",
+  "questions": [
+   "M0045",
+   "M0053",
+   "M0034",
+   "M0050"
+  ],
+  "numbers": [
+   "10秒"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-20",
+  "name": "CPR 操作數字",
+  "rule": "按壓位置在兩乳頭連線中央，按壓與吹氣 30：2，每分鐘 100次，不中斷超過 10秒。",
+  "questions": [
+   "M0035",
+   "M0036",
+   "M0039",
+   "M0060",
+   "M0043",
+   "M0058"
+  ],
+  "numbers": [
+   "30：2",
+   "100次/分",
+   "10秒",
+   "心跳停後4~6分鐘內",
+   "每2分鐘先檢查脈搏"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-21",
+  "name": "人工呼吸",
+  "rule": "成人用口對口；吹不進氣就重新打開呼吸道再吹 1口氣。",
+  "questions": [
+   "M0059",
+   "M0061"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-22",
+  "name": "CPR 流程與停止",
+  "rule": "CPR 的 D 是取得 AED 去顫；病人躺堅硬平面；救護人員接手或傷患恢復心跳才停。",
+  "questions": [
+   "M0062",
+   "M0063",
+   "M0078"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-23",
+  "name": "復甦姿勢",
+  "rule": "意識不清或 CPR 後恢復呼吸心跳的患者，用復甦姿勢。",
+  "questions": [
+   "M0054",
+   "M0055"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-24",
+  "name": "急救順序",
+  "rule": "急救順序是先維持呼吸道，再止血，最後固定骨折。",
+  "questions": [
+   "M0048"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-acc-25",
+  "name": "燒傷、化學傷害與一氧化碳",
+  "rule": "燒傷先大量沖水；化學傷害先沖洗；一氧化碳中毒要移出環境並吸氧。",
+  "questions": [
+   "M0056",
+   "M0046",
+   "M0049"
+  ],
+  "numbers": [
+   "100%氧氣"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-img-M0067",
+  "type": "image",
+  "image": "media/images/M0067.png",
+  "name": "路滑",
+  "rule": "這是「路滑」。",
+  "questions": [
+   "M0067"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0068",
+  "type": "image",
+  "image": "media/images/M0068.png",
+  "name": "注意左側落石",
+  "rule": "這是「注意左側落石」。",
+  "questions": [
+   "M0068"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0069",
+  "type": "image",
+  "image": "media/images/M0069.png",
+  "name": "注意右側落石",
+  "rule": "這是「注意右側落石」。",
+  "questions": [
+   "M0069"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0070",
+  "type": "image",
+  "image": "media/images/M0070.png",
+  "name": "右側斷崖",
+  "rule": "這是「右側斷崖」。",
+  "questions": [
+   "M0070"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0071",
+  "type": "image",
+  "image": "media/images/M0071.png",
+  "name": "危險",
+  "rule": "這是「危險」。",
+  "questions": [
+   "M0071"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0072",
+  "type": "image",
+  "image": "media/images/M0072.png",
+  "name": "救護站",
+  "rule": "這是「救護站」。",
+  "questions": [
+   "M0072"
+  ],
+  "numbers": [],
+  "conflict": null
+ }
 ]

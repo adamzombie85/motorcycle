@@ -8,7 +8,8 @@
    "M0562"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-large-02",
@@ -18,7 +19,8 @@
    "M0563"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-large-03",
@@ -28,7 +30,8 @@
    "M0572"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-large-04",
@@ -39,17 +42,8 @@
    "M0567"
   ],
   "numbers": [],
-  "conflict": null
- },
- {
-  "id": "C-large-05",
-  "name": "禁止大貨車標誌",
-  "rule": "這個標誌的意思是「禁止大貨車及聯結車進入」。",
-  "questions": [
-   "M0564"
-  ],
-  "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-large-06",
@@ -61,7 +55,8 @@
    "M0569"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-large-07",
@@ -72,16 +67,19 @@
    "M0571"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
-  "id": "C-large-08",
-  "name": "闖紅燈認定",
-  "rule": "此題正確答案：面對圓形紅燈，牽引（騎乘）到非紅燈行向的道路後繼續騎乘。",
+  "id": "C-img-M0564",
+  "type": "image",
+  "image": "media/images/M0564.png",
+  "name": "禁止大貨車及聯結車進入",
+  "rule": "這是「禁止大貨車及聯結車進入」。",
   "questions": [
-   "M0565"
+   "M0564"
   ],
   "numbers": [],
-  "conflict": "題意不明：題目問「違規認定標準」。M0450（牽引過停止線後繼續騎乘＝視同闖紅燈）可佐證此選項是闖紅燈情形，但請 Jim／Claude 確認"
+  "conflict": null
  }
 ]

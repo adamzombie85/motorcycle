@@ -1,8 +1,10 @@
 [
  {
-  "id": "C-scn-01",
-  "name": "正確配戴安全帽",
-  "rule": "圖中正確配戴安全帽的是 C。",
+  "id": "C-img-S001",
+  "type": "image",
+  "image": "media/images/S001.jpg",
+  "name": "哪一位駕駛人配戴機車安全帽才「正確」？",
+  "rule": "哪一位駕駛人配戴機車安全帽才「正確」？　答：C",
   "questions": [
    "S001"
   ],
@@ -10,27 +12,83 @@
   "conflict": null
  },
  {
-  "id": "C-scn-02",
-  "name": "載人與載物",
-  "rule": "載物寬度不超過把手外緣各 10公分、長度自後輪軸起不超過 50公分；載人載物看圖：正確乘坐 A、載寵物 C、載貨 B。",
+  "id": "C-img-S002",
+  "type": "image",
+  "image": "media/images/S002.jpg",
+  "name": "違反下列哪項規定？",
+  "rule": "違反下列哪項規定？　答：附載人數規定",
   "questions": [
-   "S002",
-   "S003",
-   "S004",
-   "S064",
-   "S065",
-   "S066"
+   "S002"
   ],
-  "numbers": [
-   "10公分",
-   "50公分"
-  ],
+  "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-03",
-  "name": "騎乘違規行為",
-  "rule": "邊騎車邊抽菸、後座乘客側坐都違規。",
+  "id": "C-img-S003",
+  "type": "image",
+  "image": "media/images/S003.jpg",
+  "name": "有關機車載物寬度A何者「正確」？",
+  "rule": "有關機車載物寬度A何者「正確」？　答：不超過機車的左右把手外緣各10公分",
+  "questions": [
+   "S003"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S004",
+  "type": "image",
+  "image": "media/images/S004.jpg",
+  "name": "有關機車載物長度C何者「正確」？",
+  "rule": "有關機車載物長度C何者「正確」？　答：自後輪輪軸起不超過50公分",
+  "questions": [
+   "S004"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S064",
+  "type": "image",
+  "image": "media/images/S064.jpg",
+  "name": "何者為正確之乘坐方式？",
+  "rule": "何者為正確之乘坐方式？　答：A",
+  "questions": [
+   "S064"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S065",
+  "type": "image",
+  "image": "media/images/S065.jpg",
+  "name": "何者為安全載運寵物的方式？",
+  "rule": "何者為安全載運寵物的方式？　答：C",
+  "questions": [
+   "S065"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S066",
+  "type": "image",
+  "image": "media/images/S066.jpg",
+  "name": "何者為安全載運貨物的方式？",
+  "rule": "何者為安全載運貨物的方式？　答：B",
+  "questions": [
+   "S066"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S081",
+  "type": "image",
+  "image": "media/images/S081.jpg",
+  "name": "何種行為屬於違規？",
+  "rule": "何種行為屬於違規？　答：以上皆是",
   "questions": [
    "S081"
   ],
@@ -38,345 +96,1187 @@
   "conflict": null
  },
  {
-  "id": "C-scn-04",
-  "name": "輪胎磨耗指示",
-  "rule": "「△」是找輪胎磨耗指示平台的記號；溝紋磨到此點就要換胎。",
+  "id": "C-img-S005",
+  "type": "image",
+  "image": "media/images/S005.jpg",
+  "name": "三角形「△」標記代表何意義？",
+  "rule": "三角形「△」標記代表何意義？　答：尋找「輪胎胎面磨耗指示平台」位置的導引記號",
   "questions": [
-   "S005",
+   "S005"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S006",
+  "type": "image",
+  "image": "media/images/S006.jpg",
+  "name": "機車輪胎之紅色圈選處，代表的意義為何?",
+  "rule": "機車輪胎之紅色圈選處，代表的意義為何?　答：輪胎胎面之「磨耗指示平台」，若輪胎溝紋磨耗到此點時，就應更換輪胎",
+  "questions": [
    "S006"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-05",
-  "name": "行車前檢查與胎壓",
-  "rule": "行車前檢查輪胎（磨耗、龜裂、損傷）、燈光、喇叭、煞車、油料；圖中正常胎壓是 C。",
+  "id": "C-img-S061",
+  "type": "image",
+  "image": "media/images/S061.jpg",
+  "name": "行車前的輪胎檢查內容為何？",
+  "rule": "行車前的輪胎檢查內容為何？　答：以上皆是",
   "questions": [
-   "S061",
-   "S062",
+   "S061"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S062",
+  "type": "image",
+  "image": "media/images/S062.jpg",
+  "name": "機車駕駛人於騎乘機車前應做那些檢查？",
+  "rule": "機車駕駛人於騎乘機車前應做那些檢查？　答：行車前，應檢查輪胎、燈光、喇叭、煞車及油料，以確保行車安全",
+  "questions": [
+   "S062"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S120",
+  "type": "image",
+  "image": "media/images/S120.jpg",
+  "name": "哪個輪胎之胎壓是正常的？",
+  "rule": "哪個輪胎之胎壓是正常的？　答：Ｃ",
+  "questions": [
    "S120"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-06",
-  "name": "設備規定",
-  "rule": "圖中排氣管正確的是 A；方向燈橙色；尾燈符合規定的是 C。",
+  "id": "C-img-S063",
+  "type": "image",
+  "image": "media/images/S063.jpg",
+  "name": "機車排氣管的設備何者正確？",
+  "rule": "機車排氣管的設備何者正確？　答：A",
   "questions": [
-   "S063",
-   "S067",
+   "S063"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S067",
+  "type": "image",
+  "image": "media/images/S067.jpg",
+  "name": "方向燈的顏色，何者正確？",
+  "rule": "方向燈的顏色，何者正確？　答：橙色",
+  "questions": [
+   "S067"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S068",
+  "type": "image",
+  "image": "media/images/S068.jpg",
+  "name": "哪輛機車尾燈的燈光符合規定？",
+  "rule": "哪輛機車尾燈的燈光符合規定？　答：C",
+  "questions": [
    "S068"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-07",
-  "name": "視野死角",
-  "rule": "直行時照後鏡看不到 A、C、E 區；並行汽車要注意 A、E 區；汽車左轉看不到 A、右轉看不到 E。",
+  "id": "C-img-S007",
+  "type": "image",
+  "image": "media/images/S007.jpg",
+  "name": "當機車直行時，哪些區域是駕駛人無法利用照",
+  "rule": "當機車直行時，哪些區域是駕駛人無法利用照後鏡看見的視野範圍？　答：A、C、E",
   "questions": [
-   "S007",
-   "S008",
-   "S009",
+   "S007"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S008",
+  "type": "image",
+  "image": "media/images/S008.jpg",
+  "name": "當騎機車並行於汽車的左側或右側時，要注意",
+  "rule": "當騎機車並行於汽車的左側或右側時，要注意圖中哪些區域，以免因視野死角而發生事故？　答：A、E",
+  "questions": [
+   "S008"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S009",
+  "type": "image",
+  "image": "media/images/S009.jpg",
+  "name": "當汽車要左轉時，後方的機車駕駛人要特別小",
+  "rule": "當汽車要左轉時，後方的機車駕駛人要特別小心，是因為汽車駕駛人看不到圖中哪個區域?　答：A",
+  "questions": [
+   "S009"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S010",
+  "type": "image",
+  "image": "media/images/S010.jpg",
+  "name": "當汽車要右轉時，後方的機車駕駛人要特別小",
+  "rule": "當汽車要右轉時，後方的機車駕駛人要特別小心，是因為汽車駕駛人看不到圖中哪個區域?　答：E",
+  "questions": [
    "S010"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-08",
-  "name": "大型車",
-  "rule": "大型車右轉要避開內輪差 B 區；停在 A 處等大型車轉完；遠離、避讓大型車，不搶快。",
+  "id": "C-img-S011",
+  "type": "image",
+  "image": "media/images/S011.jpg",
+  "name": "大型車右轉時，機車駕駛人應避免進入的內輪",
+  "rule": "大型車右轉時，機車駕駛人應避免進入的內輪差範圍為何？　答：B區域",
   "questions": [
-   "S011",
-   "S012",
-   "S013",
+   "S011"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S012",
+  "type": "image",
+  "image": "media/images/S012.jpg",
+  "name": "騎乘機車右轉彎時，應如何行駛較安全？",
+  "rule": "騎乘機車右轉彎時，應如何行駛較安全？　答：靠邊暫停於A處，待大型車轉彎後再行轉彎",
+  "questions": [
+   "S012"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S013",
+  "type": "image",
+  "image": "media/images/S013.jpg",
+  "name": "機車駕駛人應如何行駛較安全？ A.大型車",
+  "rule": "機車駕駛人應如何行駛較安全？ A.大型車駕駛座較高，前方有視野死角，機車駕駛人應避免騎在前方。 B.機車駕駛人要與大型車輛保持一段安全距離與間隔。 C.立即煞車，等大型車通過後再行駛。 D.搶快超前轉彎。　答：A、B",
+  "questions": [
+   "S013"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S014",
+  "type": "image",
+  "image": "media/images/S014.jpg",
+  "name": "機車駕駛人應如何行駛較安全？",
+  "rule": "機車駕駛人應如何行駛較安全？　答：放慢車速，遠離並避讓大型車先行",
+  "questions": [
    "S014"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-09",
-  "name": "彎道減速",
-  "rule": "進彎道前先放鬆油門減速，保持適當速度，車頭轉正確認後再加速，不超車。",
+  "id": "C-img-S015",
+  "type": "image",
+  "image": "media/images/S015.jpg",
+  "name": "機車駕駛人應如何行駛較能確保行車安全？",
+  "rule": "機車駕駛人應如何行駛較能確保行車安全？　答：應先放鬆油門減速行駛，以免在轉彎時失控",
   "questions": [
-   "S015",
-   "S016",
-   "S017",
-   "S053",
-   "S072",
+   "S015"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S016",
+  "type": "image",
+  "image": "media/images/S016.jpg",
+  "name": "機車駕駛人應如何行駛較能確保行車安全？",
+  "rule": "機車駕駛人應如何行駛較能確保行車安全？　答：保持適當速度",
+  "questions": [
+   "S016"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S017",
+  "type": "image",
+  "image": "media/images/S017.jpg",
+  "name": "機車駕駛人應如何行駛較能確保行車安全？",
+  "rule": "機車駕駛人應如何行駛較能確保行車安全？　答：應把車頭逐漸轉正，安全確認沒問題後，即可加速前進",
+  "questions": [
+   "S017"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S053",
+  "type": "image",
+  "image": "media/images/S053.jpg",
+  "name": "機車駕駛人應如何行駛較安全？",
+  "rule": "機車駕駛人應如何行駛較安全？　答：要先減速行駛，以免在轉彎時失控滑倒",
+  "questions": [
+   "S053"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S072",
+  "type": "image",
+  "image": "media/images/S072.jpg",
+  "name": "機車駕駛人行經彎道，何者行為正確？",
+  "rule": "機車駕駛人行經彎道，何者行為正確？　答：B駕駛人減速慢行，不超車，避免車速過快衝入對向車道",
+  "questions": [
+   "S072"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S106",
+  "type": "image",
+  "image": "media/images/S106.jpg",
+  "name": "機車駕駛人應如何安全行駛？",
+  "rule": "機車駕駛人應如何安全行駛？　答：減速慢行，避免因視野死角造成危險",
+  "questions": [
    "S106"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-10",
-  "name": "不良路面",
-  "rule": "遇不良路面或下雨天的標線，要避開或減速慢行，不急煞。",
+  "id": "C-img-S056",
+  "type": "image",
+  "image": "media/images/S056.jpg",
+  "name": "機車駕駛人轉彎行經此路面時，應如何行駛較",
+  "rule": "機車駕駛人轉彎行經此路面時，應如何行駛較安全？　答：應盡量避開或減速慢行",
   "questions": [
-   "S056",
-   "S057",
+   "S056"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S057",
+  "type": "image",
+  "image": "media/images/S057.jpg",
+  "name": "下雨天行經此標線時，應如何行駛較安全？",
+  "rule": "下雨天行經此標線時，應如何行駛較安全？　答：行駛時應盡量避開",
+  "questions": [
+   "S057"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S058",
+  "type": "image",
+  "image": "media/images/S058.jpg",
+  "name": "機車駕駛人行經此路面時，應如何行駛較安全",
+  "rule": "機車駕駛人行經此路面時，應如何行駛較安全？　答：應盡量避開或減速慢行",
+  "questions": [
    "S058"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-11",
-  "name": "右轉讓行人",
-  "rule": "右轉遇行人，停車讓行人先通過；仍停在 A 區，不催促或繞過。",
+  "id": "C-img-S018",
+  "type": "image",
+  "image": "media/images/S018.jpg",
+  "name": "機車駕駛人右轉時應如何行駛？",
+  "rule": "機車駕駛人右轉時應如何行駛？　答：停車並讓行人優先通過，待行人穿越後再行駛",
   "questions": [
-   "S018",
+   "S018"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S019",
+  "type": "image",
+  "image": "media/images/S019.jpg",
+  "name": "機車駕駛人應如何行駛？",
+  "rule": "機車駕駛人應如何行駛？　答：仍應停於A區，讓行人優先通過",
+  "questions": [
    "S019"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-12",
-  "name": "停止線與停等",
-  "rule": "前方壅堵時仍停在 A 區等待；尚未過停止線就不可加速通過，要停下等下個綠燈。",
+  "id": "C-img-S020",
+  "type": "image",
+  "image": "media/images/S020.jpg",
+  "name": "機車駕駛人「X」直行時，應如何行駛較安全",
+  "rule": "機車駕駛人「X」直行時，應如何行駛較安全？　答：仍應停於A區，待前方壅堵車流疏通後，再通過路口",
   "questions": [
-   "S020",
-   "S021",
+   "S020"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S021",
+  "type": "image",
+  "image": "media/images/S021.jpg",
+  "name": "機車駕駛人的行駛方式何者容易發生危險？",
+  "rule": "機車駕駛人的行駛方式何者容易發生危險？　答：雖尚未通過停止線，但仍可加速前行通過路口",
+  "questions": [
+   "S021"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S022",
+  "type": "image",
+  "image": "media/images/S022.jpg",
+  "name": "機車駕駛人應停於圖中何處？",
+  "rule": "機車駕駛人應停於圖中何處？　答：A區",
+  "questions": [
    "S022"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-13",
-  "name": "號誌與警察手勢",
-  "rule": "依號誌 A 可直行或右轉；依警察手勢，C 機車要停止。",
+  "id": "C-img-S091",
+  "type": "image",
+  "image": "media/images/S091.jpg",
+  "name": "A、B機車駕駛人依據號誌燈號，誰可直行或",
+  "rule": "A、B機車駕駛人依據號誌燈號，誰可直行或右轉行駛？　答：A",
   "questions": [
-   "S091",
+   "S091"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S112",
+  "type": "image",
+  "image": "media/images/S112.jpg",
+  "name": "警察手勢，哪輛機車應停止？",
+  "rule": "警察手勢，哪輛機車應停止？　答：Ｃ",
+  "questions": [
    "S112"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-14",
-  "name": "機車禁行車道",
-  "rule": "依圖，機車不可行駛的車道：S023 是 A、S024 是 A、S025 是 C。",
+  "id": "C-img-S023",
+  "type": "image",
+  "image": "media/images/S023.jpg",
+  "name": "機車不可行駛在哪一個車道上？",
+  "rule": "機車不可行駛在哪一個車道上？　答：A車道",
   "questions": [
-   "S023",
-   "S024",
+   "S023"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S024",
+  "type": "image",
+  "image": "media/images/S024.jpg",
+  "name": "機車不可行駛在哪一個車道上？",
+  "rule": "機車不可行駛在哪一個車道上？　答：A車道",
+  "questions": [
+   "S024"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S025",
+  "type": "image",
+  "image": "media/images/S025.jpg",
+  "name": "機車不可行駛在哪一個車道上？",
+  "rule": "機車不可行駛在哪一個車道上？　答：C車道",
+  "questions": [
    "S025"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-15",
-  "name": "超車",
-  "rule": "可從左側超車並顯示左方向燈、與前車保持半公尺以上；有些圖中不可超車、不要強行超越；只有 C 區可跨越分向線超車。",
+  "id": "C-img-S029",
+  "type": "image",
+  "image": "media/images/S029.jpg",
+  "name": "機車駕駛人若發現前方汽車車速過慢，是否可",
+  "rule": "機車駕駛人若發現前方汽車車速過慢，是否可超車？　答：不可以",
   "questions": [
-   "S029",
-   "S030",
-   "S031",
-   "S054",
-   "S059",
-   "S082",
-   "S083",
-   "S114"
+   "S029"
   ],
-  "numbers": [
-   "半公尺"
-  ],
+  "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-16",
-  "name": "變換車道",
-  "rule": "減速、顯示左方向燈、看照後鏡、確認無來車才變換車道。",
+  "id": "C-img-S030",
+  "type": "image",
+  "image": "media/images/S030.jpg",
+  "name": "機車駕駛人若發現前方汽車車速過慢，是否可",
+  "rule": "機車駕駛人若發現前方汽車車速過慢，是否可超車？　答：可以自前方車輛的左側超車",
   "questions": [
-   "S094",
+   "S030"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S031",
+  "type": "image",
+  "image": "media/images/S031.jpg",
+  "name": "機車駕駛人若發現前方汽車車速過慢，是否可",
+  "rule": "機車駕駛人若發現前方汽車車速過慢，是否可超車？　答：不可以",
+  "questions": [
+   "S031"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S054",
+  "type": "image",
+  "image": "media/images/S054.jpg",
+  "name": "機車駕駛人行駛時遇前方狀況，應如何行駛較",
+  "rule": "機車駕駛人行駛時遇前方狀況，應如何行駛較安全？　答：應減速停車，不要強行超越",
+  "questions": [
+   "S054"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S059",
+  "type": "image",
+  "image": "media/images/S059.jpg",
+  "name": "機車駕駛人是否可以變換車道超車？",
+  "rule": "機車駕駛人是否可以變換車道超車？　答：不可以",
+  "questions": [
+   "S059"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S082",
+  "type": "image",
+  "image": "media/images/S082.jpg",
+  "name": "機車駕駛人應如何正確超越前車？",
+  "rule": "機車駕駛人應如何正確超越前車？　答：顯示左方向燈並與前車左側保持半公尺以上之間隔",
+  "questions": [
+   "S082"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S083",
+  "type": "image",
+  "image": "media/images/S083.jpg",
+  "name": "機車駕駛人在哪個區域可跨越分向線超車？",
+  "rule": "機車駕駛人在哪個區域可跨越分向線超車？　答：Ｃ",
+  "questions": [
+   "S083"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S114",
+  "type": "image",
+  "image": "media/images/S114.jpg",
+  "name": "機車駕駛人應如何正確反應？",
+  "rule": "機車駕駛人應如何正確反應？　答：不要強行超越，應減速慢行並做隨時停車之準備",
+  "questions": [
+   "S114"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S094",
+  "type": "image",
+  "image": "media/images/S094.jpg",
+  "name": "機車駕駛人應如何行駛？",
+  "rule": "機車駕駛人應如何行駛？　答：減速後顯示左方向燈，察看照後鏡，確認無來車後，變換至鄰近車道",
+  "questions": [
+   "S094"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S096",
+  "type": "image",
+  "image": "media/images/S096.jpg",
+  "name": "機車駕駛人應如何行駛？",
+  "rule": "機車駕駛人應如何行駛？　答：顯示左方向燈，並察看有無來車再變換車道，行駛Y路線",
+  "questions": [
    "S096"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-17",
-  "name": "路口左右轉",
-  "rule": "30公尺前打方向燈；左轉換內側車道到路口中心再轉；右轉慢慢換外側車道；兩段左轉先打右燈換外側再入待轉區；右轉走 C 路線。",
+  "id": "C-img-S026",
+  "type": "image",
+  "image": "media/images/S026.jpg",
+  "name": "普通重型機車駕駛人「Y」兩段式左轉從A區",
+  "rule": "普通重型機車駕駛人「Y」兩段式左轉從A區行駛至B待轉區時，該如何行駛較安全？　答：需顯示右方向燈，先變換至外側車道後，再行駛至B區",
   "questions": [
-   "S026",
-   "S027",
-   "S028",
-   "S077"
+   "S026"
   ],
-  "numbers": [
-   "30公尺"
-  ],
+  "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-18",
-  "name": "幹道與支道",
-  "rule": "機車（支道車）要讓汽車（幹道車）先行；B 車要停車讓 A 車。",
+  "id": "C-img-S027",
+  "type": "image",
+  "image": "media/images/S027.jpg",
+  "name": "「X」機車駕駛人若想要左轉，應該如何行駛",
+  "rule": "「X」機車駕駛人若想要左轉，應該如何行駛較安全?　答：應距交岔路口30公尺前顯示左轉方向燈，換入內側車道，行駛到交岔路口中心處，確認對向來車安全無誤再左轉",
   "questions": [
-   "S032",
-   "S033",
+   "S027"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S028",
+  "type": "image",
+  "image": "media/images/S028.jpg",
+  "name": "「X」機車駕駛人若想要右轉，應該如何行駛",
+  "rule": "「X」機車駕駛人若想要右轉，應該如何行駛較安全?　答：應距交岔路口30公尺前顯示右轉方向燈，慢慢換入外側車道，行駛到路口後再右轉",
+  "questions": [
+   "S028"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S077",
+  "type": "image",
+  "image": "media/images/S077.jpg",
+  "name": "機車在前方路口欲右轉，應依哪條路線行駛？",
+  "rule": "機車在前方路口欲右轉，應依哪條路線行駛？　答：C",
+  "questions": [
+   "S077"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S032",
+  "type": "image",
+  "image": "media/images/S032.jpg",
+  "name": "下列哪個敘述較安全？",
+  "rule": "下列哪個敘述較安全？　答：機車應讓汽車先行",
+  "questions": [
+   "S032"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S033",
+  "type": "image",
+  "image": "media/images/S033.jpg",
+  "name": "為何機車應讓汽車先行？",
+  "rule": "為何機車應讓汽車先行？　答：支道車應讓幹道車先行",
+  "questions": [
+   "S033"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S042",
+  "type": "image",
+  "image": "media/images/S042.jpg",
+  "name": "B車與A車同時要通過路口時，B車應如何行",
+  "rule": "B車與A車同時要通過路口時，B車應如何行駛較安全？　答：停車並讓A車優先通行",
+  "questions": [
    "S042"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-19",
-  "name": "路口減速擺頭",
-  "rule": "到路口減速慢行，左右擺頭查看；必要時暫停讓汽車先行，不按喇叭搶過。",
+  "id": "C-img-S034",
+  "type": "image",
+  "image": "media/images/S034.jpg",
+  "name": "機車駕駛人應如何行駛較安全？",
+  "rule": "機車駕駛人應如何行駛較安全？　答：應先暫停並左右擺頭查看，等汽車通過後再繼續通行",
   "questions": [
-   "S034",
-   "S035",
-   "S036",
-   "S037",
+   "S034"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S035",
+  "type": "image",
+  "image": "media/images/S035.jpg",
+  "name": "機車駕駛人應如何行駛較安全？",
+  "rule": "機車駕駛人應如何行駛較安全？　答：機車行至路口時應減速接近，並小心通過路口",
+  "questions": [
+   "S035"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S036",
+  "type": "image",
+  "image": "media/images/S036.jpg",
+  "name": "機車駕駛人應如何行駛較安全？",
+  "rule": "機車駕駛人應如何行駛較安全？　答：減速並暫停，讓汽車先行",
+  "questions": [
+   "S036"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S037",
+  "type": "image",
+  "image": "media/images/S037.jpg",
+  "name": "機車駕駛人應如何行駛較安全？",
+  "rule": "機車駕駛人應如何行駛較安全？　答：減速慢行，應左右擺頭查看兩側是否有來車再通行",
+  "questions": [
+   "S037"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S092",
+  "type": "image",
+  "image": "media/images/S092.jpg",
+  "name": "機車駕駛人應如何安全行駛？",
+  "rule": "機車駕駛人應如何安全行駛？　答：注意汽車動向，減速通過",
+  "questions": [
    "S092"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-20",
-  "name": "其他路權",
-  "rule": "狹窄道路機車停路旁讓汽車；讓圓環內車先行；讓外緣汽車；A 車先行；路權順序 C→B→A；讓幼童專用車。",
+  "id": "C-img-S038",
+  "type": "image",
+  "image": "media/images/S038.jpg",
+  "name": "機車駕駛人在狹窄道路中，應如何行駛較安全",
+  "rule": "機車駕駛人在狹窄道路中，應如何行駛較安全？　答：機車駕駛人應停靠於路旁，讓汽車優先通行",
   "questions": [
-   "S038",
-   "S041",
-   "S043",
-   "S108",
-   "S109",
-   "S111",
+   "S038"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S041",
+  "type": "image",
+  "image": "media/images/S041.jpg",
+  "name": "機車駕駛人應如何行駛較安全？",
+  "rule": "機車駕駛人應如何行駛較安全？　答：應讓圓環內的車輛先行通過，再進入圓環",
+  "questions": [
+   "S041"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S043",
+  "type": "image",
+  "image": "media/images/S043.jpg",
+  "name": "汽、機車同時行經此路段時，機車駕駛人應如",
+  "rule": "汽、機車同時行經此路段時，機車駕駛人應如何行駛較安全？　答：減速並讓汽車優先通行",
+  "questions": [
+   "S043"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S108",
+  "type": "image",
+  "image": "media/images/S108.jpg",
+  "name": "機車駕駛人應如何安全行駛？",
+  "rule": "機車駕駛人應如何安全行駛？　答：應讓外緣汽車優先通行",
+  "questions": [
+   "S108"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S109",
+  "type": "image",
+  "image": "media/images/S109.jpg",
+  "name": "兩車進入同一車道，何者應該先行？",
+  "rule": "兩車進入同一車道，何者應該先行？　答：A車先行",
+  "questions": [
+   "S109"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S111",
+  "type": "image",
+  "image": "media/images/S111.jpg",
+  "name": "請排列優先路權的順序：",
+  "rule": "請排列優先路權的順序：　答：C→B→A",
+  "questions": [
+   "S111"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S107",
+  "type": "image",
+  "image": "media/images/S107.jpg",
+  "name": "機車駕駛人通過路口時，如何行駛較為安全？",
+  "rule": "機車駕駛人通過路口時，如何行駛較為安全？　答：減速慢行，禮讓幼童專用車",
+  "questions": [
    "S107"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-21",
-  "name": "違規車輛與突發狀況",
-  "rule": "遇違規車輛或前方狀況，減速慢行、注意動向、準備隨時停車，不猛按喇叭、不搶快。",
+  "id": "C-img-S087",
+  "type": "image",
+  "image": "media/images/S087.jpg",
+  "name": "機車駕駛人A，發現違規車輛，應如何安全行",
+  "rule": "機車駕駛人A，發現違規車輛，應如何安全行駛？　答：注意機車動向，減速通過",
   "questions": [
-   "S087",
-   "S104",
-   "S110",
-   "S075",
-   "S076",
-   "S101",
-   "S115",
-   "S116",
+   "S087"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S104",
+  "type": "image",
+  "image": "media/images/S104.jpg",
+  "name": "機車駕駛人應如何安全行駛？",
+  "rule": "機車駕駛人應如何安全行駛？　答：注意前方車輛，適當減速因應",
+  "questions": [
+   "S104"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S110",
+  "type": "image",
+  "image": "media/images/S110.jpg",
+  "name": "機車駕駛人行經路口處如何安全行駛較安全？",
+  "rule": "機車駕駛人行經路口處如何安全行駛較安全？　答：減速慢行，注意違規車輛之動向",
+  "questions": [
+   "S110"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S075",
+  "type": "image",
+  "image": "media/images/S075.jpg",
+  "name": "機車駕駛人應如何安全行駛？",
+  "rule": "機車駕駛人應如何安全行駛？　答：減速慢行，並做隨時停車之準備",
+  "questions": [
+   "S075"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S076",
+  "type": "image",
+  "image": "media/images/S076.jpg",
+  "name": "機車駕駛人的行為何者錯誤？",
+  "rule": "機車駕駛人的行為何者錯誤？　答：猛按喇叭後直接搶先轉彎",
+  "questions": [
+   "S076"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S101",
+  "type": "image",
+  "image": "media/images/S101.jpg",
+  "name": "機車駕駛人之行為何者錯誤？",
+  "rule": "機車駕駛人之行為何者錯誤？　答：加速繼續行駛通過",
+  "questions": [
+   "S101"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S115",
+  "type": "image",
+  "image": "media/images/S115.jpg",
+  "name": "機車駕駛人應如何處理？",
+  "rule": "機車駕駛人應如何處理？　答：以上皆是",
+  "questions": [
+   "S115"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S116",
+  "type": "image",
+  "image": "media/images/S116.jpg",
+  "name": "機車駕駛人應如何安全行駛？",
+  "rule": "機車駕駛人應如何安全行駛？　答：注意前方車輛動態，小心變換車道，減速通過",
+  "questions": [
+   "S116"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S100",
+  "type": "image",
+  "image": "media/images/S100.jpg",
+  "name": "機車駕駛人哪項行為錯誤？",
+  "rule": "機車駕駛人哪項行為錯誤？　答：猛按鳴喇叭，加速行駛",
+  "questions": [
    "S100"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-22",
-  "name": "煞車操作",
-  "rule": "減速以前輪煞車為主；遇突然迴轉的汽車放鬆油門，前後煞車同時一次完成；遇障礙物反應順序 B→A→C；人孔蓋放鬆油門、穩握把手。",
+  "id": "C-img-S039",
+  "type": "image",
+  "image": "media/images/S039.jpg",
+  "name": "若機車欲減速，機車駕駛人應如何操作煞車較",
+  "rule": "若機車欲減速，機車駕駛人應如何操作煞車較安全？　答：以前輪煞車為主，後輪煞車為輔進行操作",
   "questions": [
-   "S039",
-   "S040",
-   "S078",
+   "S039"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S040",
+  "type": "image",
+  "image": "media/images/S040.jpg",
+  "name": "機車駕駛人遇突然迴轉之汽車，應如何操作煞",
+  "rule": "機車駕駛人遇突然迴轉之汽車，應如何操作煞車較安全？　答：應立即放鬆油門，並同時使用前後煞車，一次完成煞車動作",
+  "questions": [
+   "S040"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S078",
+  "type": "image",
+  "image": "media/images/S078.jpg",
+  "name": "機車駕駛人遇障礙物煞車時，反應順序為何？",
+  "rule": "機車駕駛人遇障礙物煞車時，反應順序為何？　答：B→A→C",
+  "questions": [
+   "S078"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S095",
+  "type": "image",
+  "image": "media/images/S095.jpg",
+  "name": "機車駕駛人發現人孔蓋時應如何應變？",
+  "rule": "機車駕駛人發現人孔蓋時應如何應變？　答：放鬆油門，穩握把手",
+  "questions": [
    "S095"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-23",
-  "name": "讓緊急車輛",
-  "rule": "遇救護車，不論號誌都立即靠右避讓。",
+  "id": "C-img-S050",
+  "type": "image",
+  "image": "media/images/S050.jpg",
+  "name": "機車駕駛人應如何行駛較安全？",
+  "rule": "機車駕駛人應如何行駛較安全？　答：應立即靠右側避讓，讓救護車優先通行",
   "questions": [
-   "S050",
+   "S050"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S051",
+  "type": "image",
+  "image": "media/images/S051.jpg",
+  "name": "機車駕駛人應如何行駛較安全？",
+  "rule": "機車駕駛人應如何行駛較安全？　答：不論號誌為何，應立即避讓優先通行",
+  "questions": [
    "S051"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-24",
-  "name": "平交道",
-  "rule": "減速停在遮斷器前；故障時處理順序 C→B→A。",
+  "id": "C-img-S055",
+  "type": "image",
+  "image": "media/images/S055.jpg",
+  "name": "機車駕駛人應如何行駛比較安全？",
+  "rule": "機車駕駛人應如何行駛比較安全？　答：應減速並停止於平交道遮斷器前",
   "questions": [
-   "S055",
+   "S055"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S089",
+  "type": "image",
+  "image": "media/images/S089.jpg",
+  "name": "在平交道發生車輛故障時，處理順序為何？",
+  "rule": "在平交道發生車輛故障時，處理順序為何？　答：C→B→A",
+  "questions": [
    "S089"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-25",
-  "name": "巷口",
-  "rule": "過巷口減速，看反射鏡、擺頭看左方；圖中不可左轉進巷口。",
+  "id": "C-img-S047",
+  "type": "image",
+  "image": "media/images/S047.jpg",
+  "name": "騎機車行經圖中巷口時，應如何行駛較安全？",
+  "rule": "騎機車行經圖中巷口時，應如何行駛較安全？　答：減速並觀察反射鏡，以及擺頭查看左方是否有來車",
   "questions": [
-   "S047",
-   "S048",
+   "S047"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S048",
+  "type": "image",
+  "image": "media/images/S048.jpg",
+  "name": "圖中機車駕駛人可以左轉進入巷口嗎？",
+  "rule": "圖中機車駕駛人可以左轉進入巷口嗎？　答：不可以",
+  "questions": [
+   "S048"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S049",
+  "type": "image",
+  "image": "media/images/S049.jpg",
+  "name": "圖中巷口裝設反射鏡的主要用意為何？",
+  "rule": "圖中巷口裝設反射鏡的主要用意為何？　答：機車駕駛人可利用反射鏡觀察巷道來車狀況",
+  "questions": [
    "S049"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-26",
-  "name": "路邊與視野不良處",
-  "rule": "與路邊車輛保持一個車門以上；視野死角減速；公車停靠等其駛離；爬坡靠右。",
+  "id": "C-img-S045",
+  "type": "image",
+  "image": "media/images/S045.jpg",
+  "name": "機車駕駛人應該如何行駛較安全？",
+  "rule": "機車駕駛人應該如何行駛較安全？　答：減速並與路邊車輛保持一個車門以上的間隔",
   "questions": [
-   "S045",
-   "S046",
-   "S052",
+   "S045"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S046",
+  "type": "image",
+  "image": "media/images/S046.jpg",
+  "name": "機車駕駛人應如何行駛較安全？",
+  "rule": "機車駕駛人應如何行駛較安全？　答：前方視野死角處，應減速慢行並隨時注意車前狀況",
+  "questions": [
+   "S046"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S052",
+  "type": "image",
+  "image": "media/images/S052.jpg",
+  "name": "機車駕駛人應如何行駛較安全？",
+  "rule": "機車駕駛人應如何行駛較安全？　答：等候公車駛離後再繼續行駛",
+  "questions": [
+   "S052"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S103",
+  "type": "image",
+  "image": "media/images/S103.jpg",
+  "name": "機車駕駛人應如何安全行駛？",
+  "rule": "機車駕駛人應如何安全行駛？　答：靠右行駛，避免爬坡的視野死角",
+  "questions": [
    "S103"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-27",
-  "name": "突發危險",
-  "rule": "遇蜂群繞道或後退、避免大動作；落石確認路況或改道；機車故障看圖選 A。",
+  "id": "C-img-S093",
+  "type": "image",
+  "image": "media/images/S093.jpg",
+  "name": "機車駕駛人遇到蜂群時，應如何安全行駛？",
+  "rule": "機車駕駛人遇到蜂群時，應如何安全行駛？　答：繞道或後退離開，避免動作過大",
   "questions": [
-   "S093",
-   "S105",
+   "S093"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S105",
+  "type": "image",
+  "image": "media/images/S105.jpg",
+  "name": "機車駕駛人應如何安全行駛？",
+  "rule": "機車駕駛人應如何安全行駛？　答：確認道路狀況或改道行駛",
+  "questions": [
+   "S105"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S119",
+  "type": "image",
+  "image": "media/images/S119.jpg",
+  "name": "當機車故障時，駕駛人應該如何處理？",
+  "rule": "當機車故障時，駕駛人應該如何處理？　答：A",
+  "questions": [
    "S119"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-28",
-  "name": "天氣",
-  "rule": "濕滑要減速並拉長車距；寒冷天氣看圖選 A。",
+  "id": "C-img-S044",
+  "type": "image",
+  "image": "media/images/S044.jpg",
+  "name": "機車駕駛人在此環境中，應如何行駛較安全？",
+  "rule": "機車駕駛人在此環境中，應如何行駛較安全？　答：因路面濕滑，應減速慢行且要與前車保持更長的安全距離",
   "questions": [
-   "S044",
+   "S044"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S102",
+  "type": "image",
+  "image": "media/images/S102.jpg",
+  "name": "天氣寒冷時，機車駕駛人的行為何種方式安全",
+  "rule": "天氣寒冷時，機車駕駛人的行為何種方式安全？　答：A",
+  "questions": [
    "S102"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-29",
-  "name": "其他看圖題",
-  "rule": "S117 風險區 A；S118 減速慢行小心通過；S097、S098、S113 看圖分別選 B、B、A。",
+  "id": "C-img-S097",
+  "type": "image",
+  "image": "media/images/S097.jpg",
+  "name": "機車駕駛人在此環境中，應如何安全行駛？",
+  "rule": "機車駕駛人在此環境中，應如何安全行駛？　答：B",
   "questions": [
-   "S097",
-   "S098",
-   "S113",
-   "S117",
+   "S097"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S098",
+  "type": "image",
+  "image": "media/images/S098.jpg",
+  "name": "何者行為較安全？",
+  "rule": "何者行為較安全？　答：B",
+  "questions": [
+   "S098"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S113",
+  "type": "image",
+  "image": "media/images/S113.jpg",
+  "name": "機車駕駛人應如何安全行駛？",
+  "rule": "機車駕駛人應如何安全行駛？　答：A",
+  "questions": [
+   "S113"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S117",
+  "type": "image",
+  "image": "media/images/S117.jpg",
+  "name": "哪一區域對機車駕駛人潛藏道路風險？",
+  "rule": "哪一區域對機車駕駛人潛藏道路風險？　答：A",
+  "questions": [
+   "S117"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S118",
+  "type": "image",
+  "image": "media/images/S118.jpg",
+  "name": "當機車駕駛人遇此情形，應該如何行駛？",
+  "rule": "當機車駕駛人遇此情形，應該如何行駛？　答：應減速慢行，小心通過",
+  "questions": [
    "S118"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-30",
-  "name": "起駛",
-  "rule": "顯示方向燈、擺頭察看前後，確認無行人車輛才起駛。",
+  "id": "C-img-S069",
+  "type": "image",
+  "image": "media/images/S069.jpg",
+  "name": "機車駕駛人應如何起駛才正確？",
+  "rule": "機車駕駛人應如何起駛才正確？　答：顯示方向燈並擺頭察看前、後方，確認無行人及車輛後起駛",
   "questions": [
    "S069"
   ],
@@ -384,61 +1284,159 @@
   "conflict": null
  },
  {
-  "id": "C-scn-31",
-  "name": "停車位置",
-  "rule": "停車位置看圖選 C；禁止臨時停車標線左右範圍內都不得停。",
+  "id": "C-img-S070",
+  "type": "image",
+  "image": "media/images/S070.jpg",
+  "name": "機車駕駛人停車位置，何者正確？",
+  "rule": "機車駕駛人停車位置，何者正確？　答：C",
   "questions": [
-   "S070",
+   "S070"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S071",
+  "type": "image",
+  "image": "media/images/S071.jpg",
+  "name": "機車停放位置下列敘述何者正確？",
+  "rule": "機車停放位置下列敘述何者正確？　答：禁止臨時停車標線之左、右道路範圍內均不得停車",
+  "questions": [
    "S071"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-32",
-  "name": "錯誤行為判斷",
-  "rule": "未依遵行方向行駛是違規；S074 錯誤是 C；S088 錯誤是 A。",
+  "id": "C-img-S073",
+  "type": "image",
+  "image": "media/images/S073.jpg",
+  "name": "示中標誌，機車駕駛人違反什麼規定？",
+  "rule": "示中標誌，機車駕駛人違反什麼規定？　答：未依遵行之方向行駛",
   "questions": [
-   "S073",
-   "S074",
+   "S073"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S074",
+  "type": "image",
+  "image": "media/images/S074.jpg",
+  "name": "機車駕駛人的行駛方式何者錯誤？",
+  "rule": "機車駕駛人的行駛方式何者錯誤？　答：C",
+  "questions": [
+   "S074"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S088",
+  "type": "image",
+  "image": "media/images/S088.jpg",
+  "name": "哪位機車駕駛人之行為錯誤？",
+  "rule": "哪位機車駕駛人之行為錯誤？　答：A",
+  "questions": [
    "S088"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-33",
-  "name": "酒後與手機",
-  "rule": "酒後搭大眾運輸或親友接送；手機響時看圖選 A 的處理方式。",
+  "id": "C-img-S079",
+  "type": "image",
+  "image": "media/images/S079.jpg",
+  "name": "他們要回家，應該怎麼辦？",
+  "rule": "他們要回家，應該怎麼辦？　答：搭乘大眾運輸工具或親友接送",
   "questions": [
-   "S079",
+   "S079"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S080",
+  "type": "image",
+  "image": "media/images/S080.jpg",
+  "name": "機車駕駛人行駛途中，手機鈴聲響起，應如何",
+  "rule": "機車駕駛人行駛途中，手機鈴聲響起，應如何處理才正確？　答：A",
+  "questions": [
    "S080"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-34",
-  "name": "速度與視野",
-  "rule": "車速愈快視野愈窄，由慢到快 B→C→A；依速限減速慢行，不競駛。",
+  "id": "C-img-S084",
+  "type": "image",
+  "image": "media/images/S084.jpg",
+  "name": "不同車速時之視野範圍，請依車速由慢至快排",
+  "rule": "不同車速時之視野範圍，請依車速由慢至快排列：　答：B→C→A",
   "questions": [
-   "S084",
+   "S084"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S086",
+  "type": "image",
+  "image": "media/images/S086.jpg",
+  "name": "機車駕駛人行經圖中路段，何者正確？",
+  "rule": "機車駕駛人行經圖中路段，何者正確？　答：應減速慢行，並依速限標誌指示行駛",
+  "questions": [
    "S086"
   ],
   "numbers": [],
   "conflict": null
  },
  {
-  "id": "C-scn-35",
-  "name": "頭燈使用",
-  "rule": "開亮頭燈，依速限、遵守標誌；遠光燈看圖選 B；S090 開頭燈駛入 Y 車道。",
+  "id": "C-img-S060",
+  "type": "image",
+  "image": "media/images/S060.jpg",
+  "name": "機車駕駛人操作方式何者「錯誤」?",
+  "rule": "機車駕駛人操作方式何者「錯誤」?　答：依車道照明度，適時開亮頭燈",
   "questions": [
-   "S060",
-   "S085",
-   "S090",
+   "S060"
+  ],
+  "numbers": [],
+  "conflict": "依圖中情境判斷頭燈該不該開（M0787 另說行經市區道路不一定要開），請 Jim 看圖確認"
+ },
+ {
+  "id": "C-img-S085",
+  "type": "image",
+  "image": "media/images/S085.jpg",
+  "name": "機車駕駛人何時可開啟遠光燈？",
+  "rule": "機車駕駛人何時可開啟遠光燈？　答：B",
+  "questions": [
+   "S085"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S090",
+  "type": "image",
+  "image": "media/images/S090.jpg",
+  "name": "機車駕駛人應如何安全行駛？",
+  "rule": "機車駕駛人應如何安全行駛？　答：開啟頭燈，駛入Y車道",
+  "questions": [
+   "S090"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-S099",
+  "type": "image",
+  "image": "media/images/S099.jpg",
+  "name": "機車駕駛人應如何安全行駛？",
+  "rule": "機車駕駛人應如何安全行駛？　答：依速限行駛，注意遵守標誌，並開亮頭燈",
+  "questions": [
    "S099"
   ],
   "numbers": [],
-  "conflict": "S060 說「依車道照明度，適時開亮頭燈」是錯誤的（應全程開亮）；S099 說路燈良好也要開頭燈；但 M0787 說「行經市區道路」不是必開頭燈的情形。請 Jim／Claude 判斷"
+  "conflict": "依圖中情境判斷頭燈該不該開（M0787 另說行經市區道路不一定要開），請 Jim 看圖確認"
  }
 ]

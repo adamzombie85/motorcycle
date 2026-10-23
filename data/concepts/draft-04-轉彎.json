@@ -1,19 +1,292 @@
 [
-{"id":"C-turn-01","name":"轉彎事故原因","rule":"轉彎車禍，常因疏忽視野死角和內輪差兩者。","questions":["M0573"],"numbers":[],"conflict":null},
-{"id":"C-turn-02","name":"快慢車道轉向限制","rule":"有劃分島的道路，慢車道不得左轉，快車道不得右轉。","questions":["M0574","M0575"],"numbers":[],"conflict":null},
-{"id":"C-turn-03","name":"轉彎方向燈","rule":"轉彎或變換車道，要在 30公尺前顯示方向燈。","questions":["M0576","M0599","M0606"],"numbers":["30公尺"],"conflict":null},
-{"id":"C-turn-04","name":"禁行機車時的左轉","rule":"內側車道禁行機車時，要用兩段方式左轉。","questions":["M0577","M0605"],"numbers":[],"conflict":null},
-{"id":"C-turn-05","name":"兩段式左轉","rule":"有兩段左轉標誌，不論車流和時段都要兩段轉，先進右前方待轉區。","questions":["M0603","M0604"],"numbers":[],"conflict":null},
-{"id":"C-turn-06","name":"進入待轉區","rule":"利用直行車道進待轉區，進入前減速、顯示煞車燈。","questions":["M0597"],"numbers":[],"conflict":null},
-{"id":"C-turn-07","name":"多車道單行道轉彎","rule":"三快車道以上單行道，右側車道左轉、左側車道右轉，都要兩段式。","questions":["M0602"],"numbers":["三快車道以上"],"conflict":null},
-{"id":"C-turn-08","name":"對向轉彎車輛","rule":"未設待轉路段，對向左右轉車已進入同一車道，左轉車先行。","questions":["M0578"],"numbers":[],"conflict":null},
-{"id":"C-turn-09","name":"彎道騎乘","rule":"進彎道前要減速；彎道中不加速，出彎確認安全再加速。","questions":["M0579","M0580"],"numbers":[],"conflict":null},
-{"id":"C-turn-10","name":"轉彎前動作","rule":"轉彎前要顯示方向燈、讓大型車先行；開亮頭燈不是轉彎前動作。","questions":["M0581"],"numbers":[],"conflict":null},
-{"id":"C-turn-11","name":"禁止轉向標誌","rule":"圖中標誌是「禁止左轉」和「禁止左轉及直行」。","questions":["M0583","M0584"],"numbers":[],"conflict":null},
-{"id":"C-turn-12","name":"兩段轉標誌","rule":"圖中標誌分別是「機慢車兩段左轉」和「機慢車兩段右轉」。","questions":["M0587","M0588"],"numbers":[],"conflict":null},
-{"id":"C-turn-13","name":"行車方向標誌","rule":"圖中標誌是雙向道、指示改道方向、車道遵行方向、單行道。","questions":["M0582","M0585","M0593","M0594"],"numbers":[],"conflict":null},
-{"id":"C-turn-14","name":"封閉與管制標誌","rule":"圖中是「道路封閉」標誌，和「車道管制號誌，表示本車道封閉」。","questions":["M0586","M0592"],"numbers":[],"conflict":null},
-{"id":"C-turn-15","name":"導引線與指示牌","rule":"白色虛線是路口行車導引線；另有地名方向指示、地名里程指示牌。","questions":["M0589","M0590","M0591"],"numbers":[],"conflict":null},
-{"id":"C-turn-16","name":"待轉區闖紅燈","rule":"紅燈時跨過停止線進待轉區，或未等直行號誌就直行，視為闖紅燈。","questions":["M0595","M0596","M0598"],"numbers":[],"conflict":null},
-{"id":"C-turn-17","name":"迴車限制","rule":"禁止左轉路段不得迴車，違者罰鍰並記違規點數 1點。","questions":["M0600","M0601"],"numbers":["記點 1點"],"conflict":null}
+ {
+  "id": "C-turn-01",
+  "name": "轉彎事故原因",
+  "rule": "轉彎車禍，常因疏忽視野死角和內輪差兩者。",
+  "questions": [
+   "M0573"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-turn-02",
+  "name": "快慢車道轉向限制",
+  "rule": "有劃分島的道路，慢車道不得左轉，快車道不得右轉。",
+  "questions": [
+   "M0574",
+   "M0575"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-turn-03",
+  "name": "轉彎方向燈",
+  "rule": "轉彎或變換車道，要在 30公尺前顯示方向燈。",
+  "questions": [
+   "M0576",
+   "M0599",
+   "M0606"
+  ],
+  "numbers": [
+   "30公尺"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-turn-04",
+  "name": "禁行機車時的左轉",
+  "rule": "內側車道禁行機車時，要用兩段方式左轉。",
+  "questions": [
+   "M0577",
+   "M0605"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-turn-05",
+  "name": "兩段式左轉",
+  "rule": "有兩段左轉標誌，不論車流和時段都要兩段轉，先進右前方待轉區。",
+  "questions": [
+   "M0603",
+   "M0604"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-turn-06",
+  "name": "進入待轉區",
+  "rule": "利用直行車道進待轉區，進入前減速、顯示煞車燈。",
+  "questions": [
+   "M0597"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-turn-07",
+  "name": "多車道單行道轉彎",
+  "rule": "三快車道以上單行道，右側車道左轉、左側車道右轉，都要兩段式。",
+  "questions": [
+   "M0602"
+  ],
+  "numbers": [
+   "三快車道以上"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-turn-08",
+  "name": "對向轉彎車輛",
+  "rule": "未設待轉路段，對向左右轉車已進入同一車道，左轉車先行。",
+  "questions": [
+   "M0578"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-turn-09",
+  "name": "彎道騎乘",
+  "rule": "進彎道前要減速；彎道中不加速，出彎確認安全再加速。",
+  "questions": [
+   "M0579",
+   "M0580"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-turn-10",
+  "name": "轉彎前動作",
+  "rule": "轉彎前要顯示方向燈、讓大型車先行；開亮頭燈不是轉彎前動作。",
+  "questions": [
+   "M0581"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-turn-17",
+  "name": "迴車限制",
+  "rule": "禁止左轉路段不得迴車，違者罰鍰並記違規點數 1點。",
+  "questions": [
+   "M0600",
+   "M0601"
+  ],
+  "numbers": [
+   "記點 1點"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-img-M0583",
+  "type": "image",
+  "image": "media/images/M0583.png",
+  "name": "禁止左轉",
+  "rule": "這是「禁止左轉」。",
+  "questions": [
+   "M0583"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0584",
+  "type": "image",
+  "image": "media/images/M0584.png",
+  "name": "禁止左轉及直行",
+  "rule": "這是「禁止左轉及直行」。",
+  "questions": [
+   "M0584"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0587",
+  "type": "image",
+  "image": "media/images/M0587.png",
+  "name": "機慢車兩段左轉",
+  "rule": "這是「機慢車兩段左轉」。",
+  "questions": [
+   "M0587"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0588",
+  "type": "image",
+  "image": "media/images/M0588.png",
+  "name": "機慢車兩段右轉",
+  "rule": "這是「機慢車兩段右轉」。",
+  "questions": [
+   "M0588"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0582",
+  "type": "image",
+  "image": "media/images/M0582.png",
+  "name": "雙向道",
+  "rule": "這是「雙向道」。",
+  "questions": [
+   "M0582"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0585",
+  "type": "image",
+  "image": "media/images/M0585.png",
+  "name": "指示改道方向",
+  "rule": "這是「指示改道方向」。",
+  "questions": [
+   "M0585"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0593",
+  "type": "image",
+  "image": "media/images/M0593.png",
+  "name": "車道遵行方向",
+  "rule": "這是「車道遵行方向」。",
+  "questions": [
+   "M0593"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0594",
+  "type": "image",
+  "image": "media/images/M0594.png",
+  "name": "單行道",
+  "rule": "這是「單行道」。",
+  "questions": [
+   "M0594"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0586",
+  "type": "image",
+  "image": "media/images/M0586.png",
+  "name": "道路封閉",
+  "rule": "這是「道路封閉」。",
+  "questions": [
+   "M0586"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0592",
+  "type": "image",
+  "image": "media/images/M0592.png",
+  "name": "本號誌是：",
+  "rule": "本號誌是：　答：車道管制號誌，表示本車道封閉",
+  "questions": [
+   "M0592"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0589",
+  "type": "image",
+  "image": "media/images/M0589.png",
+  "name": "白色虛線為：",
+  "rule": "白色虛線為：　答：路口行車導引線",
+  "questions": [
+   "M0589"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0590",
+  "type": "image",
+  "image": "media/images/M0590.png",
+  "name": "本標誌為：",
+  "rule": "本標誌為：　答：地名方向指示",
+  "questions": [
+   "M0590"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0591",
+  "type": "image",
+  "image": "media/images/M0591.png",
+  "name": "地名里程指示",
+  "rule": "這是「地名里程指示」。",
+  "questions": [
+   "M0591"
+  ],
+  "numbers": [],
+  "conflict": null
+ }
 ]

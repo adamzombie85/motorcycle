@@ -1,26 +1,384 @@
 [
-{"id":"C-chk-01","name":"起駛前","rule":"起駛前要顯示方向燈，注意前後左右有無障礙、車輛、行人。","questions":["M0149","M0150"],"numbers":[],"conflict":null},
-{"id":"C-chk-02","name":"喇叭使用","rule":"遇緊急危險按喇叭，以單響為原則，不連續按 3次、每次不超過半秒。","questions":["M0151"],"numbers":["不超過半秒"],"conflict":null},
-{"id":"C-chk-03","name":"車燈顏色","rule":"頭燈白色或淡黃色，煞車燈紅色，方向燈橙色，後霧燈紅色，前霧燈黃、淡黃或白色。","questions":["M0155","M0153","M0156","M0157","M0154"],"numbers":[],"conflict":null},
-{"id":"C-chk-04","name":"頭燈與方向燈","rule":"濃霧雨天、隧道要開頭燈；頭燈有遠近光；轉彎前一定要顯示方向燈。","questions":["M0152","M0207","M0206"],"numbers":[],"conflict":null},
-{"id":"C-chk-05","name":"小型輕型與車高","rule":"小型輕型機車輪胎直徑 300～420公釐、空重 70公斤以下；機車全高不得超過 2公尺。","questions":["M0158","M0159","M0166"],"numbers":["300～420公釐","70公斤以下","2公尺"],"conflict":null},
-{"id":"C-chk-06","name":"消音器與改裝","rule":"消音器損壞不修要罰鍰；不可裝高亮度HID頭燈、翹排氣管，不可拆消音器或觸媒、噴色車燈。","questions":["M0148","M0209","M0227","M0228"],"numbers":[],"conflict":null},
-{"id":"C-chk-07","name":"排氣管隔熱","rule":"排氣管隔熱防護裝置，為避免燙傷他人，規定都要安裝。","questions":["M0160"],"numbers":[],"conflict":null},
-{"id":"C-chk-08","name":"照後鏡","rule":"照後鏡增加兩側視野，大多是凸面鏡；行駛前調好，不能在行進中調整。","questions":["M0167","M0198","M0204"],"numbers":[],"conflict":null},
-{"id":"C-chk-09","name":"機車設備與儀表","rule":"擋泥板不能不裝；機車有機油、油量、里程等儀表；輪胎磨耗不顯示在儀表板。","questions":["M0161","M0205","M0211","M0212","M0233","M0234"],"numbers":[],"conflict":null},
-{"id":"C-chk-10","name":"檢驗與登記","rule":"出廠滿 5年轉讓過戶要臨時檢驗；停駛最多 1年；重大損壞修復要臨時檢驗；報廢車不得再領照。","questions":["M0162","M0163","M0164","M0165","M0235"],"numbers":["5年","1年"],"conflict":null},
-{"id":"C-chk-11","name":"煞車","rule":"煞車拉桿保留 1～2公分間隙；速克達右手控前輪、左手控後輪；乾燥下坡以前輪為主，濕滑上坡以後輪為主；煞車有異音要送修。","questions":["M0147","M0168","M0213","M0214","M0222"],"numbers":["1～2公分"],"conflict":null},
-{"id":"C-chk-12","name":"排氣顏色","rule":"汽油引擎正常排氣無色；黑色是燃燒不完全；溫室效應主因是二氧化碳。","questions":["M0170","M0171","M0172"],"numbers":[],"conflict":null},
-{"id":"C-chk-13","name":"機油","rule":"檢查機油要停平地、熄火靜置；由引擎上機油蓋口加；定期更換；濾清器依手冊。","questions":["M0173","M0174","M0175","M0176","M0229","M0230"],"numbers":[],"conflict":null},
-{"id":"C-chk-14","name":"空氣濾清器","rule":"空氣濾清器避免沙塵損傷汽缸；積塵會馬力降低、耗油。","questions":["M0180","M0216"],"numbers":[],"conflict":null},
-{"id":"C-chk-15","name":"電瓶","rule":"檢查電瓶液不可用打火機；樁頭塗黃油防腐蝕；起動馬達電源來自電瓶；先拆負極再拆正極。","questions":["M0177","M0178","M0179","M0215"],"numbers":[],"conflict":null},
-{"id":"C-chk-16","name":"日常檢查與保養","rule":"出發前檢查燈光、方向燈、煞車、輪胎、喇叭、照後鏡；暖車不是必要動作；長期停放每週發動一次。","questions":["M0223","M0203","M0221","M0169"],"numbers":["每週，每次3-5分鐘"],"conflict":null},
-{"id":"C-chk-17","name":"胎壓","rule":"胎壓要符合原廠規定，行駛前冷胎時檢查；過低磨兩側、耗油、易爆胎；過高磨中央。","questions":["M0181","M0182","M0183","M0184","M0185","M0191","M0192","M0231","M0232"],"numbers":[],"conflict":null},
-{"id":"C-chk-18","name":"胎紋與磨耗","rule":"胎紋排水、增加摩擦；胎面與磨耗指示平齊就要換；胎紋太淺或過度磨損會延長煞車距離。","questions":["M0195","M0186","M0187","M0197","M0202"],"numbers":[],"conflict":null},
-{"id":"C-chk-19","name":"輪胎規格與保存","rule":"輪胎建議製造後不超過 6年；避免熱源和油類；胎邊最弱；規格 3.50-10 為寬 3.5英吋、內徑 10英吋。","questions":["M0188","M0189","M0190","M0193","M0194","M0196"],"numbers":["6年","MMD1213＝2013年第12週"],"conflict":null},
-{"id":"C-chk-20","name":"爆胎","rule":"爆胎第一時間要放鬆油門。","questions":["M0208"],"numbers":[],"conflict":null},
-{"id":"C-chk-21","name":"選購與配戴安全帽","rule":"安全帽要貼標準檢驗局合格標識，選鮮明或反光的；正面配戴、帽帶確實扣緊、留約 1指縫；尺寸不是愈緊愈好。","questions":["M0199","M0210","M0225","M0226","M0224"],"numbers":["約1指縫"],"conflict":null},
-{"id":"C-chk-22","name":"安全帽撞擊與未戴","rule":"安全帽強力碰撞後不宜再用；附載成員未戴安全帽，處罰駕駛人。","questions":["M0200","M0201"],"numbers":[],"conflict":null},
-{"id":"C-chk-23","name":"限制與檢查標誌","rule":"圖中標誌是車輛寬度限制、車輛長度限制，和停車檢查。","questions":["M0217","M0218","M0219","M0220"],"numbers":[],"conflict":null},
-{"id":"C-chk-24","name":"對向遠光燈眩目","rule":"對向開遠光燈眩目，視線略偏右側路緣標線，維持穩定車速與車道。","questions":["M0236"],"numbers":[],"conflict":null}
+ {
+  "id": "C-chk-01",
+  "name": "起駛前",
+  "rule": "起駛前要顯示方向燈，注意前後左右有無障礙、車輛、行人。",
+  "questions": [
+   "M0149",
+   "M0150"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-02",
+  "name": "喇叭使用",
+  "rule": "遇緊急危險按喇叭，以單響為原則，不連續按 3次、每次不超過半秒。",
+  "questions": [
+   "M0151"
+  ],
+  "numbers": [
+   "不超過半秒"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-03",
+  "name": "車燈顏色",
+  "rule": "頭燈白色或淡黃色，煞車燈紅色，方向燈橙色，後霧燈紅色，前霧燈黃、淡黃或白色。",
+  "questions": [
+   "M0155",
+   "M0153",
+   "M0156",
+   "M0157",
+   "M0154"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-04",
+  "name": "頭燈與方向燈",
+  "rule": "濃霧雨天、隧道要開頭燈；頭燈有遠近光；轉彎前一定要顯示方向燈。",
+  "questions": [
+   "M0152",
+   "M0207",
+   "M0206"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-05",
+  "name": "小型輕型與車高",
+  "rule": "小型輕型機車輪胎直徑 300～420公釐、空重 70公斤以下；機車全高不得超過 2公尺。",
+  "questions": [
+   "M0158",
+   "M0159",
+   "M0166"
+  ],
+  "numbers": [
+   "300～420公釐",
+   "70公斤以下",
+   "2公尺"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-06",
+  "name": "消音器與改裝",
+  "rule": "消音器損壞不修要罰鍰；不可裝高亮度HID頭燈、翹排氣管，不可拆消音器或觸媒、噴色車燈。",
+  "questions": [
+   "M0148",
+   "M0209",
+   "M0227",
+   "M0228"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-07",
+  "name": "排氣管隔熱",
+  "rule": "排氣管隔熱防護裝置，為避免燙傷他人，規定都要安裝。",
+  "questions": [
+   "M0160"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-08",
+  "name": "照後鏡",
+  "rule": "照後鏡增加兩側視野，大多是凸面鏡；行駛前調好，不能在行進中調整。",
+  "questions": [
+   "M0167",
+   "M0198",
+   "M0204"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-09",
+  "name": "機車設備與儀表",
+  "rule": "擋泥板不能不裝；機車有機油、油量、里程等儀表；輪胎磨耗不顯示在儀表板。",
+  "questions": [
+   "M0161",
+   "M0205",
+   "M0211",
+   "M0212",
+   "M0233",
+   "M0234"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-10",
+  "name": "檢驗與登記",
+  "rule": "出廠滿 5年轉讓過戶要臨時檢驗；停駛最多 1年；重大損壞修復要臨時檢驗；報廢車不得再領照。",
+  "questions": [
+   "M0162",
+   "M0163",
+   "M0164",
+   "M0165",
+   "M0235"
+  ],
+  "numbers": [
+   "5年",
+   "1年"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-11",
+  "name": "煞車",
+  "rule": "煞車拉桿保留 1～2公分間隙；速克達右手控前輪、左手控後輪；乾燥下坡以前輪為主，濕滑上坡以後輪為主；煞車有異音要送修。",
+  "questions": [
+   "M0147",
+   "M0168",
+   "M0213",
+   "M0214",
+   "M0222"
+  ],
+  "numbers": [
+   "1～2公分"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-12",
+  "name": "排氣顏色",
+  "rule": "汽油引擎正常排氣無色；黑色是燃燒不完全；溫室效應主因是二氧化碳。",
+  "questions": [
+   "M0170",
+   "M0171",
+   "M0172"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-13",
+  "name": "機油",
+  "rule": "檢查機油要停平地、熄火靜置；由引擎上機油蓋口加；定期更換；濾清器依手冊。",
+  "questions": [
+   "M0173",
+   "M0174",
+   "M0175",
+   "M0176",
+   "M0229",
+   "M0230"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-14",
+  "name": "空氣濾清器",
+  "rule": "空氣濾清器避免沙塵損傷汽缸；積塵會馬力降低、耗油。",
+  "questions": [
+   "M0180",
+   "M0216"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-15",
+  "name": "電瓶",
+  "rule": "檢查電瓶液不可用打火機；樁頭塗黃油防腐蝕；起動馬達電源來自電瓶；先拆負極再拆正極。",
+  "questions": [
+   "M0177",
+   "M0178",
+   "M0179",
+   "M0215"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-16",
+  "name": "日常檢查與保養",
+  "rule": "出發前檢查燈光、方向燈、煞車、輪胎、喇叭、照後鏡；暖車不是必要動作；長期停放每週發動一次。",
+  "questions": [
+   "M0223",
+   "M0203",
+   "M0221",
+   "M0169"
+  ],
+  "numbers": [
+   "每週，每次3-5分鐘"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-17",
+  "name": "胎壓",
+  "rule": "胎壓要符合原廠規定，行駛前冷胎時檢查；過低磨兩側、耗油、易爆胎；過高磨中央。",
+  "questions": [
+   "M0181",
+   "M0182",
+   "M0183",
+   "M0184",
+   "M0185",
+   "M0191",
+   "M0192",
+   "M0231",
+   "M0232"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-18",
+  "name": "胎紋與磨耗",
+  "rule": "胎紋排水、增加摩擦；胎面與磨耗指示平齊就要換；胎紋太淺或過度磨損會延長煞車距離。",
+  "questions": [
+   "M0195",
+   "M0186",
+   "M0187",
+   "M0197",
+   "M0202"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-19",
+  "name": "輪胎規格與保存",
+  "rule": "輪胎建議製造後不超過 6年；避免熱源和油類；胎邊最弱；規格 3.50-10 為寬 3.5英吋、內徑 10英吋。",
+  "questions": [
+   "M0188",
+   "M0189",
+   "M0190",
+   "M0193",
+   "M0194",
+   "M0196"
+  ],
+  "numbers": [
+   "6年",
+   "MMD1213＝2013年第12週"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-20",
+  "name": "爆胎",
+  "rule": "爆胎第一時間要放鬆油門。",
+  "questions": [
+   "M0208"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-21",
+  "name": "選購與配戴安全帽",
+  "rule": "安全帽要貼標準檢驗局合格標識，選鮮明或反光的；正面配戴、帽帶確實扣緊、留約 1指縫；尺寸不是愈緊愈好。",
+  "questions": [
+   "M0199",
+   "M0210",
+   "M0225",
+   "M0226",
+   "M0224"
+  ],
+  "numbers": [
+   "約1指縫"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-22",
+  "name": "安全帽撞擊與未戴",
+  "rule": "安全帽強力碰撞後不宜再用；附載成員未戴安全帽，處罰駕駛人。",
+  "questions": [
+   "M0200",
+   "M0201"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-chk-24",
+  "name": "對向遠光燈眩目",
+  "rule": "對向開遠光燈眩目，視線略偏右側路緣標線，維持穩定車速與車道。",
+  "questions": [
+   "M0236"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-img-M0217",
+  "type": "image",
+  "image": "media/images/M0217.png",
+  "name": "車輛寬度限制",
+  "rule": "這是「車輛寬度限制」。",
+  "questions": [
+   "M0217"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0218",
+  "type": "image",
+  "image": "media/images/M0218.png",
+  "name": "車輛長度限制",
+  "rule": "這是「車輛長度限制」。",
+  "questions": [
+   "M0218"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0219",
+  "type": "image",
+  "image": "media/images/M0219.png",
+  "name": "停車檢查",
+  "rule": "這是「停車檢查」。",
+  "questions": [
+   "M0219"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0220",
+  "type": "image",
+  "image": "media/images/M0220.png",
+  "name": "停車檢查",
+  "rule": "這是「停車檢查」。",
+  "questions": [
+   "M0220"
+  ],
+  "numbers": [],
+  "conflict": null
+ }
 ]

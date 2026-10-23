@@ -8,14 +8,14 @@ want = [i for i, q in Q.items() if q['subcategory'].startswith(sub) and q['sourc
 import glob
 cs = json.load(open(glob.glob(f'data/concepts/draft-{seq}-*.json')[0]))
 got = [i for c in cs for i in c['questions']]
-assert sorted(got) == sorted(want), (set(want) - set(got), set(got) - set(want), '重複' if len(got) != len(set(got)) else '')
+assert len(got) == len(set(got)) and set(got) <= set(Q), '重複或題號不存在'  # 跨小類合併後，整體覆蓋率另外檢查
 e = html.escape
 cards = ''
 for c in cs:
     rows = ''
     for i in c['questions']:
         q = Q[i]
-        img = f'<br><img src="../{q["image"]}" style="max-height:80px">' if q['image'] else ''
+        img = f'<br><img src="../{q["image"]}" style="max-width:100%;max-height:{240 if c.get("type")=="image" else 80}px">' if q['image'] else ''
         rows += f'<li><b>{i}</b> {e(q["question"])}{img}<br>✔ 答案：{e(q["options"][q["answer"]])}</li>'
     conf = f'<p class="cf">⚠ 矛盾：{e(c["conflict"])}</p>' if c['conflict'] else ''
     nums = '、'.join(c['numbers']) or '—'
@@ -33,7 +33,7 @@ body{{font:18px/1.6 sans-serif;max-width:760px;margin:0 auto;padding:16px}}
 .rule{{font-size:20px;font-weight:700}} small{{color:#888;font-weight:400}} .cf{{color:#b00}}
 li{{margin:8px 0}} label{{margin-right:16px;display:inline-block;min-height:44px}}
 .note{{width:100%;font-size:18px;padding:8px;box-sizing:border-box}} textarea{{width:100%;height:180px;font-size:16px}}
-</style><h1>概念卡審核 {seq}｜{sub}（{len(want)} 題、{len(cs)} 個概念）</h1>
+</style><h1>概念卡審核 {seq}｜{sub}（{len(got)} 題、{len(cs)} 張卡，其中圖卡 {sum(1 for c in cs if c.get('type')=='image')} 張）</h1>
 <p>每張卡選「✓ 正確」或「✗ 要改」，要改的寫備註。最下方會彙整，複製給 Claude。</p>
 {cards}<h2>要改的清單</h2><textarea id="out" readonly></textarea>
 <script>
@@ -43,4 +43,4 @@ document.getElementById('out').value=t.length?t.join('\\n'):'全部正確'}}
 document.addEventListener('input',upd);upd();
 </script></html>'''
 open(f'docs/概念卡審核-{seq}.html', 'w').write(page)
-print('OK', len(want), '題 100% 覆蓋，', len(cs), '個概念')
+print('OK', len(got), '題，', len(cs), '張卡（圖卡', sum(1 for c in cs if c.get('type')=='image'), '）')

@@ -11,7 +11,8 @@
   "numbers": [
    "1倍→4倍"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-02",
@@ -26,7 +27,8 @@
    "M0303"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-03",
@@ -43,7 +45,8 @@
    "M0369"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-04",
@@ -55,7 +58,8 @@
    "M0476"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-05",
@@ -66,7 +70,8 @@
    "M0475"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-06",
@@ -77,7 +82,8 @@
    "M0471"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-07",
@@ -89,7 +95,8 @@
    "M0247"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-08",
@@ -100,7 +107,8 @@
    "M0244"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-09",
@@ -110,7 +118,8 @@
    "M0245"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-10",
@@ -120,7 +129,8 @@
    "M0249"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-11",
@@ -132,7 +142,8 @@
    "M0374"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-12",
@@ -144,7 +155,8 @@
    "M0372"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-13",
@@ -157,7 +169,8 @@
    "M0289"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-14",
@@ -173,7 +186,8 @@
   "numbers": [
    "200萬元"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-15",
@@ -193,7 +207,8 @@
    "6個月",
    "保險證有效期間至少30日"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-16",
@@ -212,7 +227,8 @@
    "6分鐘",
    "100～300公尺"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-17",
@@ -224,7 +240,8 @@
   "numbers": [
    "2小時"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-18",
@@ -237,7 +254,8 @@
    "M0305"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-19",
@@ -248,7 +266,8 @@
    "M0279"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-20",
@@ -263,7 +282,8 @@
    "M0283"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-21",
@@ -276,7 +296,8 @@
    "M0337"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-22",
@@ -296,7 +317,8 @@
    "M0349"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-23",
@@ -310,7 +332,8 @@
   "numbers": [
    "3個月"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-24",
@@ -322,7 +345,8 @@
   "numbers": [
    "5年"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-25",
@@ -340,7 +364,8 @@
    "50cc",
    "250cc"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-26",
@@ -352,7 +377,8 @@
    "M0297"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-27",
@@ -371,7 +397,8 @@
   "numbers": [
    "18歲"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-28",
@@ -392,7 +419,8 @@
    "70分",
    "7天"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-29",
@@ -408,7 +436,8 @@
    "M0292"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-30",
@@ -430,7 +459,8 @@
    "3個月",
    "18,000～36,000元"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-31",
@@ -446,28 +476,8 @@
    "12點",
    "2個月"
   ],
-  "conflict": null
- },
- {
-  "id": "C-misc-32",
-  "name": "肇事逃逸與重大處分",
-  "rule": "肇事致重傷死亡逃逸吊銷並終身不得再考領；肇事逃逸吊銷後 3年不得考領；無人傷亡卻逃逸吊扣駕照；撞傷執勤警察吊銷。",
-  "questions": [
-   "M0266",
-   "M0271",
-   "M0272",
-   "M0336",
-   "M0352",
-   "M0348",
-   "M0353",
-   "M0270",
-   "M0354"
-  ],
-  "numbers": [
-   "3年",
-   "12年"
-  ],
-  "conflict": "M0084、M0140（酒駕致重傷死亡「終身不得考領，且無重新考領機會」）與 M0272、M0270（「但符合特定條件」得考領）、M0353（終身吊銷者逾 12年得申請考領）說法不一致。請 Jim／Claude 判斷哪個是現行規定"
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-33",
@@ -490,7 +500,8 @@
    "30日",
    "7日"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-34",
@@ -503,7 +514,8 @@
    "M0361"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-35",
@@ -517,7 +529,8 @@
    "M0402"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-36",
@@ -527,7 +540,8 @@
    "M0404"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-37",
@@ -547,7 +561,8 @@
    "15公里以下",
    "3至6公尺"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-38",
@@ -563,7 +578,8 @@
   "numbers": [
    "吊扣1年"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-39",
@@ -576,131 +592,8 @@
   "numbers": [
    "1933"
   ],
-  "conflict": null
- },
- {
-  "id": "C-misc-40",
-  "name": "平交道標誌",
-  "rule": "圖中標誌是雙線以上電化鐵路平交道、單線電化鐵路平交道、無柵門鐵路平交道、有柵門鐵路平交道。",
-  "questions": [
-   "M0417",
-   "M0442",
-   "M0446",
-   "M0447"
-  ],
-  "numbers": [],
-  "conflict": null
- },
- {
-  "id": "C-misc-41",
-  "name": "警告與車輛故障標誌",
-  "rule": "圖中標誌是碼頭堤岸、隧道、車輛故障標誌、當心自行車。",
-  "questions": [
-   "M0405",
-   "M0406",
-   "M0423",
-   "M0429"
-  ],
-  "numbers": [],
-  "conflict": null
- },
- {
-  "id": "C-misc-42",
-  "name": "禁止標誌",
-  "rule": "圖中標誌是禁止停車、禁止任何車輛進入、禁止四輪以上汽車進入、禁止大貨車及聯結車進入、禁止大型重型機車以外之機車進入、禁止大客車進入、禁止大客車大貨車聯結車進入。",
-  "questions": [
-   "M0407",
-   "M0408",
-   "M0409",
-   "M0410",
-   "M0411",
-   "M0438",
-   "M0441"
-  ],
-  "numbers": [],
-  "conflict": null
- },
- {
-  "id": "C-misc-43",
-  "name": "路線編號標誌",
-  "rule": "圖中標誌是省道、國道、快速公路之省道、市縣道、區鄉道路線編號。",
-  "questions": [
-   "M0412",
-   "M0413",
-   "M0414",
-   "M0415",
-   "M0416"
-  ],
-  "numbers": [],
-  "conflict": null
- },
- {
-  "id": "C-misc-44",
-  "name": "指示與車站標誌",
-  "rule": "圖中標誌是停車處、人行地下道、港埠、鐵路車站、公路汽車客運車站或轉運站、車道預告、安全方向導引、車道指示。",
-  "questions": [
-   "M0419",
-   "M0420",
-   "M0430",
-   "M0431",
-   "M0432",
-   "M0421",
-   "M0422",
-   "M0443"
-  ],
-  "numbers": [],
-  "conflict": null
- },
- {
-  "id": "C-misc-45",
-  "name": "專行車道標誌",
-  "rule": "圖中標誌是車道指定大眾捷運系統車輛專行、四輪以上汽車及大型重型機車專行、大客車專行。",
-  "questions": [
-   "M0437",
-   "M0439",
-   "M0440"
-  ],
-  "numbers": [],
-  "conflict": null
- },
- {
-  "id": "C-misc-46",
-  "name": "車輛停放與路面標線",
-  "rule": "圖中標線是車輛停放線；橫向標線減速慢行；快慢車道分隔線；對角線行人穿越道線；車道縮減標線。",
-  "questions": [
-   "M0418",
-   "M0424",
-   "M0425",
-   "M0426",
-   "M0427"
-  ],
-  "numbers": [],
-  "conflict": null
- },
- {
-  "id": "C-misc-47",
-  "name": "特種閃光紅燈號誌",
-  "rule": "圖中號誌是特種閃光紅燈號誌。",
-  "questions": [
-   "M0428"
-  ],
-  "numbers": [],
-  "conflict": null
- },
- {
-  "id": "C-misc-48",
-  "name": "手勢",
-  "rule": "手勢意思：減速暫停、允讓後車超越、右轉彎、左轉彎；自行車手勢預告右轉、減速暫停。",
-  "questions": [
-   "M0433",
-   "M0434",
-   "M0435",
-   "M0436",
-   "M0444",
-   "M0445"
-  ],
-  "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-49",
@@ -710,31 +603,20 @@
    "M0448"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-50",
   "name": "牽引機車與闖紅燈",
   "rule": "紅燈期間牽引機車通過停止線後繼續騎乘，視同闖紅燈；牽引在車道上仍是駕駛行為；熄火牽引進人行道停車格視同行人。",
   "questions": [
-   "M0450",
    "M0455",
    "M0456"
   ],
   "numbers": [],
-  "conflict": null
- },
- {
-  "id": "C-misc-51",
-  "name": "待轉區與路口停等",
-  "rule": "紅燈時跨越停止線進待轉區視同違規；左轉專用車道直行綠燈時進路口停等違規；紅燈前已進路口卻臨時停車阻礙交通仍違規。",
-  "questions": [
-   "M0451",
-   "M0454",
-   "M0449"
-  ],
-  "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-52",
@@ -747,7 +629,8 @@
   "numbers": [
    "10公尺"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-53",
@@ -758,20 +641,8 @@
    "M0479"
   ],
   "numbers": [],
-  "conflict": null
- },
- {
-  "id": "C-misc-54",
-  "name": "附載人數",
-  "rule": "重型機車在駕駛人後設有固定座位可附載 1人；輕型機車有固定座位得附載 1人。",
-  "questions": [
-   "M0278",
-   "M0473"
-  ],
-  "numbers": [
-   "1人"
-  ],
-  "conflict": "M0473 說「輕型機車」有固定座位得附載 1人，但 M0121／M0007 說小型輕型機車禁止附載人員。『輕型』是否含小型輕型不明，請 Jim／Claude 判斷"
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-55",
@@ -783,7 +654,8 @@
   "numbers": [
    "80公斤"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-56",
@@ -794,7 +666,8 @@
    "M0319"
   ],
   "numbers": [],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-57",
@@ -807,7 +680,8 @@
   "numbers": [
    "3分鐘"
   ],
-  "conflict": null
+  "conflict": null,
+  "type": "text"
  },
  {
   "id": "C-misc-58",
@@ -819,6 +693,579 @@
   "numbers": [
    "記1點"
   ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-misc-32b",
+  "name": "肇事逃逸的處分",
+  "rule": "肇事致重傷或死亡逃逸，吊銷駕照並終身不得考領，但符合條件、逾規定年限可申請；致人死亡案件逾 12年可申請；致人受傷逃逸 3年不得考領。",
+  "questions": [
+   "M0272",
+   "M0353",
+   "M0336"
+  ],
+  "numbers": [
+   "12年",
+   "3年"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-misc-32c",
+  "name": "利用機車犯罪",
+  "rule": "利用機車犯罪，經判有期徒刑以上確定，吊銷駕照，終身不得考領（符合特定條件、逾規定時間者除外）。",
+  "questions": [
+   "M0270"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-misc-32d",
+  "name": "肇事未處置與撞傷警察",
+  "rule": "無人傷亡卻未處置逃逸，罰鍰並吊扣駕照；肇事致重傷吊扣 3個月至6個月；撞傷執勤警察吊銷駕照並罰鍰；肇事逃逸不到場說明，吊扣牌照。",
+  "questions": [
+   "M0352",
+   "M0271",
+   "M0266",
+   "M0348"
+  ],
+  "numbers": [
+   "3個月至6個月"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-misc-32e",
+  "name": "酒駕移置保管車輛",
+  "rule": "酒駕被當場移置保管車輛，並處罰鍰新臺幣 15,000~90,000。",
+  "questions": [
+   "M0354"
+  ],
+  "numbers": [
+   "15,000~90,000"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-img-M0417",
+  "type": "image",
+  "image": "media/images/M0417.png",
+  "name": "雙線以上電化鐵路平交道",
+  "rule": "這是「雙線以上電化鐵路平交道」。",
+  "questions": [
+   "M0417"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0442",
+  "type": "image",
+  "image": "media/images/M0442.png",
+  "name": "單線電化鐵路平交道",
+  "rule": "這是「單線電化鐵路平交道」。",
+  "questions": [
+   "M0442"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0446",
+  "type": "image",
+  "image": "media/images/M0446.png",
+  "name": "無柵門鐵路平交道",
+  "rule": "這是「無柵門鐵路平交道」。",
+  "questions": [
+   "M0446"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0447",
+  "type": "image",
+  "image": "media/images/M0447.png",
+  "name": "有柵門鐵路平交道",
+  "rule": "這是「有柵門鐵路平交道」。",
+  "questions": [
+   "M0447"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0405",
+  "type": "image",
+  "image": "media/images/M0405.png",
+  "name": "碼頭、堤岸",
+  "rule": "這是「碼頭、堤岸」。",
+  "questions": [
+   "M0405"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0406",
+  "type": "image",
+  "image": "media/images/M0406.png",
+  "name": "隧道",
+  "rule": "這是「隧道」。",
+  "questions": [
+   "M0406"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0423",
+  "type": "image",
+  "image": "media/images/M0423.png",
+  "name": "車輛故障標誌",
+  "rule": "這是「車輛故障標誌」。",
+  "questions": [
+   "M0423"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0429",
+  "type": "image",
+  "image": "media/images/M0429.png",
+  "name": "當心自行車",
+  "rule": "這是「當心自行車」。",
+  "questions": [
+   "M0429"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0407",
+  "type": "image",
+  "image": "media/images/M0407.png",
+  "name": "禁止停車",
+  "rule": "這是「禁止停車」。",
+  "questions": [
+   "M0407"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0408",
+  "type": "image",
+  "image": "media/images/M0408.png",
+  "name": "禁止任何車輛進入",
+  "rule": "這是「禁止任何車輛進入」。",
+  "questions": [
+   "M0408"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0409",
+  "type": "image",
+  "image": "media/images/M0409.png",
+  "name": "禁止四輪以上汽車進入",
+  "rule": "這是「禁止四輪以上汽車進入」。",
+  "questions": [
+   "M0409"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0410",
+  "type": "image",
+  "image": "media/images/M0410.png",
+  "name": "禁止大貨車及聯結車進入",
+  "rule": "這是「禁止大貨車及聯結車進入」。",
+  "questions": [
+   "M0410"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0411",
+  "type": "image",
+  "image": "media/images/M0411.png",
+  "name": "禁止大型重型機車以外之機車進入",
+  "rule": "這是「禁止大型重型機車以外之機車進入」。",
+  "questions": [
+   "M0411"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0438",
+  "type": "image",
+  "image": "media/images/M0438.png",
+  "name": "禁止大客車進入",
+  "rule": "這是「禁止大客車進入」。",
+  "questions": [
+   "M0438"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0441",
+  "type": "image",
+  "image": "media/images/M0441.png",
+  "name": "禁止大客車、大貨車及聯結車進入",
+  "rule": "這是「禁止大客車、大貨車及聯結車進入」。",
+  "questions": [
+   "M0441"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0412",
+  "type": "image",
+  "image": "media/images/M0412.png",
+  "name": "省道路線編號",
+  "rule": "這是「省道路線編號」。",
+  "questions": [
+   "M0412"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0413",
+  "type": "image",
+  "image": "media/images/M0413.png",
+  "name": "國道路線編號",
+  "rule": "這是「國道路線編號」。",
+  "questions": [
+   "M0413"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0414",
+  "type": "image",
+  "image": "media/images/M0414.png",
+  "name": "快速公路之省道路線編號",
+  "rule": "這是「快速公路之省道路線編號」。",
+  "questions": [
+   "M0414"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0415",
+  "type": "image",
+  "image": "media/images/M0415.png",
+  "name": "市、縣道路線編號",
+  "rule": "這是「市、縣道路線編號」。",
+  "questions": [
+   "M0415"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0416",
+  "type": "image",
+  "image": "media/images/M0416.png",
+  "name": "區、鄉道路線編號標誌",
+  "rule": "這是「區、鄉道路線編號標誌」。",
+  "questions": [
+   "M0416"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0419",
+  "type": "image",
+  "image": "media/images/M0419.png",
+  "name": "停車處",
+  "rule": "這是「停車處」。",
+  "questions": [
+   "M0419"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0420",
+  "type": "image",
+  "image": "media/images/M0420.png",
+  "name": "人行地下道",
+  "rule": "這是「人行地下道」。",
+  "questions": [
+   "M0420"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0430",
+  "type": "image",
+  "image": "media/images/M0430.png",
+  "name": "港埠",
+  "rule": "這是「港埠」。",
+  "questions": [
+   "M0430"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0431",
+  "type": "image",
+  "image": "media/images/M0431.png",
+  "name": "鐵路車站",
+  "rule": "這是「鐵路車站」。",
+  "questions": [
+   "M0431"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0432",
+  "type": "image",
+  "image": "media/images/M0432.png",
+  "name": "公路汽車客運車站或轉運站",
+  "rule": "這是「公路汽車客運車站或轉運站」。",
+  "questions": [
+   "M0432"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0421",
+  "type": "image",
+  "image": "media/images/M0421.png",
+  "name": "車道預告",
+  "rule": "這是「車道預告」。",
+  "questions": [
+   "M0421"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0422",
+  "type": "image",
+  "image": "media/images/M0422.png",
+  "name": "安全方向導引",
+  "rule": "這是「安全方向導引」。",
+  "questions": [
+   "M0422"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0443",
+  "type": "image",
+  "image": "media/images/M0443.png",
+  "name": "車道指示",
+  "rule": "這是「車道指示」。",
+  "questions": [
+   "M0443"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0437",
+  "type": "image",
+  "image": "media/images/M0437.png",
+  "name": "車道指定大眾捷運系統車輛專行。",
+  "rule": "這是「車道指定大眾捷運系統車輛專行。」。",
+  "questions": [
+   "M0437"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0439",
+  "type": "image",
+  "image": "media/images/M0439.png",
+  "name": "車道指定四輪以上汽車及大型重型機車專行",
+  "rule": "這是「車道指定四輪以上汽車及大型重型機車專行」。",
+  "questions": [
+   "M0439"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0440",
+  "type": "image",
+  "image": "media/images/M0440.png",
+  "name": "車道指定大客車專行",
+  "rule": "這是「車道指定大客車專行」。",
+  "questions": [
+   "M0440"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0418",
+  "type": "image",
+  "image": "media/images/M0418.png",
+  "name": "車輛停放線",
+  "rule": "這是「車輛停放線」。",
+  "questions": [
+   "M0418"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0424",
+  "type": "image",
+  "image": "media/images/M0424.png",
+  "name": "機車駕駛人如果在道路上發現圖中的橫向標線",
+  "rule": "機車駕駛人如果在道路上發現圖中的橫向標線時，應該如何反應？　答：減速慢行",
+  "questions": [
+   "M0424"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0425",
+  "type": "image",
+  "image": "media/images/M0425.png",
+  "name": "最外側的路面邊線與車道線中間的白色實線為",
+  "rule": "最外側的路面邊線與車道線中間的白色實線為何種標線？　答：快慢車道分隔線",
+  "questions": [
+   "M0425"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0426",
+  "type": "image",
+  "image": "media/images/M0426.png",
+  "name": "路口交叉型標線是？",
+  "rule": "路口交叉型標線是？　答：對角線行人穿越道線",
+  "questions": [
+   "M0426"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0427",
+  "type": "image",
+  "image": "media/images/M0427.png",
+  "name": "白色箭頭是",
+  "rule": "白色箭頭是　答：車道縮減標線",
+  "questions": [
+   "M0427"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0428",
+  "type": "image",
+  "image": "media/images/M0428.png",
+  "name": "特種閃光紅燈號誌",
+  "rule": "這是「特種閃光紅燈號誌」。",
+  "questions": [
+   "M0428"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0433",
+  "type": "image",
+  "image": "media/images/M0433.png",
+  "name": "減速暫停",
+  "rule": "這是「減速暫停」。",
+  "questions": [
+   "M0433"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0434",
+  "type": "image",
+  "image": "media/images/M0434.png",
+  "name": "允讓後車超越",
+  "rule": "這是「允讓後車超越」。",
+  "questions": [
+   "M0434"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0435",
+  "type": "image",
+  "image": "media/images/M0435.png",
+  "name": "右轉彎",
+  "rule": "這是「右轉彎」。",
+  "questions": [
+   "M0435"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0436",
+  "type": "image",
+  "image": "media/images/M0436.png",
+  "name": "左轉彎",
+  "rule": "這是「左轉彎」。",
+  "questions": [
+   "M0436"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0444",
+  "type": "image",
+  "image": "media/images/M0444.png",
+  "name": "自行車騎士手勢預告即將",
+  "rule": "自行車騎士手勢預告即將　答：右轉",
+  "questions": [
+   "M0444"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0445",
+  "type": "image",
+  "image": "media/images/M0445.png",
+  "name": "自行車騎士手勢預告即將",
+  "rule": "自行車騎士手勢預告即將　答：減速暫停",
+  "questions": [
+   "M0445"
+  ],
+  "numbers": [],
   "conflict": null
  }
 ]

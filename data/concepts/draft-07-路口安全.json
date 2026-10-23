@@ -1,32 +1,668 @@
 [
-{"id":"C-jct-01","name":"轉彎前動作","rule":"轉彎前要減速禮讓、30公尺前顯示方向燈；開亮頭燈不是必要動作。","questions":["M0481","M0491"],"numbers":["30公尺"],"conflict":null},
-{"id":"C-jct-02","name":"紅燈停止","rule":"紅燈禁止通行，要停在停止線後，不得越線或進入路口。","questions":["M0482","M0558"],"numbers":[],"conflict":null},
-{"id":"C-jct-03","name":"綠燈小心通過","rule":"綠燈沒有絕對路權，要減速小心，注意前方兩側，有行人要讓行人。","questions":["M0498","M0550","M0551","M0556"],"numbers":[],"conflict":null},
-{"id":"C-jct-04","name":"闖紅燈處罰","rule":"機車闖紅燈當場舉發，罰鍰 1,800～5,400元，記違規點數 3點。","questions":["M0485","M0486","M0545","M0546"],"numbers":["1,800～5,400元","記3點"],"conflict":null},
-{"id":"C-jct-05","name":"紅燈違規行為","rule":"快到路口燈轉紅還加速通過、紅燈右轉都違規；紅燈右轉罰 600～1,800元。","questions":["M0493","M0547"],"numbers":["600～1,800元"],"conflict":null},
-{"id":"C-jct-06","name":"闖紅燈的認定","rule":"紅燈後超越停止線並足以妨害其他方向通行，或紅燈後越線迴轉，算闖紅燈；紅燈前已過線而停等路口內，不算。","questions":["M0535","M0536","M0537","M0538","M0540","M0541"],"numbers":[],"conflict":"M0535 的選項說「紅燈亮起後車身超越停止線，但實際上未妨害其他方向車輛通行者，不構成闖紅燈」是正確敘述；M0536 說「紅燈時車身跨越停止線即構成闖紅燈，不因後續動作改變」是正確答案。兩者對『越線但未妨害』的認定看似不同；另 M0538 僅前輪越線是『不遵守標線指示』。請 Jim／Claude 判斷"},
-{"id":"C-jct-07","name":"綠燈時路口擁塞","rule":"綠燈進路口，卻因擁塞在號誌轉換後未通過而妨礙他車，不是闖紅燈，但要罰鍰。","questions":["M0539"],"numbers":[],"conflict":null},
-{"id":"C-jct-08","name":"路口範圍","rule":"有停止線者，以停止線劃設後涵蓋的路面為路口；沒有停止線者，以道路邊緣虛擬連接線外 5公尺內為路口。","questions":["M0542"],"numbers":["5公尺"],"conflict":null},
-{"id":"C-jct-09","name":"黃燈","rule":"黃燈時已越過行人穿越道就繼續前進；還沒過停止線要減速，在停止線前等候。","questions":["M0503","M0544"],"numbers":[],"conflict":null},
-{"id":"C-jct-10","name":"閃光號誌","rule":"閃黃燈減速慢行；閃紅燈停車再開；一邊閃黃一邊閃紅時，閃黃燈者優先。","questions":["M0500","M0501","M0502","M0555"],"numbers":[],"conflict":null},
-{"id":"C-jct-11","name":"交通指揮人員","rule":"指揮手勢和號誌不一致時，依交通指揮人員的指揮。","questions":["M0557"],"numbers":[],"conflict":null},
-{"id":"C-jct-12","name":"幹線道與支線道","rule":"無號誌路口，少線道車讓多線道車；支線道車讓幹線道車先行。","questions":["M0490","M0494"],"numbers":[],"conflict":null},
-{"id":"C-jct-13","name":"無號誌路口同時到達","rule":"無號誌路口要減速慢行；兩車同時到、都直行時，左方車讓右方車先行。","questions":["M0499","M0548","M0543"],"numbers":[],"conflict":null},
-{"id":"C-jct-14","name":"無號誌圓環","rule":"無號誌圓環，要讓已在圓環內的車先行。","questions":["M0554"],"numbers":[],"conflict":null},
-{"id":"C-jct-15","name":"禮讓行人","rule":"行近行人穿越道要減速，有行人穿越就停下讓行人先行，沒畫穿越道的路口也要讓；行人違規仍要注意停讓。","questions":["M0487","M0492","M0497","M0549","M0553","M0559"],"numbers":[],"conflict":null},
-{"id":"C-jct-16","name":"不讓行人的處罰","rule":"不讓行人優先通行要罰鍰；因此致傷亡，刑責加重至二分之一。","questions":["M0495","M0484"],"numbers":["二分之一"],"conflict":null},
-{"id":"C-jct-17","name":"禁止臨時停車處","rule":"平交道、交岔路口、快車道、行人穿越道，不得臨時停車。","questions":["M0488","M0489"],"numbers":[],"conflict":null},
-{"id":"C-jct-18","name":"停等紅燈的位置","rule":"停等紅燈避免停快車道前、常看後視鏡；有機慢車停等區要停在停等區或停止線後，不入待轉區。","questions":["M0504","M0552"],"numbers":[],"conflict":null},
-{"id":"C-jct-19","name":"大眾捷運與輕軌路口","rule":"捷運／輕軌共用路口，聲光號誌故障要停看聽才通過；警示音響時不可加速搶過；黃線區不停留。","questions":["M0505","M0506","M0507"],"numbers":[],"conflict":null},
-{"id":"C-jct-20","name":"平交道遮斷","rule":"柵欄放下時，要停等火車通過、柵欄拉起後再通過。","questions":["M0483"],"numbers":[],"conflict":null},
-{"id":"C-jct-21","name":"車身顏色變更","rule":"車身顏色變更要向監理機關申請變更登記。","questions":["M0496"],"numbers":[],"conflict":null},
-{"id":"C-jct-22","name":"微型電動二輪車","rule":"微型電動二輪車最高時速 25公里以下，超速或擅改要罰鍰，改裝須改回。","questions":["M0508"],"numbers":["25公里"],"conflict":null},
-{"id":"C-jct-23","name":"岔路標誌","rule":"圖中標誌是「岔路」。","questions":["M0509","M0510","M0511"],"numbers":[],"conflict":null},
-{"id":"C-jct-24","name":"行人與台車標誌","rule":"圖中標誌是當心台車、當心兒童、當心行人、禁止行人通行、行人專用。","questions":["M0513","M0514","M0515","M0517","M0518"],"numbers":[],"conflict":null},
-{"id":"C-jct-25","name":"其他警告標誌","rule":"圖中標誌是危險升坡、注意號誌、此路不通。","questions":["M0512","M0516","M0519"],"numbers":[],"conflict":null},
-{"id":"C-jct-26","name":"號誌種類","rule":"圖中號誌是行車管制號誌、特種閃光黃燈號誌、行人專用號誌、行人穿越道號誌。","questions":["M0520","M0521","M0522","M0523"],"numbers":[],"conflict":null},
-{"id":"C-jct-27","name":"路口標線","rule":"圖中標線是路寬變更線、斑馬紋行人穿越道線、停止線。","questions":["M0524","M0525","M0526"],"numbers":[],"conflict":null},
-{"id":"C-jct-28","name":"停止手勢","rule":"手勢意思：前後來車停止左右通行、全部車輛停止、前方來車停止。","questions":["M0527","M0528","M0533"],"numbers":[],"conflict":null},
-{"id":"C-jct-29","name":"右方來車手勢","rule":"手勢意思：右方來車左轉彎、右方來車停止、右方來車速行。","questions":["M0529","M0530","M0534"],"numbers":[],"conflict":null},
-{"id":"C-jct-30","name":"左方來車手勢","rule":"手勢意思：左方來車速行、左方來車左轉彎。","questions":["M0531","M0532"],"numbers":[],"conflict":null}
+ {
+  "id": "C-jct-01",
+  "name": "轉彎前動作",
+  "rule": "轉彎前要減速禮讓、30公尺前顯示方向燈；開亮頭燈不是必要動作。",
+  "questions": [
+   "M0481",
+   "M0491"
+  ],
+  "numbers": [
+   "30公尺"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-02",
+  "name": "紅燈停止",
+  "rule": "紅燈禁止通行，要停在停止線後，不得越線或進入路口。",
+  "questions": [
+   "M0482",
+   "M0558"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-03",
+  "name": "綠燈小心通過",
+  "rule": "綠燈沒有絕對路權，要減速小心，注意前方兩側，有行人要讓行人。",
+  "questions": [
+   "M0498",
+   "M0550",
+   "M0551",
+   "M0556"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-04",
+  "name": "闖紅燈處罰",
+  "rule": "機車闖紅燈當場舉發，罰鍰 1,800～5,400元，記違規點數 3點。",
+  "questions": [
+   "M0485",
+   "M0486",
+   "M0545",
+   "M0546"
+  ],
+  "numbers": [
+   "1,800～5,400元",
+   "記3點"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-05",
+  "name": "紅燈違規行為",
+  "rule": "快到路口燈轉紅還加速通過、紅燈右轉都違規；紅燈右轉罰 600～1,800元。",
+  "questions": [
+   "M0493",
+   "M0547"
+  ],
+  "numbers": [
+   "600～1,800元"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-07",
+  "name": "路口停等妨礙交通",
+  "rule": "進路口後因擁塞或車流阻隔臨時停在路口、妨礙他車通行，不是闖紅燈，但仍要罰鍰。",
+  "questions": [
+   "M0539",
+   "M0449"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-08",
+  "name": "路口範圍",
+  "rule": "有停止線者，以停止線劃設後涵蓋的路面為路口；沒有停止線者，以道路邊緣虛擬連接線外 5公尺內為路口。",
+  "questions": [
+   "M0542"
+  ],
+  "numbers": [
+   "5公尺"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-09",
+  "name": "黃燈",
+  "rule": "黃燈時已越過行人穿越道就繼續前進；還沒過停止線要減速，在停止線前等候。",
+  "questions": [
+   "M0503",
+   "M0544"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-10",
+  "name": "閃光號誌",
+  "rule": "閃黃燈減速慢行；閃紅燈停車再開；一邊閃黃一邊閃紅時，閃黃燈者優先。",
+  "questions": [
+   "M0500",
+   "M0501",
+   "M0502",
+   "M0555"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-11",
+  "name": "交通指揮人員",
+  "rule": "指揮手勢和號誌不一致時，依交通指揮人員的指揮。",
+  "questions": [
+   "M0557"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-12",
+  "name": "幹線道與支線道",
+  "rule": "無號誌路口，少線道車讓多線道車；支線道車讓幹線道車先行。",
+  "questions": [
+   "M0490",
+   "M0494"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-13",
+  "name": "無號誌路口同時到達",
+  "rule": "無號誌路口要減速慢行；兩車同時到、都直行時，左方車讓右方車先行。",
+  "questions": [
+   "M0499",
+   "M0548",
+   "M0543"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-14",
+  "name": "無號誌圓環",
+  "rule": "無號誌圓環，要讓已在圓環內的車先行。",
+  "questions": [
+   "M0554"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-15",
+  "name": "禮讓行人",
+  "rule": "行近行人穿越道要減速，有行人穿越就停下讓行人先行，沒畫穿越道的路口也要讓；行人違規仍要注意停讓。",
+  "questions": [
+   "M0487",
+   "M0492",
+   "M0497",
+   "M0549",
+   "M0553",
+   "M0559"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-16",
+  "name": "不讓行人的處罰",
+  "rule": "不讓行人優先通行要罰鍰；因此致傷亡，刑責加重至二分之一。",
+  "questions": [
+   "M0495",
+   "M0484"
+  ],
+  "numbers": [
+   "二分之一"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-17",
+  "name": "禁止臨時停車處",
+  "rule": "平交道、交岔路口、快車道、行人穿越道，不得臨時停車。",
+  "questions": [
+   "M0488",
+   "M0489"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-18",
+  "name": "停等紅燈的位置",
+  "rule": "停等紅燈避免停快車道前、常看後視鏡；有機慢車停等區要停在停等區或停止線後，不入待轉區。",
+  "questions": [
+   "M0504",
+   "M0552"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-19",
+  "name": "大眾捷運與輕軌路口",
+  "rule": "捷運／輕軌共用路口，聲光號誌故障要停看聽才通過；警示音響時不可加速搶過；黃線區不停留。",
+  "questions": [
+   "M0505",
+   "M0506",
+   "M0507"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-20",
+  "name": "平交道遮斷",
+  "rule": "柵欄放下時，要停等火車通過、柵欄拉起後再通過。",
+  "questions": [
+   "M0483"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-21",
+  "name": "車身顏色變更",
+  "rule": "車身顏色變更要向監理機關申請變更登記。",
+  "questions": [
+   "M0496"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-22",
+  "name": "微型電動二輪車",
+  "rule": "微型電動二輪車最高時速 25公里以下，超速或擅改要罰鍰，改裝須改回。",
+  "questions": [
+   "M0508"
+  ],
+  "numbers": [
+   "25公里"
+  ],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-06",
+  "name": "紅燈後車身越線且妨害",
+  "rule": "紅燈亮起後，車身超越停止線並足以妨害其他方向人車通行，是闖紅燈。",
+  "questions": [
+   "M0541"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-06b",
+  "name": "紅燈後越線迴轉",
+  "rule": "紅燈時車身跨越停止線進行迴轉，仍是闖紅燈，不因後續迴轉動作而改變。",
+  "questions": [
+   "M0536"
+  ],
+  "numbers": [],
+  "conflict": "M0535 的選項說「紅燈後車身超越停止線但實際上未妨害，不構成闖紅燈」是正確敘述，與 M0536「車身跨越停止線即構成闖紅燈」看似不同，請 Jim 審核",
+  "type": "text"
+ },
+ {
+  "id": "C-jct-06c",
+  "name": "紅燈前已過線，停等路口內",
+  "rule": "紅燈亮起前已通過停止線，因車流阻隔停等在路口內，再穿越到銜接路段，不視為闖紅燈。",
+  "questions": [
+   "M0537",
+   "M0540"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-06d",
+  "name": "只有前輪越線",
+  "rule": "紅燈時只有前輪越過停止線、車身主體未越過，不構成闖紅燈，視為不遵守標線指示。",
+  "questions": [
+   "M0535",
+   "M0538"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-06e",
+  "name": "紅燈牽引機車",
+  "rule": "紅燈期間牽引機車通過停止線或路口後繼續騎乘，視同闖紅燈。",
+  "questions": [
+   "M0450",
+   "M0565"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-06f",
+  "name": "紅燈進待轉區",
+  "rule": "紅燈時跨越停止線（和行人穿越道）進入待轉區，或在待轉區未等號誌允許就直行，視同闖紅燈或違規。",
+  "questions": [
+   "M0451",
+   "M0595",
+   "M0596",
+   "M0598"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-jct-06g",
+  "name": "左轉專用車道的直行綠燈",
+  "rule": "無待轉區的左轉專用車道，直行箭頭綠燈時超越停止線進路口停等，違反轉彎不依標線、號誌指示。",
+  "questions": [
+   "M0454"
+  ],
+  "numbers": [],
+  "conflict": null,
+  "type": "text"
+ },
+ {
+  "id": "C-img-M0509",
+  "type": "image",
+  "image": "media/images/M0509.png",
+  "name": "岔路",
+  "rule": "這是「岔路」。",
+  "questions": [
+   "M0509"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0510",
+  "type": "image",
+  "image": "media/images/M0510.png",
+  "name": "岔路",
+  "rule": "這是「岔路」。",
+  "questions": [
+   "M0510"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0511",
+  "type": "image",
+  "image": "media/images/M0511.png",
+  "name": "岔路",
+  "rule": "這是「岔路」。",
+  "questions": [
+   "M0511"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0513",
+  "type": "image",
+  "image": "media/images/M0513.png",
+  "name": "當心台車",
+  "rule": "這是「當心台車」。",
+  "questions": [
+   "M0513"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0514",
+  "type": "image",
+  "image": "media/images/M0514.png",
+  "name": "當心兒童",
+  "rule": "這是「當心兒童」。",
+  "questions": [
+   "M0514"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0515",
+  "type": "image",
+  "image": "media/images/M0515.png",
+  "name": "當心行人",
+  "rule": "這是「當心行人」。",
+  "questions": [
+   "M0515"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0517",
+  "type": "image",
+  "image": "media/images/M0517.png",
+  "name": "禁止行人通行",
+  "rule": "這是「禁止行人通行」。",
+  "questions": [
+   "M0517"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0518",
+  "type": "image",
+  "image": "media/images/M0518.png",
+  "name": "行人專用",
+  "rule": "這是「行人專用」。",
+  "questions": [
+   "M0518"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0512",
+  "type": "image",
+  "image": "media/images/M0512.png",
+  "name": ")險升坡",
+  "rule": "這是「)險升坡」。",
+  "questions": [
+   "M0512"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0516",
+  "type": "image",
+  "image": "media/images/M0516.png",
+  "name": "注意號誌",
+  "rule": "這是「注意號誌」。",
+  "questions": [
+   "M0516"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0519",
+  "type": "image",
+  "image": "media/images/M0519.png",
+  "name": "此路不通",
+  "rule": "這是「此路不通」。",
+  "questions": [
+   "M0519"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0520",
+  "type": "image",
+  "image": "media/images/M0520.png",
+  "name": "行車管制號誌",
+  "rule": "這是「行車管制號誌」。",
+  "questions": [
+   "M0520"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0521",
+  "type": "image",
+  "image": "media/images/M0521.png",
+  "name": "特種閃光黃燈號誌",
+  "rule": "這是「特種閃光黃燈號誌」。",
+  "questions": [
+   "M0521"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0522",
+  "type": "image",
+  "image": "media/images/M0522.png",
+  "name": "行人專用號誌",
+  "rule": "這是「行人專用號誌」。",
+  "questions": [
+   "M0522"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0523",
+  "type": "image",
+  "image": "media/images/M0523.png",
+  "name": "行人穿越道號誌",
+  "rule": "這是「行人穿越道號誌」。",
+  "questions": [
+   "M0523"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0524",
+  "type": "image",
+  "image": "media/images/M0524.png",
+  "name": "路寬變更線",
+  "rule": "這是「路寬變更線」。",
+  "questions": [
+   "M0524"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0525",
+  "type": "image",
+  "image": "media/images/M0525.png",
+  "name": "斜紋是指：",
+  "rule": "斜紋是指：　答：斑馬紋行人穿越道線",
+  "questions": [
+   "M0525"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0526",
+  "type": "image",
+  "image": "media/images/M0526.png",
+  "name": "橫向白色實線是指：",
+  "rule": "橫向白色實線是指：　答：停止線",
+  "questions": [
+   "M0526"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0527",
+  "type": "image",
+  "image": "media/images/M0527.png",
+  "name": "前後來車停止，左右來車通行",
+  "rule": "這是「前後來車停止，左右來車通行」。",
+  "questions": [
+   "M0527"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0528",
+  "type": "image",
+  "image": "media/images/M0528.png",
+  "name": "全部車輛停止",
+  "rule": "這是「全部車輛停止」。",
+  "questions": [
+   "M0528"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0533",
+  "type": "image",
+  "image": "media/images/M0533.png",
+  "name": "前方來車停止",
+  "rule": "這是「前方來車停止」。",
+  "questions": [
+   "M0533"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0529",
+  "type": "image",
+  "image": "media/images/M0529.png",
+  "name": "右方來車左轉彎",
+  "rule": "這是「右方來車左轉彎」。",
+  "questions": [
+   "M0529"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0530",
+  "type": "image",
+  "image": "media/images/M0530.png",
+  "name": "右方來車停止",
+  "rule": "這是「右方來車停止」。",
+  "questions": [
+   "M0530"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0534",
+  "type": "image",
+  "image": "media/images/M0534.png",
+  "name": "右方來車速行",
+  "rule": "這是「右方來車速行」。",
+  "questions": [
+   "M0534"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0531",
+  "type": "image",
+  "image": "media/images/M0531.png",
+  "name": "左方來車速行",
+  "rule": "這是「左方來車速行」。",
+  "questions": [
+   "M0531"
+  ],
+  "numbers": [],
+  "conflict": null
+ },
+ {
+  "id": "C-img-M0532",
+  "type": "image",
+  "image": "media/images/M0532.png",
+  "name": "左方來車左轉彎",
+  "rule": "這是「左方來車左轉彎」。",
+  "questions": [
+   "M0532"
+  ],
+  "numbers": [],
+  "conflict": null
+ }
 ]

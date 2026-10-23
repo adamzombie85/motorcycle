@@ -1,11 +1,11 @@
 <!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>概念卡審核 01｜貨物裝載</title><style>
+<title>概念卡審核 01｜x</title><style>
 body{font:18px/1.6 sans-serif;max-width:760px;margin:0 auto;padding:16px}
 .card{border:1px solid #ccc;border-radius:12px;padding:12px 16px;margin:16px 0}
 .rule{font-size:20px;font-weight:700} small{color:#888;font-weight:400} .cf{color:#b00}
 li{margin:8px 0} label{margin-right:16px;display:inline-block;min-height:44px}
 .note{width:100%;font-size:18px;padding:8px;box-sizing:border-box} textarea{width:100%;height:180px;font-size:16px}
-</style><h1>概念卡審核 01｜貨物裝載（17 題、10 個概念）</h1>
+</style><h1>概念卡審核 01｜x（19 題、10 張卡，其中圖卡 1 張）</h1>
 <p>每張卡選「✓ 正確」或「✗ 要改」，要改的寫備註。最下方會彙整，複製給 Claude。</p>
 <section class="card" data-id="C-cargo-01" data-name="載物高度">
 <h2>載物高度 <small>C-cargo-01</small></h2><p class="rule">機車載物的高度，不可超過駕駛人肩部。</p>
@@ -44,8 +44,8 @@ li{margin:8px 0} label{margin-right:16px;display:inline-block;min-height:44px}
 <label><input type="radio" name="C-cargo-06" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
 </section><section class="card" data-id="C-cargo-07" data-name="附載乘客">
-<h2>附載乘客 <small>C-cargo-07</small></h2><p class="rule">小型輕型不得載人；重型、普通輕型後座有固定座位可載 1人，不可側坐。</p>
-<p>數字：1人</p><ul><li><b>M0007</b> 機車附載人員或物品，下列何者不正確？<br>✔ 答案：附載坐人可以側坐</li><li><b>M0008</b> 機車附載乘客之原則，何者不正確?<br>✔ 答案：普通輕型機車不可附載乘客</li></ul>
+<h2>附載乘客 <small>C-cargo-07</small></h2><p class="rule">小型輕型機車不能載人；普通輕型、重型機車後座有固定座位可載 1人，不可側坐。</p>
+<p>數字：1人</p><ul><li><b>M0007</b> 機車附載人員或物品，下列何者不正確？<br>✔ 答案：附載坐人可以側坐</li><li><b>M0008</b> 機車附載乘客之原則，何者不正確?<br>✔ 答案：普通輕型機車不可附載乘客</li><li><b>M0278</b> 重型機車在駕駛人後設有固定座位者，可附載<br>✔ 答案：1人</li><li><b>M0473</b> 輕型機車在駕駛人座位後有固定座位，附載規定何者正確？<br>✔ 答案：得附載1人</li></ul>
 <label><input type="radio" name="C-cargo-07" value="ok" checked> ✓ 正確</label>
 <label><input type="radio" name="C-cargo-07" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
@@ -55,17 +55,17 @@ li{margin:8px 0} label{margin-right:16px;display:inline-block;min-height:44px}
 <label><input type="radio" name="C-cargo-08" value="ok" checked> ✓ 正確</label>
 <label><input type="radio" name="C-cargo-08" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
-</section><section class="card" data-id="C-cargo-09" data-name="總重限制標誌">
-<h2>總重限制標誌 <small>C-cargo-09</small></h2><p class="rule">這個標誌的意思是「車輛總重限制」。</p>
-<p>數字：—</p><ul><li><b>M0009</b> <br><img src="../media/images/M0009.png" style="max-height:80px"><br>✔ 答案：車輛總重限制</li></ul>
-<label><input type="radio" name="C-cargo-09" value="ok" checked> ✓ 正確</label>
-<label><input type="radio" name="C-cargo-09" value="no"> ✗ 要改</label>
-<input class="note" placeholder="備註">
 </section><section class="card" data-id="C-cargo-10" data-name="違規處罰">
 <h2>違規處罰 <small>C-cargo-10</small></h2><p class="rule">附載人員或物品違規，處罰駕駛人，罰鍰 300元～600元。</p>
 <p>數字：300元～600元</p><ul><li><b>M0016</b> 若機車附載人員或物品違反規定，將處罰誰？<br>✔ 答案：機車駕駛人</li><li><b>M0017</b> 機車附載人員或物品未依規定者，將處駕駛人多少罰鍰？<br>✔ 答案：新臺幣300元~600元罰鍰</li></ul>
 <label><input type="radio" name="C-cargo-10" value="ok" checked> ✓ 正確</label>
 <label><input type="radio" name="C-cargo-10" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-img-M0009" data-name="車輛總重限制">
+<h2>車輛總重限制 <small>C-img-M0009</small></h2><p class="rule">這是「車輛總重限制」。</p>
+<p>數字：—</p><ul><li><b>M0009</b> <br><img src="../media/images/M0009.png" style="max-width:100%;max-height:240px"><br>✔ 答案：車輛總重限制</li></ul>
+<label><input type="radio" name="C-img-M0009" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-img-M0009" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
 </section><h2>要改的清單</h2><textarea id="out" readonly></textarea>
 <script>
