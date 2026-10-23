@@ -5,7 +5,7 @@ body{font:18px/1.6 sans-serif;max-width:760px;margin:0 auto;padding:16px}
 .rule{font-size:20px;font-weight:700} small{color:#888;font-weight:400} .cf{color:#b00} .old{color:#666;text-decoration:line-through} mark{background:#ffe08a;font-size:14px;padding:0 6px;border-radius:4px}
 li{margin:8px 0} label{margin-right:16px;display:inline-block;min-height:44px}
 .note{width:100%;font-size:18px;padding:8px;box-sizing:border-box} textarea{width:100%;height:180px;font-size:16px}
-</style><h1>概念卡審核 11｜x（238 題、93 張卡，其中圖卡 43 張）</h1>
+</style><h1>概念卡審核 11｜x（238 題、120 張卡，其中圖卡 43 張）</h1>
 <p>每張卡選「✓ 正確」或「✗ 要改」，要改的寫備註。最下方會彙整，複製給 Claude。</p>
 <section class="card" data-id="C-misc-01" data-name="速度、距離與離心力">
 <h2>速度、距離與離心力 <small>C-misc-01</small></h2><p class="old">修改前：速度增加 1倍，煞車距離變 4倍；速度愈快視野愈窄；彎道速度愈高離心力愈大。</p><p class="rule"><mark>修改後</mark> 速度增加 1倍，煞車距離變 4倍；速度愈快，視野愈窄；彎道速度愈高，離心力愈大。</p>
@@ -97,11 +97,29 @@ li{margin:8px 0} label{margin-right:16px;display:inline-block;min-height:44px}
 <label><input type="radio" name="C-misc-15" value="ok" checked> ✓ 正確</label>
 <label><input type="radio" name="C-misc-15" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
-</section><section class="card" data-id="C-misc-16" data-name="超速處罰與舉發">
-<h2>超速處罰與舉發 <small>C-misc-16</small></h2><p class="old">修改前：超速罰鍰並記點；超過規定最高時速 40公里以上罰 6,000～36,000元、吊扣牌照 6個月；逕行舉發連續舉發需相隔 6分鐘以上或經過 1個路口；儀器舉發要在 100～300公尺前標示。</p><p class="rule"><mark>修改後</mark> 超速：罰鍰（罰款）並記點；超過最高時速 40公里以上：罰 6,000～36,000元、吊扣（暫時收回）牌照 6個月；逕行舉發（不攔車，直接寄罰單）連續舉發：需相隔 6分鐘以上，或經過 1個路口；儀器舉發：要在 100～300公尺前標示。</p>
-<p>數字：6,000～36,000元、6分鐘、100～300公尺</p><ul><li><b>M0256</b> 駕駛人行車速度，超過規定之最高時速經當場舉發者，應處<br>✔ 答案：罰鍰並記違規點數</li><li><b>M0268</b> 駕駛人超速駕車者，但行車速度未超過規定之最高時速 40公里以上，經當場舉發，應處以<br>✔ 答案：罰鍰並記違規點數 1點</li><li><b>M0323</b> 機車行車速度，超過規定最高時速幾公里以上即可能遭處罰新臺幣 6,000元以上36,000元以下罰鍰、吊扣牌照 6個月，及接受道安講習？<br>✔ 答案：40 公里</li><li><b>M0333</b> 行車速度超過規定之最高速限或低於規定之最低速限違規之舉發，採用科學儀器取得證據資料，於一般道路應於多少距離明顯標示？<br>✔ 答案：100公尺至300 公尺間</li><li><b>M0356</b> 逕行舉發超速行駛時，其：<br>✔ 答案：違規時間相隔 6分鐘以上或行駛經過1個路口以上 得連續舉發之。但其違規地點在隧道內者，不在此限</li><li><b>M0357</b> 車輛於一般道路超速行駛遭逕行舉發，依規定須符合何種條件，始得對該車輛連續舉發？<br>✔ 答案：違規時間相隔 6分鐘以上，或行駛經過 1個路口以上</li></ul>
-<label><input type="radio" name="C-misc-16" value="ok" checked> ✓ 正確</label>
-<label><input type="radio" name="C-misc-16" value="no"> ✗ 要改</label>
+</section><section class="card" data-id="C-misc-16-1" data-name="超速處罰">
+<h2>超速處罰 <small>C-misc-16-1</small></h2><p class="old">修改前：超速：罰鍰（罰款）並記點；超過最高時速 40公里以上：罰 6,000～36,000元、吊扣（暫時收回）牌照 6個月；逕行舉發（不攔車，直接寄罰單）連續舉發：需相隔 6分鐘以上，或經過 1個路口；儀器舉發：要在 100～300公尺前標示。</p><p class="rule"><mark>修改後</mark> 超速未超過最高時速 40公里以上：罰鍰並記 1點。</p>
+<p>數字：記1點</p><ul><li><b>M0256</b> 駕駛人行車速度，超過規定之最高時速經當場舉發者，應處<br>✔ 答案：罰鍰並記違規點數</li><li><b>M0268</b> 駕駛人超速駕車者，但行車速度未超過規定之最高時速 40公里以上，經當場舉發，應處以<br>✔ 答案：罰鍰並記違規點數 1點</li></ul>
+<label><input type="radio" name="C-misc-16-1" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-16-1" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-16-2" data-name="超速 40公里以上">
+<h2>超速 40公里以上 <small>C-misc-16-2</small></h2><p class="old">修改前：超速：罰鍰（罰款）並記點；超過最高時速 40公里以上：罰 6,000～36,000元、吊扣（暫時收回）牌照 6個月；逕行舉發（不攔車，直接寄罰單）連續舉發：需相隔 6分鐘以上，或經過 1個路口；儀器舉發：要在 100～300公尺前標示。</p><p class="rule"><mark>修改後</mark> 超速 40公里以上：罰 6,000～36,000元，吊扣牌照 6個月。</p>
+<p>數字：6,000～36,000元、吊扣牌照6個月</p><ul><li><b>M0323</b> 機車行車速度，超過規定最高時速幾公里以上即可能遭處罰新臺幣 6,000元以上36,000元以下罰鍰、吊扣牌照 6個月，及接受道安講習？<br>✔ 答案：40 公里</li></ul>
+<label><input type="radio" name="C-misc-16-2" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-16-2" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-16-3" data-name="儀器測速標示">
+<h2>儀器測速標示 <small>C-misc-16-3</small></h2><p class="old">修改前：超速：罰鍰（罰款）並記點；超過最高時速 40公里以上：罰 6,000～36,000元、吊扣（暫時收回）牌照 6個月；逕行舉發（不攔車，直接寄罰單）連續舉發：需相隔 6分鐘以上，或經過 1個路口；儀器舉發：要在 100～300公尺前標示。</p><p class="rule"><mark>修改後</mark> 儀器測速，一般道路要在 100～300公尺前標示。</p>
+<p>數字：100～300公尺</p><ul><li><b>M0333</b> 行車速度超過規定之最高速限或低於規定之最低速限違規之舉發，採用科學儀器取得證據資料，於一般道路應於多少距離明顯標示？<br>✔ 答案：100公尺至300 公尺間</li></ul>
+<label><input type="radio" name="C-misc-16-3" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-16-3" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-16-4" data-name="連續舉發超速">
+<h2>連續舉發超速 <small>C-misc-16-4</small></h2><p class="old">修改前：超速：罰鍰（罰款）並記點；超過最高時速 40公里以上：罰 6,000～36,000元、吊扣（暫時收回）牌照 6個月；逕行舉發（不攔車，直接寄罰單）連續舉發：需相隔 6分鐘以上，或經過 1個路口；儀器舉發：要在 100～300公尺前標示。</p><p class="rule"><mark>修改後</mark> 逕行舉發超速要連續開單：相隔 6分鐘以上，或過 1個路口。</p>
+<p>數字：6分鐘</p><ul><li><b>M0356</b> 逕行舉發超速行駛時，其：<br>✔ 答案：違規時間相隔 6分鐘以上或行駛經過1個路口以上 得連續舉發之。但其違規地點在隧道內者，不在此限</li><li><b>M0357</b> 車輛於一般道路超速行駛遭逕行舉發，依規定須符合何種條件，始得對該車輛連續舉發？<br>✔ 答案：違規時間相隔 6分鐘以上，或行駛經過 1個路口以上</li></ul>
+<label><input type="radio" name="C-misc-16-4" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-16-4" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
 </section><section class="card" data-id="C-misc-17" data-name="逕行舉發違規停車">
 <h2>逕行舉發違規停車 <small>C-misc-17</small></h2><p class="old">修改前：違規停車駕駛不在場，每逾2小時得連續舉發。</p><p class="rule"><mark>修改後</mark> 違規停車而駕駛不在場：每逾2小時，可連續舉發（開罰單）。</p>
@@ -151,11 +169,35 @@ li{margin:8px 0} label{margin-right:16px;display:inline-block;min-height:44px}
 <label><input type="radio" name="C-misc-24" value="ok" checked> ✓ 正確</label>
 <label><input type="radio" name="C-misc-24" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
-</section><section class="card" data-id="C-misc-25" data-name="駕照種類與車種">
-<h2>駕照種類與車種 <small>C-misc-25</small></h2><p class="old">修改前：重型機車駕照可駕駛輕型機車；普通重型駕照不得駕駛逾 250cc；50cc 以下是普通輕型、逾50～250cc 是普通重型、逾 250cc 是大型重型。</p><p class="rule"><mark>修改後</mark> 重型機車駕照可駕駛輕型機車；普通重型駕照不得駕駛逾 250cc；50cc 以下是普通輕型；逾50～250cc 是普通重型；逾 250cc 是大型重型。</p>
-<p>數字：50cc、250cc</p><ul><li><b>M0260</b> 領有重型機車駕駛執照者，可駕駛<br>✔ 答案：輕型機車</li><li><b>M0285</b> 依現行規定，持普通重型機車駕駛執照，不得駕駛汽缸排氣量<br>✔ 答案：逾 250立方公分以上之二輪機車</li><li><b>M0464</b> 持有下列何種駕照者，得駕駛普通重型機車？<br>✔ 答案：大型重型機車駕照</li><li><b>M0467</b> 有關普通重型機車，下列敘述何者正確？<br>✔ 答案：排氣量逾50cc~250cc</li><li><b>M0468</b> 汽缸總排氣量50cc 以下之機車，屬於何種分類？<br>✔ 答案：普通輕型機車</li><li><b>M0469</b> 汽缸總排氣量超過 250cc之機車，在分類上屬於：<br>✔ 答案：大型重型機車</li></ul>
-<label><input type="radio" name="C-misc-25" value="ok" checked> ✓ 正確</label>
-<label><input type="radio" name="C-misc-25" value="no"> ✗ 要改</label>
+</section><section class="card" data-id="C-misc-25-1" data-name="駕照可騎的車">
+<h2>駕照可騎的車 <small>C-misc-25-1</small></h2><p class="old">修改前：重型機車駕照可駕駛輕型機車；普通重型駕照不得駕駛逾 250cc；50cc 以下是普通輕型；逾50～250cc 是普通重型；逾 250cc 是大型重型。</p><p class="rule"><mark>修改後</mark> 重型駕照可騎輕型；大型重型駕照可騎普通重型。</p>
+<p>數字：—</p><ul><li><b>M0260</b> 領有重型機車駕駛執照者，可駕駛<br>✔ 答案：輕型機車</li><li><b>M0464</b> 持有下列何種駕照者，得駕駛普通重型機車？<br>✔ 答案：大型重型機車駕照</li></ul>
+<label><input type="radio" name="C-misc-25-1" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-25-1" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-25-2" data-name="普通重型不能騎的車">
+<h2>普通重型不能騎的車 <small>C-misc-25-2</small></h2><p class="old">修改前：重型機車駕照可駕駛輕型機車；普通重型駕照不得駕駛逾 250cc；50cc 以下是普通輕型；逾50～250cc 是普通重型；逾 250cc 是大型重型。</p><p class="rule"><mark>修改後</mark> 普通重型駕照，不能騎逾 250cc 的二輪機車。</p>
+<p>數字：250cc</p><ul><li><b>M0285</b> 依現行規定，持普通重型機車駕駛執照，不得駕駛汽缸排氣量<br>✔ 答案：逾 250立方公分以上之二輪機車</li></ul>
+<label><input type="radio" name="C-misc-25-2" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-25-2" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-25-3" data-name="輕型機車排氣量">
+<h2>輕型機車排氣量 <small>C-misc-25-3</small></h2><p class="old">修改前：重型機車駕照可駕駛輕型機車；普通重型駕照不得駕駛逾 250cc；50cc 以下是普通輕型；逾50～250cc 是普通重型；逾 250cc 是大型重型。</p><p class="rule"><mark>修改後</mark> 50cc以下的機車，是普通輕型機車。</p>
+<p>數字：50cc</p><ul><li><b>M0468</b> 汽缸總排氣量50cc 以下之機車，屬於何種分類？<br>✔ 答案：普通輕型機車</li></ul>
+<label><input type="radio" name="C-misc-25-3" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-25-3" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-25-4" data-name="普通重型排氣量">
+<h2>普通重型排氣量 <small>C-misc-25-4</small></h2><p class="old">修改前：重型機車駕照可駕駛輕型機車；普通重型駕照不得駕駛逾 250cc；50cc 以下是普通輕型；逾50～250cc 是普通重型；逾 250cc 是大型重型。</p><p class="rule"><mark>修改後</mark> 排氣量逾 50cc～250cc，是普通重型機車。</p>
+<p>數字：50cc、250cc</p><ul><li><b>M0467</b> 有關普通重型機車，下列敘述何者正確？<br>✔ 答案：排氣量逾50cc~250cc</li></ul>
+<label><input type="radio" name="C-misc-25-4" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-25-4" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-25-5" data-name="大型重型排氣量">
+<h2>大型重型排氣量 <small>C-misc-25-5</small></h2><p class="old">修改前：重型機車駕照可駕駛輕型機車；普通重型駕照不得駕駛逾 250cc；50cc 以下是普通輕型；逾50～250cc 是普通重型；逾 250cc 是大型重型。</p><p class="rule"><mark>修改後</mark> 排氣量超過 250cc，是大型重型機車。</p>
+<p>數字：250cc</p><ul><li><b>M0469</b> 汽缸總排氣量超過 250cc之機車，在分類上屬於：<br>✔ 答案：大型重型機車</li></ul>
+<label><input type="radio" name="C-misc-25-5" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-25-5" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
 </section><section class="card" data-id="C-misc-26" data-name="駕照註銷與新舊制">
 <h2>駕照註銷與新舊制 <small>C-misc-26</small></h2><p class="old">修改前：112年6月30日起新考領汽車駕照不再能騎輕型機車；駕照註銷後不能騎任何機車，須重新考領；其他大車駕照騎重機要罰。</p><p class="rule"><mark>修改後</mark> 112年6月30日起，新考領的汽車駕照不能騎輕型機車；駕照註銷後，不能騎任何機車，須重新考領；其他大車駕照騎重機要罰。</p>
@@ -181,23 +223,113 @@ li{margin:8px 0} label{margin-right:16px;display:inline-block;min-height:44px}
 <label><input type="radio" name="C-misc-29" value="ok" checked> ✓ 正確</label>
 <label><input type="radio" name="C-misc-29" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
-</section><section class="card" data-id="C-misc-30" data-name="無照與違規駕駛處罰">
-<h2>無照與違規駕駛處罰 <small>C-misc-30</small></h2><p class="old">修改前：允許無照者駕車或借照他人吊扣 3個月；偽造變造駕照扣繳；吊銷註銷吊扣期間仍駕駛要處罰；無照騎機車罰 18,000～36,000元；未滿14歲處罰法定代理人。</p><p class="rule"><mark>修改後</mark> 允許無照者駕車，或借照給他人：吊扣（暫時收回）駕照 3個月；偽造變造駕照：扣繳；吊銷、註銷、吊扣期間仍駕駛：要處罰；無照騎機車：罰 18,000～36,000元；未滿14歲：處罰法定代理人。</p>
-<p>數字：3個月、18,000～36,000元</p><ul><li><b>M0261</b> 駕駛人允許無駕駛執照之人駕駛其車輛者， 應吊扣駕駛執照<br>✔ 答案：3個月</li><li><b>M0269</b> 將駕照借供他人駕車， 處罰吊扣駕照<br>✔ 答案：3 個月</li><li><b>M0262</b> 駕駛人使用偽照、變造或矇領之駕駛執照駕車時，應處<br>✔ 答案：罰鍰並扣繳駕照</li><li><b>M0295</b> 駕駛執照業經吊銷、註銷仍駕駛機車者，除處罰鍰、當場禁止其駕駛外，該駕照並應<br>✔ 答案：扣繳</li><li><b>M0296</b> 駕駛執照吊扣期間仍駕駛機車者，除處罰鍰、當場禁止其駕駛外，並應<br>✔ 答案：吊銷駕駛執照</li><li><b>M0302</b> 使用偽造、變造或矇領之駕駛執照駕駛小型車或機車者<br>✔ 答案：以上皆是</li><li><b>M0355</b> 未領有駕照駕駛機車者應處罰鍰新臺幣：<br>✔ 答案：18,000～36,000 元</li><li><b>M0460</b> 機車駕駛執照經吊扣、註銷時，仍駕車者將受何種處罰？<br>✔ 答案：處罰鍰並當場禁止駕駛、吊銷其駕照</li><li><b>M0326</b> 未滿18歲駕駛人違反無照騎車之處分，下列何者須施以道路交通安全講習？<br>✔ 答案：駕駛人及其法定代理人或監護人</li><li><b>M0466</b> 未滿14歲之人，若違反道路交通管理處罰條例，處罰<br>✔ 答案：法定代理人或監護人</li></ul>
-<label><input type="radio" name="C-misc-30" value="ok" checked> ✓ 正確</label>
-<label><input type="radio" name="C-misc-30" value="no"> ✗ 要改</label>
+</section><section class="card" data-id="C-misc-30-1" data-name="借照與允許無照">
+<h2>借照與允許無照 <small>C-misc-30-1</small></h2><p class="old">修改前：允許無照者駕車，或借照給他人：吊扣（暫時收回）駕照 3個月；偽造變造駕照：扣繳；吊銷、註銷、吊扣期間仍駕駛：要處罰；無照騎機車：罰 18,000～36,000元；未滿14歲：處罰法定代理人。</p><p class="rule"><mark>修改後</mark> 允許無照者開車，或借照給人：吊扣（暫收）駕照 3個月。</p>
+<p>數字：3個月</p><ul><li><b>M0261</b> 駕駛人允許無駕駛執照之人駕駛其車輛者， 應吊扣駕駛執照<br>✔ 答案：3個月</li><li><b>M0269</b> 將駕照借供他人駕車， 處罰吊扣駕照<br>✔ 答案：3 個月</li></ul>
+<label><input type="radio" name="C-misc-30-1" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-30-1" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
-</section><section class="card" data-id="C-misc-31" data-name="記點與吊扣吊銷">
-<h2>記點與吊扣吊銷 <small>C-misc-31</small></h2><p class="old">修改前：1年內記點滿 12點吊扣駕照 2個月；2年內吊扣2次再記點吊銷；不接受講習罰 1,800元，逾期 6個月以上吊扣駕照。</p><p class="rule"><mark>修改後</mark> 1年內記點滿 12點：吊扣（暫時收回）駕照 2個月；2年內吊扣2次再記點：吊銷（直接取消，要重考）；不接受講習：罰 1,800元，逾期 6個月以上吊扣駕照。</p>
-<p>數字：12點、2個月</p><ul><li><b>M0273</b> 駕駛人在1年內，違規記點每達 12點以上者，吊扣駕駛執照<br>✔ 答案：2個月</li><li><b>M0274</b> 駕駛人因違規記點，2年內經吊扣駕駛執照 2次，再經記違規點數者，處以：<br>✔ 答案：吊銷駕照</li><li><b>M0457</b> 機車駕駛人因違反道路交通管理處罰條例規定，1年內經記違規點數滿 12點者，應予何種處分？<br>✔ 答案：吊扣其駕駛執照 2個月，並應接受道安講習</li><li><b>M0347</b> 駕駛人無正當理由，不依規定接受道路交通安全講習者，處新臺幣 1,800元罰鍰，經再通知依限參加講習，逾期 6個月以上仍不參加者，應罰<br>✔ 答案：吊扣駕駛執照</li></ul>
-<label><input type="radio" name="C-misc-31" value="ok" checked> ✓ 正確</label>
-<label><input type="radio" name="C-misc-31" value="no"> ✗ 要改</label>
+</section><section class="card" data-id="C-misc-30-2" data-name="偽造變造駕照">
+<h2>偽造變造駕照 <small>C-misc-30-2</small></h2><p class="old">修改前：允許無照者駕車，或借照給他人：吊扣（暫時收回）駕照 3個月；偽造變造駕照：扣繳；吊銷、註銷、吊扣期間仍駕駛：要處罰；無照騎機車：罰 18,000～36,000元；未滿14歲：處罰法定代理人。</p><p class="rule"><mark>修改後</mark> 用偽造、變造、矇領的駕照：罰鍰、當場禁止駕駛、扣繳駕照。</p>
+<p>數字：—</p><ul><li><b>M0262</b> 駕駛人使用偽照、變造或矇領之駕駛執照駕車時，應處<br>✔ 答案：罰鍰並扣繳駕照</li><li><b>M0302</b> 使用偽造、變造或矇領之駕駛執照駕駛小型車或機車者<br>✔ 答案：以上皆是</li></ul>
+<label><input type="radio" name="C-misc-30-2" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-30-2" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
-</section><section class="card" data-id="C-misc-33" data-name="行政救濟與程序">
-<h2>行政救濟與程序 <small>C-misc-33</small></h2><p class="old">修改前：違規通知單 30天內可逕行繳納；不服裁決 30日內提訴；文書送達依行政程序法；可申請分期；民眾檢舉 7日內舉發；事故資料當事人或利害關係人可閱覽，目擊證人不可；對鑑定有異議向覆議機關申請；稽查非法官執行。</p><p class="rule"><mark>修改後</mark> 違規通知單：30天內可不經裁決，直接繳納；不服裁決：30日內提訴；文書送達：依行政程序法；可申請分期；檢舉：7日內舉發；事故資料：當事人或利害關係人可閱覽，目擊證人不可；鑑定有異議：向覆議機關申請；稽查：不是法官執行。</p>
-<p>數字：30天、30日、7日</p><ul><li><b>M0265</b> 違反道路交通管理事件行為人，接獲違反道路交通管理事件通知單後，應於幾天內得不經裁決，逕依罰鍰基準規定，向指定之處所繳納結案？<br>✔ 答案：30天內</li><li><b>M0334</b> 受處分人不服道路交通管理處罰條例第 8條或第37條第5項處罰之裁決者，應以原處分機關為被告，逕向管轄之高等行政法院地方行政訴訟庭提起訴訟；其中撤銷訴訟之提起，應於裁決書送達後幾日內為之？<br>✔ 答案：30日</li><li><b>M0314</b> 處理違反道路交通管理事件，有關文書送達之程序，依下列何者之規定？<br>✔ 答案：行政程序法</li><li><b>M0317</b> 違反道路交通管理事件受處罰人，無法 1次完納罰鍰者<br>✔ 答案：得申請分期繳納罰鍰</li><li><b>M0350</b> 交通違規案件，民眾得敘明違規事實或檢具違規證據資料，向公路主管或警察機關檢舉，經查證屬實者，應即舉發。但行為終了日起逾多少日期之檢舉，不予舉發：<br>✔ 答案：7日</li><li><b>M0312</b> 以下何者「非」道路交通事故案件之可向警察機關申請閱覽或提供相關資料之人？<br>✔ 答案：目擊證人</li><li><b>M0318</b> 道路交通事故案件當事人或利害關係人得於幾日內向警察機關申請閱覽或提供相關資料？<br>✔ 答案：以上皆是</li><li><b>M0240</b> 對肇事責任鑑定有異議，<br>✔ 答案：向覆議機關申請覆議</li><li><b>M0315</b> 道路交通管理之稽查，違規紀錄，非由下列何者執行之？<br>✔ 答案：地方法院法官</li><li><b>M0257</b> 駕駛人因違規而被處罰鍰並記點，以後應<br>✔ 答案：遵守交通規則，勿再違規</li></ul>
-<label><input type="radio" name="C-misc-33" value="ok" checked> ✓ 正確</label>
-<label><input type="radio" name="C-misc-33" value="no"> ✗ 要改</label>
+</section><section class="card" data-id="C-misc-30-3" data-name="吊銷或註銷後仍騎車">
+<h2>吊銷或註銷後仍騎車 <small>C-misc-30-3</small></h2><p class="old">修改前：允許無照者駕車，或借照給他人：吊扣（暫時收回）駕照 3個月；偽造變造駕照：扣繳；吊銷、註銷、吊扣期間仍駕駛：要處罰；無照騎機車：罰 18,000～36,000元；未滿14歲：處罰法定代理人。</p><p class="rule"><mark>修改後</mark> 駕照吊銷或註銷後仍騎車：罰鍰、禁止駕駛，並扣繳駕照。</p>
+<p>數字：—</p><ul><li><b>M0295</b> 駕駛執照業經吊銷、註銷仍駕駛機車者，除處罰鍰、當場禁止其駕駛外，該駕照並應<br>✔ 答案：扣繳</li></ul>
+<label><input type="radio" name="C-misc-30-3" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-30-3" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-30-4" data-name="吊扣期間仍騎車">
+<h2>吊扣期間仍騎車 <small>C-misc-30-4</small></h2><p class="old">修改前：允許無照者駕車，或借照給他人：吊扣（暫時收回）駕照 3個月；偽造變造駕照：扣繳；吊銷、註銷、吊扣期間仍駕駛：要處罰；無照騎機車：罰 18,000～36,000元；未滿14歲：處罰法定代理人。</p><p class="rule"><mark>修改後</mark> 駕照吊扣、註銷期間仍騎車：罰鍰、當場禁止駕駛、吊銷駕照。</p>
+<p>數字：—</p><ul><li><b>M0296</b> 駕駛執照吊扣期間仍駕駛機車者，除處罰鍰、當場禁止其駕駛外，並應<br>✔ 答案：吊銷駕駛執照</li><li><b>M0460</b> 機車駕駛執照經吊扣、註銷時，仍駕車者將受何種處罰？<br>✔ 答案：處罰鍰並當場禁止駕駛、吊銷其駕照</li></ul>
+<label><input type="radio" name="C-misc-30-4" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-30-4" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-30-5" data-name="無照騎機車">
+<h2>無照騎機車 <small>C-misc-30-5</small></h2><p class="old">修改前：允許無照者駕車，或借照給他人：吊扣（暫時收回）駕照 3個月；偽造變造駕照：扣繳；吊銷、註銷、吊扣期間仍駕駛：要處罰；無照騎機車：罰 18,000～36,000元；未滿14歲：處罰法定代理人。</p><p class="rule"><mark>修改後</mark> 沒有駕照騎機車：罰 18,000～36,000元。</p>
+<p>數字：18,000～36,000元</p><ul><li><b>M0355</b> 未領有駕照駕駛機車者應處罰鍰新臺幣：<br>✔ 答案：18,000～36,000 元</li></ul>
+<label><input type="radio" name="C-misc-30-5" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-30-5" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-30-6" data-name="未滿18歲無照騎車">
+<h2>未滿18歲無照騎車 <small>C-misc-30-6</small></h2><p class="old">修改前：允許無照者駕車，或借照給他人：吊扣（暫時收回）駕照 3個月；偽造變造駕照：扣繳；吊銷、註銷、吊扣期間仍駕駛：要處罰；無照騎機車：罰 18,000～36,000元；未滿14歲：處罰法定代理人。</p><p class="rule"><mark>修改後</mark> 未滿 18歲無照騎車：駕駛人和法定代理人都要上講習。</p>
+<p>數字：18歲</p><ul><li><b>M0326</b> 未滿18歲駕駛人違反無照騎車之處分，下列何者須施以道路交通安全講習？<br>✔ 答案：駕駛人及其法定代理人或監護人</li></ul>
+<label><input type="radio" name="C-misc-30-6" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-30-6" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-30-7" data-name="未滿14歲違規">
+<h2>未滿14歲違規 <small>C-misc-30-7</small></h2><p class="old">修改前：允許無照者駕車，或借照給他人：吊扣（暫時收回）駕照 3個月；偽造變造駕照：扣繳；吊銷、註銷、吊扣期間仍駕駛：要處罰；無照騎機車：罰 18,000～36,000元；未滿14歲：處罰法定代理人。</p><p class="rule"><mark>修改後</mark> 未滿 14歲違規：處罰法定代理人或監護人。</p>
+<p>數字：14歲</p><ul><li><b>M0466</b> 未滿14歲之人，若違反道路交通管理處罰條例，處罰<br>✔ 答案：法定代理人或監護人</li></ul>
+<label><input type="radio" name="C-misc-30-7" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-30-7" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-31-1" data-name="記點滿12點">
+<h2>記點滿12點 <small>C-misc-31-1</small></h2><p class="old">修改前：1年內記點滿 12點：吊扣（暫時收回）駕照 2個月；2年內吊扣2次再記點：吊銷（直接取消，要重考）；不接受講習：罰 1,800元，逾期 6個月以上吊扣駕照。</p><p class="rule"><mark>修改後</mark> 1年內記點滿 12點：吊扣（暫收）駕照 2個月。</p>
+<p>數字：12點、2個月</p><ul><li><b>M0273</b> 駕駛人在1年內，違規記點每達 12點以上者，吊扣駕駛執照<br>✔ 答案：2個月</li><li><b>M0457</b> 機車駕駛人因違反道路交通管理處罰條例規定，1年內經記違規點數滿 12點者，應予何種處分？<br>✔ 答案：吊扣其駕駛執照 2個月，並應接受道安講習</li></ul>
+<label><input type="radio" name="C-misc-31-1" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-31-1" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-31-2" data-name="吊扣兩次再記點">
+<h2>吊扣兩次再記點 <small>C-misc-31-2</small></h2><p class="old">修改前：1年內記點滿 12點：吊扣（暫時收回）駕照 2個月；2年內吊扣2次再記點：吊銷（直接取消，要重考）；不接受講習：罰 1,800元，逾期 6個月以上吊扣駕照。</p><p class="rule"><mark>修改後</mark> 2年內吊扣 2次又記點：吊銷（取消）駕照。</p>
+<p>數字：2年、2次</p><ul><li><b>M0274</b> 駕駛人因違規記點，2年內經吊扣駕駛執照 2次，再經記違規點數者，處以：<br>✔ 答案：吊銷駕照</li></ul>
+<label><input type="radio" name="C-misc-31-2" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-31-2" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-31-3" data-name="不上道安講習">
+<h2>不上道安講習 <small>C-misc-31-3</small></h2><p class="old">修改前：1年內記點滿 12點：吊扣（暫時收回）駕照 2個月；2年內吊扣2次再記點：吊銷（直接取消，要重考）；不接受講習：罰 1,800元，逾期 6個月以上吊扣駕照。</p><p class="rule"><mark>修改後</mark> 無故不上講習罰 1,800元；逾期 6個月以上，吊扣駕照。</p>
+<p>數字：1,800元、6個月</p><ul><li><b>M0347</b> 駕駛人無正當理由，不依規定接受道路交通安全講習者，處新臺幣 1,800元罰鍰，經再通知依限參加講習，逾期 6個月以上仍不參加者，應罰<br>✔ 答案：吊扣駕駛執照</li></ul>
+<label><input type="radio" name="C-misc-31-3" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-31-3" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-33-1" data-name="繳納與分期">
+<h2>繳納與分期 <small>C-misc-33-1</small></h2><p class="old">修改前：違規通知單：30天內可不經裁決，直接繳納；不服裁決：30日內提訴；文書送達：依行政程序法；可申請分期；檢舉：7日內舉發；事故資料：當事人或利害關係人可閱覽，目擊證人不可；鑑定有異議：向覆議機關申請；稽查：不是法官執行。</p><p class="rule"><mark>修改後</mark> 通知單 30天內可直接繳納；無法一次繳，可申請分期。</p>
+<p>數字：30天</p><ul><li><b>M0265</b> 違反道路交通管理事件行為人，接獲違反道路交通管理事件通知單後，應於幾天內得不經裁決，逕依罰鍰基準規定，向指定之處所繳納結案？<br>✔ 答案：30天內</li><li><b>M0317</b> 違反道路交通管理事件受處罰人，無法 1次完納罰鍰者<br>✔ 答案：得申請分期繳納罰鍰</li></ul>
+<label><input type="radio" name="C-misc-33-1" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-33-1" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-33-2" data-name="不服裁決">
+<h2>不服裁決 <small>C-misc-33-2</small></h2><p class="old">修改前：違規通知單：30天內可不經裁決，直接繳納；不服裁決：30日內提訴；文書送達：依行政程序法；可申請分期；檢舉：7日內舉發；事故資料：當事人或利害關係人可閱覽，目擊證人不可；鑑定有異議：向覆議機關申請；稽查：不是法官執行。</p><p class="rule"><mark>修改後</mark> 不服裁決，30日內向行政法院地方庭提起訴訟。</p>
+<p>數字：30日</p><ul><li><b>M0334</b> 受處分人不服道路交通管理處罰條例第 8條或第37條第5項處罰之裁決者，應以原處分機關為被告，逕向管轄之高等行政法院地方行政訴訟庭提起訴訟；其中撤銷訴訟之提起，應於裁決書送達後幾日內為之？<br>✔ 答案：30日</li></ul>
+<label><input type="radio" name="C-misc-33-2" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-33-2" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-33-3" data-name="文書送達">
+<h2>文書送達 <small>C-misc-33-3</small></h2><p class="old">修改前：違規通知單：30天內可不經裁決，直接繳納；不服裁決：30日內提訴；文書送達：依行政程序法；可申請分期；檢舉：7日內舉發；事故資料：當事人或利害關係人可閱覽，目擊證人不可；鑑定有異議：向覆議機關申請；稽查：不是法官執行。</p><p class="rule"><mark>修改後</mark> 違規文書的送達，依行政程序法。</p>
+<p>數字：—</p><ul><li><b>M0314</b> 處理違反道路交通管理事件，有關文書送達之程序，依下列何者之規定？<br>✔ 答案：行政程序法</li></ul>
+<label><input type="radio" name="C-misc-33-3" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-33-3" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-33-4" data-name="民眾檢舉">
+<h2>民眾檢舉 <small>C-misc-33-4</small></h2><p class="old">修改前：違規通知單：30天內可不經裁決，直接繳納；不服裁決：30日內提訴；文書送達：依行政程序法；可申請分期；檢舉：7日內舉發；事故資料：當事人或利害關係人可閱覽，目擊證人不可；鑑定有異議：向覆議機關申請；稽查：不是法官執行。</p><p class="rule"><mark>修改後</mark> 民眾檢舉違規，行為終了逾 7日不予舉發（開罰單）。</p>
+<p>數字：7日</p><ul><li><b>M0350</b> 交通違規案件，民眾得敘明違規事實或檢具違規證據資料，向公路主管或警察機關檢舉，經查證屬實者，應即舉發。但行為終了日起逾多少日期之檢舉，不予舉發：<br>✔ 答案：7日</li></ul>
+<label><input type="radio" name="C-misc-33-4" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-33-4" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-33-5" data-name="事故資料閱覽">
+<h2>事故資料閱覽 <small>C-misc-33-5</small></h2><p class="old">修改前：違規通知單：30天內可不經裁決，直接繳納；不服裁決：30日內提訴；文書送達：依行政程序法；可申請分期；檢舉：7日內舉發；事故資料：當事人或利害關係人可閱覽，目擊證人不可；鑑定有異議：向覆議機關申請；稽查：不是法官執行。</p><p class="rule"><mark>修改後</mark> 事故資料：當事人、利害關係人可閱覽；目擊證人不行。</p>
+<p>數字：—</p><ul><li><b>M0312</b> 以下何者「非」道路交通事故案件之可向警察機關申請閱覽或提供相關資料之人？<br>✔ 答案：目擊證人</li><li><b>M0318</b> 道路交通事故案件當事人或利害關係人得於幾日內向警察機關申請閱覽或提供相關資料？<br>✔ 答案：以上皆是</li></ul>
+<label><input type="radio" name="C-misc-33-5" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-33-5" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-33-6" data-name="肇責鑑定有異議">
+<h2>肇責鑑定有異議 <small>C-misc-33-6</small></h2><p class="old">修改前：違規通知單：30天內可不經裁決，直接繳納；不服裁決：30日內提訴；文書送達：依行政程序法；可申請分期；檢舉：7日內舉發；事故資料：當事人或利害關係人可閱覽，目擊證人不可；鑑定有異議：向覆議機關申請；稽查：不是法官執行。</p><p class="rule"><mark>修改後</mark> 對肇事責任鑑定有異議，向覆議機關申請覆議。</p>
+<p>數字：—</p><ul><li><b>M0240</b> 對肇事責任鑑定有異議，<br>✔ 答案：向覆議機關申請覆議</li></ul>
+<label><input type="radio" name="C-misc-33-6" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-33-6" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-33-7" data-name="誰來稽查">
+<h2>誰來稽查 <small>C-misc-33-7</small></h2><p class="old">修改前：違規通知單：30天內可不經裁決，直接繳納；不服裁決：30日內提訴；文書送達：依行政程序法；可申請分期；檢舉：7日內舉發；事故資料：當事人或利害關係人可閱覽，目擊證人不可；鑑定有異議：向覆議機關申請；稽查：不是法官執行。</p><p class="rule"><mark>修改後</mark> 稽查、記錄違規的人，不是地方法院法官。</p>
+<p>數字：—</p><ul><li><b>M0315</b> 道路交通管理之稽查，違規紀錄，非由下列何者執行之？<br>✔ 答案：地方法院法官</li></ul>
+<label><input type="radio" name="C-misc-33-7" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-33-7" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-33-8" data-name="被罰之後">
+<h2>被罰之後 <small>C-misc-33-8</small></h2><p class="old">修改前：違規通知單：30天內可不經裁決，直接繳納；不服裁決：30日內提訴；文書送達：依行政程序法；可申請分期；檢舉：7日內舉發；事故資料：當事人或利害關係人可閱覽，目擊證人不可；鑑定有異議：向覆議機關申請；稽查：不是法官執行。</p><p class="rule"><mark>修改後</mark> 被罰鍰（罰款）並記點後，要守規則，不再違規。</p>
+<p>數字：—</p><ul><li><b>M0257</b> 駕駛人因違規而被處罰鍰並記點，以後應<br>✔ 答案：遵守交通規則，勿再違規</li></ul>
+<label><input type="radio" name="C-misc-33-8" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-33-8" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
 </section><section class="card" data-id="C-misc-34" data-name="加油安全">
 <h2>加油安全 <small>C-misc-34</small></h2><p class="old">修改前：加油時引擎熄火，嚴禁撥接手機；辛烷值愈高對引擎愈好是錯誤的知識。</p><p class="rule"><mark>修改後</mark> 加油時引擎熄火，嚴禁撥接手機；「辛烷值愈高對引擎愈好」是錯誤的知識。</p>
@@ -283,11 +415,23 @@ li{margin:8px 0} label{margin-right:16px;display:inline-block;min-height:44px}
 <label><input type="radio" name="C-misc-58" value="ok" checked> ✓ 正確</label>
 <label><input type="radio" name="C-misc-58" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
-</section><section class="card" data-id="C-misc-32b" data-name="肇事逃逸的處分">
-<h2>肇事逃逸的處分 <small>C-misc-32b</small></h2><p class="old">修改前：肇事致重傷或死亡逃逸，吊銷駕照並終身不得考領，但符合條件、逾規定年限可申請；致人死亡案件逾 12年可申請；致人受傷逃逸 3年不得考領。</p><p class="rule"><mark>修改後</mark> 肇事致重傷或死亡逃逸：吊銷（直接取消，要重考）駕照，終身不得考領，但符合條件、逾規定年限可申請；致人死亡案件逾 12年可申請；致人受傷逃逸：3年不得考領。</p>
-<p>數字：12年、3年</p><ul><li><b>M0272</b> 駕駛人如肇事致人重傷或死亡，應即時處理，並向警察機關報告，不得逃逸，違者應處罰<br>✔ 答案：吊銷駕駛執照，並終身不得再考領（但符合 特定條件，且所受吊銷駕駛執照處分，執行已逾相關規定時間者，不在此限）</li><li><b>M0353</b> 經終身吊銷駕駛執照之受處分人，如為肇事致人死亡案件，經吊銷駕駛執照處分執行已逾幾年，得向公路主管機關申請考領駕駛執照：<br>✔ 答案：12年</li><li><b>M0336</b> 駕駛人駕駛汽車肇事致人受傷而逃逸者，吊銷其駕駛執照且多久不得考領？<br>✔ 答案：3年</li></ul>
-<label><input type="radio" name="C-misc-32b" value="ok" checked> ✓ 正確</label>
-<label><input type="radio" name="C-misc-32b" value="no"> ✗ 要改</label>
+</section><section class="card" data-id="C-misc-32b-1" data-name="重傷死亡逃逸">
+<h2>重傷死亡逃逸 <small>C-misc-32b-1</small></h2><p class="old">修改前：肇事致重傷或死亡逃逸：吊銷（直接取消，要重考）駕照，終身不得考領，但符合條件、逾規定年限可申請；致人死亡案件逾 12年可申請；致人受傷逃逸：3年不得考領。</p><p class="rule"><mark>修改後</mark> 致重傷或死亡逃逸：吊銷駕照，終身不得考領（符合條件者例外）。</p>
+<p>數字：—</p><ul><li><b>M0272</b> 駕駛人如肇事致人重傷或死亡，應即時處理，並向警察機關報告，不得逃逸，違者應處罰<br>✔ 答案：吊銷駕駛執照，並終身不得再考領（但符合 特定條件，且所受吊銷駕駛執照處分，執行已逾相關規定時間者，不在此限）</li></ul>
+<label><input type="radio" name="C-misc-32b-1" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-32b-1" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-32b-2" data-name="終身吊銷後考領">
+<h2>終身吊銷後考領 <small>C-misc-32b-2</small></h2><p class="old">修改前：肇事致重傷或死亡逃逸：吊銷（直接取消，要重考）駕照，終身不得考領，但符合條件、逾規定年限可申請；致人死亡案件逾 12年可申請；致人受傷逃逸：3年不得考領。</p><p class="rule"><mark>修改後</mark> 終身吊銷者，肇事致死案件逾 12年可申請考領。</p>
+<p>數字：12年</p><ul><li><b>M0353</b> 經終身吊銷駕駛執照之受處分人，如為肇事致人死亡案件，經吊銷駕駛執照處分執行已逾幾年，得向公路主管機關申請考領駕駛執照：<br>✔ 答案：12年</li></ul>
+<label><input type="radio" name="C-misc-32b-2" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-32b-2" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-32b-3" data-name="致人受傷逃逸">
+<h2>致人受傷逃逸 <small>C-misc-32b-3</small></h2><p class="old">修改前：肇事致重傷或死亡逃逸：吊銷（直接取消，要重考）駕照，終身不得考領，但符合條件、逾規定年限可申請；致人死亡案件逾 12年可申請；致人受傷逃逸：3年不得考領。</p><p class="rule"><mark>修改後</mark> 肇事致人受傷逃逸：吊銷駕照，3年不得考領。</p>
+<p>數字：3年</p><ul><li><b>M0336</b> 駕駛人駕駛汽車肇事致人受傷而逃逸者，吊銷其駕駛執照且多久不得考領？<br>✔ 答案：3年</li></ul>
+<label><input type="radio" name="C-misc-32b-3" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-32b-3" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
 </section><section class="card" data-id="C-misc-32c" data-name="利用機車犯罪">
 <h2>利用機車犯罪 <small>C-misc-32c</small></h2><p class="old">修改前：利用機車犯罪，經判有期徒刑以上確定，吊銷駕照，終身不得考領（符合特定條件、逾規定時間者除外）。</p><p class="rule"><mark>修改後</mark> 利用機車犯罪，經判有期徒刑以上確定：吊銷（直接取消，要重考）駕照，終身不得考領（符合特定條件、逾規定時間者除外）。</p>
@@ -295,11 +439,29 @@ li{margin:8px 0} label{margin-right:16px;display:inline-block;min-height:44px}
 <label><input type="radio" name="C-misc-32c" value="ok" checked> ✓ 正確</label>
 <label><input type="radio" name="C-misc-32c" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
-</section><section class="card" data-id="C-misc-32d" data-name="肇事未處置與撞傷警察">
-<h2>肇事未處置與撞傷警察 <small>C-misc-32d</small></h2><p class="old">修改前：無人傷亡卻未處置逃逸，罰鍰並吊扣駕照；肇事致重傷吊扣 3個月至6個月；撞傷執勤警察吊銷駕照並罰鍰；肇事逃逸不到場說明，吊扣牌照。</p><p class="rule"><mark>修改後</mark> 無人傷亡卻未處置逃逸：罰鍰（罰款）並吊扣（暫時收回）駕照；肇事致重傷：吊扣 3個月至6個月；撞傷執勤警察：吊銷駕照並罰鍰；肇事逃逸不到場說明：吊扣牌照。</p>
-<p>數字：3個月至6個月</p><ul><li><b>M0352</b> 駕駛人駕車肇事，雖無人受傷或死亡，卻未依規定處置且逃逸者，除處罰鍰外，並：<br>✔ 答案：吊扣駕駛執照</li><li><b>M0271</b> 違反道路交通安全規則，因而肇事致人重傷者，吊扣其駕照<br>✔ 答案：3 個月至6個月</li><li><b>M0266</b> 駕駛人駕車撞傷正執行交通勤務中之警察時，<br>✔ 答案：吊銷駕照並處罰鍰</li><li><b>M0348</b> 肇事逃逸案件，經通知所有人到場說明，無故不到場說明，或不提供駕駛人相關資料者<br>✔ 答案：吊扣牌照</li></ul>
-<label><input type="radio" name="C-misc-32d" value="ok" checked> ✓ 正確</label>
-<label><input type="radio" name="C-misc-32d" value="no"> ✗ 要改</label>
+</section><section class="card" data-id="C-misc-32d-1" data-name="無人傷亡未處置逃逸">
+<h2>無人傷亡未處置逃逸 <small>C-misc-32d-1</small></h2><p class="old">修改前：無人傷亡卻未處置逃逸：罰鍰（罰款）並吊扣（暫時收回）駕照；肇事致重傷：吊扣 3個月至6個月；撞傷執勤警察：吊銷駕照並罰鍰；肇事逃逸不到場說明：吊扣牌照。</p><p class="rule"><mark>修改後</mark> 無人傷亡卻未處置、逃逸：罰鍰，並吊扣（暫收）駕照。</p>
+<p>數字：—</p><ul><li><b>M0352</b> 駕駛人駕車肇事，雖無人受傷或死亡，卻未依規定處置且逃逸者，除處罰鍰外，並：<br>✔ 答案：吊扣駕駛執照</li></ul>
+<label><input type="radio" name="C-misc-32d-1" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-32d-1" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-32d-2" data-name="肇事致重傷">
+<h2>肇事致重傷 <small>C-misc-32d-2</small></h2><p class="old">修改前：無人傷亡卻未處置逃逸：罰鍰（罰款）並吊扣（暫時收回）駕照；肇事致重傷：吊扣 3個月至6個月；撞傷執勤警察：吊銷駕照並罰鍰；肇事逃逸不到場說明：吊扣牌照。</p><p class="rule"><mark>修改後</mark> 肇事致人重傷：吊扣駕照 3個月至6個月。</p>
+<p>數字：3個月至6個月</p><ul><li><b>M0271</b> 違反道路交通安全規則，因而肇事致人重傷者，吊扣其駕照<br>✔ 答案：3 個月至6個月</li></ul>
+<label><input type="radio" name="C-misc-32d-2" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-32d-2" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-32d-3" data-name="撞傷執勤警察">
+<h2>撞傷執勤警察 <small>C-misc-32d-3</small></h2><p class="old">修改前：無人傷亡卻未處置逃逸：罰鍰（罰款）並吊扣（暫時收回）駕照；肇事致重傷：吊扣 3個月至6個月；撞傷執勤警察：吊銷駕照並罰鍰；肇事逃逸不到場說明：吊扣牌照。</p><p class="rule"><mark>修改後</mark> 撞傷執勤警察：吊銷（取消）駕照並罰鍰。</p>
+<p>數字：—</p><ul><li><b>M0266</b> 駕駛人駕車撞傷正執行交通勤務中之警察時，<br>✔ 答案：吊銷駕照並處罰鍰</li></ul>
+<label><input type="radio" name="C-misc-32d-3" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-32d-3" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註">
+</section><section class="card" data-id="C-misc-32d-4" data-name="所有人不說明">
+<h2>所有人不說明 <small>C-misc-32d-4</small></h2><p class="old">修改前：無人傷亡卻未處置逃逸：罰鍰（罰款）並吊扣（暫時收回）駕照；肇事致重傷：吊扣 3個月至6個月；撞傷執勤警察：吊銷駕照並罰鍰；肇事逃逸不到場說明：吊扣牌照。</p><p class="rule"><mark>修改後</mark> 肇事逃逸，所有人無故不到場說明：吊扣牌照。</p>
+<p>數字：—</p><ul><li><b>M0348</b> 肇事逃逸案件，經通知所有人到場說明，無故不到場說明，或不提供駕駛人相關資料者<br>✔ 答案：吊扣牌照</li></ul>
+<label><input type="radio" name="C-misc-32d-4" value="ok" checked> ✓ 正確</label>
+<label><input type="radio" name="C-misc-32d-4" value="no"> ✗ 要改</label>
 <input class="note" placeholder="備註">
 </section><section class="card" data-id="C-misc-32e" data-name="酒駕移置保管車輛">
 <h2>酒駕移置保管車輛 <small>C-misc-32e</small></h2><p class="old">修改前：酒駕被當場移置保管車輛，並處罰鍰新臺幣 15,000~90,000。</p><p class="rule"><mark>修改後</mark> 酒駕被當場移置保管（把車拖走保管）車輛，並處罰鍰（罰款）新臺幣 15,000~90,000。</p>

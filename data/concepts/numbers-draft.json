@@ -2,6 +2,7 @@
  "entries": [
   {
    "weak": false,
+   "source_note": null,
    "id": "N-001",
    "group": "罰鍰金額",
    "value": "300元～600元",
@@ -16,6 +17,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-002",
    "group": "罰鍰金額",
    "value": "600～1,800元",
@@ -30,6 +32,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-003",
    "group": "罰鍰金額",
    "value": "1,800～5,400元",
@@ -45,6 +48,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-004",
    "group": "罰鍰金額",
    "value": "3,600～10,800元",
@@ -60,6 +64,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-005",
    "group": "罰鍰金額",
    "value": "1,800～3,000元",
@@ -74,6 +79,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-006",
    "group": "罰鍰金額",
    "value": "1,800元",
@@ -88,6 +94,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-007",
    "group": "罰鍰金額",
    "value": "6,000～36,000元",
@@ -102,6 +109,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-008",
    "group": "罰鍰金額",
    "value": "15,000元～90,000元",
@@ -120,6 +128,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-009",
    "group": "罰鍰金額",
    "value": "30,000～90,000元",
@@ -134,6 +143,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-010",
    "group": "罰鍰金額",
    "value": "18,000～36,000元",
@@ -148,6 +158,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-011",
    "group": "罰鍰金額",
    "value": "9萬元",
@@ -167,6 +178,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-012",
    "group": "罰鍰金額",
    "value": "12萬元",
@@ -181,6 +193,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-013",
    "group": "罰鍰金額",
    "value": "18萬元（180,000元）",
@@ -199,6 +212,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-014",
    "group": "距離與長度",
    "value": "10公分",
@@ -214,6 +228,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-015",
    "group": "距離與長度",
    "value": "半公尺（50公分）",
@@ -232,6 +247,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-016",
    "group": "距離與長度",
    "value": "半公尺（50公分、0.5公尺）",
@@ -254,6 +270,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-017",
    "group": "距離與長度",
    "value": "50公分",
@@ -268,6 +285,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-018",
    "group": "距離與長度",
    "value": "1公尺（約1個車門）",
@@ -283,6 +301,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-019",
    "group": "距離與長度",
    "value": "30公尺",
@@ -301,6 +320,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-020",
    "group": "距離與長度",
    "value": "10公尺",
@@ -317,6 +337,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-021",
    "group": "距離與長度",
    "value": "5公尺",
@@ -331,6 +352,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-022",
    "group": "距離與長度",
    "value": "3至6公尺",
@@ -345,6 +367,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-023",
    "group": "距離與長度",
    "value": "100～300公尺",
@@ -359,6 +382,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-024",
    "group": "距離與長度",
    "value": "2公尺",
@@ -373,6 +397,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-025",
    "group": "距離與長度",
    "value": "300～420公釐",
@@ -387,6 +412,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-026",
    "group": "距離與長度",
    "value": "1～2公分",
@@ -400,7 +426,8 @@
    ]
   },
   {
-   "weak": true,
+   "weak": false,
+   "source_note": "出自反向題：答案以外的選項都是正確敘述",
    "id": "N-027",
    "group": "距離與長度",
    "value": "約1指縫",
@@ -415,6 +442,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-028",
    "group": "重量",
    "value": "80公斤",
@@ -431,6 +459,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-029",
    "group": "重量",
    "value": "50公斤",
@@ -445,6 +474,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-030",
    "group": "重量",
    "value": "70公斤以下",
@@ -459,6 +489,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-031",
    "group": "速度",
    "value": "30公里",
@@ -474,6 +505,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-032",
    "group": "速度",
    "value": "40公里",
@@ -491,6 +523,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-033",
    "group": "速度",
    "value": "50公里",
@@ -506,6 +539,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-034",
    "group": "速度",
    "value": "15公里以下",
@@ -521,7 +555,8 @@
    ]
   },
   {
-   "weak": true,
+   "weak": false,
+   "source_note": "出自「以上皆是」題：每個選項都是正確敘述",
    "id": "N-035",
    "group": "速度",
    "value": "25公里以下",
@@ -536,6 +571,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-036",
    "group": "速度",
    "value": "30→50公里",
@@ -550,6 +586,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-037",
    "group": "速度",
    "value": "1倍→4倍",
@@ -564,6 +601,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-038",
    "group": "時間與年數",
    "value": "半秒",
@@ -579,6 +617,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-039",
    "group": "時間與年數",
    "value": "3分鐘",
@@ -593,6 +632,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-040",
    "group": "時間與年數",
    "value": "10秒",
@@ -609,6 +649,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-041",
    "group": "時間與年數",
    "value": "4~6分鐘",
@@ -622,7 +663,8 @@
    ]
   },
   {
-   "weak": true,
+   "weak": false,
+   "source_note": "出自反向題：答案以外的選項都是正確敘述",
    "id": "N-042",
    "group": "時間與年數",
    "value": "15~20分鐘",
@@ -637,6 +679,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-043",
    "group": "時間與年數",
    "value": "30：2、100次/分",
@@ -652,6 +695,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-044",
    "group": "時間與年數",
    "value": "6分鐘",
@@ -667,6 +711,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-045",
    "group": "時間與年數",
    "value": "2小時",
@@ -681,6 +726,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-046",
    "group": "時間與年數",
    "value": "上午7時至晚間8時",
@@ -695,6 +741,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-047",
    "group": "時間與年數",
    "value": "1年",
@@ -709,6 +756,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-048",
    "group": "時間與年數",
    "value": "1年",
@@ -723,6 +771,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-049",
    "group": "時間與年數",
    "value": "1年",
@@ -737,6 +786,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-050",
    "group": "時間與年數",
    "value": "1～2年",
@@ -752,6 +802,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-051",
    "group": "時間與年數",
    "value": "2年",
@@ -766,6 +817,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-052",
    "group": "時間與年數",
    "value": "3年",
@@ -785,6 +837,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-053",
    "group": "時間與年數",
    "value": "12年",
@@ -799,6 +852,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-054",
    "group": "時間與年數",
    "value": "5年",
@@ -816,6 +870,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-055",
    "group": "時間與年數",
    "value": "6年",
@@ -830,6 +885,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-056",
    "group": "時間與年數",
    "value": "10年內",
@@ -849,6 +905,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-057",
    "group": "時間與年數",
    "value": "3個月",
@@ -866,6 +923,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-058",
    "group": "時間與年數",
    "value": "3個月至6個月",
@@ -880,6 +938,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-059",
    "group": "時間與年數",
    "value": "6個月",
@@ -896,6 +955,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-060",
    "group": "時間與年數",
    "value": "30日",
@@ -910,6 +970,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-061",
    "group": "時間與年數",
    "value": "2個月",
@@ -925,6 +986,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-062",
    "group": "時間與年數",
    "value": "7天",
@@ -939,6 +1001,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-063",
    "group": "時間與年數",
    "value": "每週",
@@ -953,6 +1016,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-064",
    "group": "時間與年數",
    "value": "每隔5秒",
@@ -967,6 +1031,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-065",
    "group": "時間與年數",
    "value": "30天（30日、7日）",
@@ -982,6 +1047,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-066",
    "group": "時間與年數",
    "value": "18歲",
@@ -998,6 +1064,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-067",
    "group": "時間與年數",
    "value": "未滿12歲",
@@ -1012,6 +1079,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-068",
    "group": "酒精濃度",
    "value": "0.15毫克（每公升吐氣）",
@@ -1027,6 +1095,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-069",
    "group": "酒精濃度",
    "value": "0.25毫克（每公升吐氣）",
@@ -1041,6 +1110,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-070",
    "group": "點數",
    "value": "記3點",
@@ -1056,6 +1126,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-071",
    "group": "點數",
    "value": "記1點",
@@ -1079,6 +1150,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-072",
    "group": "點數",
    "value": "12點",
@@ -1094,6 +1166,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-073",
    "group": "其他",
    "value": "200萬元",
@@ -1108,6 +1181,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-074",
    "group": "其他",
    "value": "1人",
@@ -1123,6 +1197,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-075",
    "group": "其他",
    "value": "二分之一",
@@ -1139,6 +1214,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-076",
    "group": "其他",
    "value": "85分、70分",
@@ -1153,6 +1229,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-077",
    "group": "其他",
    "value": "50cc、250cc",
@@ -1160,8 +1237,8 @@
    "forms": [],
    "qids": [
     "M0285",
-    "M0467",
     "M0468",
+    "M0467",
     "M0469"
    ],
    "cards": [
@@ -1170,6 +1247,7 @@
   },
   {
    "weak": false,
+   "source_note": null,
    "id": "N-078",
    "group": "其他",
    "value": "110",
@@ -1183,7 +1261,8 @@
    ]
   },
   {
-   "weak": true,
+   "weak": false,
+   "source_note": "出自「以上皆是」題：每個選項都是正確敘述",
    "id": "N-079",
    "group": "其他",
    "value": "1933",
@@ -1197,7 +1276,8 @@
    ]
   },
   {
-   "weak": true,
+   "weak": false,
+   "source_note": "出自反向題：答案以外的選項都是正確敘述",
    "id": "N-080",
    "group": "其他",
    "value": "100%氧氣",

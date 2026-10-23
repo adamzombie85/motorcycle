@@ -5,7 +5,10 @@ import json, glob, re, html
 Q = {q['id']: q for q in json.load(open('data/questions.json'))}
 cards = {}
 for f in sorted(glob.glob('data/concepts/draft-*.json')):
-    for c in json.load(open(f)): cards[c['id']] = c
+    for c in json.load(open(f)):
+        cards[c['id']] = c
+        if c.get('split_from'):   # 拆開的卡：用原本的代號也找得到（題目合併）
+            cards.setdefault(c['split_from'], dict(questions=[]))['questions'] += c['questions']
 G = {}  # group -> entries
 E = []
 def n(group, value, meaning, rx, cs, forms=None):
@@ -120,14 +123,20 @@ for i, e in enumerate(E, 1):
         for qid in cards[cid]['questions']:
             q = Q[qid]
             if rx.search(q['question'] + ' ' + q['options'][q['answer']]) and qid not in qs: qs.append(qid)
-    weak = False
-    if not qs:   # 反向題／「以上皆是」：數字在其他選項裡，改比對全部選項
+    weak, note = False, None
+    if not qs:   # 反向題／「以上皆是」：數字在其他選項裡，改比對全部選項，並自動判斷出處是否有效
         weak = True
         for cid in e['cards']:
             for qid in cards[cid]['questions']:
                 q = Q[qid]
-                if rx.search(q['question'] + ' ' + ' '.join(q['options'])) and qid not in qs: qs.append(qid)
-    out.append(dict(weak=weak, id=f'N-{i:03d}', group=e['group'], value=e['value'], meaning=e['meaning'], forms=e['forms'], qids=qs, cards=e['cards']))
+                if rx.search(q['question'] + ' ' + ' '.join(q['options'])) and qid not in qs:
+                    qs.append(qid)
+                    ans = q['options'][q['answer']]
+                    if '以上皆是' in ans: note = '出自「以上皆是」題：每個選項都是正確敘述'
+                    elif '反向題' in q['tags'] or re.search(r'不正確|錯誤|何者「?非|不是|不包括|並非|不適當', q['question']): note = '出自反向題：答案以外的選項都是正確敘述'
+                    else: note = None; break
+        weak = bool(qs) and note is None
+    out.append(dict(weak=weak, source_note=note, id=f'N-{i:03d}', group=e['group'], value=e['value'], meaning=e['meaning'], forms=e['forms'], qids=qs, cards=e['cards']))
 miss = [o['id'] + ' ' + o['value'] for o in out if not o['qids']]
 conf = []
 byval = {}
@@ -140,7 +149,7 @@ json.dump(dict(entries=out, confusable=conf), open('data/concepts/numbers-draft.
 e = html.escape; byid = {o['id']: o for o in out}
 def row(o):
     f = ('　寫法：' + '、'.join(o['forms'])) if o['forms'] else ''
-    qs = '、'.join(f"{q}（{e(Q[q]['options'][Q[q]['answer']][:22])}）" for q in o['qids']) + ('　※數字在題目的其他選項裡' if o['weak'] else '')
+    qs = '、'.join(f"{q}（{e(Q[q]['options'][Q[q]['answer']][:22])}）" for q in o['qids']) + (('　※' + o['source_note']) if o.get('source_note') else '') + ('　※出處待確認' if o['weak'] else '')
     return f'''<section class="card" data-id="{o['id']}" data-name="{e(o['value'])}"><h3>{e(o['value'])} <small>{o['id']}</small></h3>
 <p class="rule">{e(o['meaning'])}{e(f)}</p><p class="src">出處：{qs}</p>
 <label><input type="radio" name="{o['id']}" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="{o['id']}" value="no"> ✗ 要改</label>
