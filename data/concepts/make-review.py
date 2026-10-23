@@ -18,9 +18,11 @@ for c in cs:
         img = f'<br><img src="../{q["image"]}" style="max-width:100%;max-height:{240 if c.get("type")=="image" else 80}px">' if q['image'] else ''
         rows += f'<li><b>{i}</b> {e(q["question"])}{img}<br>✔ 答案：{e(q["options"][q["answer"]])}</li>'
     conf = f'<p class="cf">⚠ 矛盾：{e(c["conflict"])}</p>' if c['conflict'] else ''
+    ver = (f'<p class="old">修改前：{e(c["before"])}</p><p class="rule"><mark>修改後</mark> {e(c["rule"])}</p>'
+           if c.get('revised') else f'<p class="rule">{e(c["rule"])}</p>')
     nums = '、'.join(c['numbers']) or '—'
     cards += f'''<section class="card" data-id="{c['id']}" data-name="{e(c['name'])}">
-<h2>{e(c['name'])} <small>{c['id']}</small></h2><p class="rule">{e(c['rule'])}</p>
+<h2>{e(c['name'])} <small>{c['id']}</small></h2>{ver}
 <p>數字：{e(nums)}</p>{conf}<ul>{rows}</ul>
 <label><input type="radio" name="{c['id']}" value="ok" checked> ✓ 正確</label>
 <label><input type="radio" name="{c['id']}" value="no"> ✗ 要改</label>
@@ -30,7 +32,7 @@ page = f'''<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name=
 <title>概念卡審核 {seq}｜{sub}</title><style>
 body{{font:18px/1.6 sans-serif;max-width:760px;margin:0 auto;padding:16px}}
 .card{{border:1px solid #ccc;border-radius:12px;padding:12px 16px;margin:16px 0}}
-.rule{{font-size:20px;font-weight:700}} small{{color:#888;font-weight:400}} .cf{{color:#b00}}
+.rule{{font-size:20px;font-weight:700}} small{{color:#888;font-weight:400}} .cf{{color:#b00}} .old{{color:#666;text-decoration:line-through}} mark{{background:#ffe08a;font-size:14px;padding:0 6px;border-radius:4px}}
 li{{margin:8px 0}} label{{margin-right:16px;display:inline-block;min-height:44px}}
 .note{{width:100%;font-size:18px;padding:8px;box-sizing:border-box}} textarea{{width:100%;height:180px;font-size:16px}}
 </style><h1>概念卡審核 {seq}｜{sub}（{len(got)} 題、{len(cs)} 張卡，其中圖卡 {sum(1 for c in cs if c.get('type')=='image')} 張）</h1>
