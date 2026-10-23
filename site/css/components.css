@@ -2376,6 +2376,7 @@
 .character-unlock-badge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   padding: 6px 12px;
   border-radius: var(--radius-full);
@@ -2383,6 +2384,8 @@
   color: #B45309;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
+  max-width: 100%;
+  text-align: center;
   margin-top: auto;
 }
 

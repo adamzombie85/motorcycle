@@ -43,8 +43,10 @@
 
     var ill = el('div', 'empty-state-illustration');
     ill.style.cssText = 'display: flex; justify-content: center; margin-bottom: var(--space-4);';
+    var currentAvatar = (typeof Game !== 'undefined' && Game.getAvatar) ? Game.getAvatar() : 'rider-1';
+    var isFemale = (currentAvatar === 'rider-2' || currentAvatar === 'rider-4');
     var img = el('img');
-    img.src = 'assets/illustrations/empty-mistakes.png';
+    img.src = isFemale ? 'assets/illustrations/empty-mistakes-f.png' : 'assets/illustrations/empty-mistakes.png';
     img.alt = '太棒了！目前沒有任何錯題';
     img.style.cssText = 'max-width: 220px; height: auto; object-fit: contain;';
     ill.appendChild(img);

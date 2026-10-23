@@ -66,16 +66,22 @@
       ? '錯題重練 結算報告'
       : (level ? level.category + ' · ' + level.subcategory + '（第 ' + level.index + ' 關）' : '練習結算')));
 
-    // 過關慶祝插圖（真實插圖）
+    // 過關慶祝插圖（支援男女版角色與音效）
     if (!isMistakes && pass) {
+      var currentAvatar = (typeof Game !== 'undefined' && Game.getAvatar) ? Game.getAvatar() : 'rider-1';
+      var isFemale = (currentAvatar === 'rider-2' || currentAvatar === 'rider-4');
       var ill = el('div', 'result-celebration-ill');
       ill.style.cssText = 'display: flex; justify-content: center; margin: var(--space-2) 0 var(--space-4) 0;';
       var img = el('img');
-      img.src = 'assets/illustrations/celebrate-level.png';
+      img.src = isFemale ? 'assets/illustrations/celebrate-level-f.png' : 'assets/illustrations/celebrate-level.png';
       img.alt = '合格通過慶祝插畫';
       img.style.cssText = 'max-width: 220px; height: auto; object-fit: contain;';
       ill.appendChild(img);
       sec.appendChild(ill);
+
+      if (window.Sound && Sound.pass) {
+        Sound.pass();
+      }
     }
 
     var circle = el('div', 'score-badge-circle');
@@ -380,6 +386,63 @@
     bar.hidden = false;
   }
 
+  /* ---------- 徽章解鎖慶祝對話框 ---------- */
+  function renderBadgeCelebration(badgeCodes) {
+    var allBadges = (typeof Game !== 'undefined' && Game.getBadges) ? Game.getBadges() : [];
+    var names = badgeCodes.map(function (code) {
+      for (var i = 0; i < allBadges.length; i++) {
+        if (allBadges[i].code === code) return allBadges[i].name;
+      }
+      return code;
+    });
+
+    var currentAvatar = (typeof Game !== 'undefined' && Game.getAvatar) ? Game.getAvatar() : 'rider-1';
+    var isFemale = (currentAvatar === 'rider-2' || currentAvatar === 'rider-4');
+
+    var modal = el('div', 'celebration-modal');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+
+    var box = el('div', 'celebration-box');
+
+    // 彩帶特效
+    var confetti = el('div', 'confetti-container');
+    var colors = ['#2563EB', '#F59E0B', '#10B981', '#EC4899', '#8B5CF6'];
+    for (var i = 0; i < 20; i++) {
+      var piece = el('div', 'confetti-piece');
+      piece.style.left = (Math.random() * 100) + '%';
+      piece.style.backgroundColor = colors[i % colors.length];
+      piece.style.animationDelay = (Math.random() * 1.5) + 's';
+      confetti.appendChild(piece);
+    }
+    box.appendChild(confetti);
+
+    var img = el('img');
+    img.src = isFemale ? 'assets/illustrations/celebrate-badge-f.png' : 'assets/illustrations/celebrate-badge.png';
+    img.alt = '獲得新徽章';
+    img.style.cssText = 'width: 140px; height: auto; margin-bottom: var(--space-4); object-fit: contain;';
+    box.appendChild(img);
+
+    var h2 = el('h2', 'text-nowrap', '獲得新成就徽章！');
+    h2.style.cssText = 'font-size: var(--font-size-xl); font-weight: var(--font-weight-black); color: var(--color-slate-900);';
+    box.appendChild(h2);
+
+    var badgeText = el('p', '', '恭喜解鎖：' + names.join('、') + '！');
+    badgeText.style.cssText = 'font-size: var(--font-size-md); font-weight: bold; color: var(--color-primary-700); margin: var(--space-3) 0 var(--space-6) 0;';
+    box.appendChild(badgeText);
+
+    var closeBtn = el('button', 'btn btn-primary btn-lg', '收入徽章館 ➔');
+    closeBtn.type = 'button';
+    closeBtn.addEventListener('click', function () {
+      modal.remove();
+    });
+    box.appendChild(closeBtn);
+
+    modal.appendChild(box);
+    document.body.appendChild(modal);
+    closeBtn.focus();
+  }
+
   function init() {
     var params = new URLSearchParams(location.search);
     var isMistakes = params.get('mode') === 'mistakes';
@@ -410,6 +473,12 @@
       renderCharts(attempt, isMistakes, levelId);
       renderMistakes(attempt);
       renderActions(isMistakes, level);
+
+      var newBadges = (typeof Game !== 'undefined' && Game.checkBadges) ? Game.checkBadges() : [];
+      if (newBadges && newBadges.length > 0) {
+        if (window.Sound && Sound.badge) setTimeout(function () { Sound.badge(); }, 400);
+        renderBadgeCelebration(newBadges);
+      }
     }).catch(function () {
       showMessage('資料載入失敗，請用網址 http://localhost:8000/site/ 開啟。');
     });

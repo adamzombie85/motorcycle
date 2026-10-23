@@ -153,6 +153,11 @@
     rName.style.cssText = 'font-size: var(--font-size-md); font-weight: var(--font-weight-black); color: var(--color-slate-900);';
     rCard.appendChild(rName);
 
+    var cBtn = link('btn btn-outline btn-sm', '更換角色 ➔', 'character.html');
+    cBtn.style.marginTop = 'var(--space-2)';
+    cBtn.style.fontSize = 'var(--font-size-xs)';
+    rCard.appendChild(cBtn);
+
     sec.appendChild(rCard);
 
     // 三合一統計卡
@@ -219,7 +224,7 @@
     grid.appendChild(cMistakes);
 
     // 3. 考照之路地圖
-    var cMap = link('feature-item-card', '', 'levels.html');
+    var cMap = link('feature-item-card', '', 'map.html');
     cMap.style.borderLeft = '6px solid var(--color-accent)';
     var iMap = el('div', 'feature-icon-wrapper');
     iMap.style.cssText = 'background-color: var(--color-accent-100); color: var(--color-accent-700);';
@@ -232,7 +237,7 @@
     grid.appendChild(cMap);
 
     // 4. 成就徽章館
-    var cBadges = link('feature-item-card', '', 'levels.html');
+    var cBadges = link('feature-item-card', '', 'badges.html');
     cBadges.style.borderLeft = '6px solid var(--color-success)';
     var iBadges = el('div', 'feature-icon-wrapper');
     iBadges.style.cssText = 'background-color: var(--color-success-100); color: var(--color-success-700);';

@@ -241,12 +241,24 @@
     var q = questions[index];
     var correct = choice === q.answer;
 
+    // 播放音效
+    if (window.Sound) {
+      if (correct && Sound.correct) Sound.correct();
+      else if (!correct && Sound.wrong) Sound.wrong();
+    }
+
     var mistake;
     if (mode === 'daily' && typeof Game !== 'undefined' && Game.dailyAnswer) {
       Game.dailyAnswer(q.id, correct, choice);
-      mistake = Store.recordAnswer(q.id, correct);
+      mistake = Store.recordAnswer(q.id, correct, { choice: choice, src: 'daily' });
     } else {
-      mistake = Store.recordAnswer(q.id, correct);
+      mistake = Store.recordAnswer(q.id, correct, { choice: choice, src: mode });
+    }
+
+    // 檢查是否有新徽章解鎖
+    var unlockedBadges = (typeof Game !== 'undefined' && Game.checkBadges) ? Game.checkBadges() : [];
+    if (unlockedBadges.length > 0 && window.Sound && Sound.badge) {
+      setTimeout(function () { Sound.badge(); }, 350);
     }
 
     results.push({ qid: q.id, choice: choice, correct: correct, cleared: mistake ? mistake.cleared : false });
@@ -254,7 +266,11 @@
     Array.prototype.forEach.call(list.children, function (btn, i) {
       btn.disabled = true;
       btn.classList.remove('is-selected');
-      if (i === q.answer) { btn.classList.add('is-correct'); setIndicator(btn, '正確解答'); }
+      if (i === q.answer) {
+        btn.classList.add('is-correct');
+        if (correct) btn.classList.add('animate-correct-pop');
+        setIndicator(btn, '正確解答');
+      }
       else if (i === choice) { btn.classList.add('is-wrong'); setIndicator(btn, '你的選擇'); }
       else btn.classList.add('is-dimmed');
     });

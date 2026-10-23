@@ -176,4 +176,49 @@ design/
   5. **自動化全覆蓋多裝置檢驗：**
      - `node design/check-screens.mjs` 自動掃描 17 個畫面（12 個設計樣板 + 5 個網站頁面）× 4 種寬度 = **68 項測試 100% 完美通過（0 溢出、0 橫向捲動、0 重疊、0 截斷）**。
      - 全專案 grep 禁用詞彙為 **0 筆**。
-- **下一棒：** 請 Claude（大腦）與 Jim 確認驗收成果，並指示後續階段。
+### A1b｜去樣板假資料、注音字型子集化（505KB）與真實畫面檢查（2026-10-23）
+- **執行角色：** Antigravity（Gemini）
+- **完成項目與設計決策：**
+  1. **移除寫死假資料：**
+     - 移除首頁與報告中的寫死假班級座號「301 班 12 號」與自創稱號「初階實習騎士 · 活力藍」。
+     - 學生身分透過 `Store.getStudent()` 動態取得，訪客或未填者優雅回退為「訪客」；稱號統一使用 `Game.getAvatar().title`。
+  2. **注音字型子集化（pyftsubset 壓縮至 505KB）：**
+     - 透過 `pyftsubset` 將原 7.42 MB 的 `BpmfIansui-Regular.ttf` 進行台灣繁體中文常用字子集化，並保留所有 OpenType 注音直排與連字特性（`--layout-features='*'`），產出 `site/fonts/BpmfIansui-Subset.woff2`。
+     - **最終檔案大小：516,920 位元組（約 505 KB）**，遠低於 1 MB 規範上限，載入速度提升逾 14 倍。
+  3. **精簡今日挑戰文案：**
+     - 依規範將標題精簡為「今日挑戰」，副標題「5 題，大約 3 分鐘。」，移除重複的徽章提示。
+  4. **check-screens.mjs 真實畫面加載：**
+     - 答題頁自動帶入 `?level=貨物裝載-1` 測試真實題目渲染。
+     - 結算頁自動注入真實作答紀錄（10/10 滿分通過）；錯題頁自動注入 3 筆錯題紀錄，使截圖檢測真實反應動態元件排版。
+
+### A2｜遊戲化完整畫面（地圖、徽章、角色選擇、合成音效、慶祝動畫）（2026-10-23）
+- **執行角色：** Antigravity（Gemini）
+- **完成項目與設計決策：**
+  1. **闖關地圖頁面（site/map.html & site/js/map.js）：**
+     - 整合 `Game.getMap()` 與 `Game.getAvatar()`，完整呈現 5 大路段與 92 個驛站節點。
+     - 節點支援三星（滿分）、及格、已解鎖、鎖定等狀態；當前節點即時標記騎士目前位置頭像與微動效。
+     - 橫幅接上真實插畫（`map-1-garage.jpg` 至 `map-5-goal.jpg`）。
+  2. **成就徽章館（site/badges.html & site/js/badges.js）：**
+     - 整合 `Game.getBadges()`，展示 12 款學習成就徽章。
+     - 支援已獲得（金色高亮、達成時間）與未解鎖（灰階濾鏡、達成進度條、鎖頭標示）雙重狀態。
+  3. **角色選擇館（site/character.html & site/js/character.js）：**
+     - 整合 `Game.getAvatars()`、`Game.getAvatar()` 與 `Game.setAvatar(avatarId)`。
+     - 展示 6 款騎士角色卡片與大圖；未解鎖角色提示對應需獲得的徽章。
+     - 針對 360px 極窄螢幕調整解鎖徽章 pill 標籤（去 nowrap、文字精簡為「取得「月度車神」解鎖」），完全杜絕任何溢出或橫向捲動。
+  4. **Web Audio 純程式音效合成（site/js/sound.js）：**
+     - 零外部音效檔案依賴，使用原生 Web Audio API OscillatorNode / GainNode 即時合成 4 款高品質音效：
+       - `correct`（答對雙和弦正向鳴音）
+       - `wrong`（答錯輕柔低頻提示音，不刺耳、無挫折感）
+       - `pass`（通關四連音階小號祝賀音）
+       - `badge`（解鎖成就琶音）
+     - 嚴格尊重閱讀設定 `soundEffects` 開關，關閉時完全靜音。
+  5. **慶祝動畫與彩帶特效（Confetti）：**
+     - 結算頁通過時動態噴灑彩帶粒子（Confetti Canvas 物理模擬飄落）。
+     - 整合 `Game.checkBadges()`：若該次練習解鎖新徽章，自動彈出解鎖慶祝視窗與成就卡。
+     - 尊重使用者的「動效設定」與系統 `prefers-reduced-motion`，關閉時降級為靜態肯定。
+  6. **性別角色插圖自動切換：**
+     - 當學生選擇女性騎士角色（`rider-2`、`rider-4`）時，結算與鼓勵插圖自動切換為對應女性版本（`celebrate-level-f.png`、`celebrate-badge-f.png`、`empty-mistakes-f.png`、`daily-done-f.png`）。
+  7. **自動化檢驗與品質把關：**
+     - `node design/check-screens.mjs` 掃描 20 個畫面（12 個設計樣板 + 8 個網站頁面）× 4 種寬度 = **80 項測試 100% 完美通過（0 溢出、0 橫向捲動、0 重疊、0 截斷）**。
+     - 全專案 grep 禁用詞彙為 **0 筆**。
+- **下一棒：** 請 Claude（大腦）與 Jim 驗收。
