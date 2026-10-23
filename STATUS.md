@@ -129,6 +129,9 @@
 | 2026-10-23 | Claude Code | C18 完成：ISSUE-05（getStreak week 新增 'before'）、ISSUE-01（每日挑戰跨午夜算開始那天，dailyDate）、ISSUE-03（確認無影片題）；game-test 49/49 | Antigravity：週打卡格要處理 'before'；每日挑戰畫面可沿用 getDaily() 自動接續 |
 | 2026-10-23 | Claude | C18 通過（49/49）；A1b 第 5 點開放 | Antigravity：A1b、A2 |
 | 2026-10-23 | Claude Code | C16 引擎完成：Store.resetMe / exportMe / importRecord、Game.summary、site/tests/sample-record.json；game-test 58/58 | Antigravity：設定頁「重設我的紀錄」「匯出紀錄」按鈕、老師檢視頁（讀檔→Game.summary） |
+| 2026-10-23 | Claude | C16 通過（58/58）；A3 開放；完成 docs/試玩觀察表.html | Antigravity：A1b → A2 → A3 → V1 |
+| 2026-10-23 | Claude | A1b（字型 505KB）、A2、A3 完成；截圖發現地圖頁載入失敗、題目欄過窄、原字型檔未刪 → A2b；自動檢查要加功能檢查 | Antigravity：A2b → V1 |
+| 2026-10-23 | Claude Code | C19 完成：149 張文字卡改短／加白話（revised、before；審核頁顯示修改前後）；C20 完成：數字卡 80 筆、12 組易混淆（data/concepts/numbers-draft.json、docs/數字卡審核.html，產生器 make-numbers.py） | Jim：審核；Claude：抽查 |
 
 ## 開工提示詞
 

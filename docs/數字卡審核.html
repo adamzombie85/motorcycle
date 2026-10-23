@@ -1,0 +1,249 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>數字卡審核</title><style>
+body{font:18px/1.6 sans-serif;max-width:760px;margin:0 auto;padding:16px}.card{border:1px solid #ccc;border-radius:12px;padding:8px 16px;margin:12px 0}
+.rule{font-size:19px;font-weight:700;margin:4px 0}.src{color:#555;font-size:15px;margin:4px 0}small{color:#888;font-weight:400}h3{margin:6px 0}
+.grp{background:#fff7e0;border-radius:12px;padding:4px 16px;margin:12px 0}label{margin-right:16px;display:inline-block;min-height:44px}
+.note{width:100%;font-size:18px;padding:8px;box-sizing:border-box}textarea{width:100%;height:180px;font-size:16px}</style>
+<h1>數字卡審核（80 筆）</h1><p>每筆選「✓ 正確」或「✗ 要改」，要改的寫備註；最下方彙整，複製給 Claude。</p><h2>容易搞混的數字（放在一起看）</h2><div class="grp"><h3>載物的寬和長</h3><p>載物寬度和載物後方長度最容易搞混</p><ul><li><b>10公分</b>：載物寬度：不超過把手外緣</li><li><b>半公尺（50公分）</b>：載物伸出車尾：自後輪軸起不超過</li></ul></div><div class="grp"><h3>載物與車重</h3><p>重型、普通輕型載物重量；小型輕型空重不是載物重量</p><ul><li><b>80公斤</b>：重型機車載物重量上限</li><li><b>50公斤</b>：普通輕型機車載物重量</li><li><b>70公斤以下</b>：小型輕型機車空重（含電池）</li></ul></div><div class="grp"><h3>路口附近的距離</h3><p>方向燈 30公尺、臨時停車 10公尺、路口範圍 5公尺、平交道 3至6公尺</p><ul><li><b>30公尺</b>：轉彎或變換車道，要在多遠前顯示方向燈</li><li><b>10公尺</b>：交岔路口、公車招呼站多少公尺內不得臨時停車（巷道形成的路口也一樣）</li><li><b>5公尺</b>：沒有停止線的路口範圍：道路邊緣虛擬連接線外</li><li><b>3至6公尺</b>：無看守、無設備的平交道：在軌道外多遠停看聽</li></ul></div><div class="grp"><h3>各種間隔</h3><p>同樣是「間隔」，兩車交會半公尺、障礙物 50公分、路邊停車 1公尺（半公尺、50公分、0.5公尺是同一個長度的不同寫法）</p><ul><li><b>半公尺（50公分、0.5公尺）</b>：兩車交會、與左右相鄰車輛的間隔</li><li><b>50公分</b>：機車與障礙物保持的最少橫向距離</li><li><b>1公尺（約1個車門）</b>：經過路邊停放的車輛，保持的間隔</li></ul></div><div class="grp"><h3>三種速限</h3><p>30、40、50公里依道路不同；平交道是 15公里以下</p><ul><li><b>30公里</b>：未劃設車道線或分向線的道路，時速不得超過</li><li><b>40公里</b>：有快慢車道分隔線的慢車道，無速限時時速不得超過</li><li><b>50公里</b>：沒有速限標誌或標線的一般道路，時速不得超過</li><li><b>15公里以下</b>：看到平交道標誌或標線，要把車速降到</li></ul></div><div class="grp"><h3>兩種酒精濃度</h3><p>0.15 是不得開車的標準；0.25 才有刑責</p><ul><li><b>0.15毫克（每公升吐氣）</b>：吐氣酒精濃度達此數值，不得開車</li><li><b>0.25毫克（每公升吐氣）</b>：吐氣酒精濃度達此數值，或吸毒致不能安全駕駛：處 3年以下有期徒刑</li></ul></div><div class="grp"><h3>酒駕罰鍰</h3><p>9萬、12萬（汽車）、18萬（拒測）</p><ul><li><b>9萬元</b>：機車酒駕：10年內第 2次；第一次最高也是 9萬元</li><li><b>12萬元</b>：汽車（四輪以上）10年內酒駕第 2次</li><li><b>18萬元（180,000元）</b>：拒絕酒測：另當場吊銷駕照</li></ul></div><div class="grp"><h3>闖紅燈的罰鍰</h3><p>闖紅燈、捷運共用路口闖紅燈、紅燈右轉三個區間</p><ul><li><b>1,800～5,400元</b>：機車闖紅燈（當場舉發），並記 3點</li><li><b>3,600～10,800元</b>：機車在捷運共用路口闖紅燈，並記點</li><li><b>600～1,800元</b>：紅燈右轉</li></ul></div><div class="grp"><h3>吊扣的期間</h3><p>酒駕吊扣 1～2年；吊扣牌照 2年（車主）；吊扣牌照 6個月</p><ul><li><b>1～2年</b>：機車酒駕第一次：吊扣駕照</li><li><b>2年</b>：車主明知酒駕不禁止：吊扣牌照</li><li><b>6個月</b>：吊扣牌照：迫使他車讓道；強制險逾期未投保可註銷牌照</li></ul></div><div class="grp"><h3>幾年</h3><p>1年、3年、5年、6年、10年、12年各代表不同事</p><ul><li><b>1年</b>：駕照被吊銷後，多久才能重新考領</li><li><b>1年</b>：機車辦理停駛，期限最多</li><li><b>1年</b>：闖越平交道：吊扣駕照</li><li><b>3年</b>：10年內酒駕第 2次：吊銷駕照後；肇事致人受傷逃逸：不得考領</li><li><b>5年</b>：出廠滿幾年轉讓過戶要臨時檢驗；大型重型機車出廠未滿 5年免定期檢驗</li><li><b>6年</b>：輪胎建議製造後不超過</li><li><b>10年內</b>：累計酒駕次數的計算期間</li><li><b>12年</b>：終身吊銷駕照者（肇事致死案件）逾幾年可申請考領</li></ul></div><div class="grp"><h3>幾個月</h3><p>2個月（記點）、3個月、6個月</p><ul><li><b>2個月</b>：1年內記點滿 12點：吊扣駕照</li><li><b>3個月</b>：吊扣駕照：借照或允許無照者駕車；事故車證據扣留不得超過</li><li><b>3個月至6個月</b>：肇事致人重傷：吊扣駕照</li><li><b>6個月</b>：吊扣牌照：迫使他車讓道；強制險逾期未投保可註銷牌照</li></ul></div><div class="grp"><h3>CPR 的數字</h3><p>比例 30：2、10秒、4~6分鐘、15~20分鐘</p><ul><li><b>30：2、100次/分</b>：CPR 按壓與吹氣比例、按壓速度</li><li><b>10秒</b>：檢查呼吸不超過；CPR 不可中斷超過</li><li><b>4~6分鐘</b>：心跳停止後多久內要做 CPR</li><li><b>15~20分鐘</b>：止血帶每隔多久鬆開一次</li></ul></div><h2>罰鍰金額</h2><section class="card" data-id="N-001" data-name="300元～600元"><h3>300元～600元 <small>N-001</small></h3>
+<p class="rule">附載人員或物品違規，罰駕駛人</p><p class="src">出處：M0017（新臺幣300元~600元罰鍰）</p>
+<label><input type="radio" name="N-001" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-001" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-002" data-name="600～1,800元"><h3>600～1,800元 <small>N-002</small></h3>
+<p class="rule">紅燈右轉</p><p class="src">出處：M0547（處新臺幣600～1,800元罰鍰）</p>
+<label><input type="radio" name="N-002" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-002" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-003" data-name="1,800～5,400元"><h3>1,800～5,400元 <small>N-003</small></h3>
+<p class="rule">機車闖紅燈（當場舉發），並記 3點</p><p class="src">出處：M0486（罰鍰新臺幣1,800 元至5,400元並記違）、M0546（處新臺幣1,800～5,400元罰鍰）</p>
+<label><input type="radio" name="N-003" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-003" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-004" data-name="3,600～10,800元"><h3>3,600～10,800元 <small>N-004</small></h3>
+<p class="rule">機車在捷運共用路口闖紅燈，並記點</p><p class="src">出處：M0117（罰鍰新臺幣 3,600～10,800元並予違）</p>
+<label><input type="radio" name="N-004" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-004" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-005" data-name="1,800～3,000元"><h3>1,800～3,000元 <small>N-005</small></h3>
+<p class="rule">汽車併排停車</p><p class="src">出處：M0102（1,800元以上 3,000元以下）</p>
+<label><input type="radio" name="N-005" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-005" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-006" data-name="1,800元"><h3>1,800元 <small>N-006</small></h3>
+<p class="rule">無正當理由不接受道安講習（逾期 6個月以上再吊扣駕照）</p><p class="src">出處：M0347（吊扣駕駛執照）</p>
+<label><input type="radio" name="N-006" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-006" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-007" data-name="6,000～36,000元"><h3>6,000～36,000元 <small>N-007</small></h3>
+<p class="rule">超過規定最高時速 40公里以上（另吊扣牌照 6個月、上講習）</p><p class="src">出處：M0323（40 公里）</p>
+<label><input type="radio" name="N-007" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-007" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-008" data-name="15,000元～90,000元"><h3>15,000元～90,000元 <small>N-008</small></h3>
+<p class="rule">車主明知駕駛人酒駕卻不禁止（另吊扣牌照 2年）　寫法：15,000~90,000</p><p class="src">出處：M0106（15,000元以上 90,000元以下）、M0354（罰鍰新臺幣15,000~90,000）</p>
+<label><input type="radio" name="N-008" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-008" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-009" data-name="30,000～90,000元"><h3>30,000～90,000元 <small>N-009</small></h3>
+<p class="rule">兩輛以上機車競駛（另當場禁止駕駛、吊銷駕照）</p><p class="src">出處：M0669（吊銷其駕駛執照）</p>
+<label><input type="radio" name="N-009" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-009" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-010" data-name="18,000～36,000元"><h3>18,000～36,000元 <small>N-010</small></h3>
+<p class="rule">沒有駕照騎機車</p><p class="src">出處：M0355（18,000～36,000 元）</p>
+<label><input type="radio" name="N-010" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-010" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-011" data-name="9萬元"><h3>9萬元 <small>N-011</small></h3>
+<p class="rule">機車酒駕：10年內第 2次；第一次最高也是 9萬元</p><p class="src">出處：M0144（新臺幣9萬元）、M0094（於10年內第 2次再次遭舉發違規酒駕）、M0095（10 年）、M0097（9萬元）、M0139（處新臺幣9萬元罰鍰）</p>
+<label><input type="radio" name="N-011" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-011" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-012" data-name="12萬元"><h3>12萬元 <small>N-012</small></h3>
+<p class="rule">汽車（四輪以上）10年內酒駕第 2次</p><p class="src">出處：M0107（12 萬元）</p>
+<label><input type="radio" name="N-012" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-012" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-013" data-name="18萬元（180,000元）"><h3>18萬元（180,000元） <small>N-013</small></h3>
+<p class="rule">拒絕酒測：另當場吊銷駕照　寫法：18萬、180,000</p><p class="src">出處：M0108（吊銷其駕駛執照）、M0143（處新臺幣18 萬元罰鍰，並當場吊銷其駕駛執照）</p>
+<label><input type="radio" name="N-013" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-013" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><h2>距離與長度</h2><section class="card" data-id="N-014" data-name="10公分"><h3>10公分 <small>N-014</small></h3>
+<p class="rule">載物寬度：不超過把手外緣</p><p class="src">出處：M0002（10公分）、M0013（不得超過把手外緣 10公分）</p>
+<label><input type="radio" name="N-014" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-014" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-015" data-name="半公尺（50公分）"><h3>半公尺（50公分） <small>N-015</small></h3>
+<p class="rule">載物伸出車尾：自後輪軸起不超過　寫法：半公尺、50公分</p><p class="src">出處：M0004（半公尺）、M0011（自後輪軸起不得超過半公尺）</p>
+<label><input type="radio" name="N-015" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-015" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-016" data-name="半公尺（50公分、0.5公尺）"><h3>半公尺（50公分、0.5公尺） <small>N-016</small></h3>
+<p class="rule">兩車交會、與左右相鄰車輛的間隔　寫法：半公尺、50公分、0.5公尺</p><p class="src">出處：M0628（半公尺）、M0634（半公尺）、M0674（0.5公尺以上）、M0767（50公分以上）、M0768（50公分）</p>
+<label><input type="radio" name="N-016" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-016" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-017" data-name="50公分"><h3>50公分 <small>N-017</small></h3>
+<p class="rule">機車與障礙物保持的最少橫向距離</p><p class="src">出處：M0760（50公分）</p>
+<label><input type="radio" name="N-017" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-017" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-018" data-name="1公尺（約1個車門）"><h3>1公尺（約1個車門） <small>N-018</small></h3>
+<p class="rule">經過路邊停放的車輛，保持的間隔</p><p class="src">出處：M0675（1公尺以上(約1個車門)）、M0774（至少1公尺（約 1個車門）以上）</p>
+<label><input type="radio" name="N-018" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-018" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-019" data-name="30公尺"><h3>30公尺 <small>N-019</small></h3>
+<p class="rule">轉彎或變換車道，要在多遠前顯示方向燈</p><p class="src">出處：M0576（30公尺）、M0599（30公尺前）、M0606（應距交岔路口 30公尺前顯示方向燈，換入內側）、M0491（30公尺）</p>
+<label><input type="radio" name="N-019" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-019" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-020" data-name="10公尺"><h3>10公尺 <small>N-020</small></h3>
+<p class="rule">交岔路口、公車招呼站多少公尺內不得臨時停車（巷道形成的路口也一樣）</p><p class="src">出處：M0663（10公尺）、M0453（交叉路口十公尺內不得臨時停車）</p>
+<label><input type="radio" name="N-020" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-020" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-021" data-name="5公尺"><h3>5公尺 <small>N-021</small></h3>
+<p class="rule">沒有停止線的路口範圍：道路邊緣虛擬連接線外</p><p class="src">出處：M0542（劃有停止線者，自停止線劃設後所涵蓋之路面;未）</p>
+<label><input type="radio" name="N-021" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-021" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-022" data-name="3至6公尺"><h3>3至6公尺 <small>N-022</small></h3>
+<p class="rule">無看守、無設備的平交道：在軌道外多遠停看聽</p><p class="src">出處：M0343（3至6公尺）</p>
+<label><input type="radio" name="N-022" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-022" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-023" data-name="100～300公尺"><h3>100～300公尺 <small>N-023</small></h3>
+<p class="rule">超速舉發用科學儀器，一般道路要在多遠前明顯標示</p><p class="src">出處：M0333（100公尺至300 公尺間）</p>
+<label><input type="radio" name="N-023" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-023" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-024" data-name="2公尺"><h3>2公尺 <small>N-024</small></h3>
+<p class="rule">機車全高不得超過</p><p class="src">出處：M0166（2公尺）</p>
+<label><input type="radio" name="N-024" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-024" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-025" data-name="300～420公釐"><h3>300～420公釐 <small>N-025</small></h3>
+<p class="rule">小型輕型機車輪胎直徑</p><p class="src">出處：M0158（300公釐以上，420公釐以下）</p>
+<label><input type="radio" name="N-025" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-025" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-026" data-name="1～2公分"><h3>1～2公分 <small>N-026</small></h3>
+<p class="rule">煞車拉桿輕抓時的間隙</p><p class="src">出處：M0147（應要有1至2公分間隙）</p>
+<label><input type="radio" name="N-026" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-026" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-027" data-name="約1指縫"><h3>約1指縫 <small>N-027</small></h3>
+<p class="rule">安全帽帽帶扣緊後保留的空間</p><p class="src">出處：M0224（受過撞擊之安全帽，如外觀無損壞，則可正常使用）　※數字在題目的其他選項裡</p>
+<label><input type="radio" name="N-027" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-027" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><h2>重量</h2><section class="card" data-id="N-028" data-name="80公斤"><h3>80公斤 <small>N-028</small></h3>
+<p class="rule">重型機車載物重量上限</p><p class="src">出處：M0003（80 公斤）、M0291（以 80公斤為限）</p>
+<label><input type="radio" name="N-028" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-028" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-029" data-name="50公斤"><h3>50公斤 <small>N-029</small></h3>
+<p class="rule">普通輕型機車載物重量</p><p class="src">出處：M0005（以50公斤為限）</p>
+<label><input type="radio" name="N-029" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-029" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-030" data-name="70公斤以下"><h3>70公斤以下 <small>N-030</small></h3>
+<p class="rule">小型輕型機車空重（含電池）</p><p class="src">出處：M0159（70公斤以下）</p>
+<label><input type="radio" name="N-030" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-030" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><h2>速度</h2><section class="card" data-id="N-031" data-name="30公里"><h3>30公里 <small>N-031</small></h3>
+<p class="rule">未劃設車道線或分向線的道路，時速不得超過</p><p class="src">出處：M0620（不得超過 30公里）、M0776（不得超過30 公里）</p>
+<label><input type="radio" name="N-031" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-031" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-032" data-name="40公里"><h3>40公里 <small>N-032</small></h3>
+<p class="rule">有快慢車道分隔線的慢車道，無速限時時速不得超過</p><p class="src">出處：M0625（40公里）、M0777（不得超過40 公里）、M0115（40公里）</p>
+<label><input type="radio" name="N-032" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-032" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-033" data-name="50公里"><h3>50公里 <small>N-033</small></h3>
+<p class="rule">沒有速限標誌或標線的一般道路，時速不得超過</p><p class="src">出處：M0621（50公里）、M0778（不得超過50 公里）</p>
+<label><input type="radio" name="N-033" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-033" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-034" data-name="15公里以下"><h3>15公里以下 <small>N-034</small></h3>
+<p class="rule">看到平交道標誌或標線，要把車速降到</p><p class="src">出處：M0652（15公里以下）、M0377（15公里以下）</p>
+<label><input type="radio" name="N-034" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-034" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-035" data-name="25公里以下"><h3>25公里以下 <small>N-035</small></h3>
+<p class="rule">微型電動二輪車最高時速</p><p class="src">出處：M0508（以上皆是）　※數字在題目的其他選項裡</p>
+<label><input type="radio" name="N-035" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-035" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-036" data-name="30→50公里"><h3>30→50公里 <small>N-036</small></h3>
+<p class="rule">撞擊時速從 30公里升到 50公里，騎士死亡機率從 10％升到約 80％</p><p class="src">出處：M0805（從10％大幅增加至約 80％）</p>
+<label><input type="radio" name="N-036" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-036" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-037" data-name="1倍→4倍"><h3>1倍→4倍 <small>N-037</small></h3>
+<p class="rule">速度增加 1倍，煞車距離變成</p><p class="src">出處：M0237（4倍）</p>
+<label><input type="radio" name="N-037" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-037" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><h2>時間與年數</h2><section class="card" data-id="N-038" data-name="半秒"><h3>半秒 <small>N-038</small></h3>
+<p class="rule">每次按喇叭不得超過</p><p class="src">出處：M0626（不得超過半秒鐘）</p>
+<label><input type="radio" name="N-038" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-038" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-039" data-name="3分鐘"><h3>3分鐘 <small>N-039</small></h3>
+<p class="rule">臨時停車不得超過</p><p class="src">出處：M0275（不得超過3分鐘，並保持立即行駛之狀態）</p>
+<label><input type="radio" name="N-039" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-039" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-040" data-name="10秒"><h3>10秒 <small>N-040</small></h3>
+<p class="rule">檢查呼吸不超過；CPR 不可中斷超過</p><p class="src">出處：M0034（10 秒鐘）、M0060（10秒）</p>
+<label><input type="radio" name="N-040" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-040" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-041" data-name="4~6分鐘"><h3>4~6分鐘 <small>N-041</small></h3>
+<p class="rule">心跳停止後多久內要做 CPR</p><p class="src">出處：M0043（在4~6分鐘內）</p>
+<label><input type="radio" name="N-041" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-041" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-042" data-name="15~20分鐘"><h3>15~20分鐘 <small>N-042</small></h3>
+<p class="rule">止血帶每隔多久鬆開一次</p><p class="src">出處：M0042（將出血患肢放置低於心臟的位置，這樣血才不會流）　※數字在題目的其他選項裡</p>
+<label><input type="radio" name="N-042" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-042" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-043" data-name="30：2、100次/分"><h3>30：2、100次/分 <small>N-043</small></h3>
+<p class="rule">CPR 按壓與吹氣比例、按壓速度</p><p class="src">出處：M0035（30：2）、M0036（100 次/每分鐘）</p>
+<label><input type="radio" name="N-043" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-043" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-044" data-name="6分鐘"><h3>6分鐘 <small>N-044</small></h3>
+<p class="rule">逕行舉發超速，連續舉發要相隔</p><p class="src">出處：M0356（違規時間相隔 6分鐘以上或行駛經過1個路口以）、M0357（違規時間相隔 6分鐘以上，或行駛經過 1個路）</p>
+<label><input type="radio" name="N-044" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-044" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-045" data-name="2小時"><h3>2小時 <small>N-045</small></h3>
+<p class="rule">違規停車駕駛不在場，每逾多久可連續舉發</p><p class="src">出處：M0335（2小時）</p>
+<label><input type="radio" name="N-045" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-045" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-046" data-name="上午7時至晚間8時"><h3>上午7時至晚間8時 <small>N-046</small></h3>
+<p class="rule">禁止停車路段的禁止時間</p><p class="src">出處：M0653（上午7時至晚間8時）</p>
+<label><input type="radio" name="N-046" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-046" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-047" data-name="1年"><h3>1年 <small>N-047</small></h3>
+<p class="rule">駕照被吊銷後，多久才能重新考領</p><p class="src">出處：M0077（應經1年）</p>
+<label><input type="radio" name="N-047" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-047" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-048" data-name="1年"><h3>1年 <small>N-048</small></h3>
+<p class="rule">機車辦理停駛，期限最多</p><p class="src">出處：M0163（1年）</p>
+<label><input type="radio" name="N-048" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-048" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-049" data-name="1年"><h3>1年 <small>N-049</small></h3>
+<p class="rule">闖越平交道：吊扣駕照</p><p class="src">出處：M0378（吊銷駕駛執照終身不得考領）</p>
+<label><input type="radio" name="N-049" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-049" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-050" data-name="1～2年"><h3>1～2年 <small>N-050</small></h3>
+<p class="rule">機車酒駕第一次：吊扣駕照</p><p class="src">出處：M0142（吊扣其駕駛執照 1年至2年，並當場移置保管該）、M0103（1~2 年）</p>
+<label><input type="radio" name="N-050" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-050" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-051" data-name="2年"><h3>2年 <small>N-051</small></h3>
+<p class="rule">車主明知酒駕不禁止：吊扣牌照</p><p class="src">出處：M0088（2年）</p>
+<label><input type="radio" name="N-051" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-051" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-052" data-name="3年"><h3>3年 <small>N-052</small></h3>
+<p class="rule">10年內酒駕第 2次：吊銷駕照後；肇事致人受傷逃逸：不得考領</p><p class="src">出處：M0094（於10年內第 2次再次遭舉發違規酒駕）、M0095（10 年）、M0097（9萬元）、M0107（12 萬元）、M0336（3年）</p>
+<label><input type="radio" name="N-052" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-052" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-053" data-name="12年"><h3>12年 <small>N-053</small></h3>
+<p class="rule">終身吊銷駕照者（肇事致死案件）逾幾年可申請考領</p><p class="src">出處：M0353（12年）</p>
+<label><input type="radio" name="N-053" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-053" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-054" data-name="5年"><h3>5年 <small>N-054</small></h3>
+<p class="rule">出廠滿幾年轉讓過戶要臨時檢驗；大型重型機車出廠未滿 5年免定期檢驗</p><p class="src">出處：M0162（5 年）、M0235（出廠年份未滿5年者，免予定期檢驗）、M0293（臨時檢驗）</p>
+<label><input type="radio" name="N-054" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-054" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-055" data-name="6年"><h3>6年 <small>N-055</small></h3>
+<p class="rule">輪胎建議製造後不超過</p><p class="src">出處：M0194（6年）</p>
+<label><input type="radio" name="N-055" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-055" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-056" data-name="10年內"><h3>10年內 <small>N-056</small></h3>
+<p class="rule">累計酒駕次數的計算期間</p><p class="src">出處：M0094（於10年內第 2次再次遭舉發違規酒駕）、M0095（10 年）、M0097（9萬元）、M0139（處新臺幣9萬元罰鍰）、M0109（吊銷其駕駛執照）、M0107（12 萬元）</p>
+<label><input type="radio" name="N-056" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-056" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-057" data-name="3個月"><h3>3個月 <small>N-057</small></h3>
+<p class="rule">吊扣駕照：借照或允許無照者駕車；事故車證據扣留不得超過</p><p class="src">出處：M0261（3個月）、M0269（3 個月）、M0311（扣留期間不得超過 3個月）</p>
+<label><input type="radio" name="N-057" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-057" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-058" data-name="3個月至6個月"><h3>3個月至6個月 <small>N-058</small></h3>
+<p class="rule">肇事致人重傷：吊扣駕照</p><p class="src">出處：M0271（3 個月至6個月）</p>
+<label><input type="radio" name="N-058" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-058" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-059" data-name="6個月"><h3>6個月 <small>N-059</small></h3>
+<p class="rule">吊扣牌照：迫使他車讓道；強制險逾期未投保可註銷牌照</p><p class="src">出處：M0098（6個月）、M0307（6個月）</p>
+<label><input type="radio" name="N-059" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-059" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-060" data-name="30日"><h3>30日 <small>N-060</small></h3>
+<p class="rule">強制險保險證有效期間至少（換牌照、過戶時）</p><p class="src">出處：M0324（30日）</p>
+<label><input type="radio" name="N-060" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-060" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-061" data-name="2個月"><h3>2個月 <small>N-061</small></h3>
+<p class="rule">1年內記點滿 12點：吊扣駕照</p><p class="src">出處：M0273（2個月）、M0457（吊扣其駕駛執照 2個月，並應接受道安講習）</p>
+<label><input type="radio" name="N-061" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-061" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-062" data-name="7天"><h3>7天 <small>N-062</small></h3>
+<p class="rule">路考不合格，再考的間隔不得少於</p><p class="src">出處：M0280（7 天）</p>
+<label><input type="radio" name="N-062" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-062" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-063" data-name="每週"><h3>每週 <small>N-063</small></h3>
+<p class="rule">長期停放，每週發動 1次，每次 3-5分鐘</p><p class="src">出處：M0169（每週）</p>
+<label><input type="radio" name="N-063" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-063" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-064" data-name="每隔5秒"><h3>每隔5秒 <small>N-064</small></h3>
+<p class="rule">行進間看後照鏡的頻率</p><p class="src">出處：M0758（正確）</p>
+<label><input type="radio" name="N-064" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-064" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-065" data-name="30天（30日、7日）"><h3>30天（30日、7日） <small>N-065</small></h3>
+<p class="rule">違規通知單 30天內可繳納；不服裁決 30日內提訴；檢舉 7日內舉發</p><p class="src">出處：M0265（30天內）、M0334（30日）</p>
+<label><input type="radio" name="N-065" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-065" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-066" data-name="18歲"><h3>18歲 <small>N-066</small></h3>
+<p class="rule">考領輕型、普通重型機車駕照須年滿</p><p class="src">出處：M0294（18歲）、M0463（須年滿18歲，最高年齡不受限制）、M0461（無論如何都不可以騎乘機車）</p>
+<label><input type="radio" name="N-066" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-066" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-067" data-name="未滿12歲"><h3>未滿12歲 <small>N-067</small></h3>
+<p class="rule">酒駕且載未滿 12歲兒童</p><p class="src">出處：M0145（除罰鍰外，並吊扣其駕駛執照）</p>
+<label><input type="radio" name="N-067" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-067" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><h2>酒精濃度</h2><section class="card" data-id="N-068" data-name="0.15毫克（每公升吐氣）"><h3>0.15毫克（每公升吐氣） <small>N-068</small></h3>
+<p class="rule">吐氣酒精濃度達此數值，不得開車</p><p class="src">出處：M0087（不得開車）、M0089（0.15毫克）</p>
+<label><input type="radio" name="N-068" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-068" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-069" data-name="0.25毫克（每公升吐氣）"><h3>0.25毫克（每公升吐氣） <small>N-069</small></h3>
+<p class="rule">吐氣酒精濃度達此數值，或吸毒致不能安全駕駛：處 3年以下有期徒刑</p><p class="src">出處：M0146（處3年以下有期徒刑）</p>
+<label><input type="radio" name="N-069" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-069" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><h2>點數</h2><section class="card" data-id="N-070" data-name="記3點"><h3>記3點 <small>N-070</small></h3>
+<p class="rule">機車闖紅燈（當場舉發）</p><p class="src">出處：M0485（3點）、M0545（應處罰鍰，並記違規點數 3點）</p>
+<label><input type="radio" name="N-070" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-070" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-071" data-name="記1點"><h3>記1點 <small>N-071</small></h3>
+<p class="rule">迴車違規；低於最低時速；不在規定車道行駛；佔用自行車專用道；起駛不讓行進中車人；不服從警察指揮</p><p class="src">出處：M0600（不可以，違者，經當場舉發，除罰鍰外並記違規點）、M0636（罰鍰並記違規點數 1點）、M0639（罰鍰並記違規點數 1點）、M0298（罰鍰並記違規點數1點）、M0306（罰鍰並記違規點數 1點）、M0305（罰鍰並記違規點數 1點）</p>
+<label><input type="radio" name="N-071" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-071" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-072" data-name="12點"><h3>12點 <small>N-072</small></h3>
+<p class="rule">1年內記點滿 12點</p><p class="src">出處：M0273（2個月）、M0457（吊扣其駕駛執照 2個月，並應接受道安講習）</p>
+<label><input type="radio" name="N-072" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-072" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><h2>其他</h2><section class="card" data-id="N-073" data-name="200萬元"><h3>200萬元 <small>N-073</small></h3>
+<p class="rule">強制險：死亡或全殘最高給付</p><p class="src">出處：M0255（200萬元）</p>
+<label><input type="radio" name="N-073" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-073" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-074" data-name="1人"><h3>1人 <small>N-074</small></h3>
+<p class="rule">重型、普通輕型機車後座有固定座位，最多附載</p><p class="src">出處：M0278（1人）、M0473（得附載1人）</p>
+<label><input type="radio" name="N-074" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-074" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-075" data-name="二分之一"><h3>二分之一 <small>N-075</small></h3>
+<p class="rule">無照、酒醉駕車致傷亡，或不讓行人致傷亡：刑責加重至</p><p class="src">出處：M0111（二分之一）、M0484（二分之一）</p>
+<label><input type="radio" name="N-075" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-075" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-076" data-name="85分、70分"><h3>85分、70分 <small>N-076</small></h3>
+<p class="rule">筆試及格 85分、路考及格 70分</p><p class="src">出處：M0329（交通規則 85分，路考70分）</p>
+<label><input type="radio" name="N-076" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-076" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-077" data-name="50cc、250cc"><h3>50cc、250cc <small>N-077</small></h3>
+<p class="rule">普通輕型 50cc以下；普通重型逾 50～250cc；大型重型逾 250cc</p><p class="src">出處：M0285（逾 250立方公分以上之二輪機車）、M0467（排氣量逾50cc~250cc）、M0468（普通輕型機車）、M0469（大型重型機車）</p>
+<label><input type="radio" name="N-077" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-077" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-078" data-name="110"><h3>110 <small>N-078</small></h3>
+<p class="rule">事故報案電話</p><p class="src">出處：M0076（應立即撥打110報案，簡要說明事故地點、傷亡）</p>
+<label><input type="radio" name="N-078" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-078" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-079" data-name="1933"><h3>1933 <small>N-079</small></h3>
+<p class="rule">平交道故障車輛，鐵路緊急聯絡電話</p><p class="src">出處：M0382（以上皆是）　※數字在題目的其他選項裡</p>
+<label><input type="radio" name="N-079" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-079" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section><section class="card" data-id="N-080" data-name="100%氧氣"><h3>100%氧氣 <small>N-080</small></h3>
+<p class="rule">一氧化碳中毒給予</p><p class="src">出處：M0049（患者的皮膚呈黑色）　※數字在題目的其他選項裡</p>
+<label><input type="radio" name="N-080" value="ok" checked> ✓ 正確</label> <label><input type="radio" name="N-080" value="no"> ✗ 要改</label>
+<input class="note" placeholder="備註"></section>
+<h2>要改的清單</h2><textarea id="out" readonly></textarea><script>
+function upd(){let t=[];document.querySelectorAll('.card').forEach(c=>{if(c.querySelector('input[value=no]').checked)t.push(c.dataset.id+' '+c.dataset.name+'：'+(c.querySelector('.note').value||'（未寫備註）'))});document.getElementById('out').value=t.length?t.join('\n'):'全部正確'}
+document.addEventListener('input',upd);upd();</script></html>
