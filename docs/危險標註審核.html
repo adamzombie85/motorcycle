@@ -1,0 +1,4304 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>危險感知影片標註審核（109 支）</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --danger: #dc2626;
+      --success: #16a34a;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+      padding: 16px;
+    }
+    .header-bar {
+      max-width: 1200px;
+      margin: 0 auto 24px;
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 12px;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+    }
+    h1 { margin: 0 0 12px; font-size: 24px; }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      font-size: 15px;
+    }
+    .controls input[type="text"], .controls select {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn:hover { opacity: 0.9; }
+    .list-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .video-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
+    .card-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+    .vid-title {
+      font-size: 20px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .badge-sec { background: #fee2e2; color: #b91c1c; }
+    .badge-area { background: #e0f2fe; color: #0369a1; }
+    .badge-conf { background: #dcfce7; color: #15803d; }
+    .q-box {
+      background: #f1f5f9;
+      padding: 14px 18px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+    .q-text {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #1e293b;
+    }
+    .opts {
+      margin: 0;
+      padding-left: 20px;
+      font-size: 14px;
+    }
+    .opts li {
+      margin: 4px 0;
+      color: #475569;
+    }
+    .opts li.correct {
+      color: #166534;
+      font-weight: 700;
+      background: #dcfce7;
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+    .contact-wrapper {
+      position: relative;
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #cbd5e1;
+      background: #000;
+      margin-bottom: 16px;
+    }
+    .contact-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .highlight-box {
+      position: absolute;
+      border: 4px solid #ef4444;
+      box-shadow: 0 0 12px #ef4444, inset 0 0 8px rgba(239, 68, 68, 0.4);
+      border-radius: 6px;
+      pointer-events: none;
+      box-sizing: border-box;
+      z-index: 10;
+    }
+    .highlight-tag {
+      position: absolute;
+      top: -28px;
+      left: 0;
+      background: #ef4444;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    .review-action {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+    }
+    .review-action label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      min-height: 44px;
+    }
+    .review-note {
+      flex: 1;
+      min-width: 240px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    .summary-section {
+      max-width: 1200px;
+      margin: 32px auto;
+      background: #fff;
+      padding: 24px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      font-family: monospace;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <h1>危險感知影片標註審核（共 109 支影片）</h1>
+    <div class="controls">
+      <span>前往影片：</span>
+      <select id="jumpSelect" onchange="jumpTo(this.value)">
+        <option value="">選擇影片編號...</option>
+      </select>
+      <input type="text" id="filterInput" placeholder="搜尋影片 ID 或關鍵字..." oninput="filterCards()">
+      <button class="btn" onclick="exportSummary()">彙整審核結果</button>
+      <span id="statText" style="margin-left:auto; font-weight:700;"></span>
+    </div>
+  </div>
+
+  <div class="list-container" id="cardsList">
+
+    <div class="video-card" id="card-4142" data-id="4142" data-what="左側白車切入本車道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#1 影片 4142</span>
+          <span class="badge badge-sec">0.5 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 左側白車切入本車道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V001] 身為騎士的您，當左側車輛顯示方向燈欲變換車道或轉彎時，應如何行駛較為安全？</div>
+        <ol class="opts">
+          <li class="correct">注意相鄰車輛狀況，預作煞車或減速的準備 ✓ (正解)</li><li class="">按鳴喇叭，促使對方避讓，讓自己前進 </li><li class="">只要自己安全無虞，不用理會其他的用路人 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4142.jpg" alt="Contact sheet 4142" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:3.2258%; width:20.0000%; height:16.1290%;">
+          <div class="highlight-tag">0.5s 左側白車切入本車道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4142" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4142" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4142" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4143" data-id="4143" data-what="對向白車左轉穿越">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#2 影片 4143</span>
+          <span class="badge badge-sec">6.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 對向白車左轉穿越
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V002] 身為騎士的您，行經號誌化路口，當對向有左轉車輛時，應如何行駛較為安全？</div>
+        <ol class="opts">
+          <li class="">只要注意路口紅綠燈號，綠燈亮起就代表可以通行，無須注意周遭車輛 </li><li class="correct">隨時注意周遭車輛，感知對向車輛可能未依規定轉彎，須預作準備 ✓ (正解)</li><li class="">對向車輛轉彎未依規定顯示方向燈，所以我車要加速通過路口 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4143.jpg" alt="Contact sheet 4143" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:42.3077%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">6.0s 對向白車左轉穿越</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4143" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4143" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4143" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4144" data-id="4144" data-what="路口左側橫向車駛出">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#3 影片 4144</span>
+          <span class="badge badge-sec">4.0 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 路口左側橫向車駛出
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V003] 身為騎士的您，在路口有視線遮蔽之橫向道路有車輛突然駛出時，應如何行駛較為安全？</div>
+        <ol class="opts">
+          <li class="correct">騎乘機車時，除注意車前狀況外，也應留意橫向道路車輛的動態 ✓ (正解)</li><li class="">為了阻止對方車輛違規，所以我車要搶先前進，使對方讓道 </li><li class="">遇到突然駛出的車輛，要立刻緊急煞車停止，才是安全行為 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4144.jpg" alt="Contact sheet 4144" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">4.0s 路口左側橫向車駛出</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4144" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4144" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4144" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4145" data-id="4145" data-what="停車場車輛駛出入路">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#4 影片 4145</span>
+          <span class="badge badge-sec">4.5 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 停車場車輛駛出入路
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V004] 身為騎士的您，看到前方道路右側路外停車場出入口有車輛駛出時，應如何行駛較為安全？</div>
+        <ol class="opts">
+          <li class="">駕車為了安全，眼睛只能直視前方，不需要注意左右方向道路情況 </li><li class="correct">駕車除了注意前方狀況外，也要注意周圍車輛是否會突然駛出 ✓ (正解)</li><li class="">只要自己安全無虞，看到其他車輛從路旁駛出亦無須理會 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4145.jpg" alt="Contact sheet 4145" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">4.5s 停車場車輛駛出入路</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4145" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4145" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4145" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4146" data-id="4146" data-what="左側白車突然向右切換">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#5 影片 4146</span>
+          <span class="badge badge-sec">4.0 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 左側白車突然向右切換
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V005] 身為騎士的您，看到前方左側車道車輛突然往右變換車道時，應如何行駛較為安全？</div>
+        <ol class="opts">
+          <li class="correct">騎乘機車時，除注意車前狀況外，也應留意左右車道車輛的動態 ✓ (正解)</li><li class="">由於所有的用路人都會遵守交通規則，所以我們不須隨時保持警覺 </li><li class="">只要自己安全無虞，看到其他車輛從路旁突然衝出都無須理會 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4146.jpg" alt="Contact sheet 4146" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:23.0769%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">4.0s 左側白車突然向右切換</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4146" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4146" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4146" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4147" data-id="4147" data-what="右方非號誌路口黑車駛出">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#6 影片 4147</span>
+          <span class="badge badge-sec">5.0 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 右方非號誌路口黑車駛出
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V006] 身為騎士的您，看到前方非號誌路口右方有車輛突然駛出時，應如何行駛較為安全？</div>
+        <ol class="opts">
+          <li class="correct">雖然自己是行駛在幹道上，但還是要隨時注意支道車輛動態 ✓ (正解)</li><li class="">行經非號誌路口時，要看雙方道路大小來判斷是否需要停車再開 </li><li class="">行經非號誌路口時，如果對方車輛是左方車，就可加速通過 </li>
+        </ol>
+    
+        <div class="q-text">[V007] 身為騎士的您，看到前方非號誌路口右方有車輛突然駛出時，應如何行駛較為安全？</div>
+        <ol class="opts">
+          <li class="">應該善用機車短小輕巧的優勢，搶先穿過路口 </li><li class="">按鳴喇叭，示警對方避讓，讓我車通過 </li><li class="correct">不論有無交通號誌，都應注意周遭車輛動態 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4147.jpg" alt="Contact sheet 4147" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">5.0s 右方非號誌路口黑車駛出</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4147" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4147" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4147" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4149" data-id="4149" data-what="暗處行人跨越枕木紋">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#7 影片 4149</span>
+          <span class="badge badge-sec">5.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 暗處行人跨越枕木紋
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V008] 身為騎士的您，看到前方行人從暗處行經行人穿越道時，應如何行駛較為妥適？</div>
+        <ol class="opts">
+          <li class="correct">機車行近行人穿越道或轉彎時，均應停讓行人優先通行 ✓ (正解)</li><li class="">因為我車行向是綠燈，可按鳴喇叭，促使行人避讓我車前進 </li><li class="">由於行人是不依號誌穿越行人穿越道，所以我不用禮讓他 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4149.jpg" alt="Contact sheet 4149" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">5.5s 暗處行人跨越枕木紋</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4149" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4149" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4149" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4150" data-id="4150" data-what="對向車跨雙黃線逆向超車">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#8 影片 4150</span>
+          <span class="badge badge-sec">6.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 對向車跨雙黃線逆向超車
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V009] 身為騎士的您，當遇到有車輛跨越分向限制線逆向超車時，應如何行駛較為安全？</div>
+        <ol class="opts">
+          <li class="">以安全駕駛而言，看到後應該立即煞車，不用理會後方來車 </li><li class="correct">以防禦駕駛而言，應預想對向車輛可能跨越中心線，隨時注意 ✓ (正解)</li><li class="">以預防肇事而言，過彎時要按鳴喇叭，讓對向車道注意我車 </li>
+        </ol>
+    
+        <div class="q-text">[V010] 身為騎士的您，當遇到有車輛跨越分向限制線逆向超車時，應如何行駛較為安全？</div>
+        <ol class="opts">
+          <li class="correct">利用機車 ABS 裝置逐漸減速，並往安全方向閃避 ✓ (正解)</li><li class="">保持在固定的車道上行駛，維持適當的速度 </li><li class="">利用機車 ABS裝置逐漸減速，並往車多方向閃避 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4150.jpg" alt="Contact sheet 4150" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:42.3077%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">6.5s 對向車跨雙黃線逆向超車</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4150" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4150" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4150" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4152" data-id="4152" data-what="路旁白車起駛切入車道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#9 影片 4152</span>
+          <span class="badge badge-sec">3.0 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 路旁白車起駛切入車道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V011] 身為騎士的您，當發現路旁有車輛使用方向燈欲進入我車行進車道時，應如何行駛較為妥適？</div>
+        <ol class="opts">
+          <li class="correct">減速慢行，觀察旁邊車輛動向，並做隨時停車之準備 ✓ (正解)</li><li class="">按鳴喇叭，示警對方車輛立即避讓，以便讓我車通過 </li><li class="">只要專心注意前方有無來車即可，不需要禮讓該車通過 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4152.jpg" alt="Contact sheet 4152" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">3.0s 路旁白車起駛切入車道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4152" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4152" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4152" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4153" data-id="4153" data-what="路面放置故障標誌">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#10 影片 4153</span>
+          <span class="badge badge-sec">4.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 路面放置故障標誌
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V012] 身為騎士的您，當發現前方道路放置有車輛故障標誌時，應如何行駛較為妥適？</div>
+        <ol class="opts">
+          <li class="">不用管其他用路人行為，我車繼續往前加速繞過行進即可 </li><li class="correct">減速慢行，認知前方可能有故障車輛或事故現場，避免追撞 ✓ (正解)</li><li class="">為了避免惹禍上身，趕快變換車道繞開，並加速離開現場 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4153.jpg" alt="Contact sheet 4153" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:23.0769%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">4.5s 路面放置故障標誌</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4153" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4153" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4153" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4154" data-id="4154" data-what="右側孩童追球衝入車道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#11 影片 4154</span>
+          <span class="badge badge-sec">7.0 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 右側孩童追球衝入車道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V013] 身為騎士的您，當發現前方有球、小孩、行人或其他異物侵入車道時，應如何行駛較為妥適？？</div>
+        <ol class="opts">
+          <li class="correct">應鬆開油門減速慢行，並預做隨時停車之準備 ✓ (正解)</li><li class="">按鳴喇叭，遏阻可能追球的小孩或行人撞上我車 </li><li class="">只是一顆球或其他異物侵入車道，完全無須理會 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4154.jpg" alt="Contact sheet 4154" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:42.3077%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">7.0s 右側孩童追球衝入車道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4154" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4154" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4154" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4155" data-id="4155" data-what="右側機車閃避違停左切">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#12 影片 4155</span>
+          <span class="badge badge-sec">7.0 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 右側機車閃避違停左切
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V014] 身為騎士的您，當現場視線不佳或視線昏暗情況下，發現右方有路邊停車，且右側機車為閃避該車而變換行向通過我車前方時，應如何行駛較為安全？</div>
+        <ol class="opts">
+          <li class="">直接煞車，且不用考慮就往左變換行向，以閃避該機車及路邊停車 </li><li class="correct">應減速慢行，擺頭確認左方無來車，顯示方向燈往左變換車道 ✓ (正解)</li><li class="">直接緊急變換車道，並按鳴喇叭，以避免自己被該機車撞到 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4155.jpg" alt="Contact sheet 4155" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">7.0s 右側機車閃避違停左切</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4155" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4155" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4155" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4156" data-id="4156" data-what="進入涵洞光線劇烈變化">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#13 影片 4156</span>
+          <span class="badge badge-sec">2.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 進入涵洞光線劇烈變化
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V015] 身為騎士的您，當進入、離開涵洞或隧道時，因光線強度的急遽變化容易造成眩光，應如何行駛較為安全？</div>
+        <ol class="opts">
+          <li class="correct">進出涵洞或隧道時，應該要開啟車輛頭燈，減速拉大安全距離，並做隨時停車之準備 ✓ (正解)</li><li class="">光線強度的急遽變化，對於騎士眼睛是沒有影響的，因此可以立刻變換車道或超車 </li><li class="">光線強度的急遽變化，會讓騎士眼睛不舒服，因此要立刻在路邊緊急煞車暫停一下 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4156.jpg" alt="Contact sheet 4156" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:23.0769%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">2.5s 進入涵洞光線劇烈變化</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4156" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4156" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4156" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4157" data-id="4157" data-what="右方白車匯入本車道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#14 影片 4157</span>
+          <span class="badge badge-sec">5.0 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 右方白車匯入本車道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V016] 身為騎士的您，如遇車輛由道路右方車道匯入時，應如何行駛較為安全？</div>
+        <ol class="opts">
+          <li class="correct">行經無號誌路口或交岔路段時，應注意周遭車輛動態，避免事故的發生 ✓ (正解)</li><li class="">因光線強弱不會影響騎士眼睛視力，所以不用注意周圍車輛動態 </li><li class="">按鳴喇叭，示警對方車輛立即避讓，以便讓我車通過 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4157.jpg" alt="Contact sheet 4157" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:42.3077%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">5.0s 右方白車匯入本車道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4157" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4157" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4157" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4158" data-id="4158" data-what="前方公車打右燈靠站停靠">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#15 影片 4158</span>
+          <span class="badge badge-sec">3.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前方公車打右燈靠站停靠
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V017] 身為騎士的您，遇到公車停靠路邊公車站時，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="">減速後先顯示右方向燈，察看右方及後方有無來車後從公車右側超車 </li><li class="correct">減速後在公車後方安全距離停等，待公車起步後保持安全距離再行駛 ✓ (正解)</li><li class="">緊靠公車後方停等，並按鳴喇叭，請公車盡快前行並緊靠公車行駛 </li>
+        </ol>
+    
+        <div class="q-text">[V018] 身為騎士的您，如欲從影片中公車左側繞行，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="correct">先顯示左方向燈，透過照後鏡及擺頭觀察左方及後方有無來車，判斷安全距離並注意公車動態，確認安全才可超越 ✓ (正解)</li><li class="">機車駕駛人欲超越公車時，須顯示方向燈並注意公車車輛動向後，即可從公車右側超越 </li><li class="">注意公車動態，如遇隔壁車道有車輛行駛，可從公車左側在車陣中同車道超越 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4158.jpg" alt="Contact sheet 4158" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:23.0769%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">3.0s 前方公車打右燈靠站停靠</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4158" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4158" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4158" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4160" data-id="4160" data-what="巷弄右側孩童突衝出門">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#16 影片 4160</span>
+          <span class="badge badge-sec">5.0 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 巷弄右側孩童突衝出門
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V019] 身為騎士的您，於巷弄中應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="">依速限規定行駛，不須理會周遭車輛與行人之動向 </li><li class="">維持原速度行駛，按鳴喇叭提醒周邊行人有機車行駛，使其自行避讓 </li><li class="correct">依速限規定行駛，並預判周邊人車接下來可能的動向，避免反應不及發生危險 ✓ (正解)</li>
+        </ol>
+    
+        <div class="q-text">[V020] 身為騎士的您，行駛於巷弄中察覺有行人進入車道時，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="">先減速，繞過行人後駛離 </li><li class="">先減速，按鳴喇叭提醒行人避讓 </li><li class="correct">先減速並停等，禮讓行人先行 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4160.jpg" alt="Contact sheet 4160" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:68.7500%; width:20.0000%; height:31.2500%;">
+          <div class="highlight-tag">5.0s 巷弄右側孩童突衝出門</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4160" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4160" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4160" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4162" data-id="4162" data-what="路旁白車突然開啟車門">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#17 影片 4162</span>
+          <span class="badge badge-sec">4.0 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 路旁白車突然開啟車門
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V021] 身為騎士的您，遇影片中路邊停車開車門，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="correct">提高警覺，與停靠於路邊的汽車保持安全間隔並減速慢行，做好隨時停車之準備 ✓ (正解)</li><li class="">按鳴喇叭，警告汽車駕駛人，並盡快通過 </li><li class="">應即變換車道閃避，儘速駛離以免發生碰撞 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4162.jpg" alt="Contact sheet 4162" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">4.0s 路旁白車突然開啟車門</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4162" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4162" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4162" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4163" data-id="4163" data-what="左方救護車閃燈穿越路口">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#18 影片 4163</span>
+          <span class="badge badge-sec">6.0 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 左方救護車閃燈穿越路口
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V022] 身為騎士的您，遇影片中救護車輛執行任務穿越交岔路口時，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="">減速，閃過救護車並通過路口 </li><li class="">救護車闖紅燈，無須避讓停等 </li><li class="correct">聽聞救護車即應減速避讓，不得跟隨疾駛 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4163.jpg" alt="Contact sheet 4163" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">6.0s 左方救護車閃燈穿越路口</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4163" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4163" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4163" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4164" data-id="4164" data-what="行人在公車後方突穿越">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#19 影片 4164</span>
+          <span class="badge badge-sec">6.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 行人在公車後方突穿越
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V023] 身為騎士的您，如遇行人在公車後方隨意穿越馬路，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="">減速慢行，按鳴喇叭，使行人避讓 </li><li class="correct">減速慢行，並注意行人動態 ✓ (正解)</li><li class="">減速慢行，行人違規所以無須禮讓 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4164.jpg" alt="Contact sheet 4164" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">6.5s 行人在公車後方突穿越</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4164" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4164" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4164" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4165" data-id="4165" data-what="前車煞車燈亮遮蔽路口">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#20 影片 4165</span>
+          <span class="badge badge-sec">4.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前車煞車燈亮遮蔽路口
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V024] 身為騎士的您，行近路口時見前方車輛煞車燈亮起並遮蔽視線時，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="correct">先減速，察看左右來車，確認已無來車後再通行 ✓ (正解)</li><li class="">緊貼左方車輛行駛作為屏障可繼續直行 </li><li class="">維持原車速度繼續直行 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4165.jpg" alt="Contact sheet 4165" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">4.0s 前車煞車燈亮遮蔽路口</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4165" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4165" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4165" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4166" data-id="4166" data-what="遊覽車旁行人突然走出">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#21 影片 4166</span>
+          <span class="badge badge-sec">5.5 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 遊覽車旁行人突然走出
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V025] 身為騎士的您，在影片中看到路旁有遊覽車停等，採取哪個行為較不妥適?</div>
+        <ol class="opts">
+          <li class="">注意路邊停等遊覽車輛動向 </li><li class="">受大型車輛遮蔽視線，須注意行人穿越道路 </li><li class="correct">注意路旁停靠遊覽車，維持原速直行 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4166.jpg" alt="Contact sheet 4166" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">5.5s 遊覽車旁行人突然走出</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4166" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4166" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4166" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4167" data-id="4167" data-what="山區彎道對向來車駛出">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#22 影片 4167</span>
+          <span class="badge badge-sec">4.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 山區彎道對向來車駛出
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V026] 身為騎士的您，當行經山區彎道時，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="">為順利過彎，壓低重心加速行駛 </li><li class="">按鳴喇叭，提醒對向車輛避讓 </li><li class="correct">減速慢行，提前注意彎道對向車輛行駛動態，並避免緊急煞車 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4167.jpg" alt="Contact sheet 4167" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">4.0s 山區彎道對向來車駛出</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4167" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4167" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4167" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4168" data-id="4168" data-what="前方施工右側車輛左切">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#23 影片 4168</span>
+          <span class="badge badge-sec">4.5 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前方施工右側車輛左切
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V027] 身為騎士的您，遇前方道路施工，右前方車輛突變換車道時，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="correct">須注意前方車輛行駛動向，減速慢行以利避讓 ✓ (正解)</li><li class="">加速行駛超越前車，避免影響後方車流 </li><li class="">不須理會前方車輛行駛動向，維持原本的速度行駛即可 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4168.jpg" alt="Contact sheet 4168" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">4.5s 前方施工右側車輛左切</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4168" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4168" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4168" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4169" data-id="4169" data-what="前車倒車切入路旁停車格">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#24 影片 4169</span>
+          <span class="badge badge-sec">5.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前車倒車切入路旁停車格
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V028] 身為騎士的您，遇前方車輛倒車駛入停車格，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="">按鳴喇叭，使前方車輛加速駛入停車格，以免影響後方車流 </li><li class="">減速後不顯示方向燈和擺頭察看左右來車，直接變換車道 </li><li class="correct">保持安全距離先行停等，待前方車輛駛入停車格後再繼續行駛 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4169.jpg" alt="Contact sheet 4169" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">5.5s 前車倒車切入路旁停車格</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4169" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4169" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4169" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4170" data-id="4170" data-what="公車未打方向燈向右變換">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#25 影片 4170</span>
+          <span class="badge badge-sec">3.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 公車未打方向燈向右變換
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V029] 身為騎士的您，如遇見公車未顯示方向燈即變換車道並右轉，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="">趁公車尚未完全變換車道及轉彎時，顯示右方向燈後，從右側超越公車後直行 </li><li class="correct">應與公車保持安全距離並減速慢行，觀察公車動態後再行駛 ✓ (正解)</li><li class="">察覺公車要變換車道及右轉時，顯示左方向燈後，即可從左側超車 </li>
+        </ol>
+    
+        <div class="q-text">[V030] 身為騎士的您，行經影片中的交岔路口欲右轉，遇見公車右轉未顯示方向燈時，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="">與公車保持相同速度，並緊鄰公車右側一起右轉 </li><li class="correct">減速慢行，並與公車保持安全距離間隔，待公車轉彎後再行右轉 ✓ (正解)</li><li class="">顯示左轉方向燈變換車道，自公車左側超越後右轉 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4170.jpg" alt="Contact sheet 4170" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:23.0769%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">3.5s 公車未打方向燈向右變換</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4170" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4170" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4170" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4172" data-id="4172" data-what="對向機車路口違規直接左轉">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#26 影片 4172</span>
+          <span class="badge badge-sec">5.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 對向機車路口違規直接左轉
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V031] 身為騎士的您，行經交岔路口時，看見機車騎士違規左轉，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="">維持相同速度直接通過路口 </li><li class="">按鳴喇叭，示警對方避讓 </li><li class="correct">減速慢行，並做隨時停車之準備 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4172.jpg" alt="Contact sheet 4172" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:68.7500%; width:20.0000%; height:31.2500%;">
+          <div class="highlight-tag">5.0s 對向機車路口違規直接左轉</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4172" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4172" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4172" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4173" data-id="4173" data-what="前車違規行駛斑馬線">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#27 影片 4173</span>
+          <span class="badge badge-sec">6.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前車違規行駛斑馬線
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V032] 身為騎士的您，如遇見影片中機車騎士違規行駛，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="correct">減速慢行，觀察該車輛動向並做隨時停車之準備 ✓ (正解)</li><li class="">只要自己沒違規，看到其他車輛違規便無須理會 </li><li class="">看到車輛衝出，按鳴喇叭使其避讓，無須做煞停準備 </li>
+        </ol>
+    
+        <div class="q-text">[V033] 身為騎士的您，行經影片中的交岔路口欲左轉時，以下敘述何者錯誤?</div>
+        <ol class="opts">
+          <li class="">行經路口應減速慢行，左右擺頭觀察道路車輛及行人動向，確保安全後再左轉，並做隨時停車之準備 </li><li class="">應距交岔路口 30公尺前顯示方向燈或手勢，行至交岔路口中心處左轉 </li><li class="correct">在交岔路口 30公尺前顯示方向燈或手勢後即可轉彎不用減速 ✓ (正解)</li>
+        </ol>
+    
+        <div class="q-text">[V034] 身為騎士的您，行駛至影片交岔路口欲左轉時，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="">距交岔路口 30 公尺前顯示方向燈或手勢，確認前後及對向無來車後，無須行駛至路口中心直接左轉，避免影響後方車流 </li><li class="correct">距交岔路口30公尺前顯示方向燈或手勢，並減速行駛至交岔路口中心處，確認前後及對向無來車與行人後再左轉 ✓ (正解)</li><li class="">距交岔路口30 公尺前顯示方向燈或手勢並減速行駛至行人穿越道，察看無來車及行人後即可左轉 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4173.jpg" alt="Contact sheet 4173" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">6.0s 前車違規行駛斑馬線</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4173" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4173" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4173" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4176" data-id="4176" data-what="路口機車待轉區有車停等">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#28 影片 4176</span>
+          <span class="badge badge-sec">6.5 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 路口機車待轉區有車停等
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V035] 身為騎士的您，行經設有機車待轉區之路口時，應如何行駛較安全?</div>
+        <ol class="opts">
+          <li class="">先減速，按鳴喇叭示意機車待轉區內之機車退讓 </li><li class="correct">先減速，並注意機車待轉區內之機車 ✓ (正解)</li><li class="">維持原行駛速度，並繞過停等之機車，直接通過路口 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4176.jpg" alt="Contact sheet 4176" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">6.5s 路口機車待轉區有車停等</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4176" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4176" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4176" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4177" data-id="4177" data-what="彎道濕滑鐵板與施工錐">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#29 影片 4177</span>
+          <span class="badge badge-sec">3.5 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 彎道濕滑鐵板與施工錐
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V036] 身為騎士的您，當行駛於彎道上，下列敘述何者為非？</div>
+        <ol class="opts">
+          <li class="">應有防禦駕駛的觀念，入彎前減速慢行預測接下來的道路可能有障礙物 </li><li class="correct">應加速通過，避免速度過慢遭後車撞擊 ✓ (正解)</li><li class="">應隨時留意對向車道車輛可能會違規跨越分向限制線 </li>
+        </ol>
+    
+        <div class="q-text">[V037] 身為騎士的您，遇道路施工修補，應如何因應較為妥適？</div>
+        <ol class="opts">
+          <li class="correct">減速慢行通過 ✓ (正解)</li><li class="">迅速靠左行駛閃避障礙物 </li><li class="">快速通過，避免阻塞交通 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4177.jpg" alt="Contact sheet 4177" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">3.5s 彎道濕滑鐵板與施工錐</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4177" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4177" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4177" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4179" data-id="4179" data-what="行駛中電話響起需停路邊">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#30 影片 4179</span>
+          <span class="badge badge-sec">4.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 行駛中電話響起需停路邊
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V038] 身為騎士的您，行駛過程中接獲行動電話，應如何因應較為妥適?</div>
+        <ol class="opts">
+          <li class="">邊騎車邊接聽，避免漏接重要電話 </li><li class="">應先將手機拿起查看來電者，重要電話再接聽 </li><li class="correct">應停靠至路邊安全位置後，熄火再接聽 ✓ (正解)</li>
+        </ol>
+    
+        <div class="q-text">[V039] 身為騎士的您，遇前車騎車接聽電話，應做何處置較適當？</div>
+        <ol class="opts">
+          <li class="">按鳴喇叭，示意對方注意安全 </li><li class="correct">減速慢行並隨時注意前車及左右狀況，確認安全無虞後再超車 ✓ (正解)</li><li class="">拿起手機跟隨拍照蒐證，向警方檢舉 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4179.jpg" alt="Contact sheet 4179" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">4.0s 行駛中電話響起需停路邊</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4179" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4179" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4179" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4181" data-id="4181" data-what="左前方汽車煞車燈亮起">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#31 影片 4181</span>
+          <span class="badge badge-sec">4.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 左前方汽車煞車燈亮起
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V040] 身為騎士的您，如綠燈時看到左前方汽車煞車減速，下列敘述何者為非？</div>
+        <ol class="opts">
+          <li class="correct">注意紅綠燈狀況後，便可通過路口 ✓ (正解)</li><li class="">可能有人、車或動物等闖入車道，我們應做隨時煞車減速之準備 </li><li class="">可能道路路面有異物或施工，我們應減速慢行小心留意 </li>
+        </ol>
+    
+        <div class="q-text">[V041] 身為騎士的您，行經號誌化路口時遇左前方汽車遮蔽視線，應如何行駛較為妥適？</div>
+        <ol class="opts">
+          <li class="">注意本車車道狀況安全後，便可直行通過 </li><li class="correct">視線可能被前車遮蔽，要留意對向來車左轉 ✓ (正解)</li><li class="">綠燈時，本車擁有絕對路權可以直行通過 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4181.jpg" alt="Contact sheet 4181" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">4.5s 左前方汽車煞車燈亮起</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4181" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4181" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4181" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4183" data-id="4183" data-what="左方機車超車切入前方">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#32 影片 4183</span>
+          <span class="badge badge-sec">3.0 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 左方機車超車切入前方
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V042] 身為騎士的您，遇有左方機車超越本車，應如何因應較為妥適？</div>
+        <ol class="opts">
+          <li class="correct">應與前方機車保持隨時可煞停之距離 ✓ (正解)</li><li class="">注意前方車輛狀況後，可從左側閃避通過 </li><li class="">為避免碰撞，應先按鳴喇叭，示警對方避讓 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4183.jpg" alt="Contact sheet 4183" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:37.5000%; width:20.0000%; height:31.2500%;">
+          <div class="highlight-tag">3.0s 左方機車超車切入前方</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4183" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4183" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4183" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4184" data-id="4184" data-what="前車煞車燈亮起減速">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#33 影片 4184</span>
+          <span class="badge badge-sec">5.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前車煞車燈亮起減速
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V043] 身為騎士的您，在車道中看到左前方車輛煞車減速，下列敘述何者正確？</div>
+        <ol class="opts">
+          <li class="correct">注意左前方車輛動向，預作減速煞車準備 ✓ (正解)</li><li class="">靠右行駛加速通過，避開可能危險 </li><li class="">按鳴喇叭，提醒左前方車輛後，加速通過 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4184.jpg" alt="Contact sheet 4184" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">5.0s 前車煞車燈亮起減速</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4184" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4184" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4184" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4185" data-id="4185" data-what="前車打右方向燈隨即右轉">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#34 影片 4185</span>
+          <span class="badge badge-sec">8.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前車打右方向燈隨即右轉
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V044] 身為騎士的您，遇前方車輛顯示方向燈隨即右轉，應如何因應較為妥適？</div>
+        <ol class="opts">
+          <li class="">向左繞行避開危險 </li><li class="">直行快速通過 </li><li class="correct">減速慢行，作隨時停車之準備 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4185.jpg" alt="Contact sheet 4185" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:76.1905%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">8.5s 前車打右方向燈隨即右轉</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4185" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4185" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4185" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4186" data-id="4186" data-what="對向機車違規左轉跨越">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#35 影片 4186</span>
+          <span class="badge badge-sec">5.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 對向機車違規左轉跨越
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V045] 身為騎士的您，如遇對向車道有機車突然左轉彎駛入加油站時，應如何因應較為妥適？</div>
+        <ol class="opts">
+          <li class="correct">隨時注意對向車道車輛動向，預作煞車減速等措施 ✓ (正解)</li><li class="">直行車路權相較轉彎車大，應直行通過 </li><li class="">迅速靠左行駛，避免發生車輛碰撞 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4186.jpg" alt="Contact sheet 4186" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:68.7500%; width:20.0000%; height:31.2500%;">
+          <div class="highlight-tag">5.5s 對向機車違規左轉跨越</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4186" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4186" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4186" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4187" data-id="4187" data-what="前方機車煞車燈亮起">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#36 影片 4187</span>
+          <span class="badge badge-sec">4.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前方機車煞車燈亮起
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V046] 身為騎士的您，行經無號誌路口，遇前方機車煞車燈亮起，應如何因應較為妥適?</div>
+        <ol class="opts">
+          <li class="">行經無號誌路口時，可能遇有橫向直行車，先到路口者即有優先路權 </li><li class="correct">除了注意前方車輛狀況外，橫向車輛也要注意 ✓ (正解)</li><li class="">遇橫向車道有來車時，左方車應讓右方車先行，故本車不必禮讓 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4187.jpg" alt="Contact sheet 4187" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:37.5000%; width:20.0000%; height:31.2500%;">
+          <div class="highlight-tag">4.5s 前方機車煞車燈亮起</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4187" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4187" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4187" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4188" data-id="4188" data-what="路口左方機車橫向駛出">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#37 影片 4188</span>
+          <span class="badge badge-sec">3.5 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 路口左方機車橫向駛出
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V047] 身為騎士的您，行經閃光號誌路口，遇橫向車道有來車，應如何因應較為妥適?</div>
+        <ol class="opts">
+          <li class="correct">遇閃光黃燈號誌，應減速慢行，小心通過 ✓ (正解)</li><li class="">加快速度，直行通過 </li><li class="">本車行駛於閃光黃燈號誌之車道，擁有優先路權可以直行通過 </li>
+        </ol>
+    
+        <div class="q-text">[V048] 身為騎士的您，行駛在昏暗的道路上，行經閃光號誌路口，以下騎車行為何者較為妥適?</div>
+        <ol class="opts">
+          <li class="correct">天色昏暗時，應開啟頭燈，並留意道路上是否有障礙物 ✓ (正解)</li><li class="">注意本車車道狀況安全後，便可直行通過 </li><li class="">行經路口遇橫向來車，應按鳴喇叭，使對方避讓 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4188.jpg" alt="Contact sheet 4188" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">3.5s 路口左方機車橫向駛出</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4188" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4188" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4188" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4190" data-id="4190" data-what="前車煞車且橫向貨車穿過">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#38 影片 4190</span>
+          <span class="badge badge-sec">5.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前車煞車且橫向貨車穿過
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V049] 身為騎士的您，行經閃光號誌路口，遇前方汽車煞車燈亮起，下列敘述何者為非?</div>
+        <ol class="opts">
+          <li class="">遇閃光黃燈號誌，應減速慢行，小心通過 </li><li class="">除了注意前方狀況外，對向及橫向車輛也要注意 </li><li class="correct">同樣是直行車，左方車應暫停讓右方車先行，故我應禮讓右方車優先通行 ✓ (正解)</li>
+        </ol>
+    
+        <div class="q-text">[V050] 身為騎士的您，行經閃光號誌路口，如遇前方汽車煞車燈亮起，應該如何因應較為妥適?</div>
+        <ol class="opts">
+          <li class="">本車行駛於閃光黃燈號誌之車道，擁有優先路權可以直行通過 </li><li class="correct">除了注意前方狀況外，對向及橫向車輛也要注意 ✓ (正解)</li><li class="">行經路口，所有車輛減速時，機車機動性強，可立即催油門搶先通過 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4190.jpg" alt="Contact sheet 4190" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">5.5s 前車煞車且橫向貨車穿過</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4190" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4190" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4190" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4192" data-id="4192" data-what="右側機車無燈切入本車道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#39 影片 4192</span>
+          <span class="badge badge-sec">5.0 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 右側機車無燈切入本車道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V051] 身為騎士的您，遇機車未顯示方向燈即駛入本車道，應如何因應較為妥適?</div>
+        <ol class="opts">
+          <li class="">按鳴喇叭搶快行駛，使對方避讓 </li><li class="correct">減速慢行，並做隨時煞車之準備 ✓ (正解)</li><li class="">為避免碰撞，應從右側閃避通過 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4192.jpg" alt="Contact sheet 4192" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">5.0s 右側機車無燈切入本車道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4192" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4192" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4192" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4193" data-id="4193" data-what="右前方汽車煞車燈亮起">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#40 影片 4193</span>
+          <span class="badge badge-sec">3.5 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 右前方汽車煞車燈亮起
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V052] 身為騎士的您，遇右側車道汽車煞車燈亮起，應如何因應較為妥適？</div>
+        <ol class="opts">
+          <li class="correct">視線遮蔽處可能有人、車或動物等闖入車道，我們應做隨時煞車減速之準備 ✓ (正解)</li><li class="">可能右側汽車準備路邊停車，直行行駛通過即可 </li><li class="">迅速靠左行駛，避免與突然闖入車道之車輛碰撞 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4193.jpg" alt="Contact sheet 4193" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">3.5s 右前方汽車煞車燈亮起</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4193" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4193" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4193" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4194" data-id="4194" data-what="左側白車右轉切入路口">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#41 影片 4194</span>
+          <span class="badge badge-sec">7.0 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 左側白車右轉切入路口
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V053] 身為騎士的您，如遇影片左邊快車道車輛顯示方向燈，該如何反應？</div>
+        <ol class="opts">
+          <li class="correct">行經路口前應注意快車道車輛動態，預作減速、停車等措施 ✓ (正解)</li><li class="">連續按鳴喇叭，阻止快車道車輛進入 </li><li class="">確保自己安全無虞，就可繼續直行 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4194.jpg" alt="Contact sheet 4194" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:42.3077%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">7.0s 左側白車右轉切入路口</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4194" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4194" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4194" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4195" data-id="4195" data-what="內側黑車打右燈右轉切入">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#42 影片 4195</span>
+          <span class="badge badge-sec">5.5 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 內側黑車打右燈右轉切入
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V054] 身為騎士的您，如遇見影片左邊內車道車輛顯示方向燈，下列何者反應為非？</div>
+        <ol class="opts">
+          <li class="correct">只要專心注意前方有無來車即可 ✓ (正解)</li><li class="">注意相鄰車輛狀況，預作煞車準備 </li><li class="">除注意車前狀況外，當身旁出現車輛時應留意其動向 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4195.jpg" alt="Contact sheet 4195" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:42.3077%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">5.5s 內側黑車打右燈右轉切入</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4195" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4195" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4195" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4196" data-id="4196" data-what="起步時左側橫向白車闖紅燈">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#43 影片 4196</span>
+          <span class="badge badge-sec">7.0 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 起步時左側橫向白車闖紅燈
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V055] 身為騎士的您，於號誌路口起步時應注意事項，下列何者正確？</div>
+        <ol class="opts">
+          <li class="">只要注意紅綠燈號，綠燈亮起就代表可以通行 </li><li class="">看到綠燈亮起要快速通過才不會被後車按鳴喇叭催促 </li><li class="correct">綠燈亮起雖然代表可以通過，但仍應注意是否會有闖紅燈車輛 ✓ (正解)</li>
+        </ol>
+    
+        <div class="q-text">[V056] 身為騎士的您，在路口停等紅燈時，下列何者正確？</div>
+        <ol class="opts">
+          <li class="">可以利用停等紅燈時查看手機 </li><li class="">察看四周是否有新的廣告招牌 </li><li class="correct">起步前左右擺頭，留意是否有違規車輛 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4196.jpg" alt="Contact sheet 4196" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:35.4839%; width:20.0000%; height:16.1290%;">
+          <div class="highlight-tag">7.0s 起步時左側橫向白車闖紅燈</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4196" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4196" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4196" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4198" data-id="4198" data-what="對向休旅車違規搶先左轉">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#44 影片 4198</span>
+          <span class="badge badge-sec">7.0 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 對向休旅車違規搶先左轉
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V057] 身為騎士的您，行經路口遇有違規車輛，以下敘述何者正確?</div>
+        <ol class="opts">
+          <li class="">加快車速並連續按鳴喇叭警告違規車輛須禮讓 </li><li class="correct">行經路口時應注意其他車輛動態，預作減速、停車等措施 ✓ (正解)</li><li class="">加快車速緊跟著大型車才能順利通過路口 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4198.jpg" alt="Contact sheet 4198" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:42.3077%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">7.0s 對向休旅車違規搶先左轉</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4198" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4198" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4198" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4199" data-id="4199" data-what="橫向機車紅燈右轉竄出">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#45 影片 4199</span>
+          <span class="badge badge-sec">4.5 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 橫向機車紅燈右轉竄出
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V058] 身為騎士的您，如遇見影片中有機車紅燈右轉，該如何反應？</div>
+        <ol class="opts">
+          <li class="correct">遇到路口應減速慢行，觀察旁邊車輛動向並做隨時停車之準備 ✓ (正解)</li><li class="">機車違規闖紅燈右轉在先，我仍可繼續直行 </li><li class="">為了阻止對方機車違規，所以我要搶先前進，使對方讓道 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4199.jpg" alt="Contact sheet 4199" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">4.5s 橫向機車紅燈右轉竄出</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4199" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4199" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4199" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4200" data-id="4200" data-what="機車從缺口逆向竄出跨線">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#46 影片 4200</span>
+          <span class="badge badge-sec">6.5 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 機車從缺口逆向竄出跨線
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V059] 身為騎士的您，遇有機車於分向限制線缺口逆向竄出時，應採取何種動作較為妥適?</div>
+        <ol class="opts">
+          <li class="">按鳴喇叭警示，從右側直接加速超越 </li><li class="correct">應減速並作隨時停車之準備 ✓ (正解)</li><li class="">只要自己沒違規，維持等速繼續直行 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4200.jpg" alt="Contact sheet 4200" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:42.3077%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">6.5s 機車從缺口逆向竄出跨線</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4200" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4200" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4200" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4201" data-id="4201" data-what="左轉時左後方機車加速超越">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#47 影片 4201</span>
+          <span class="badge badge-sec">6.5 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 左轉時左後方機車加速超越
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V060] 身為騎士的您，行經路口欲左轉時，發現左後方有來車，以下敘述何者為是?</div>
+        <ol class="opts">
+          <li class="correct">轉彎時應提前顯示方向燈並注意照後鏡、轉頭察看 ✓ (正解)</li><li class="">只要顯示方向燈提醒其他車輛，就可以馬上轉彎 </li><li class="">為順利左轉彎，可以提前跨越分向限制線 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4201.jpg" alt="Contact sheet 4201" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">6.5s 左轉時左後方機車加速超越</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4201" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4201" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4201" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4202" data-id="4202" data-what="對向機車違規跨雙黃線">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#48 影片 4202</span>
+          <span class="badge badge-sec">6.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 對向機車違規跨雙黃線
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V061] 身為騎士的您，左側來車違規跨越分向限制線，應如何行駛較為妥適？</div>
+        <ol class="opts">
+          <li class="">因對方違規，應連續按鳴喇叭，使對方避讓 </li><li class="correct">減速慢行，並做隨時停車之準備 ✓ (正解)</li><li class="">為了阻止對方違規，所以我要搶先前進，使對方讓道 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4202.jpg" alt="Contact sheet 4202" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:42.3077%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">6.5s 對向機車違規跨雙黃線</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4202" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4202" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4202" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4203" data-id="4203" data-what="左側機車未打燈近距離超車">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#49 影片 4203</span>
+          <span class="badge badge-sec">9.0 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 左側機車未打燈近距離超車
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V062] 身為騎士的您，當左側來車未顯示方向燈及未保持車距超車，應如何反應較為妥適？</div>
+        <ol class="opts">
+          <li class="">注意前方路況，乖乖行駛在我方車道就沒有危險 </li><li class="">車道狹小且車輛很多，要連續按鳴喇叭提醒他人提高警覺 </li><li class="correct">除了注意車前狀況，也要隨時注意照後鏡，預先做減速準備 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4203.jpg" alt="Contact sheet 4203" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:51.6129%; width:20.0000%; height:16.1290%;">
+          <div class="highlight-tag">9.0s 左側機車未打燈近距離超車</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4203" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4203" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4203" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4204" data-id="4204" data-what="左側巷口黑車突然橫越駛出">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#50 影片 4204</span>
+          <span class="badge badge-sec">7.5 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 左側巷口黑車突然橫越駛出
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V063] 身為騎士的您，行經路口有左側來車，以下敘述何者為是?</div>
+        <ol class="opts">
+          <li class="correct">行駛於車陣中，視野死角多，應留意是否有車輛或行人從車縫中衝出 ✓ (正解)</li><li class="">交通壅塞時，應把握時間加速通過，才不會造成塞車 </li><li class="">我方有優先路權，所以要搶先前進，迫使對方讓道 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4204.jpg" alt="Contact sheet 4204" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:51.6129%; width:20.0000%; height:16.1290%;">
+          <div class="highlight-tag">7.5s 左側巷口黑車突然橫越駛出</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4204" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4204" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4204" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4205" data-id="4205" data-what="行人低頭看手機橫跨車道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#51 影片 4205</span>
+          <span class="badge badge-sec">4.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 行人低頭看手機橫跨車道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V064] 身為騎士的您，行駛中行人從車陣中竄出，應如何反應較為妥適？</div>
+        <ol class="opts">
+          <li class="">因行人違規穿越分向限制線，可長按鳴喇叭加速通過 </li><li class="correct">減速慢行，注意察看行人動向，作隨時停車之準備 ✓ (正解)</li><li class="">因行人專心講手機，未察覺道路狀況，無須禮讓 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4205.jpg" alt="Contact sheet 4205" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:23.0769%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">4.5s 行人低頭看手機橫跨車道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4205" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4205" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4205" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4206" data-id="4206" data-what="行人任意橫越馬路穿越車道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#52 影片 4206</span>
+          <span class="badge badge-sec">5.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 行人任意橫越馬路穿越車道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V065] 身為騎士的您，行駛中行人任意穿越馬路，應如何反應較為妥適？</div>
+        <ol class="opts">
+          <li class="correct">減速慢行，注意察看行人動向，作隨時停車之準備 ✓ (正解)</li><li class="">行人未依規定於行人穿越道過馬路，連續按鳴喇叭使其讓路 </li><li class="">行人穿越馬路動作緩慢，為節省時間可加速通過 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4206.jpg" alt="Contact sheet 4206" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:42.3077%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">5.0s 行人任意橫越馬路穿越車道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4206" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4206" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4206" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4207" data-id="4207" data-what="公車旁行人持傘橫越馬路">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#53 影片 4207</span>
+          <span class="badge badge-sec">3.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 公車旁行人持傘橫越馬路
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V066] 身為騎士的您，行人下公車後任意穿越馬路，應如何反應，請選出正確的。</div>
+        <ol class="opts">
+          <li class="">行人未依規定於行人穿越道過馬路，連續按鳴喇叭使其讓路 </li><li class="">天雨路滑，為避免緊急煞車滑倒，應快速通過 </li><li class="correct">天雨路滑降低車速，並注意察看行人動向，預作停車準備 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4207.jpg" alt="Contact sheet 4207" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">3.0s 公車旁行人持傘橫越馬路</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4207" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4207" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4207" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4208" data-id="4208" data-what="窄巷右側低頭族步入車道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#54 影片 4208</span>
+          <span class="badge badge-sec">16.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 窄巷右側低頭族步入車道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V067] 身為騎士的您，遇到低頭族的行人通過路口，你該如何因應？</div>
+        <ol class="opts">
+          <li class="correct">採取減速、預作停車等必要措施 ✓ (正解)</li><li class="">按鳴喇叭並出聲提醒 </li><li class="">緊急煞車嚇阻低頭族 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4208.jpg" alt="Contact sheet 4208" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:75.6098%; width:20.0000%; height:12.1951%;">
+          <div class="highlight-tag">16.5s 窄巷右側低頭族步入車道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4208" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4208" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4208" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4209" data-id="4209" data-what="前方機車未待轉逕自左轉">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#55 影片 4209</span>
+          <span class="badge badge-sec">7.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前方機車未待轉逕自左轉
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V068] 身為騎士的您，遇到不依規定左轉的機車，你該如何因應？</div>
+        <ol class="opts">
+          <li class="correct">採取減速、預作停車等必要措施 ✓ (正解)</li><li class="">按鳴喇叭並出聲提醒 </li><li class="">緊急煞車嚇阻違規騎士 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4209.jpg" alt="Contact sheet 4209" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:76.1905%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">7.5s 前方機車未待轉逕自左轉</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4209" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4209" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4209" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4210" data-id="4210" data-what="前方大貨車打燈跨線左轉">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#56 影片 4210</span>
+          <span class="badge badge-sec">7.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前方大貨車打燈跨線左轉
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V069] 身為騎士的您，行駛中如遇前方大型車輛顯示方向燈時，你該如何因應？</div>
+        <ol class="opts">
+          <li class="">加速超車前方車輛 </li><li class="correct">車輛減速並保持安全車距 ✓ (正解)</li><li class="">緊急加速超車並按鳴喇叭告知 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4210.jpg" alt="Contact sheet 4210" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:51.6129%; width:20.0000%; height:16.1290%;">
+          <div class="highlight-tag">7.5s 前方大貨車打燈跨線左轉</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4210" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4210" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4210" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4211" data-id="4211" data-what="大車視線遮蔽處機車竄出">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#57 影片 4211</span>
+          <span class="badge badge-sec">10.5 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 大車視線遮蔽處機車竄出
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V070] 身為騎士的您，行駛中如遇併行車輛視線遮蔽，該如何反應？</div>
+        <ol class="opts">
+          <li class="correct">注意號誌並留意視線遮蔽處有無來車，做好防禦駕駛行為 ✓ (正解)</li><li class="">綠燈路權最大，加速通過以防燈號改變 </li><li class="">直接通過路口事故風險低 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4211.jpg" alt="Contact sheet 4211" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:67.7419%; width:20.0000%; height:16.1290%;">
+          <div class="highlight-tag">10.5s 大車視線遮蔽處機車竄出</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4211" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4211" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4211" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4212" data-id="4212" data-what="大型車轉彎大迴轉橫跨車道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#58 影片 4212</span>
+          <span class="badge badge-sec">7.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 大型車轉彎大迴轉橫跨車道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V071] 身為騎士的您，看到大型車右轉卻打左方向燈，應該要有什麼觀念？</div>
+        <ol class="opts">
+          <li class="">大型車是要右轉，單純打錯方向燈 </li><li class="correct">大型車是要左轉，只是內輪差限制需先往右靠 ✓ (正解)</li><li class="">方向燈誤打不可信，應以車輛偏移軌跡判斷大型車轉彎方向 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4212.jpg" alt="Contact sheet 4212" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:42.3077%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">7.0s 大型車轉彎大迴轉橫跨車道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4212" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4212" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4212" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4213" data-id="4213" data-what="同車道前方故障車輛停等">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#59 影片 4213</span>
+          <span class="badge badge-sec">7.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 同車道前方故障車輛停等
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V072] 身為騎士的您，遇前方車輛故障需變換車道時，應先完成什麼動作？</div>
+        <ol class="opts">
+          <li class="">顯示遠光燈後變換車道 </li><li class="correct">顯示方向燈並察看照後鏡與擺頭確認交通情況，再變換車道 ✓ (正解)</li><li class="">按鳴喇叭並伸手示意後變換車道 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4213.jpg" alt="Contact sheet 4213" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:76.1905%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">7.5s 同車道前方故障車輛停等</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4213" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4213" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4213" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4214" data-id="4214" data-what="對向黑車右轉進入同車道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#60 影片 4214</span>
+          <span class="badge badge-sec">7.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 對向黑車右轉進入同車道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V073] 身為騎士的您，路口左轉時遇對向來車右轉進同一車道，請問誰的路權優先？</div>
+        <ol class="opts">
+          <li class="">對向右轉車輛 </li><li class="correct">左轉彎車輛 ✓ (正解)</li><li class="">先跨越停止線進入路口之車輛優先 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4214.jpg" alt="Contact sheet 4214" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:35.4839%; width:20.0000%; height:16.1290%;">
+          <div class="highlight-tag">7.0s 對向黑車右轉進入同車道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4214" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4214" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4214" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4215" data-id="4215" data-what="前方車道有停等故障車輛">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#61 影片 4215</span>
+          <span class="badge badge-sec">6.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前方車道有停等故障車輛
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V074] 身為騎士的您，遇前方車輛故障需變換車道時，應先完成什麼動作？</div>
+        <ol class="opts">
+          <li class="">顯示遠光燈後變換車道 </li><li class="correct">顯示方向燈並察看照後鏡與擺頭確認交通情況，再變換車道 ✓ (正解)</li><li class="">按鳴喇叭並伸手示意後變換車道 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4215.jpg" alt="Contact sheet 4215" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">6.5s 前方車道有停等故障車輛</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4215" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4215" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4215" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4216" data-id="4216" data-what="岔路白車突然左轉駛入車道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#62 影片 4216</span>
+          <span class="badge badge-sec">6.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 岔路白車突然左轉駛入車道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V075] 身為騎士的您遇到有車輛突然從前方岔路左轉進入您行駛之車道，應該如何反應？</div>
+        <ol class="opts">
+          <li class="">注意前方，繼續維持前進速度 </li><li class="">加速前進，在前方車輛轉入車道前超越它 </li><li class="correct">注意車前狀況並減速慢行，預作停車等必要措施 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4216.jpg" alt="Contact sheet 4216" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">6.0s 岔路白車突然左轉駛入車道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4216" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4216" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4216" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4217" data-id="4217" data-what="對向機車違規跨雙黃線左轉">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#63 影片 4217</span>
+          <span class="badge badge-sec">6.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 對向機車違規跨雙黃線左轉
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V076] 身為騎士的您遇到前方車輛違規跨越雙黃線左轉，應該如何反應？</div>
+        <ol class="opts">
+          <li class="">直行車路權高於轉彎車，繼續維持前進速度 </li><li class="correct">注意車前狀況並減速慢行，預作停車等必要措施 ✓ (正解)</li><li class="">按鳴喇叭並伸手示意後變換車道繞開 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4217.jpg" alt="Contact sheet 4217" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">6.5s 對向機車違規跨雙黃線左轉</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4217" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4217" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4217" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4218" data-id="4218" data-what="內側車道黑車違規右轉切入">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#64 影片 4218</span>
+          <span class="badge badge-sec">6.5 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 內側車道黑車違規右轉切入
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V077] 身為騎士的您，在天色昏暗且內側車道車輛違規右轉時，您應如何反應？</div>
+        <ol class="opts">
+          <li class="">顯示遠光燈示意超車 </li><li class="">按鳴喇叭並伸手示意後變換車道超車 </li><li class="correct">注意車前狀況並減速慢行，預作停車等必要措施 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4218.jpg" alt="Contact sheet 4218" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:26.8293%; width:20.0000%; height:12.1951%;">
+          <div class="highlight-tag">6.5s 內側車道黑車違規右轉切入</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4218" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4218" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4218" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4219" data-id="4219" data-what="路寬縮減左車打燈切入本道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#65 影片 4219</span>
+          <span class="badge badge-sec">9.5 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 路寬縮減左車打燈切入本道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V078] 身為騎士的您遇前方道路縮減路段，鄰車顯示方向燈併入時，應該如何行駛比較安全？</div>
+        <ol class="opts">
+          <li class="">直行車優先繼續維持前進速度即可 </li><li class="correct">注意車前狀況並減速慢行，預作停車等必要措施 ✓ (正解)</li><li class="">按鳴喇叭並伸手示意後變換車道繞開 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4219.jpg" alt="Contact sheet 4219" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:34.7826%; width:20.0000%; height:10.8696%;">
+          <div class="highlight-tag">9.5s 路寬縮減左車打燈切入本道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4219" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4219" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4219" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4220" data-id="4220" data-what="起步時橫向黑車闖紅燈搶行">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#66 影片 4220</span>
+          <span class="badge badge-sec">8.0 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 起步時橫向黑車闖紅燈搶行
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V079] 身為騎士的您，於路口遇號誌變換為綠燈，此時應該採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="correct">留意橫向道路闖紅燈車輛的動態，作隨時停車之準備 ✓ (正解)</li><li class="">號誌已變換為綠燈，快速通過路口避免交通阻塞 </li><li class="">橫向道路車輛已進入路口，應按鳴喇叭 3單響使其停讓 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4220.jpg" alt="Contact sheet 4220" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:61.5385%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">8.0s 起步時橫向黑車闖紅燈搶行</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4220" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4220" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4220" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4221" data-id="4221" data-what="橫向車輛闖紅燈穿越路口">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#67 影片 4221</span>
+          <span class="badge badge-sec">5.0 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 橫向車輛闖紅燈穿越路口
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V080] 身為騎士的您，在影片中發現那些危險?</div>
+        <ol class="opts">
+          <li class="correct">橫向道路車輛闖紅燈左轉 ✓ (正解)</li><li class="">左彎車輛不禮讓行人 </li><li class="">車輛逆向行駛侵入我方車道 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4221.jpg" alt="Contact sheet 4221" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">5.0s 橫向車輛闖紅燈穿越路口</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4221" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4221" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4221" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4222" data-id="4222" data-what="對向來車會車侵入我方路幅">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#68 影片 4222</span>
+          <span class="badge badge-sec">8.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 對向來車會車侵入我方路幅
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V081] 身為騎士的您，此時最可能會遇到何種危險?</div>
+        <ol class="opts">
+          <li class="correct">對向來車侵入我方車道 ✓ (正解)</li><li class="">後方機車未保持安全距離導致追撞 </li><li class="">路面標線濕滑導致車輛失去控制 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4222.jpg" alt="Contact sheet 4222" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:61.5385%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">8.5s 對向來車會車侵入我方路幅</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4222" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4222" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4222" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4223" data-id="4223" data-what="前方門口黑車倒車橫越路面">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#69 影片 4223</span>
+          <span class="badge badge-sec">8.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前方門口黑車倒車橫越路面
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V082] 身為騎士的您，遇前方疑似有車輛準備倒車時，應該採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="">按鳴喇叭 3 次，提醒路邊車輛後減速通過 </li><li class="correct">減速注意路邊車輛動向，作隨時停車之準備 ✓ (正解)</li><li class="">停車上前拍打路邊車輛警告其已侵入我方行車動線 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4223.jpg" alt="Contact sheet 4223" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:76.1905%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">8.0s 前方門口黑車倒車橫越路面</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4223" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4223" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4223" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4224" data-id="4224" data-what="前方大貨車煞車減速">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#70 影片 4224</span>
+          <span class="badge badge-sec">8.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前方大貨車煞車減速
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V083] 身為騎士的您，見同車道前方大貨車減速且視線不良的情況下，應採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="">察看右照後鏡確認無來車後，由前車右側通過 </li><li class="correct">減速慢行，觀察前方車輛動向並作隨時停車之準備 ✓ (正解)</li><li class="">顯示左方向燈後跨越行車分向線進行超車 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4224.jpg" alt="Contact sheet 4224" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:61.5385%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">8.5s 前方大貨車煞車減速</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4224" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4224" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4224" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4225" data-id="4225" data-what="橫向大貨車橫越路口阻擋">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#71 影片 4225</span>
+          <span class="badge badge-sec">8.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 橫向大貨車橫越路口阻擋
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V084] 身為騎士的您，行近路口見橫向道路有大貨車欲右轉且可能侵入我方車道，此時應該採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="">減速慢行、顯示右側方向燈後變換至路肩行駛 </li><li class="correct">減速慢行，觀察大貨車動向並作隨時停車之準備 ✓ (正解)</li><li class="">按鳴喇叭 3單響，提醒大貨車並減速慢行 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4225.jpg" alt="Contact sheet 4225" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:61.5385%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">8.5s 橫向大貨車橫越路口阻擋</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4225" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4225" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4225" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4226" data-id="4226" data-what="路邊白車起駛違規大迴轉">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#72 影片 4226</span>
+          <span class="badge badge-sec">7.0 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 路邊白車起駛違規大迴轉
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V085] 身為騎士的您，見路邊車輛起駛，此時應採取什麼動作較為妥適？</div>
+        <ol class="opts">
+          <li class="correct">該車可能違規迴轉，應減速慢行並作隨時停車之準備 ✓ (正解)</li><li class="">該車起駛後將進入外側車道，與我車無關，繼續行駛即可 </li><li class="">該車應依序變換至我方車道並禮讓我車，因此繼續行駛即可 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4226.jpg" alt="Contact sheet 4226" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">7.0s 路邊白車起駛違規大迴轉</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4226" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4226" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4226" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4227" data-id="4227" data-what="前車減速準備路口左轉">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#73 影片 4227</span>
+          <span class="badge badge-sec">7.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前車減速準備路口左轉
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V086] 身為騎士的您，行駛於內側車道且前方有車輛準備左轉，此時不應該採取什麼動作?</div>
+        <ol class="opts">
+          <li class="correct">直接變換至外側車道後，加速繞過前方大貨車 ✓ (正解)</li><li class="">減速暫停，待前方車輛左轉完成後，再繼續前進 </li><li class="">顯示右方向燈並禮讓直行車先行後，變換至外側車道行駛 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4227.jpg" alt="Contact sheet 4227" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:76.1905%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">7.5s 前車減速準備路口左轉</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4227" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4227" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4227" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4228" data-id="4228" data-what="大貨車右轉產生內輪差逼近">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#74 影片 4228</span>
+          <span class="badge badge-sec">8.5 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 大貨車右轉產生內輪差逼近
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V087] 身為騎士的您，欲與大貨車同時進行右轉彎，此時應該採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="">大貨車起步較慢，把握時機加速右轉即可 </li><li class="correct">勿與大貨車併行，應停讓使大貨車先行駛 ✓ (正解)</li><li class="">大貨車與我行駛於不同車道，可以一起右轉 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4228.jpg" alt="Contact sheet 4228" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:61.5385%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">8.5s 大貨車右轉產生內輪差逼近</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4228" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4228" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4228" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4229" data-id="4229" data-what="併行大貨車右轉侵入內輪差">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#75 影片 4229</span>
+          <span class="badge badge-sec">8.0 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 併行大貨車右轉侵入內輪差
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V088] 身為騎士的您，在影片中發現那些危險?</div>
+        <ol class="opts">
+          <li class="correct">大貨車右轉彎，可能導致我方進入內輪差危險區域 ✓ (正解)</li><li class="">號誌桿歪斜凸出車道阻礙交通 </li><li class="">大貨車裝載貨櫃超出車身之外影響行車安全 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4229.jpg" alt="Contact sheet 4229" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:76.1905%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">8.0s 併行大貨車右轉侵入內輪差</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4229" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4229" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4229" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4230" data-id="4230" data-what="夜間對向來車強光會車">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#76 影片 4230</span>
+          <span class="badge badge-sec">6.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 夜間對向來車強光會車
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V089] 身為騎士的您，於夜間發現對向有車行駛而來，此時應採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="">按鳴喇叭提醒汽車駕駛人應關閉遠光燈 </li><li class="correct">靠右減速慢行並作隨時停車之準備 ✓ (正解)</li><li class="">開啟遠光燈增加視野並減速慢行 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4230.jpg" alt="Contact sheet 4230" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">6.5s 夜間對向來車強光會車</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4230" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4230" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4230" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4231" data-id="4231" data-what="前方右側單車騎士同向行駛">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#77 影片 4231</span>
+          <span class="badge badge-sec">7.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前方右側單車騎士同向行駛
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V090] 身為騎士的您，此時應採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="correct">按鳴喇叭 1單響，提醒單車騎士後方有來車並減速慢行 ✓ (正解)</li><li class="">按鳴喇叭 1 秒，提醒單車騎士我方將進行超車 </li><li class="">按鳴喇叭 3 單響，提醒單車騎士後方有來車並減速慢行 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4231.jpg" alt="Contact sheet 4231" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:42.3077%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">7.0s 前方右側單車騎士同向行駛</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4231" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4231" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4231" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4232" data-id="4232" data-what="會車後右前方單車騎士騎行">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#78 影片 4232</span>
+          <span class="badge badge-sec">7.5 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 會車後右前方單車騎士騎行
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V091] 身為騎士的您，此時應採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="correct">減速慢行，注意單車騎士動態，隨時採取必要之安全措施 ✓ (正解)</li><li class="">按鳴喇叭2單響，提醒單車騎士我方將進行超車，然後加速前進 </li><li class="">快速變換遠光燈 1次，提醒對向來車應開亮頭燈行駛 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4232.jpg" alt="Contact sheet 4232" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:61.5385%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">7.5s 會車後右前方單車騎士騎行</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4232" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4232" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4232" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4233" data-id="4233" data-what="狹窄巷弄前方行人通行">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#79 影片 4233</span>
+          <span class="badge badge-sec">7.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 狹窄巷弄前方行人通行
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V092] 身為騎士的您，此時應採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="">觀察行人動向後減速通過即可 </li><li class="">按鳴喇叭 1單響，提醒行人禮讓我方車先行 </li><li class="correct">停車並應讓行人優先通行 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4233.jpg" alt="Contact sheet 4233" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:76.1905%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">7.5s 狹窄巷弄前方行人通行</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4233" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4233" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4233" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4234" data-id="4234" data-what="前方行人自右側橫跨道路">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#80 影片 4234</span>
+          <span class="badge badge-sec">6.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前方行人自右側橫跨道路
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V093] 身為騎士的您，此時應採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="">應按鳴喇叭阻止行人擅自穿越馬路 </li><li class="correct">減速觀察行人動向並作隨時停車之準備 ✓ (正解)</li><li class="">配合路邊行人動向，向左偏移後閃過行人 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4234.jpg" alt="Contact sheet 4234" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">6.0s 前方行人自右側橫跨道路</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4234" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4234" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4234" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4235" data-id="4235" data-what="行人違規擅越中央分隔島">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#81 影片 4235</span>
+          <span class="badge badge-sec">2.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 行人違規擅越中央分隔島
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V094] 身為騎士的您，如遇影片中行人擅越中央分向島，應如何因應較為妥適?</div>
+        <ol class="opts">
+          <li class="correct">視線放遠，提前反應 ✓ (正解)</li><li class="">按鳴喇叭，警告行人違規 </li><li class="">馬上停車，催促行人快速通過 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4235.jpg" alt="Contact sheet 4235" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:23.0769%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">2.5s 行人違規擅越中央分隔島</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4235" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4235" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4235" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4236" data-id="4236" data-what="路側停放車輛防開門死角">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#82 影片 4236</span>
+          <span class="badge badge-sec">7.0 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 路側停放車輛防開門死角
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V095] 身為騎士的您，騎乘機車行經單線雙向之車道，且路邊停有車輛，應如何因應較為妥適?</div>
+        <ol class="opts">
+          <li class="">右邊已停有車輛無法通行，故靠左直行 </li><li class="correct">減速慢行，注意是否有行人竄出或車門突然開啟 ✓ (正解)</li><li class="">為避免危險，直行車優先快速通過 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4236.jpg" alt="Contact sheet 4236" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">7.0s 路側停放車輛防開門死角</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4236" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4236" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4236" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4237" data-id="4237" data-what="前方行人行走於車道中間">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#83 影片 4237</span>
+          <span class="badge badge-sec">3.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前方行人行走於車道中間
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V096] 身為騎士的您，發現有行人行走車道上，該如何因應較為妥適?</div>
+        <ol class="opts">
+          <li class="">繞過行人，繼續直行 </li><li class="">在車道上緊急煞車等行人通過 </li><li class="correct">減速慢行，預作閃避之準備 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4237.jpg" alt="Contact sheet 4237" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:23.0769%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">3.5s 前方行人行走於車道中間</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4237" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4237" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4237" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4238" data-id="4238" data-what="匝道左側機車突切換車道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#84 影片 4238</span>
+          <span class="badge badge-sec">3.0 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 匝道左側機車突切換車道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V097] 身為騎士的您，行經匝道出入口處，行駛內側車道遇同向岔路有機車變換車道，該如何因應較為妥適?</div>
+        <ol class="opts">
+          <li class="correct">減速並預作停車之準備 ✓ (正解)</li><li class="">加速通過，不用禮讓 </li><li class="">直行車優先，不用管其他用路人行為 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4238.jpg" alt="Contact sheet 4238" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">3.0s 匝道左側機車突切換車道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4238" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4238" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4238" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4239" data-id="4239" data-what="橋梁上左側機車超車切入">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#85 影片 4239</span>
+          <span class="badge badge-sec">3.5 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 橋梁上左側機車超車切入
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V098] 身為騎士的您，行經橋梁路段，且左前方有小型車同行，請問此時您可能會遇到何種危險?</div>
+        <ol class="opts">
+          <li class="correct">已經靠右行駛，僅注意車前狀況即可 ✓ (正解)</li><li class="">突然有車輛從右方超車 </li><li class="">專注於前方小型車，是否會靠右行駛 </li>
+        </ol>
+    
+        <div class="q-text">[V099] 身為騎士的您，遇有車輛從左側超車時，該如何因應較為妥適?</div>
+        <ol class="opts">
+          <li class="">加速行駛，阻礙其超車 </li><li class="">直行車優先，繼續直行 </li><li class="correct">減速讓其先行超車 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4239.jpg" alt="Contact sheet 4239" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">3.5s 橋梁上左側機車超車切入</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4239" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4239" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4239" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4241" data-id="4241" data-what="狹窄單行道對向汽車會車">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#86 影片 4241</span>
+          <span class="badge badge-sec">2.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 狹窄單行道對向汽車會車
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V100] 身為騎士的您，行經鄉間蔓草叢生的單線車道時，遇有汽車會車，該如何因應較為妥適?</div>
+        <ol class="opts">
+          <li class="correct">減速慢行，靠右行駛，讓其先行 ✓ (正解)</li><li class="">勉強可以會車，趕快往前通行 </li><li class="">按鳴喇叭，使其再靠邊行駛， 方便會車 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4241.jpg" alt="Contact sheet 4241" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:28.5714%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">2.5s 狹窄單行道對向汽車會車</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4241" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4241" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4241" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4242" data-id="4242" data-what="右側白車切入本道上交流道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#87 影片 4242</span>
+          <span class="badge badge-sec">5.5 秒</span>
+          <span class="badge badge-area">右側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 右側白車切入本道上交流道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V101] 身為騎士的您，如遇汽車變換車道至左前方上交流道時，該如何因應較為妥適？</div>
+        <ol class="opts">
+          <li class="">加速通過，不用禮讓 </li><li class="correct">減速慢行，並注意後方車輛動向 ✓ (正解)</li><li class="">按鳴喇叭，警告應讓直行車。" </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4242.jpg" alt="Contact sheet 4242" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">5.5s 右側白車切入本道上交流道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4242" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4242" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4242" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4243" data-id="4243" data-what="狹窄道路對向大貨車駛近">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#88 影片 4243</span>
+          <span class="badge badge-sec">6.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 狹窄道路對向大貨車駛近
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V102] 身為騎士的您，行駛於狹窄道路，見對向大型車駛近，應有什麼樣的適當行為呢？</div>
+        <ol class="opts">
+          <li class="correct">保持隨時可以減速煞停因應的空間 ✓ (正解)</li><li class="">按鳴喇叭，使對方避讓 </li><li class="">按鳴喇叭直接加速通過 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4243.jpg" alt="Contact sheet 4243" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:32.0388%; width:20.0000%; height:14.5631%;">
+          <div class="highlight-tag">6.5s 狹窄道路對向大貨車駛近</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4243" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4243" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4243" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4244" data-id="4244" data-what="路口白車缺口迴轉橫跨車道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#89 影片 4244</span>
+          <span class="badge badge-sec">5.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 路口白車缺口迴轉橫跨車道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V103] 身為騎士的您，看到分向島缺口處有車輛顯示左側方向燈並迴轉，應有什麼樣的適當行為呢？</div>
+        <ol class="opts">
+          <li class="">維持原車速度繼續直行 </li><li class="correct">減速讓該車先行，避免危險發生 ✓ (正解)</li><li class="">按鳴喇叭無須做煞停準備 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4244.jpg" alt="Contact sheet 4244" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:39.7590%; width:20.0000%; height:18.0723%;">
+          <div class="highlight-tag">5.5s 路口白車缺口迴轉橫跨車道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4244" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4244" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4244" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4245" data-id="4245" data-what="對向大車繞越障礙侵入本道">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#90 影片 4245</span>
+          <span class="badge badge-sec">6.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 對向大車繞越障礙侵入本道
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V104] 身為騎士的您，行經路幅狹小且有違停車輛的路口時，以下敘述何者為是？</div>
+        <ol class="opts">
+          <li class="">無須理會其他違規車輛，繼續直行 </li><li class="correct">應預判橫向車輛轉彎會侵犯到本車的行駛空間 ✓ (正解)</li><li class="">違停車輛並沒有遮蔽橫向駕駛人轉彎時之視線 </li>
+        </ol>
+    
+        <div class="q-text">[V105] 身為騎士的您，發現路口有違規停車，橫向小貨車右轉時繞越路口，應有什麼樣的適當行為呢？</div>
+        <ol class="opts">
+          <li class="correct">應減速停讓 ✓ (正解)</li><li class="">不須減速，直接通過路口 </li><li class="">加速並緊鄰該車之間隙通過 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4245.jpg" alt="Contact sheet 4245" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:39.7590%; width:20.0000%; height:18.0723%;">
+          <div class="highlight-tag">6.0s 對向大車繞越障礙侵入本道</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4245" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4245" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4245" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4247" data-id="4247" data-what="隧道內左側黑車違規切入">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#91 影片 4247</span>
+          <span class="badge badge-sec">5.5 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 隧道內左側黑車違規切入
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V106] 身為騎士的您，看到小客車顯示右側方向燈違規變換車道，應有什麼樣的適當行為呢？</div>
+        <ol class="opts">
+          <li class="">按鳴喇叭，使對方避讓 </li><li class="correct">提高警覺，拉大安全距離 ✓ (正解)</li><li class="">直接切入右側車道，繞過前車 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4247.jpg" alt="Contact sheet 4247" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:39.7590%; width:20.0000%; height:18.0723%;">
+          <div class="highlight-tag">5.5s 隧道內左側黑車違規切入</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4247" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4247" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4247" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4248" data-id="4248" data-what="加油站旁黑車由路外駛入">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#92 影片 4248</span>
+          <span class="badge badge-sec">8.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 加油站旁黑車由路外駛入
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V107] 身為騎士的您，看到路旁加油站小客車由路外駛入，應有什麼樣的適當行為呢？</div>
+        <ol class="opts">
+          <li class="correct">減速慢行，觀察前方車輛動向並做隨時停車之準備 ✓ (正解)</li><li class="">無須禮讓，直接變換至內側車道 </li><li class="">看到車輛衝出，按鳴喇叭無須做煞停準備 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4248.jpg" alt="Contact sheet 4248" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:57.8313%; width:20.0000%; height:18.0723%;">
+          <div class="highlight-tag">8.5s 加油站旁黑車由路外駛入</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4248" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4248" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4248" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4249" data-id="4249" data-what="機車違規行駛行穿線橫越">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#93 影片 4249</span>
+          <span class="badge badge-sec">7.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 機車違規行駛行穿線橫越
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V108] 身為騎士的您，於綠燈時看到機車違規行駛行穿線，應有什麼樣的適當行為呢？</div>
+        <ol class="opts">
+          <li class="">按照燈號繼續直行 </li><li class="correct">減速慢行，並做隨時停車之準備 ✓ (正解)</li><li class="">按鳴喇叭即可，無須留意騎士動態 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4249.jpg" alt="Contact sheet 4249" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:39.7590%; width:20.0000%; height:18.0723%;">
+          <div class="highlight-tag">7.0s 機車違規行駛行穿線橫越</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4249" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4249" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4249" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4250" data-id="4250" data-what="左前方休旅車突減速遮蔽死角">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#94 影片 4250</span>
+          <span class="badge badge-sec">5.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 左前方休旅車突減速遮蔽死角
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V109] 身為騎士的您，見左前方小客車於路口綠燈時突然減速，應有什麼樣的適當行為呢？</div>
+        <ol class="opts">
+          <li class="correct">應預判視線遮蔽處可能有車輛駛出或行人衝出，保持隨時減速的準備 ✓ (正解)</li><li class="">只要注意前方車輛動態，不須注意兩旁物體動態 </li><li class="">只要自己安全無虞，無須理會其他用路人的反應 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4250.jpg" alt="Contact sheet 4250" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:39.7590%; width:20.0000%; height:18.0723%;">
+          <div class="highlight-tag">5.0s 左前方休旅車突減速遮蔽死角</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4250" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4250" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4250" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4251" data-id="4251" data-what="對向車輛路口搶先左轉">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#95 影片 4251</span>
+          <span class="badge badge-sec">9.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 對向車輛路口搶先左轉
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V110] 身為騎士的您，在影片中發現哪些危險?</div>
+        <ol class="opts">
+          <li class="correct">對向機車占用來車道搶先左轉 ✓ (正解)</li><li class="">路邊行人不依規定，擅自進入車道範圍 </li><li class="">對向紅色汽車左轉彎不讓直行車先行 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4251.jpg" alt="Contact sheet 4251" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:61.5385%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">9.0s 對向車輛路口搶先左轉</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4251" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4251" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4251" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4252" data-id="4252" data-what="路口對向來車搶先右轉">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#96 影片 4252</span>
+          <span class="badge badge-sec">5.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 路口對向來車搶先右轉
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V111] 身為騎士的您，於影片中路口欲左轉，而對向來車欲右轉進入同一路段之車道，以下敘述何者正確?</div>
+        <ol class="opts">
+          <li class="correct">右轉彎車輛應讓左轉彎車輛先行，因此對向來車應暫停讓本車先行才是符合法規的行為 ✓ (正解)</li><li class="">雙方可同時進入該路段，本車為左轉彎車輛，進入車道內側；對向車為右轉彎車輛，進入車道外側 </li><li class="">左轉彎車輛應讓右轉彎車輛先行，因此本車暫停讓對向來車先行是符合法規的行為 </li>
+        </ol>
+    
+        <div class="q-text">[V112] 身為騎士的您，在影片中發現哪些危險?</div>
+        <ol class="opts">
+          <li class="correct">對向來車右轉彎未讓本車先行，影響本車安全 ✓ (正解)</li><li class="">對向來車不依規定使用燈光，影響本車安全 </li><li class="">路旁行人不依規定穿越車道，影響本車安全 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4252.jpg" alt="Contact sheet 4252" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:42.3077%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">5.0s 路口對向來車搶先右轉</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4252" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4252" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4252" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4254" data-id="4254" data-what="夜間無照明路段前方障礙">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#97 影片 4254</span>
+          <span class="badge badge-sec">6.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 夜間無照明路段前方障礙
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V113] 身為騎士的您，基於防禦駕駛觀念，此時應採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="">按鳴喇叭 1單響，提醒對方應禮讓，本車減速通過即可 </li><li class="">轉彎車應讓直行車先行，本車減速通過即可 </li><li class="correct">減速慢行，並作隨時停車之準備 ✓ (正解)</li>
+        </ol>
+    
+        <div class="q-text">[V114] 身為騎士的您，行經影片中路口，最可能遭遇何種危險?</div>
+        <ol class="opts">
+          <li class="">視線昏暗導致後方車輛追撞 </li><li class="">對向來車錯誤使用遠光燈，導致本車眩光 </li><li class="correct">對向來車轉彎不讓直行車先行 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4254.jpg" alt="Contact sheet 4254" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">6.0s 夜間無照明路段前方障礙</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4254" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4254" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4254" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4256" data-id="4256" data-what="無號誌路口橫向紅車駛出">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#98 影片 4256</span>
+          <span class="badge badge-sec">6.0 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 無號誌路口橫向紅車駛出
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V115] 身為騎士的您，行駛於無號誌路口，見橫向多車通過該路口，以下敘述何者正確?</div>
+        <ol class="opts">
+          <li class="">本車車道劃設有慢標字，屬支線道，因此本車應停讓 </li><li class="correct">左方車應讓右方車先行，因此紅色汽車應讓本車先行 ✓ (正解)</li><li class="">橫向路段劃設有分向限制線，屬於幹線道，因此本車應停讓 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4256.jpg" alt="Contact sheet 4256" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:35.4839%; width:20.0000%; height:16.1290%;">
+          <div class="highlight-tag">6.0s 無號誌路口橫向紅車駛出</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4256" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4256" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4256" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4257" data-id="4257" data-what="圓環內側車道車輛匯出">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#99 影片 4257</span>
+          <span class="badge badge-sec">3.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 圓環內側車道車輛匯出
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V116] 身為騎士的您，此時應採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="correct">本車行駛於圓環外側車道，應讓內側車道車輛先行 ✓ (正解)</li><li class="">轉彎車輛應讓直行車輛先行，因此本車可優先通過 </li><li class="">變換車道車輛應讓直行車輛先行，因此本車可優先通過 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4257.jpg" alt="Contact sheet 4257" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:23.0769%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">3.5s 圓環內側車道車輛匯出</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4257" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4257" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4257" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4258" data-id="4258" data-what="前行車輛無預警減速">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#100 影片 4258</span>
+          <span class="badge badge-sec">6.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前行車輛無預警減速
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V117] 身為騎士的您，見前車減速，此時應該採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="">減速慢行，待對向來車淨空後，抓住適當時機由左方車道超車 </li><li class="">按鳴喇叭1 單響或顯示超車燈光，待前行車表示允讓後，由右方超車 </li><li class="correct">減速慢行，觀察前行車動向及視線所及處交通情況並作隨時停車之準備 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4258.jpg" alt="Contact sheet 4258" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:42.3077%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">6.5s 前行車輛無預警減速</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4258" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4258" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4258" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4259" data-id="4259" data-what="車道縮減換入內側應讓行">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#101 影片 4259</span>
+          <span class="badge badge-sec">6.5 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 車道縮減換入內側應讓行
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V118] 身為騎士的您，欲繼續前行，除顯示左邊方向燈外，應採取什麼動作較為妥適？</div>
+        <ol class="opts">
+          <li class="">遵守指向線指示，立即換入內側車道行駛，避免阻礙車流 </li><li class="correct">應讓直行車道之車輛先行，確認安全後依規定換入內側車道 ✓ (正解)</li><li class="">待行駛至車道末端後，換入內側車道行駛，避免阻礙車流 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4259.jpg" alt="Contact sheet 4259" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:42.3077%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">6.5s 車道縮減換入內側應讓行</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4259" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4259" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4259" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4260" data-id="4260" data-what="彎道前方自行車禁止超車">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#102 影片 4260</span>
+          <span class="badge badge-sec">4.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 彎道前方自行車禁止超車
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V119] 身為機車騎士的您，欲超越前方自行車騎士，應該採取什麼方式較為妥適?</div>
+        <ol class="opts">
+          <li class="">於彎道處，見對向來車淨空後即可超車 </li><li class="">可利用自行車騎士右方空間，進行超車 </li><li class="correct">待行駛至劃設行車分向線路段後，才可超車 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4260.jpg" alt="Contact sheet 4260" loading="lazy">
+        <div class="highlight-box" style="left:60.0000%; top:19.3548%; width:20.0000%; height:16.1290%;">
+          <div class="highlight-tag">4.0s 彎道前方自行車禁止超車</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4260" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4260" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4260" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4261" data-id="4261" data-what="號誌變換路口違規車輛穿梭">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#103 影片 4261</span>
+          <span class="badge badge-sec">7.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 號誌變換路口違規車輛穿梭
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V120] 身為機車騎士的您，在影片中看到哪些駕駛行為是符合交通法規的?</div>
+        <ol class="opts">
+          <li class="">同向藍色小客車駕駛，維持車速穩定行駛 </li><li class="">橫向機車騎士減速通過路口 </li><li class="correct">以上行為皆不符合交通法規 ✓ (正解)</li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4261.jpg" alt="Contact sheet 4261" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:35.4839%; width:20.0000%; height:16.1290%;">
+          <div class="highlight-tag">7.0s 號誌變換路口違規車輛穿梭</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4261" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4261" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4261" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4262" data-id="4262" data-what="平交道前車駛離前暫停等候">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#104 影片 4262</span>
+          <span class="badge badge-sec">8.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 平交道前車駛離前暫停等候
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V121] 身為騎士的您，此時應採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="correct">於停止線前停車，待前車駛離淨空後再前進 ✓ (正解)</li><li class="">緊跟前車，避免阻礙後方車流 </li><li class="">柵欄升起即可立即通過 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4262.jpg" alt="Contact sheet 4262" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:51.6129%; width:20.0000%; height:16.1290%;">
+          <div class="highlight-tag">8.5s 平交道前車駛離前暫停等候</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4262" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4262" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4262" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4263" data-id="4263" data-what="行經隧道出入口應開頭燈">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#105 影片 4263</span>
+          <span class="badge badge-sec">4.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 行經隧道出入口應開頭燈
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V122] 身為騎士的您，行經影片中路段時，應如何使用燈光最為妥適?</div>
+        <ol class="opts">
+          <li class="correct">保持頭燈開啟 ✓ (正解)</li><li class="">開啟或關閉頭燈均可 </li><li class="">只需開啟危險警告燈即可 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4263.jpg" alt="Contact sheet 4263" loading="lazy">
+        <div class="highlight-box" style="left:80.0000%; top:37.5000%; width:20.0000%; height:31.2500%;">
+          <div class="highlight-tag">4.5s 行經隧道出入口應開頭燈</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4263" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4263" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4263" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4264" data-id="4264" data-what="辨識快慢車道與路肩範圍">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#106 影片 4264</span>
+          <span class="badge badge-sec">1.0 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 辨識快慢車道與路肩範圍
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V123] 身為騎士的您，能否辨別出影片中那些空間是您可以行駛的呢?</div>
+        <ol class="opts">
+          <li class="">機慢車道及右側路肩 </li><li class="correct">左側快車道及機慢車道 ✓ (正解)</li><li class="">左側快車道、機慢車道及右側路肩 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4264.jpg" alt="Contact sheet 4264" loading="lazy">
+        <div class="highlight-box" style="left:40.0000%; top:3.8462%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">1.0s 辨識快慢車道與路肩範圍</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4264" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4264" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4264" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4265" data-id="4265" data-what="路口行人穿越行穿線應停讓">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#107 影片 4265</span>
+          <span class="badge badge-sec">5.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 路口行人穿越行穿線應停讓
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V124] 身為騎士的您，此時應採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="">停讓行人後，進入內側快車道 </li><li class="correct">停讓行人後，進入外側快車道 ✓ (正解)</li><li class="">行人行速慢，可加速進入機慢車道 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4265.jpg" alt="Contact sheet 4265" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:52.3810%; width:20.0000%; height:23.8095%;">
+          <div class="highlight-tag">5.5s 路口行人穿越行穿線應停讓</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4265" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4265" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4265" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4266" data-id="4266" data-what="左前車頭死角防行人竄出">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#108 影片 4266</span>
+          <span class="badge badge-sec">5.5 秒</span>
+          <span class="badge badge-area">左側</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 左前車頭死角防行人竄出
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V125] 身為騎士的您，此時最可能遭遇何種危險?</div>
+        <ol class="opts">
+          <li class="">行人自右方樹蔭死角處闖入我方車動線上 </li><li class="correct">行人自左前方車前死角處進入我方車動線上 ✓ (正解)</li><li class="">左前方車輛突然右轉穿越我方車動線上 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4266.jpg" alt="Contact sheet 4266" loading="lazy">
+        <div class="highlight-box" style="left:20.0000%; top:68.7500%; width:20.0000%; height:31.2500%;">
+          <div class="highlight-tag">5.5s 左前車頭死角防行人竄出</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4266" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4266" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4266" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+    <div class="video-card" id="card-4267" data-id="4267" data-what="前方路面不明髒汙應減速">
+      <div class="card-head">
+        <div class="vid-title">
+          <span>#109 影片 4267</span>
+          <span class="badge badge-sec">7.5 秒</span>
+          <span class="badge badge-area">前方</span>
+          <span class="badge badge-conf">信心：高</span>
+        </div>
+        <div style="font-size:16px; font-weight:700; color:#dc2626;">
+          ⚠️ 前方路面不明髒汙應減速
+        </div>
+      </div>
+
+      <div class="q-box">
+  
+        <div class="q-text">[V126] 身為騎士的您，基於防禦駕駛觀念，此時應採取什麼動作較為妥適?</div>
+        <ol class="opts">
+          <li class="">我方車道前方路面有不明髒汙，應切換至對向車道後繞過髒污 </li><li class="correct">我方車道前方路面有不明髒汙，應先減速接近，確認安全再通過 ✓ (正解)</li><li class="">我方車道前方路面有不明髒汙，應下車以牽拉方式通過 </li>
+        </ol>
+    
+      </div>
+
+      <div class="contact-wrapper">
+        <img src="../assets-src/contact-sheets/4267.jpg" alt="Contact sheet 4267" loading="lazy">
+        <div class="highlight-box" style="left:0.0000%; top:61.5385%; width:20.0000%; height:19.2308%;">
+          <div class="highlight-tag">7.5s 前方路面不明髒汙應減速</div>
+        </div>
+      </div>
+
+      <div class="review-action">
+        <label><input type="radio" name="rev-4267" value="ok" checked onchange="updateStats()"> ✓ 正確</label>
+        <label><input type="radio" name="rev-4267" value="modify" onchange="updateStats()"> ✗ 要改</label>
+        <input type="text" class="review-note" id="note-4267" placeholder="修改備註（例如：建議改為 5.0 秒、或描述修改）">
+      </div>
+    </div>
+  
+  </div>
+
+  <div class="summary-section">
+    <h2>審核結果彙整</h2>
+    <p>點擊「彙整審核結果」後，將下方內容複製回報給 Claude：</p>
+    <textarea id="summaryText" readonly placeholder="審核結果將出現在此處..."></textarea>
+  </div>
+
+  <script>
+    const totalCount = 109;
+    const select = document.getElementById("jumpSelect");
+    document.querySelectorAll(".video-card").forEach(c => {
+      const opt = document.createElement("option");
+      opt.value = c.id;
+      opt.textContent = c.dataset.id + " - " + c.dataset.what;
+      select.appendChild(opt);
+    });
+
+    function jumpTo(id) {
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function filterCards() {
+      const q = document.getElementById("filterInput").value.trim().toLowerCase();
+      document.querySelectorAll(".video-card").forEach(c => {
+        const text = (c.dataset.id + " " + c.dataset.what).toLowerCase();
+        c.style.display = text.includes(q) ? "block" : "none";
+      });
+    }
+
+    function updateStats() {
+      let okCount = 0;
+      let modCount = 0;
+      document.querySelectorAll(".video-card").forEach(c => {
+        const vid = c.dataset.id;
+        const checked = document.querySelector(`input[name="rev-${vid}"]:checked`);
+        if (checked && checked.value === "modify") modCount++;
+        else okCount++;
+      });
+      document.getElementById("statText").textContent = `✓ 正確: ${okCount} / ✗ 需改: ${modCount} (共 ${totalCount})`;
+    }
+    updateStats();
+
+    function exportSummary() {
+      const lines = [];
+      lines.push("# 危險感知影片標註審核意見");
+      let count = 0;
+      document.querySelectorAll(".video-card").forEach(c => {
+        const vid = c.dataset.id;
+        const checked = document.querySelector(`input[name="rev-${vid}"]:checked`);
+        const note = document.getElementById(`note-${vid}`).value.trim();
+        if (checked && checked.value === "modify") {
+          count++;
+          lines.push(`- 影片 ${vid} (${c.dataset.what})：${note || "需修改"}`);
+        }
+      });
+      if (count === 0) {
+        lines.push("全數審核通過 (109 支皆無異議) ✓");
+      }
+      document.getElementById("summaryText").value = lines.join("\n");
+    }
+  </script>
+</body>
+</html>
