@@ -67,7 +67,7 @@ const U1 = { uid: 'u1', email: 'a@example.com', emailVerified: true, displayName
     await signIn(U1); eq(Store.getStudent(), 'u1'); eq(data['users/u1'].email, 'a@example.com'); eq(!!data['users/u1'].createdAt, true);
   });
   await t('作答後補傳：按月份分文件、有摘要、錯題與其他資料上雲', async () => {
-    at('2026-10-19'); Store.recordAnswer(qs[0].id, false); Store.recordAnswer(qs[1].id, true); Store.addAttempt({ levelId: 'L1', mode: 'level', answers: [], score: 90, date: '2026-10-19T08:00:00.000Z' });
+    at('2026-10-19'); Store.recordAnswer(qs[0].id, false); Store.recordAnswer(qs[1].id, true); Store.addAttempt({ levelId: Data.getLevels()[0].id, mode: 'level', answers: [], score: 90, date: '2026-10-19T08:00:00.000Z' });
     Store.setDoc('avatar', 'rider-2');
     eq(SF.pendingCount() > 0, true); eq(await SF.flushNow(), true); eq(SF.pendingCount(), 0);
     eq(data['users/u1/answers/2026-10'].items.length, 2); eq(data['users/u1/attempts/2026-10'].items.length, 1);
