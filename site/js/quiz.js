@@ -366,11 +366,15 @@
   }
 
   function init() {
-    var student = Store.getStudent() || '301 班 12 號';
-    Store.setStudent(student);
+    var studentCode = Store.getStudent();
+    if (!studentCode) {
+      studentCode = 'guest';
+      Store.setStudent('guest');
+    }
+    var studentDisplay = studentCode === 'guest' ? '訪客' : studentCode;
 
     var userChip = document.getElementById('user-chip');
-    if (userChip) userChip.textContent = student;
+    if (userChip) userChip.textContent = studentDisplay;
 
     var params = new URLSearchParams(location.search);
     var levelId = params.get('level');

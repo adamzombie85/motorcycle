@@ -42,7 +42,10 @@ const MIME_TYPES = {
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.svg': 'image/svg+xml',
-  '.ico': 'image/x-icon'
+  '.ico': 'image/x-icon',
+  '.woff2': 'font/woff2',
+  '.woff': 'font/woff',
+  '.ttf': 'font/ttf'
 };
 
 // 尋找 Chrome 執行檔路徑
@@ -123,7 +126,17 @@ async function main() {
     ? fs.readdirSync(siteDir)
         .filter(file => file.endsWith('.html'))
         .sort()
-        .map(file => ({ group: 'site', file, urlPath: `/site/${file}`, baseName: `site_${file.replace(/\.html$/, '')}` }))
+        .map(file => {
+          let urlPath = `/site/${file}`;
+          if (file === 'quiz.html') {
+            urlPath = `/site/${file}?level=${encodeURIComponent('貨物裝載-1')}`;
+          } else if (file === 'result.html') {
+            urlPath = `/site/${file}?level=${encodeURIComponent('貨物裝載-1')}`;
+          } else if (file === 'levels.html') {
+            urlPath = `/site/${file}?sub=${encodeURIComponent('貨物裝載')}`;
+          }
+          return { group: 'site', file, urlPath, baseName: `site_${file.replace(/\.html$/, '')}` };
+        })
     : [];
 
   const pageEntries = [...designFiles, ...siteFiles];
@@ -208,6 +221,61 @@ async function main() {
 
   await send('Page.enable');
   await send('DOM.enable');
+
+  // 前置設定：注入真實測試資料至 localStorage，確保結算頁、錯題庫皆能渲染出真實狀態
+  try {
+    await send('Page.navigate', { url: `${baseUrl}/site/index.html` });
+    await new Promise(r => setTimeout(r, 400));
+    await send('Runtime.evaluate', {
+      expression: `(() => {
+        try {
+          localStorage.setItem('moto:student', JSON.stringify('guest'));
+          const mockAttempt = {
+            levelId: '貨物裝載-1',
+            mode: 'level',
+            date: new Date().toISOString(),
+            answers: [
+              { qid: 'M0001', choice: 0, correct: true },
+              { qid: 'M0002', choice: 1, correct: false },
+              { qid: 'M0003', choice: 2, correct: true },
+              { qid: 'M0004', choice: 0, correct: true },
+              { qid: 'M0005', choice: 0, correct: true },
+              { qid: 'M0006', choice: 1, correct: true },
+              { qid: 'M0007', choice: 2, correct: true },
+              { qid: 'M0008', choice: 0, correct: true },
+              { qid: 'M0009', choice: 0, correct: true },
+              { qid: 'M0010', choice: 1, correct: true }
+            ],
+            correctCount: 9,
+            total: 10,
+            score: 90,
+            seconds: 125
+          };
+          localStorage.setItem('moto:u:guest:attempts', JSON.stringify([mockAttempt]));
+          localStorage.setItem('moto:u:guest:mistakes', JSON.stringify({
+            'M0002': 0,
+            'M0015': 1
+          }));
+          localStorage.setItem('moto:u:guest:answers_v2', 'true');
+          const now = Date.now();
+          localStorage.setItem('moto:u:guest:answers', JSON.stringify([
+            { qid: 'M0001', correct: true, ts: now - 9000 },
+            { qid: 'M0002', correct: false, ts: now - 8000, choice: 1 },
+            { qid: 'M0003', correct: true, ts: now - 7000 },
+            { qid: 'M0004', correct: true, ts: now - 6000 },
+            { qid: 'M0005', correct: true, ts: now - 5000 },
+            { qid: 'M0006', correct: true, ts: now - 4000 },
+            { qid: 'M0007', correct: true, ts: now - 3000 },
+            { qid: 'M0008', correct: true, ts: now - 2000 },
+            { qid: 'M0009', correct: true, ts: now - 1000 },
+            { qid: 'M0010', correct: true, ts: now }
+          ]));
+        } catch (e) { console.error('Seed error', e); }
+      })()`
+    });
+  } catch (e) {
+    console.warn('⚠️ 注入前置測試資料失敗：', e.message);
+  }
 
   const results = [];
   let totalIssues = 0;

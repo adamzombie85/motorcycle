@@ -110,7 +110,7 @@
     left.appendChild(document.createTextNode('連續答對進度：'));
     left.appendChild(el('strong', null, streak + ' / ' + need + ' 次'));
     sh.appendChild(left);
-    sh.appendChild(el('span', 'streak-hint text-nowrap', streak ? '再答對 ' + (need - streak) + ' 次即可移出！' : '還需連續答對 ' + need + ' 次'));
+    sh.appendChild(el('span', 'streak-hint', streak ? '再答對 ' + (need - streak) + ' 次即可移出！' : '還需連續答對 ' + need + ' 次'));
     box.appendChild(sh);
 
     var dots = el('div', 'streak-dots');
@@ -163,11 +163,15 @@
   }
 
   function init() {
-    var student = Store.getStudent() || '301 班 12 號';
-    Store.setStudent(student);
+    var studentCode = Store.getStudent();
+    if (!studentCode) {
+      studentCode = 'guest';
+      Store.setStudent('guest');
+    }
+    var studentDisplay = studentCode === 'guest' ? '訪客' : studentCode;
 
     var userChip = document.getElementById('user-chip');
-    if (userChip) userChip.textContent = student;
+    if (userChip) userChip.textContent = studentDisplay;
 
     Data.load().then(function () {
       var m = Store.getMistakes();

@@ -287,9 +287,9 @@
     out.width = w; out.height = h;
     var ctx = out.getContext('2d');
     ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, w, h);
-    ctx.fillStyle = cssVar('--color-slate-800');
-    ctx.font = 'bold 36px sans-serif';
-    ctx.fillText('機車筆試好過關 學習圖表（' + (Store.getStudent() || '') + '）', pad, 56);
+    var sCode = Store.getStudent();
+    var sDisplay = (!sCode || sCode === 'guest') ? '訪客' : sCode;
+    ctx.fillText('機車筆試好過關 學習圖表（' + sDisplay + '）', pad, 56);
     var y = titleH;
     canvases.forEach(function (c) {
       ctx.drawImage(c, pad, y);
@@ -384,11 +384,15 @@
     var params = new URLSearchParams(location.search);
     var isMistakes = params.get('mode') === 'mistakes';
     var levelId = params.get('level');
-    var student = Store.getStudent() || '301 班 12 號';
-    Store.setStudent(student);
+    var studentCode = Store.getStudent();
+    if (!studentCode) {
+      studentCode = 'guest';
+      Store.setStudent('guest');
+    }
+    var studentDisplay = studentCode === 'guest' ? '訪客' : studentCode;
 
     var userChip = document.getElementById('user-chip');
-    if (userChip) userChip.textContent = student;
+    if (userChip) userChip.textContent = studentDisplay;
 
     Data.load().then(function () {
       var level = null;

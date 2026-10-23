@@ -41,11 +41,7 @@
 
     // 今日挑戰卡
     var cDaily = el('div', 'card-daily-challenge');
-    var badge = el('div', 'daily-challenge-badge');
-    badge.innerHTML = ICONS.target + '<span class="text-nowrap">今日挑戰</span>';
-    cDaily.appendChild(badge);
-
-    var h1 = el('h1', 'daily-challenge-title', '每日 3 分鐘挑戰');
+    var h1 = el('h1', 'daily-challenge-title', '今日挑戰');
     cDaily.appendChild(h1);
 
     var meta = el('p', 'daily-challenge-meta', '5 題，大約 3 分鐘。');
@@ -146,19 +142,16 @@
 
     // 騎士角色卡 (真實插圖置入)
     var rCard = el('div', 'rider-card');
+    var currentAvatar = (typeof Game !== 'undefined' && Game.getAvatar) ? Game.getAvatar() : 'rider-1';
     var img = el('img');
-    img.src = 'assets/illustrations/rider-1.png';
-    img.alt = '活力藍騎士';
+    img.src = 'assets/illustrations/' + currentAvatar + '.png';
+    img.alt = '騎士角色';
     img.style.cssText = 'width: 96px; height: 96px; object-fit: contain; margin-bottom: var(--space-2);';
     rCard.appendChild(img);
 
     var rName = el('div', 'text-nowrap', studentName);
     rName.style.cssText = 'font-size: var(--font-size-md); font-weight: var(--font-weight-black); color: var(--color-slate-900);';
     rCard.appendChild(rName);
-
-    var rTitle = el('div', 'text-nowrap', '初階實習騎士 · 活力藍');
-    rTitle.style.cssText = 'font-size: var(--font-size-xs); color: var(--color-slate-600); margin-top: 2px;';
-    rCard.appendChild(rTitle);
 
     sec.appendChild(rCard);
 
@@ -290,11 +283,15 @@
   }
 
   function init() {
-    var student = Store.getStudent() || '301 班 12 號';
-    Store.setStudent(student);
+    var studentCode = Store.getStudent();
+    if (!studentCode) {
+      studentCode = 'guest';
+      Store.setStudent('guest');
+    }
+    var studentDisplay = studentCode === 'guest' ? '訪客' : studentCode;
 
     var userChip = document.getElementById('user-chip');
-    if (userChip) userChip.textContent = student;
+    if (userChip) userChip.textContent = studentDisplay;
 
     Data.load().then(function () {
       var levels = Data.getLevels();
@@ -309,7 +306,7 @@
         : { questions: [], done: [], completed: false };
 
       renderTopGrid(streak, daily);
-      renderProfileAndStats(levels, student);
+      renderProfileAndStats(levels, studentDisplay);
       renderFeatures(Store.getMistakeIds().length);
     }).catch(function (err) {
       console.error(err);

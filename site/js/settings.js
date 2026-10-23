@@ -77,7 +77,7 @@
         styleEl.textContent = 
           "@font-face {\n" +
           "  font-family: 'BpmfIansui';\n" +
-          "  src: url('fonts/BpmfIansui-Regular.ttf') format('truetype');\n" +
+          "  src: url('fonts/BpmfIansui-Subset.woff2') format('woff2');\n" +
           "  font-weight: normal;\n" +
           "  font-style: normal;\n" +
           "  font-display: swap;\n" +
