@@ -52,7 +52,7 @@
         });
       });
     });
-    return { questions: questions, byId: byId, levels: levels, subcategories: order };
+    return { questions: questions, all: all, byId: byId, levels: levels, subcategories: order };
   }
 
   function need() {
@@ -72,6 +72,8 @@
     // 題目圖片的可用網址（依資料檔位置換算）
     assetUrl: function (path) { return path ? base + path : null; },
     getQuestions: function () { return need().questions; },
+    // 含影片題的完整題庫（階段 4 的模擬考用；平常練習仍用 getQuestions，不含影片題）
+    getAllQuestions: function () { return need().all; },
     getQuestion: function (id) { return need().byId[id] || null; },
     getLevels: function () { return need().levels; },
     getLevel: function (levelId) {

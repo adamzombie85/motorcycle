@@ -135,6 +135,8 @@
 | 2026-10-23 | Claude | C19（149 張改寫）、C20（80 筆數字卡）抽查通過；5 筆弱出處其實有效；7 張超長卡要拆 → C19b | Claude Code：C19b；Jim：審文字概念卡 |
 | 2026-10-23 | Claude Code | C19b 完成：7 張超長卡拆成 34 張（題目跟著分，覆蓋 926 題 100%）；數字卡 5 筆弱出處改為有效並加 source_note，之後由程式自動判斷 | Jim：審核 |
 | 2026-10-23 | Claude Code | C10a 完成（預設 local、未啟用）：Store.setBackend／applyRemote／訪客匯入、config.js、store-firebase.js、firestore.rules、firebase-tests（需 Java，沒跑）、docs/Firebase建置步驟.md、docs/Firestore規則測試清單.md；game-test 58/58、firebase-sync-test 15/15 | Jim：試玩後照建置步驟建專案；Antigravity：登入頁、班級座號、訪客匯入詢問（C10 畫面） |
+| 2026-10-23 | Claude | C10a 通過（Firebase 預備，預設 local）；Claude Code 誤存 Antigravity 半成品（c49a5dd），不改歷史，CLAUDE.md 加規則禁止 git add -A；開 A4（試玩後） | Antigravity：A2b → V1 |
+| 2026-10-23 | Claude Code | 階段 4 引擎前置：scripts/make_contact_sheets.py（109 張截圖表在 assets-src/contact-sheets/，不上 GitHub；data/video_tasks.json 109 支影片／126 題）；site/js/exam.js 模擬考出題引擎（50 題、危險感知 15、其餘 21／10／4、不重複、同影片一題；exam-test 23/23）；Data.getAllQuestions | Claude：用截圖表請 Gemini 標危險秒數；Antigravity：模擬考畫面 |
 
 ## 開工提示詞
 
