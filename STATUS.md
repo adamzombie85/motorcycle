@@ -120,7 +120,7 @@
 | 2026-10-23 | Claude | 開 C17 概念分類初稿（提前做階段 3，用 Claude 本週剩餘額度；逐小類、只根據題目歸納） | Claude Code：C17 第一個小類 |
 | 2026-10-23 | Claude Code | C17 第 1 個小類「貨物裝載」初稿完成（17 題→10 個概念、覆蓋 100%、無矛盾）；data/concepts/draft-01-貨物裝載.json、docs/概念卡審核-01.html；產生器 data/concepts/make-review.py | Jim：審核 docs/概念卡審核-01.html，確認格式後才做下一小類 |
 | 2026-10-23 | Claude | 審查 D4：質感大幅進步；360px 頁首重疊、文案 AI 腔、反向題橫幅文字、換行、插圖未接上 → 併入 A1 | Antigravity：R1 → A1 |
-| 2026-10-23 | Claude Code | C17 全部 11 個小類完成：926 題→298 個概念（覆蓋 100%、無重複）；初稿 data/concepts/draft-01~11-*.json，審核頁 docs/概念卡審核-01~11.html；有疑似矛盾 7 處（見審核頁⚠） | Jim：審核 02～11；Claude：抽查規則、裁決矛盾 |
+| 2026-10-23 | Claude Code | C17 全部 11 個小類完成：926 題→287 個概念（覆蓋 100%、無重複）；初稿 data/concepts/draft-01~11-*.json，審核頁 docs/概念卡審核-01~11.html；有疑似矛盾 7 處（見審核頁⚠） | Jim：審核 02～11；Claude：抽查規則、裁決矛盾 |
 
 ## 開工提示詞
 
