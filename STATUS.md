@@ -67,7 +67,7 @@
 | 0 資料化 | 題庫轉 JSON、抽圖、影片壓縮、加標籤、程式交叉比對 | Claude → Jim 抽查 | ✅ 完成 |
 | 1a 視覺定調 | tokens.css、首頁和答題畫面樣板 | Antigravity（Gemini） | ✅ D1、D2、D2b 完成 |
 | 1 練習核心 | 小關卡、回饋、錯題重練、圖表 | Claude Code（照 design/ 實作，任務 C3～C12） | 🔄 C3～C9 ✅（已上線），等 Jim 手機實測 → C10 |
-| 1.5 質感與遊戲化 | 專業視覺、每日挑戰、連續天數、地圖、徽章、間隔複習、動畫音效、角色（規格 `docs/遊戲化設計.md`） | Antigravity D4→A1→A2＋R1 審查、Gemini 插圖、Claude Code C13、C16 | ⏳ D4、C13 待執行 |
+| 1.5 質感與遊戲化 | 專業視覺、每日挑戰、連續天數、地圖、徽章、間隔複習、動畫音效、角色（規格 `docs/遊戲化設計.md`） | Antigravity D4→A1→A2＋R1 審查、Gemini 插圖、Claude Code C13、C16 | 🔄 C13 ✅；D4 進行中 → R1 → A1 → A2 |
 | ★ 學生試玩 | 3～5 位學生（含資源班學生）試玩，Claude 準備觀察表 | Jim | ⬜ |
 | 2 閱讀與學習設定 | 朗讀、注音、字級、反向題提醒、音效、動畫、確認作答 | Antigravity D3 ✅ → Claude Code C14 | ⏳ |
 | 3 概念卡 | 概念歸類、概念卡、數字記憶卡 | Claude（內容）＋ Claude Code（介面） | ⬜ |
@@ -115,6 +115,10 @@
 | 2026-10-22 | Claude | Jim 手機實測回饋；決定 1～7 遊戲化全做、順序：精修＋遊戲化 → 試玩 → 登入。寫 docs/遊戲化設計.md、D4、插圖 4 組、C13～C16；D3 審查通過（注音字型未載入，C14 處理） | Antigravity：D4；Claude Code：C13；Jim：Gemini 第 1 組徽章 |
 | 2026-10-22 | Claude | 依 Jim 要求重新分配額度：畫面工程、測試、交叉審查改由 Antigravity（A1、A2、R1）；Claude Code 只做引擎；兩邊各自存檔；更新 AGENTS.md、.agents/rules | Claude Code：C13；Antigravity：D4 |
 | 2026-10-22 | Claude Code | C13 完成：D3 已存檔（80cbe38）；site/js/game.js（每日挑戰、連續天數＋休息卡、間隔複習、12 徽章、角色、地圖）；store.js 新增 Store.now/setClock、作答紀錄（每答一題就存）、複習到期日、通用文件 getDoc/setDoc；stats.js 改讀作答紀錄；測試 node site/tests/game-test.js 42 項全過；部署時排除 tests/ | Antigravity：D4 畫面（呼叫 Game.* 與 Store.recordAnswer(qid, correct, {choice, src})） |
+| 2026-10-22 | Claude | 抽查 C13（42 項測試通過）；採用 a～e 判斷；開放 R1；A2 寫入引擎呼叫方式 | Antigravity：D4 → R1 |
+| 2026-10-23 | Claude | Gemini 插圖 5 組全部審查通過（41 張，含女生版與雙人圖），完成後製 | Antigravity：D4 → R1 → A1 |
+| 2026-10-23 | Claude | 開 C17 概念分類初稿（提前做階段 3，用 Claude 本週剩餘額度；逐小類、只根據題目歸納） | Claude Code：C17 第一個小類 |
+| 2026-10-23 | Claude Code | C17 第 1 個小類「貨物裝載」初稿完成（17 題→10 個概念、覆蓋 100%、無矛盾）；data/concepts/draft-01-貨物裝載.json、docs/概念卡審核-01.html；產生器 data/concepts/make-review.py | Jim：審核 docs/概念卡審核-01.html，確認格式後才做下一小類 |
 
 ## 開工提示詞
 

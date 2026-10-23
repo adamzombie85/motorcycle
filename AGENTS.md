@@ -30,6 +30,7 @@
 | AGENTS.md | Jim | AI 可以提出修改建議，Jim 同意才改 |
 | STATUS.md | Claude | Claude Code 只能在「交接紀錄」追加一行 |
 | TASKS_AGY.md、TASKS_CODE.md、assets-spec.md、data/、docs/、scripts/ | Claude | 唯讀 |
+| data/concepts/（概念卡初稿）、docs/概念卡審核-*.html | Claude Code | 初稿，Jim 審核後由 Claude 定稿 |
 | .agents/rules/ | Jim | Antigravity 的專用規則 |
 | site/js/data.js、store.js、stats.js、game.js | Claude Code | Antigravity 只能呼叫，需要新功能就寫進 STATUS.md 待決事項 |
 | site/ 其餘（html、css、頁面程式、fonts） | Antigravity | Claude Code 唯讀 |

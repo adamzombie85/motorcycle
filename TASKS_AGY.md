@@ -106,7 +106,9 @@
 ## A2｜遊戲化畫面（原 C15）
 - 狀態：**未開放**（A1 完成、Claude Code 完成 C13 引擎、Gemini 插圖到齊）
 - 做什麼：首頁（今日挑戰、連續天數、週打卡格）、地圖頁、徽章頁、角色頁、慶祝動畫、Web Audio 音效。所有規則都呼叫 `game.js`，不要自己重寫規則
+  - 作答一律呼叫 `Store.recordAnswer(qid, correct, {choice, src})`；每日挑戰用 `Game.dailyAnswer`；每次作答後自己呼叫 `Game.checkBadges()` 顯示新徽章
+  - 用法以 `site/js/game.js` 和 `site/tests/game-test.js` 為準
 
-## R1｜交叉審查 C13 引擎（Claude Code 完成後）
-- 狀態：**未開放**（C13 完成後）
+## R1｜交叉審查 C13 引擎
+- 狀態：**待執行**（D4 完成後做）
 - 做什麼：讀 `docs/遊戲化設計.md` 和 `site/js/game.js`，逐條對照規則，找出邏輯錯誤或沒處理到的情況（跨月、跨年、時區、同一天多次作答）。結果寫進 `REVIEW.md`，**不要直接改 game.js**
