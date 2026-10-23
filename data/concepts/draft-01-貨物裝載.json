@@ -1,0 +1,12 @@
+[
+{"id":"C-cargo-01","name":"載物高度","rule":"機車載物的高度，不可超過駕駛人肩部。","questions":["M0001"],"numbers":[],"conflict":null},
+{"id":"C-cargo-02","name":"載物寬度","rule":"機車載物的寬度，不可超過把手外緣 10公分。","questions":["M0002","M0013"],"numbers":["10公分"],"conflict":null},
+{"id":"C-cargo-03","name":"載物後方長度","rule":"載物伸出車尾，自後輪軸起不可超過半公尺。","questions":["M0004","M0011"],"numbers":["半公尺（50公分）"],"conflict":null},
+{"id":"C-cargo-04","name":"載物前方長度","rule":"載物自座位後部起，不可向前超伸。","questions":["M0010","M0012"],"numbers":[],"conflict":null},
+{"id":"C-cargo-05","name":"載物重量","rule":"重型機車載物不得超過 80公斤；普通輕型以 50公斤為限。","questions":["M0003","M0005"],"numbers":["重型 80公斤","普通輕型 50公斤"],"conflict":null},
+{"id":"C-cargo-06","name":"載物總規定","rule":"載物要遵守寬、長、高、重的限制，高度不可高過肩膀。","questions":["M0006","M0014"],"numbers":[],"conflict":null},
+{"id":"C-cargo-07","name":"附載乘客","rule":"重型和普通輕型機車，後座有固定座位可載 1人，不可側坐。","questions":["M0007","M0008"],"numbers":["1人"],"conflict":null},
+{"id":"C-cargo-08","name":"載人後再載物","rule":"載了人就不能再載物品，零星物品不影響安全者除外。","questions":["M0015"],"numbers":[],"conflict":null},
+{"id":"C-cargo-09","name":"總重限制標誌","rule":"這個標誌的意思是「車輛總重限制」。","questions":["M0009"],"numbers":[],"conflict":null},
+{"id":"C-cargo-10","name":"違規處罰","rule":"附載人員或物品違規，處罰駕駛人，罰鍰 300元～600元。","questions":["M0016","M0017"],"numbers":["300元～600元"],"conflict":null}
+]
