@@ -1,6 +1,17 @@
 /* 小類關卡清單：levels.html?sub=小類。所有關卡都可以直接點，不鎖關。 */
 (function () {
+  'use strict';
+
   var root = document.getElementById('levels-root');
+  if (!root) return;
+
+  var ICONS = {
+    target: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+    check: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>',
+    bolt: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+    circle: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>',
+    list: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>'
+  };
 
   function el(tag, cls, text) {
     var e = document.createElement(tag);
@@ -8,6 +19,7 @@
     if (text !== undefined) e.textContent = text;
     return e;
   }
+
   function link(cls, text, href) {
     var a = el('a', cls, text);
     a.href = href;
@@ -39,7 +51,7 @@
     crumbs.appendChild(el('span', null, '›'));
     crumbs.appendChild(el('span', null, levels[0].category));
     crumbs.appendChild(el('span', null, '›'));
-    crumbs.appendChild(el('span', 'level-meta-state', sub));
+    crumbs.appendChild(el('span', 'level-meta-state text-nowrap', sub));
     card.appendChild(crumbs);
 
     card.appendChild(el('h1', 'levels-category-title', sub));
@@ -54,14 +66,16 @@
     card.appendChild(desc);
 
     var rules = el('div', 'rules-banner');
-    rules.appendChild(el('span', 'rules-banner-icon', '🎯'));
+    var rIcon = el('span', 'rules-banner-icon');
+    rIcon.innerHTML = ICONS.target;
+    rules.appendChild(rIcon);
     rules.appendChild(el('span', null, '過關規則：做完一關立刻看成績，' + Stats.PASS_SCORE + ' 分以上就是「已過關 ✔」。'));
     card.appendChild(rules);
 
     var wrap = el('div', 'levels-progress-wrap');
     var head = el('div', 'levels-progress-head');
-    head.appendChild(el('span', null, '小類通關進度：已過關 ' + passed + ' / ' + levels.length + ' 關'));
-    head.appendChild(el('span', 'stat-primary', '累計答對率 ' + rate + '%'));
+    head.appendChild(el('span', 'text-nowrap', '小類通關進度：已過關 ' + passed + ' / ' + levels.length + ' 關'));
+    head.appendChild(el('span', 'stat-primary text-nowrap', '累計答對率 ' + rate + '%'));
     wrap.appendChild(head);
     var track = el('div', 'progress-bar-track');
     var fill = el('div', 'progress-bar-fill');
@@ -78,17 +92,20 @@
 
     var bar = el('div', 'level-filter-bar');
     bar.setAttribute('role', 'tablist');
+
     var tabs = [
-      ['all', '📋 全部關卡（' + levels.length + '）'],
-      ['passed', '✔ 已過關（' + counts.passed + '）'],
-      ['progress', '⚡ 練習中（' + counts.progress + '）'],
-      ['not-started', '⚪ 未開始（' + counts['not-started'] + '）']
+      ['all', ICONS.list + '<span style="margin-left:4px;">全部關卡（' + levels.length + '）</span>'],
+      ['passed', ICONS.check + '<span style="margin-left:4px;">已過關（' + counts.passed + '）</span>'],
+      ['progress', ICONS.bolt + '<span style="margin-left:4px;">練習中（' + counts.progress + '）</span>'],
+      ['not-started', ICONS.circle + '<span style="margin-left:4px;">未開始（' + counts['not-started'] + '）</span>']
     ];
+
     var grid = el('div', 'level-item-grid');
     var btns = [];
     tabs.forEach(function (t, i) {
-      var b = el('button', 'level-filter-tab' + (i === 0 ? ' is-active' : ''), t[1]);
+      var b = el('button', 'level-filter-tab' + (i === 0 ? ' is-active' : ''));
       b.type = 'button';
+      b.innerHTML = t[1];
       b.addEventListener('click', function () {
         btns.forEach(function (x) { x.classList.remove('is-active'); });
         b.classList.add('is-active');
@@ -102,48 +119,65 @@
     root.appendChild(bar);
 
     levels.forEach(function (l) {
-      var b = best[l.id], st = statusOf(b);
-      var card = el('div', 'level-item-card' + (st === 'passed' ? ' is-passed' : st === 'progress' ? ' is-in-progress' : ''));
+      var st = statusOf(best[l.id]);
+      var card = link('level-item-card is-' + st, '', 'quiz.html?level=' + encodeURIComponent(l.id));
       card.dataset.status = st;
-      var top = el('div');
-      var header = el('div', 'level-item-header');
-      header.appendChild(el('span', 'level-item-num', '第 ' + ('0' + l.index).slice(-2) + ' 關'));
-      header.appendChild(el('span', 'level-item-badge is-' + (st === 'progress' ? 'in-progress' : st),
-        st === 'passed' ? '✔ 已過關 · 最高 ' + b + ' 分'
-        : st === 'progress' ? '⚡ 練習中 · 最高 ' + b + ' 分' : '⚪ 尚未挑戰'));
-      top.appendChild(header);
+
+      var top = el('div', 'level-item-top');
+      var badge = el('span', 'level-index-badge text-nowrap', '第 ' + l.index + ' 關');
+      top.appendChild(badge);
+
+      var tag = el('span', 'level-status-tag is-' + st + ' text-nowrap');
+      if (st === 'passed') tag.innerHTML = ICONS.check + '<span>已過關 ' + best[l.id] + ' 分</span>';
+      else if (st === 'progress') tag.innerHTML = ICONS.bolt + '<span>最高 ' + best[l.id] + ' 分</span>';
+      else tag.innerHTML = ICONS.circle + '<span>未開始</span>';
+      top.appendChild(tag);
       card.appendChild(top);
 
-      var bottom = el('div');
-      var footer = el('div', 'level-item-footer');
-      footer.appendChild(el('span', null, '題數：' + l.questionIds.length + ' 題'));
-      footer.appendChild(el('span', null, st === 'passed' ? '已過關'
-        : st === 'progress' ? '還差 ' + (Stats.PASS_SCORE - b) + ' 分及格' : '自由挑戰 · 不鎖關'));
-      bottom.appendChild(footer);
-      bottom.appendChild(link('level-action-btn btn ' + (st === 'passed' ? 'btn-outline' : st === 'progress' ? 'btn-secondary' : 'btn-primary'),
-        (st === 'passed' ? '再次練習' : st === 'progress' ? '繼續挑戰' : '開始練習') + ' ➔',
-        'quiz.html?level=' + encodeURIComponent(l.id)));
-      card.appendChild(bottom);
+      var title = el('div', 'level-item-title', l.subcategory + ' 第 ' + l.index + ' 關');
+      card.appendChild(title);
+
+      var meta = el('div', 'level-item-meta');
+      meta.appendChild(el('span', 'text-nowrap', '題數：' + l.questionIds.length + ' 題'));
+      meta.appendChild(el('span', 'text-nowrap', '題號 ' + l.questionIds[0] + '～' + l.questionIds[l.questionIds.length - 1]));
+      card.appendChild(meta);
+
+      var btn = el('div', 'btn btn-primary level-item-action',
+        st === 'passed' ? '再練一次' : st === 'progress' ? '繼續挑戰' : '開始練習');
+      card.appendChild(btn);
+
       grid.appendChild(card);
     });
     root.appendChild(grid);
   }
 
   function init() {
-    if (!Store.getStudent()) Store.setStudent('訪客');
-    document.getElementById('user-chip').textContent = '👤 ' + Store.getStudent();
-    var sub = new URLSearchParams(location.search).get('sub');
+    var student = Store.getStudent() || '301 班 12 號';
+    Store.setStudent(student);
+
+    var userChip = document.getElementById('user-chip');
+    if (userChip) userChip.textContent = student;
+
+    var params = new URLSearchParams(location.search);
+    var sub = params.get('sub');
+
     Data.load().then(function () {
-      if (!sub) return message('請從首頁選擇一個小類。');
-      var levels = Data.getLevels().filter(function (l) { return l.subcategory === sub; });
-      if (!levels.length) return message('找不到這個小類。');
-      var best = Stats.bestScores();
+      var levels = Data.getLevels();
+      if (!sub) {
+        var first = levels[0];
+        sub = first ? first.subcategory : '';
+      }
+      var subLevels = levels.filter(function (l) { return l.subcategory === sub; });
+      if (!subLevels.length) return message('找不到這個小類的關卡。');
+
+      var best = Stats.levelBestScores();
       root.textContent = '';
-      renderHeader(sub, levels, best);
-      renderGrid(levels, best);
+      renderHeader(sub, subLevels, best);
+      renderGrid(subLevels, best);
     }).catch(function () {
       message('資料載入失敗，請用網址 http://localhost:8000/site/ 開啟。');
     });
   }
+
   init();
 })();

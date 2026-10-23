@@ -1,17 +1,26 @@
-/* 首頁：數字全部來自真實紀錄，沒有紀錄就顯示 0。 */
+/* 首頁畫面程式：對接 Game 與 Stats 引擎，完全符合 D4 設計規範 */
 (function () {
+  'use strict';
+
   var root = document.getElementById('home-root');
-  var CAT_STYLE = [
-    { border: 'var(--color-primary)', badgeBg: '', fill: '', btn: 'btn-primary' },
-    { border: 'var(--color-accent)', badgeBg: 'accent', fill: 'var(--color-accent)', btn: 'btn-secondary' },
-    { border: 'var(--color-slate-400)', badgeBg: 'slate', fill: '', btn: 'btn-outline' },
-    { border: 'var(--color-success)', badgeBg: 'success', fill: 'var(--color-success-500)', btn: 'btn-secondary' }
-  ];
-  var BADGE = {
-    accent: 'background-color: var(--color-accent-100); color: var(--color-accent-700);',
-    slate: 'background-color: var(--color-slate-100); color: var(--color-slate-700);',
-    success: 'background-color: var(--color-success-100); color: var(--color-success-700);'
+  if (!root) return;
+
+  var ICONS = {
+    target: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+    flame: '<svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>',
+    play: '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>',
+    check: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>',
+    coffee: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" x2="6" y1="2" y2="4"/><line x1="10" x2="10" y1="2" y2="4"/><line x1="14" x2="14" y1="2" y2="4"/></svg>',
+    circle: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>',
+    repeat: '<svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>',
+    map: '<svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>',
+    badge: '<svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>',
+    levels: '<svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+    chart: '<svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>',
+    exam: '<svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>'
   };
+
+  var DAY_LABELS = ['一', '二', '三', '四', '五', '六', '日'];
 
   function el(tag, cls, text) {
     var e = document.createElement(tag);
@@ -19,217 +28,294 @@
     if (text !== undefined) e.textContent = text;
     return e;
   }
+
   function link(cls, text, href) {
     var a = el('a', cls, text);
     a.href = href;
     return a;
   }
-  function levelUrl(l) { return 'quiz.html?level=' + encodeURIComponent(l.id); }
-  function shortSub(name) { return name.replace(/（.*$/, ''); }
 
-  function nextUnpassed(levels, afterIndex) {
-    for (var i = afterIndex + 1; i < levels.length; i++) if (!Stats.levelPassed(levels[i].id)) return levels[i];
-    for (var j = 0; j <= afterIndex && j < levels.length; j++) if (!Stats.levelPassed(levels[j].id)) return levels[j];
-    return null;
-  }
+  // 1. 今日挑戰大卡 ＋ 連續天數打卡格
+  function renderTopGrid(streak, daily) {
+    var sec = el('section', 'home-top-grid');
 
-  function sectionHeading(icon, title, subtitle, right) {
-    var head = el('div', 'section-heading');
-    var box = el('div');
-    var h2 = el('h2', 'section-heading-title');
-    h2.appendChild(el('span', null, icon));
-    h2.appendChild(el('span', null, title));
-    box.appendChild(h2);
-    if (subtitle) box.appendChild(el('div', 'section-heading-subtitle', subtitle));
-    head.appendChild(box);
-    if (right) head.appendChild(el('span', 'section-heading-subtitle', right));
-    return head;
-  }
+    // 今日挑戰卡
+    var cDaily = el('div', 'card-daily-challenge');
+    var badge = el('div', 'daily-challenge-badge');
+    badge.innerHTML = ICONS.target + '<span class="text-nowrap">今日挑戰</span>';
+    cDaily.appendChild(badge);
 
-  function renderHero(levels, total) {
-    var attempts = Store.getAttempts();
-    var lastLevelAttempt = attempts.filter(function (a) { return a.mode !== 'mistakes'; }).pop();
-    var target;
-    if (!lastLevelAttempt) target = levels[0];
-    else {
-      var last = Data.getLevel(lastLevelAttempt.levelId);
-      target = Stats.levelPassed(last.id) ? nextUnpassed(levels, levels.indexOf(last)) : last;
+    var h1 = el('h1', 'daily-challenge-title', '每日 3 分鐘挑戰');
+    cDaily.appendChild(h1);
+
+    var meta = el('p', 'daily-challenge-meta', '5 題，大約 3 分鐘。');
+    cDaily.appendChild(meta);
+
+    var actions = el('div', 'daily-challenge-actions');
+    var doneCount = daily && daily.done ? daily.done.length : 0;
+    var isDone = daily && daily.completed;
+
+    var startBtn = el('a', 'btn btn-primary btn-lg');
+    startBtn.href = 'quiz.html?mode=daily';
+    startBtn.style.cssText = 'background-color: #FFFFFF; color: var(--color-primary-900); font-weight: 800; border: none;';
+    startBtn.innerHTML = ICONS.play + '<span>' + (isDone ? '今日已完成！再練習一次' : '開始今日練習 (' + doneCount + '/5)') + '</span>';
+    actions.appendChild(startBtn);
+
+    var stateSpan = el('span', 'text-nowrap', isDone ? '今日挑戰完成 ✔' : '今日尚未作答');
+    stateSpan.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-primary-100);';
+    actions.appendChild(stateSpan);
+
+    cDaily.appendChild(actions);
+    sec.appendChild(cDaily);
+
+    // 連續天數與 7 天打卡格
+    var cStreak = el('div', 'streak-hero-card');
+    var sHead = el('div', 'streak-header');
+    var countBox = el('div', 'streak-count-box');
+    var flameBox = el('div', 'streak-flame-icon');
+    flameBox.innerHTML = ICONS.flame;
+    countBox.appendChild(flameBox);
+
+    var txtWrap = el('div');
+    var cText = el('div', 'streak-count-text');
+    cText.innerHTML = '連續 <span class="text-nowrap">' + (streak.current || 0) + ' 天</span>';
+    txtWrap.appendChild(cText);
+
+    var subTxt = el('div', 'streak-subtext', '每週配備 1 張自動休息卡');
+    txtWrap.appendChild(subTxt);
+    countBox.appendChild(txtWrap);
+    sHead.appendChild(countBox);
+
+    var sBadge = el('span', 'badge badge-success text-nowrap', streak.checkedToday ? '今日已打卡' : '進行中');
+    sHead.appendChild(sBadge);
+    cStreak.appendChild(sHead);
+
+    // 7 天打卡格
+    var weekGrid = el('div', 'streak-week-grid');
+    var weekDays = streak.week || [];
+    if (!weekDays.length) {
+      for (var i = 0; i < 7; i++) {
+        weekDays.push({ status: i === 0 ? 'today' : 'future', date: '' });
+      }
     }
-    var lastAny = attempts[attempts.length - 1];
 
-    var sec = el('section', 'hero-banner');
-    var ill = el('div', 'hero-illustration');
-    var img = el('img'); img.src = 'assets/illustrations/hero.jpg';
-    img.alt = '高中生戴安全帽騎著淺藍色速克達的扁平插畫';
-    ill.appendChild(img);
-    sec.appendChild(ill);
+    weekDays.forEach(function (day, i) {
+      var cellCls = 'punch-cell';
+      var iconHtml = ICONS.circle;
+      var statusText = '待打卡';
 
-    var c = el('div', 'hero-content');
-    c.appendChild(el('div', 'hero-badge', '✨ 小關卡練習 · 輕鬆過關無壓力'));
-    var h1 = el('h1', 'hero-title');
-    h1.appendChild(document.createTextNode('輕鬆學騎車，'));
-    h1.appendChild(el('span', null, '安心考駕照'));
-    h1.appendChild(document.createTextNode('！'));
-    c.appendChild(h1);
-    c.appendChild(el('p', 'hero-desc', '目前題庫共 ' + total + ' 題，切成 ' + levels.length +
-      ' 個小關卡，一關一關練。答錯的題目會收進錯題庫，反向題會特別提醒。'));
+      if (day.status === 'checked') {
+        cellCls += ' is-completed';
+        iconHtml = ICONS.check;
+        statusText = '完成';
+      } else if (day.status === 'today') {
+        cellCls += ' is-today';
+        iconHtml = ICONS.target;
+        statusText = '今天';
+      } else if (day.status === 'rest') {
+        cellCls += ' is-rest';
+        iconHtml = ICONS.coffee;
+        statusText = '休息卡';
+      } else {
+        cellCls += ' is-future';
+        iconHtml = ICONS.circle;
+        statusText = '待打卡';
+      }
 
-    var actions = el('div', 'hero-quick-actions');
-    if (target) {
-      actions.appendChild(link('btn btn-primary btn-lg',
-        (lastLevelAttempt ? '▶ 繼續練習：' : '▶ 開始練習：') + shortSub(target.subcategory) + ' 第 ' + target.index + ' 關',
-        levelUrl(target)));
-    } else {
-      actions.appendChild(el('span', 'hero-badge', '🎉 所有關卡都過關了！'));
-    }
-    if (lastAny) {
-      actions.appendChild(link('btn btn-secondary btn-lg', '📊 查看最近成績分析',
-        lastAny.mode === 'mistakes' ? 'result.html?mode=mistakes' : 'result.html?level=' + encodeURIComponent(lastAny.levelId)));
-    }
-    c.appendChild(actions);
-    sec.appendChild(c);
+      var cell = el('div', cellCls);
+      cell.setAttribute('title', '週' + DAY_LABELS[i] + '：' + statusText);
+      cell.appendChild(el('span', 'punch-day-label', DAY_LABELS[i]));
+
+      var iconWrap = el('div', 'punch-status-icon');
+      iconWrap.innerHTML = iconHtml;
+      cell.appendChild(iconWrap);
+
+      cell.appendChild(el('span', 'punch-status-text', statusText));
+      weekGrid.appendChild(cell);
+    });
+
+    cStreak.appendChild(weekGrid);
+    sec.appendChild(cStreak);
+
     root.appendChild(sec);
   }
 
-  function renderStats(levels) {
+  // 2. 主角機車騎士展示 ＋ 核心統計簡覽
+  function renderProfileAndStats(levels, studentName) {
+    var sec = el('section', 'profile-summary-grid');
+
+    // 騎士角色卡 (真實插圖置入)
+    var rCard = el('div', 'rider-card');
+    var img = el('img');
+    img.src = 'assets/illustrations/rider-1.png';
+    img.alt = '活力藍騎士';
+    img.style.cssText = 'width: 96px; height: 96px; object-fit: contain; margin-bottom: var(--space-2);';
+    rCard.appendChild(img);
+
+    var rName = el('div', 'text-nowrap', studentName);
+    rName.style.cssText = 'font-size: var(--font-size-md); font-weight: var(--font-weight-black); color: var(--color-slate-900);';
+    rCard.appendChild(rName);
+
+    var rTitle = el('div', 'text-nowrap', '初階實習騎士 · 活力藍');
+    rTitle.style.cssText = 'font-size: var(--font-size-xs); color: var(--color-slate-600); margin-top: 2px;';
+    rCard.appendChild(rTitle);
+
+    sec.appendChild(rCard);
+
+    // 三合一統計卡
     var passed = levels.filter(function (l) { return Stats.levelPassed(l.id); }).length;
     var cats = Stats.byCategory(), answered = 0, correct = 0;
     Object.keys(cats).forEach(function (k) { answered += cats[k].answered; correct += cats[k].correct; });
     var rate = answered ? Math.round(correct / answered * 100) : 0;
-    var sec = el('section', 'page-block');
-    var row = el('div', 'stats-summary-row');
-    function box(cls, num, label) {
-      var b = el('div', 'stat-box');
-      b.appendChild(el('div', 'stat-box-num ' + cls, num));
-      b.appendChild(el('div', 'stat-box-label', label));
-      row.appendChild(b);
+    var mistakesCount = Store.getMistakeIds().length;
+
+    var trio = el('div', 'stats-trio-grid');
+
+    function miniCard(num, numColor, label) {
+      var c = el('div', 'stat-mini-card');
+      var n = el('div', 'stat-mini-num text-nowrap', num);
+      n.style.color = numColor;
+      c.appendChild(n);
+      c.appendChild(el('div', 'stat-mini-label text-nowrap', label));
+      trio.appendChild(c);
     }
-    box('stat-primary', passed + ' / ' + levels.length, '已通關小關卡');
-    box('stat-success', rate + '%', '累計答對率');
-    box('stat-accent', Store.getMistakeIds().length + ' 題', '待複習錯題庫');
-    sec.appendChild(row);
+
+    miniCard(passed + ' / ' + levels.length, 'var(--color-primary-800)', '已過關');
+    miniCard(rate + '%', 'var(--color-success-700)', '答對率');
+    miniCard(mistakesCount + ' 題', 'var(--color-accent-700)', '待練錯題');
+
+    sec.appendChild(trio);
     root.appendChild(sec);
   }
 
-  function renderCategories(levels) {
+  // 3. 快捷功能卡 (照 D4 screen-home.html 排版)
+  function renderFeatures(mistakesCount) {
     var sec = el('section', 'page-block');
-    sec.appendChild(sectionHeading('🎯', '核心關卡學習', '集中練習一個重點，做完馬上看成績。',
-      '目前題庫 ' + Data.getQuestions().length + ' 題'));
-    var grid = el('div', 'grid-2');
+    var head = el('div', 'section-heading');
+    var h2 = el('h2', 'section-heading-title');
+    h2.innerHTML = ICONS.target + '<span>學習功能總覽</span>';
+    head.appendChild(h2);
+    sec.appendChild(head);
 
-    Data.getCategories().forEach(function (cat, i) {
-      var st = CAT_STYLE[i % CAT_STYLE.length];
-      var catLevels = levels.filter(function (l) { return l.category === cat; });
-      var passed = catLevels.filter(function (l) { return Stats.levelPassed(l.id); }).length;
-      var subs = [];
-      catLevels.forEach(function (l) { if (subs.indexOf(l.subcategory) === -1) subs.push(l.subcategory); });
+    var grid = el('div', 'feature-grid');
 
-      var card = el('div', 'level-card');
-      card.style.borderLeft = '8px solid ' + st.border;
-      var top = el('div', 'level-card-top');
-      var badge = el('span', 'level-badge', ('0' + (i + 1)).slice(-2));
-      if (st.badgeBg) badge.style.cssText = BADGE[st.badgeBg];
-      top.appendChild(badge);
-      card.appendChild(top);
+    // 1. 全部關卡清單
+    var cLevels = link('feature-item-card', '', 'levels.html');
+    cLevels.style.borderLeft = '6px solid var(--color-primary)';
+    var iLevels = el('div', 'feature-icon-wrapper');
+    iLevels.style.cssText = 'background-color: var(--color-primary-100); color: var(--color-primary-700);';
+    iLevels.innerHTML = ICONS.levels;
+    cLevels.appendChild(iLevels);
+    var bLevels = el('div');
+    bLevels.appendChild(el('h3', 'feature-title', '92 關全部關卡'));
+    bLevels.appendChild(el('p', 'feature-desc', '92 關，可以從任何一關開始。'));
+    cLevels.appendChild(bLevels);
+    grid.appendChild(cLevels);
 
-      var info = el('div');
-      info.appendChild(el('h3', 'level-title', '第 ' + (i + 1) + ' 大類：' + cat));
-      info.appendChild(el('p', 'level-desc', subs.map(shortSub).join('、')));
-      card.appendChild(info);
+    // 2. 錯題特訓庫
+    var cMistakes = link('feature-item-card', '', 'mistakes.html');
+    cMistakes.style.borderLeft = '6px solid var(--color-danger)';
+    var iMistakes = el('div', 'feature-icon-wrapper');
+    iMistakes.style.cssText = 'background-color: var(--color-danger-100); color: var(--color-danger-700);';
+    iMistakes.innerHTML = ICONS.repeat;
+    cMistakes.appendChild(iMistakes);
+    var bMistakes = el('div');
+    bMistakes.appendChild(el('h3', 'feature-title', '錯題特訓庫（' + mistakesCount + ' 題待練）'));
+    bMistakes.appendChild(el('p', 'feature-desc', '連續答對 2 次才會移出錯題庫。'));
+    cMistakes.appendChild(bMistakes);
+    grid.appendChild(cMistakes);
 
-      var prog = el('div');
-      var track = el('div', 'progress-bar-track');
-      var fill = el('div', 'progress-bar-fill');
-      fill.style.width = Math.round(passed / catLevels.length * 100) + '%';
-      if (st.fill) fill.style.background = st.fill;
-      track.appendChild(fill);
-      prog.appendChild(track);
-      var meta = el('div', 'level-meta');
-      meta.appendChild(el('span', null, '已過關：' + passed + ' / ' + catLevels.length + ' 關'));
-      meta.appendChild(el('span', 'level-meta-state', passed === catLevels.length ? '全部通關' : passed ? '進行中' : '待挑戰'));
-      prog.appendChild(meta);
-      card.appendChild(prog);
+    // 3. 考照之路地圖
+    var cMap = link('feature-item-card', '', 'levels.html');
+    cMap.style.borderLeft = '6px solid var(--color-accent)';
+    var iMap = el('div', 'feature-icon-wrapper');
+    iMap.style.cssText = 'background-color: var(--color-accent-100); color: var(--color-accent-700);';
+    iMap.innerHTML = ICONS.map;
+    cMap.appendChild(iMap);
+    var bMap = el('div');
+    bMap.appendChild(el('h3', 'feature-title', '考照之路地圖'));
+    bMap.appendChild(el('p', 'feature-desc', '5 大路段、92 關路線圖，自主前進。'));
+    cMap.appendChild(bMap);
+    grid.appendChild(cMap);
 
-      var first = catLevels.filter(function (l) { return !Stats.levelPassed(l.id); })[0];
-      if (first) {
-        card.appendChild(link('btn ' + st.btn, '進入練習：' + shortSub(first.subcategory) + ' 第 ' + first.index + ' 關 ➔', levelUrl(first)));
-      }
+    // 4. 成就徽章館
+    var cBadges = link('feature-item-card', '', 'levels.html');
+    cBadges.style.borderLeft = '6px solid var(--color-success)';
+    var iBadges = el('div', 'feature-icon-wrapper');
+    iBadges.style.cssText = 'background-color: var(--color-success-100); color: var(--color-success-700);';
+    iBadges.innerHTML = ICONS.badge;
+    cBadges.appendChild(iBadges);
+    var bBadges = el('div');
+    bBadges.appendChild(el('h3', 'feature-title', '成就徽章館'));
+    bBadges.appendChild(el('p', 'feature-desc', '12 款專屬徽章，紀錄努力痕跡。'));
+    cBadges.appendChild(bBadges);
+    grid.appendChild(cBadges);
 
-      var list = el('div', 'cat-sub-list');
-      subs.forEach(function (sub) {
-        var ls = catLevels.filter(function (l) { return l.subcategory === sub; });
-        var p = ls.filter(function (l) { return Stats.levelPassed(l.id); }).length;
-        var a = link('cat-sub-link', '', 'levels.html?sub=' + encodeURIComponent(sub));
-        a.appendChild(el('span', null, sub));
-        a.appendChild(el('span', 'cat-sub-count', p + ' / ' + ls.length + ' 關'));
-        list.appendChild(a);
-      });
-      card.appendChild(list);
-      grid.appendChild(card);
-    });
-    sec.appendChild(grid);
-    root.appendChild(sec);
-  }
+    // 5. 學習成果報告
+    var cReport = link('feature-item-card', '', 'result.html?level=level-1');
+    cReport.style.borderLeft = '6px solid var(--color-primary-600)';
+    var iReport = el('div', 'feature-icon-wrapper');
+    iReport.style.cssText = 'background-color: var(--color-primary-50); color: var(--color-primary-800);';
+    iReport.innerHTML = ICONS.chart;
+    cReport.appendChild(iReport);
+    var bReport = el('div');
+    bReport.appendChild(el('h3', 'feature-title', '我的學習成果報告'));
+    bReport.appendChild(el('p', 'feature-desc', '產生直式成績圖片，包含各類答對率分析。'));
+    cReport.appendChild(bReport);
+    grid.appendChild(cReport);
 
-  function featureCard(opts) {
-    var card = opts.href ? link('feature-card', '', opts.href) : el('div', 'feature-card is-soon');
-    if (!opts.href) card.setAttribute('aria-disabled', 'true');
-    var icon = el('div', 'feature-icon-box', opts.icon);
-    icon.style.cssText = opts.iconStyle;
-    card.appendChild(icon);
-    var body = el('div');
-    var h3 = el('h3', 'feature-title', opts.title);
-    if (!opts.href) h3.appendChild(el('span', 'soon-tag', '即將推出'));
-    body.appendChild(h3);
-    body.appendChild(el('p', 'feature-desc', opts.desc));
-    card.appendChild(body);
-    return card;
-  }
+    // 6. 50 題全真模擬考 (即將推出)
+    var cExam = el('div', 'feature-item-card');
+    cExam.style.cssText = 'border-left: 6px solid var(--color-slate-300); background-color: var(--color-slate-50); opacity: 0.85;';
+    var iExam = el('div', 'feature-icon-wrapper');
+    iExam.style.cssText = 'background-color: var(--color-slate-200); color: var(--color-slate-600);';
+    iExam.innerHTML = ICONS.exam;
+    cExam.appendChild(iExam);
+    var bExam = el('div');
+    var h3Wrap = el('div');
+    h3Wrap.style.cssText = 'display: flex; align-items: center; gap: 8px; margin-bottom: 4px;';
+    var h3 = el('h3', 'feature-title', '50 題全真模擬考');
+    h3.style.marginBottom = '0';
+    h3Wrap.appendChild(h3);
+    var badgeSoon = el('span', 'badge text-nowrap', '即將推出');
+    badgeSoon.style.cssText = 'background-color: var(--color-slate-200); color: var(--color-slate-700); font-size: 0.85rem;';
+    h3Wrap.appendChild(badgeSoon);
+    bExam.appendChild(h3Wrap);
+    bExam.appendChild(el('p', 'feature-desc', '比照正式新制：50 題，含 15 題危險感知影片題。'));
+    cExam.appendChild(bExam);
+    grid.appendChild(cExam);
 
-  function renderFeatures() {
-    var reverseCount = Data.getQuestions().filter(function (q) { return q.tags.indexOf('反向題') !== -1; }).length;
-    var sec = el('section', 'page-block');
-    sec.appendChild(sectionHeading('⚡', '加強練習', '針對容易失分的題型練習。'));
-    var grid = el('div', 'grid-2');
-    var n = Store.getMistakeIds().length;
-    grid.appendChild(featureCard({
-      href: 'mistakes.html', icon: '🔁',
-      iconStyle: 'background-color: var(--color-danger-100); color: var(--color-danger-600);',
-      title: '錯題庫（' + n + ' 題待練）',
-      desc: '答錯的題目都會收進這裡，連續答對 ' + Store.MISTAKE_CLEAR_STREAK + ' 次才算真正掌握。'
-    }));
-    grid.appendChild(featureCard({
-      icon: '⚠️', iconStyle: 'background-color: var(--color-warning-100); color: var(--color-warning-700);',
-      title: '反向題專區（' + reverseCount + ' 題）',
-      desc: '專門練習題目問「不正確」的反向題。'
-    }));
-    grid.appendChild(featureCard({
-      icon: '🃏', iconStyle: 'background-color: var(--color-primary-100); color: var(--color-primary-700);',
-      title: '數字與罰鍰記憶翻卡',
-      desc: '把公分、公斤、罰鍰整理成翻卡來記。'
-    }));
-    grid.appendChild(featureCard({
-      icon: '🏁', iconStyle: 'background-color: var(--color-primary); color: var(--color-text-inverse);',
-      title: '50 題模擬考',
-      desc: '比照新制：50 題選擇題，含 15 題危險感知，' + Stats.PASS_SCORE + ' 分及格。'
-    }));
     sec.appendChild(grid);
     root.appendChild(sec);
   }
 
   function init() {
-    if (!Store.getStudent()) Store.setStudent('訪客');
-    document.getElementById('user-chip').textContent = '👤 ' + Store.getStudent();
+    var student = Store.getStudent() || '301 班 12 號';
+    Store.setStudent(student);
+
+    var userChip = document.getElementById('user-chip');
+    if (userChip) userChip.textContent = student;
+
     Data.load().then(function () {
       var levels = Data.getLevels();
       root.textContent = '';
-      renderHero(levels, Data.getQuestions().length);
-      renderStats(levels);
-      renderCategories(levels);
-      renderFeatures();
-    }).catch(function () {
+
+      var streak = (typeof Game !== 'undefined' && Game.getStreak) 
+        ? Game.getStreak() 
+        : { current: 3, checkedToday: false, week: [] };
+
+      var daily = (typeof Game !== 'undefined' && Game.getDaily)
+        ? Game.getDaily()
+        : { questions: [], done: [], completed: false };
+
+      renderTopGrid(streak, daily);
+      renderProfileAndStats(levels, student);
+      renderFeatures(Store.getMistakeIds().length);
+    }).catch(function (err) {
+      console.error(err);
       root.textContent = '資料載入失敗，請用網址 http://localhost:8000/site/ 開啟。';
     });
   }
+
   init();
 })();

@@ -173,7 +173,8 @@
         <span class="btn-settings-icon" aria-hidden="true">
           <svg class="icon icon-md" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
         </span>
-        <span class="btn-settings-text text-nowrap">閱讀設定</span>
+        <span class="btn-settings-text btn-settings-text-full text-nowrap">閱讀設定</span>
+        <span class="btn-settings-text btn-settings-text-short text-nowrap">設定</span>
       </a>
     </div>
   </header>
@@ -193,9 +194,7 @@
             <span>今日挑戰</span>
           </div>
           <h1 class="daily-challenge-title">每日 3 分鐘挑戰</h1>
-          <p class="daily-challenge-meta">
-            今天量身精選 5 題：含 2 題複習錯題 ＋ 3 題弱點突破。做完立即維持連續天數！不計時、零負擔。
-          </p>
+          <p class="daily-challenge-meta">5 題，大約 3 分鐘。</p>
           <div class="daily-challenge-actions">
             <a href="screen-quiz.html?mode=daily" class="btn btn-primary btn-lg" style="background-color: #FFFFFF; color: var(--color-primary-900); font-weight: 800; border: none;">
               <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -298,12 +297,12 @@
 
         <!-- 騎士角色卡 (插圖佔位框) -->
         <div class="rider-card">
-          <div class="asset-placeholder-circle" style="width: 96px; height: 96px;" aria-label="角色插圖佔位框">
-            <svg class="icon icon-xl" viewBox="0 0 24 24" style="color: var(--color-slate-400);"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
-          <div class="asset-placeholder-tag">character-rider-1.png</div>
-          <div style="font-size: var(--font-size-md); font-weight: bold; margin-top: 8px; color: var(--color-slate-900);">
+          <img src="../site/assets/illustrations/rider-1.png" alt="活力藍騎士" style="width: 96px; height: 96px; object-fit: contain;">
+          <div style="font-size: var(--font-size-md); font-weight: bold; margin-top: 6px; color: var(--color-slate-900);">
             活力藍騎士
+          </div>
+          <div style="font-size: var(--font-size-sm); color: var(--color-slate-600); font-weight: bold; margin-top: 2px;">
+            301 班 12 號
           </div>
           <a href="screen-character.html" class="btn btn-outline" style="min-height: 40px; padding: 6px 14px; margin-top: 10px; font-size: var(--font-size-sm);" title="前往選擇角色">
             <span>更換角色</span>

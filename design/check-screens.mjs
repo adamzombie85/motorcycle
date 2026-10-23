@@ -112,16 +112,22 @@ async function main() {
     fs.mkdirSync(SCREENSHOTS_DIR, { recursive: true });
   }
 
-  // 1. 取得所有 HTML 畫面
-  const htmlFiles = fs.readdirSync(DESIGN_DIR)
+  // 1. 取得所有 HTML 畫面 (包含 design/ 與 site/ 目錄)
+  const designFiles = fs.readdirSync(DESIGN_DIR)
     .filter(file => file.endsWith('.html'))
-    .sort();
+    .sort()
+    .map(file => ({ group: 'design', file, urlPath: `/design/${file}`, baseName: file.replace(/\.html$/, '') }));
 
-  if (htmlFiles.length === 0) {
-    console.error('❌ 未在 design/ 目錄找到任何 HTML 檔案');
-    process.exit(1);
-  }
-  console.log(`📋 找到 ${htmlFiles.length} 個畫面：\n   ${htmlFiles.join(', ')}`);
+  const siteDir = path.join(ROOT_DIR, 'site');
+  const siteFiles = fs.existsSync(siteDir)
+    ? fs.readdirSync(siteDir)
+        .filter(file => file.endsWith('.html'))
+        .sort()
+        .map(file => ({ group: 'site', file, urlPath: `/site/${file}`, baseName: `site_${file.replace(/\.html$/, '')}` }))
+    : [];
+
+  const pageEntries = [...designFiles, ...siteFiles];
+  console.log(`📋 找到 ${pageEntries.length} 個畫面 (設計樣板 ${designFiles.length} 個，網站頁面 ${siteFiles.length} 個)`);
 
   // 2. 啟動伺服器
   const { server, port } = await startServer();
@@ -207,12 +213,12 @@ async function main() {
   let totalIssues = 0;
 
   console.log('--------------------------------------------------------------------------');
-  console.log(`開始進行 ${htmlFiles.length} 畫面 × ${VIEWPORTS.length} 寬度 = ${htmlFiles.length * VIEWPORTS.length} 項測試...`);
+  console.log(`開始進行 ${pageEntries.length} 畫面 × ${VIEWPORTS.length} 寬度 = ${pageEntries.length * VIEWPORTS.length} 項測試...`);
   console.log('--------------------------------------------------------------------------');
 
-  for (const htmlFile of htmlFiles) {
-    const pageUrl = `${baseUrl}/design/${htmlFile}`;
-    const screenBase = htmlFile.replace(/\.html$/, '');
+  for (const entry of pageEntries) {
+    const pageUrl = `${baseUrl}${entry.urlPath}`;
+    const screenBase = entry.baseName;
 
     for (const vp of VIEWPORTS) {
       // 1. 設定裝置寬高 Emulation
@@ -225,7 +231,7 @@ async function main() {
 
       // 2. 載入頁面
       await send('Page.navigate', { url: pageUrl });
-      await new Promise(r => setTimeout(r, 400));
+      await new Promise(r => setTimeout(r, 450));
 
       // 3. 檢查水平捲動與元素溢出
       const evalRes = await send('Runtime.evaluate', {
@@ -262,7 +268,7 @@ async function main() {
               if (!isClipped) {
                 const tag = el.tagName.toLowerCase();
                 const cls = el.className && typeof el.className === 'string' 
-                  ? '.' + el.className.trim().split(/\s+/).slice(0, 2).join('.') 
+                  ? '.' + el.className.trim().split(/\\s+/).slice(0, 2).join('.') 
                   : '';
                 const id = el.id ? '#' + el.id : '';
                 overflowing.push({
@@ -274,18 +280,78 @@ async function main() {
             }
           }
 
+          // 3. 頁首與重點元件互相重疊檢查 (Overlap detection)
+          const overlapping = [];
+          const navElements = Array.from(document.querySelectorAll('.site-header .nav-bar > *, .site-header .brand-badge, .site-header .btn-settings, .site-header .user-chip'));
+          for (let i = 0; i < navElements.length; i++) {
+            for (let j = i + 1; j < navElements.length; j++) {
+              const a = navElements[i], b = navElements[j];
+              if (a.contains(b) || b.contains(a)) continue;
+              const rA = a.getBoundingClientRect(), rB = b.getBoundingClientRect();
+              if (rA.width === 0 || rB.width === 0 || rA.height === 0 || rB.height === 0) continue;
+              const sA = window.getComputedStyle(a), sB = window.getComputedStyle(b);
+              if (sA.display === 'none' || sB.display === 'none' || sA.visibility === 'hidden' || sB.visibility === 'hidden' || sA.opacity === '0' || sB.opacity === '0') continue;
+
+              const overlapX = Math.max(0, Math.min(rA.right, rB.right) - Math.max(rA.left, rB.left));
+              const overlapY = Math.max(0, Math.min(rA.bottom, rB.bottom) - Math.max(rA.top, rB.top));
+              if (overlapX > 3 && overlapY > 3) {
+                overlapping.push({
+                  elemA: (a.className || a.tagName),
+                  elemB: (b.className || b.tagName),
+                  overlapArea: Math.round(overlapX * overlapY)
+                });
+              }
+            }
+          }
+
+          // 4. 文字被截斷 (Text truncation / Ellipsis)
+          const truncated = [];
+          const textNodes = Array.from(document.querySelectorAll('.site-header span, .brand-badge span, .user-chip span, .btn span, .btn, h1, h2, .stat-box-num, .stat-box-label'));
+          for (const el of textNodes) {
+            if (el.childElementCount > 0) continue;
+            const text = (el.textContent || '').trim();
+            if (text.length === 0) continue;
+            const style = window.getComputedStyle(el);
+            if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') continue;
+
+            if (style.textOverflow === 'ellipsis' || style.overflow === 'hidden' || style.overflowX === 'hidden') {
+              if (el.scrollWidth > (el.clientWidth + 2)) {
+                truncated.push({
+                  selector: el.tagName.toLowerCase() + (el.className ? '.' + el.className.trim().split(/\\s+/)[0] : ''),
+                  text: text,
+                  scrollWidth: el.scrollWidth,
+                  clientWidth: el.clientWidth
+                });
+              }
+            }
+          }
+
           return {
             clientWidth,
             scrollWidth,
             hasHScroll,
             overflowingCount: overflowing.length,
-            overflowingSamples: overflowing.slice(0, 3)
+            overflowingSamples: overflowing.slice(0, 3),
+            overlappingCount: overlapping.length,
+            overlappingSamples: overlapping.slice(0, 3),
+            truncatedCount: truncated.length,
+            truncatedSamples: truncated.slice(0, 3)
           };
         })()`
       });
 
-      const metrics = evalRes.result.value || { clientWidth: vp.width, scrollWidth: vp.width, hasHScroll: false, overflowingCount: 0, overflowingSamples: [] };
-      const isClean = !metrics.hasHScroll && metrics.overflowingCount === 0;
+      const metrics = evalRes.result.value || {
+        clientWidth: vp.width,
+        scrollWidth: vp.width,
+        hasHScroll: false,
+        overflowingCount: 0,
+        overflowingSamples: [],
+        overlappingCount: 0,
+        overlappingSamples: [],
+        truncatedCount: 0,
+        truncatedSamples: []
+      };
+      const isClean = !metrics.hasHScroll && metrics.overflowingCount === 0 && metrics.overlappingCount === 0 && metrics.truncatedCount === 0;
 
       if (!isClean) {
         totalIssues++;
@@ -298,22 +364,29 @@ async function main() {
       fs.writeFileSync(imgFilePath, Buffer.from(shot.data, 'base64'));
 
       results.push({
-        screen: htmlFile,
+        screen: `${entry.group}/${entry.file}`,
         width: vp.width,
         vpName: vp.name,
         hasHScroll: metrics.hasHScroll,
         scrollWidth: metrics.scrollWidth,
         clientWidth: metrics.clientWidth,
         overflowing: metrics.overflowingSamples,
+        overlapping: metrics.overlappingSamples,
+        truncated: metrics.truncatedSamples,
         isClean,
         image: imgFileName
       });
 
       const mark = isClean ? '✅' : '❌';
+      let errDetails = [];
+      if (metrics.hasHScroll) errDetails.push(`捲動寬 ${metrics.scrollWidth} > ${metrics.clientWidth}`);
+      if (metrics.overflowingCount > 0) errDetails.push(`溢出 ${metrics.overflowingCount} 個`);
+      if (metrics.overlappingCount > 0) errDetails.push(`重疊 ${metrics.overlappingCount} 處`);
+      if (metrics.truncatedCount > 0) errDetails.push(`文字截斷 ${metrics.truncatedCount} 個: ${metrics.truncatedSamples[0].text}`);
       const statusText = isClean 
-        ? '正常 (無溢出)' 
-        : `異常: 滾動寬 ${metrics.scrollWidth}px > 視窗 ${metrics.clientWidth}px, 溢出元素 ${metrics.overflowingCount} 個`;
-      console.log(`${mark} [${htmlFile}] @ ${vp.width}px ➔ ${statusText}`);
+        ? '正常 (無溢出、無重疊、無文字截斷)' 
+        : `異常: ${errDetails.join(' | ')}`;
+      console.log(`${mark} [${entry.group}/${entry.file}] @ ${vp.width}px ➔ ${statusText}`);
     }
   }
 

@@ -149,4 +149,31 @@ design/
   7. **品質驗收：**
      - 全專案 grep 檢查四大禁用詞彙為 **0 筆**。
      - 全 HTML 樣板 grep 檢查介面 emoji 為 **0 筆**。
-- **下一棒：** 請 Jim 確認後，交由 Claude Code 推進前端程式實作。
+- **下一棒：** 由 Antigravity 承接 A1、A2 網站畫面工程與 R1 引擎審查。
+
+### A1 & R1｜套用 D4 到網站、閱讀設定實作與引擎審查（2026-10-23）
+- **執行角色：** Antigravity（Gemini）
+- **完成項目與設計決策：**
+  1. **R1 遊戲化引擎（site/js/game.js）交叉審查：**
+     - 深度對照 `docs/遊戲化設計.md`，檢驗跨月、跨年、時區、同一天多次作答、午夜換日邊界。
+     - 產出完整分析報告 `REVIEW.md`，提出 3 項中度風險（跨午夜做題競態條件、歷史用戶長迴圈效能負擔、影片題呈現相容性）與 3 項輕度/優化建議，**嚴格不修改 `game.js`**。
+  2. **修復 5 項 D4 審查問題：**
+     - **360px 頁首緊湊最佳化：** 手機寬度（`<= 480px`）自動隱藏 `.user-chip`，顯示短版品牌名稱「好過關」與短版按鈕「設定」，學生名稱移入首頁內容。
+     - **check-screens.mjs 升級：** 加入「元素互相重疊（Overlap detection）」與「文字被截斷（Ellipsis detection）」雙重檢查演算法。
+     - **文案去廣告化：** 今日挑戰改為「5 題，大約 3 分鐘。」；地圖改為「92 關，可以從任何一關開始。」；剔除「量身精選」「零負擔」「隨時啟程」「巡迴」等字眼。
+     - **反向題橫幅定案：** 統一為「題目裡有「不」「錯誤」這類字眼，請看清楚題目問的是什麼，再選答案。」。
+     - **進度格式防折行：** 關卡進度改為 `6 / 10` 簡短格式並包覆 `.text-nowrap`。
+     - **接上真實插圖：** `design/` 與 `site/` 全面接上 `site/assets/illustrations/` 真實插圖（`rider-1.png`~`rider-6.png`、女性 `-f` 版、雙人 `-duo` 版、徽章與地圖場景圖），移除所有佔位框。
+  3. **閱讀設定模組（site/js/settings.js）與芫荽注音字型：**
+     - 下載開源 OFL 1.1 芫荽注音字型（`BpmfIansui-Regular.ttf`，7,424,064 bytes，約 7.42 MB）至 `site/fonts/`。
+     - 實作按需動態 `@font-face` 載入：預設情況下完全不發送字型 HTTP 請求，只有當學生在閱讀設定中開啟注音時才動態注入 `<style id="moto-zhuyin-font-style">` 下載字型。
+     - 整合 Web Speech API 原生中文語音合成（自動偵測 `zh-TW` 語音，支援慢速 0.8x、正常 1.0x、快速 1.25x），並支援題幹旁手動「朗讀本題」按鈕與自動朗讀。
+     - 整合字級（標準/大/特大）、音效、動效、確認作答二次確認等設定。
+  4. **全面套用 D4 至 site/ 所有頁面：**
+     - 更新 `site/index.html`, `quiz.html`, `levels.html`, `mistakes.html`, `result.html` 之標頭、CSS 引用與閱讀設定按鈕。
+     - 重構 `site/js/home.js`, `quiz.js`, `levels.js`, `mistakes.js`, `result.js`，全面汰除 Unicode Emoji 介面圖示，採用 Lucide SVG 向量圖示。
+     - 錯題庫空狀態接上 `empty-mistakes.png`；結算頁過關接上 `celebrate-level.png`。
+  5. **自動化全覆蓋多裝置檢驗：**
+     - `node design/check-screens.mjs` 自動掃描 17 個畫面（12 個設計樣板 + 5 個網站頁面）× 4 種寬度 = **68 項測試 100% 完美通過（0 溢出、0 橫向捲動、0 重疊、0 截斷）**。
+     - 全專案 grep 禁用詞彙為 **0 筆**。
+- **下一棒：** 請 Claude（大腦）與 Jim 確認驗收成果，並指示後續階段。

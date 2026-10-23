@@ -148,16 +148,20 @@
 .brand-title-short {
   display: none;
 }
+.btn-settings-text-short {
+  display: none;
+}
 
 @media (max-width: 480px) {
   .nav-bar {
-    gap: 6px;
-    min-height: 52px;
+    gap: 8px;
+    min-height: 56px;
+    justify-content: space-between;
   }
   .brand-badge {
-    font-size: 0.95rem;
-    gap: 4px;
-    max-width: 125px;
+    font-size: 1.05rem;
+    gap: 8px;
+    max-width: none;
     min-width: 0;
   }
   .brand-title-full {
@@ -165,43 +169,29 @@
   }
   .brand-title-short {
     display: inline;
+    font-weight: var(--font-weight-black);
   }
   .brand-icon {
-    width: 32px;
-    height: 32px;
-    font-size: 18px;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
   }
+  /* 手機寬度下將使用者名稱移出頁首，徹底避免擠壓與文字截斷 */
   .user-chip {
-    padding: 4px 8px;
-    font-size: 0.8125rem;
-    gap: 4px;
-    max-width: 105px;
-    min-width: 0;
-  }
-  .user-chip span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    display: none !important;
   }
   .btn-settings {
     min-height: 44px;
-    padding: 6px 10px;
-    gap: 4px;
-    font-size: 0.8125rem;
+    padding: 6px 14px;
+    gap: 6px;
+    font-size: var(--font-size-sm);
     flex-shrink: 0;
   }
-}
-
-@media (max-width: 360px) {
-  .nav-bar {
-    gap: 4px;
+  .btn-settings-text-full {
+    display: none;
   }
-  .user-chip {
-    padding: 3px 6px;
-    max-width: 95px;
-  }
-  .btn-settings {
-    padding: 6px 8px;
+  .btn-settings-text-short {
+    display: inline;
   }
 }
 
