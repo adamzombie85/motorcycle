@@ -1,0 +1,4570 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>看圖題比較卡審核（V1 初稿）</title>
+<style>
+:root {
+  --primary: #1e3a8a;
+  --primary-light: #e0e7ff;
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --border: #cbd5e1;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --success: #15803d;
+  --danger: #b91c1c;
+  --external: #b45309;
+  --external-bg: #fef3c7;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  margin: 0;
+  padding: 16px;
+}
+.header {
+  max-width: 1200px;
+  margin: 0 auto 24px;
+  background: var(--surface);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+h1 { margin: 0 0 8px; color: var(--primary); font-size: 1.6rem; }
+.desc { color: var(--text-muted); font-size: 0.95rem; margin: 0; }
+.stats-badge {
+  display: inline-block;
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+.group-card {
+  max-width: 1200px;
+  margin: 0 auto 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  border-bottom: 2px solid var(--primary-light);
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+}
+.group-title {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--primary);
+}
+.group-id {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-family: monospace;
+}
+.section-subtitle {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 14px 0 8px;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.principles-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 14px;
+}
+.principle-item {
+  background: #f1f5f9;
+  border-left: 4px solid var(--primary);
+  padding: 10px 14px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+.principle-item.is-external {
+  border-left-color: var(--external);
+  background: #fffbeb;
+}
+.source-tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 6px;
+  background: #cbd5e1;
+  color: #334155;
+}
+.source-tag.external {
+  background: var(--external-bg);
+  color: var(--external);
+  border: 1px solid #fde68a;
+}
+.confusions-box {
+  background: #fff1f2;
+  border-left: 4px solid #f43f5e;
+  padding: 10px 14px;
+  border-radius: 4px;
+  margin-bottom: 18px;
+  font-size: 0.92rem;
+  color: #881337;
+}
+.confusions-box ul {
+  margin: 4px 0 0;
+  padding-left: 20px;
+}
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.member-item {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+.member-img-wrap {
+  text-align: center;
+  background: #f8fafc;
+  border-radius: 6px;
+  padding: 8px;
+  margin-bottom: 10px;
+  min-height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.member-img {
+  max-width: 100%;
+  max-height: 120px;
+  object-fit: contain;
+}
+.member-meta {
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+.member-qid {
+  font-weight: 700;
+  color: var(--primary);
+  font-family: monospace;
+}
+.member-qtext {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 8px;
+  flex-grow: 1;
+}
+.member-answer {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-top: auto;
+}
+.review-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.review-actions label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.review-note {
+  flex-grow: 1;
+  min-width: 220px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+.summary-box {
+  max-width: 1200px;
+  margin: 0 auto 40px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.summary-box textarea {
+  width: 100%;
+  height: 140px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>看圖題比較卡審核（V1 初稿）</h1>
+  <p class="desc">
+    本審核頁收錄全站 268 張看圖題目（筆試 148 題、情境 120 題），依「外觀相似、容易搞混」歸納為 33 個比較群組。<br>
+    每個群組提供 2～4 條分辨原則（包含《道路交通標誌標線號誌設置規則》與《道路交通安全規則》法定條號）與常見混淆解析。
+  </p>
+  <div class="stats-badge">總群組數：33 組 ｜ 涵蓋題數：268 題 ｜ 覆蓋率：100% ｜ 「其他」組：0 題</div>
+</div>
+
+<section class="group-card" data-gid="CMP-police-gesture" data-gname="警察指揮手勢">
+  <div class="group-header">
+    <h2 class="group-title">警察指揮手勢 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(9 題)</small></h2>
+    <span class="group-id">CMP-police-gesture</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>手臂水平伸直時，該手臂方向（或正面對面）之車輛應依指示停止或通行。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第7條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>手掌掌心立起朝向來車為「停止」；手臂平伸擺動或前屈為「速行」或「轉彎」。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第7條</span>
+    </li>
+    <li class="principle-item">
+      <span>右手平伸掌心向前為右方來車停止（M0530）；左右手均平伸為前後來車停止、左右來車通行（M0527）。</span>
+      <span class="source-tag">題庫出處：M0527</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>手臂平伸是叫該方向車輛「停止」還是「通行」，關鍵在掌心是否正對來車以及有無揮動招引動作。</li>
+      <li>前後來車停止（M0527）與全部車輛停止（M0528 右手高舉過頭掌心向前）的手臂高度不同。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0527.png" alt="M0527" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0527</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0527）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>前後來車停止，左右來車通行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0528.png" alt="M0528" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0528</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0528）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>全部車輛停止</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0529.png" alt="M0529" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0529</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0529）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>右方來車左轉彎</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0530.png" alt="M0530" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0530</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0530）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>右方來車停止</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0531.png" alt="M0531" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0531</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0531）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>左方來車速行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0532.png" alt="M0532" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0532</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0532）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>左方來車左轉彎</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0533.png" alt="M0533" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0533</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0533）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>前方來車停止</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0534.png" alt="M0534" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0534</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0534）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>右方來車速行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S112.jpg" alt="S112" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S112</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖中警察手勢，哪輛機車應停止？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>Ｃ</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-police-gesture" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-police-gesture" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-driver-signals" data-gname="駕駛人與自行車轉向減速手勢">
+  <div class="group-header">
+    <h2 class="group-title">駕駛人與自行車轉向減速手勢 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(9 題)</small></h2>
+    <span class="group-id">CMP-driver-signals</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>左臂平伸、手掌向下為「左轉彎」信號。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第91條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>左臂向上屈曲、手掌向右微曲為「右轉彎」信號（自行車亦得以右臂平伸表示右轉）。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第91條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>左臂向下垂伸、手掌向後為「減速暫停」；左臂向下垂伸、手掌向前微動為「允讓後車超越」。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第91條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>左臂「向上屈曲」是右轉，左臂「水平平伸」才是左轉，容易左右混淆。</li>
+      <li>手掌「向後下垂不動」是減速暫停（M0433、M0743），「掌心向前微動」是允讓後車超越（M0434）。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0433.png" alt="M0433" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0433</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0433）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>減速暫停</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0434.png" alt="M0434" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0434</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0434）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>允讓後車超越</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0435.png" alt="M0435" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0435</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0435）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>右轉彎</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0436.png" alt="M0436" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0436</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0436）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>左轉彎</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0444.png" alt="M0444" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0444</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">自行車騎士手勢預告即將</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>右轉</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0445.png" alt="M0445" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0445</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">自行車騎士手勢預告即將</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>減速暫停</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0741.png" alt="M0741" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0741</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">左臂向上，手掌向右微曲，表示：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>右轉彎</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0742.png" alt="M0742" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0742</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">左臂平伸，手掌向下，表示：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>左轉彎</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0743.png" alt="M0743" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0743</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">左臂向下垂伸，手掌向後，表示：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>減速暫停</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-driver-signals" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-driver-signals" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-prohibitory-entry" data-gname="禁制標誌：車種與對象禁止進入">
+  <div class="group-header">
+    <h2 class="group-title">禁制標誌：車種與對象禁止進入 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(12 題)</small></h2>
+    <span class="group-id">CMP-prohibitory-entry</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>圓形白底紅邊加紅色反斜線表示「禁止進入」；牌面黑色圖案代表受禁止之車種或對象。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第58條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>白底紅圈無圖案為「禁止任何車輛進入」；內畫汽車為四輪以上汽車，機車有分普通機車、大重機與550cc以上大重機。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第63條</span>
+    </li>
+    <li class="principle-item">
+      <span>紅色圓圈內黃底機車圖案專指「大型重型機車」，紅色圓圈內機車圖案加註黃底550字樣為「550cc以上大重機」。</span>
+      <span class="source-tag">題庫出處：M0712</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>空心紅圈（M0408）是禁止「任何車輛」進入，不是只有汽車。</li>
+      <li>「禁止大型重型機車以外之機車進入」（M0411）表示大重機可以進、普通機車不能進，易反向理解。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0408.png" alt="M0408" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0408</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0408）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止任何車輛進入</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0409.png" alt="M0409" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0409</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0409）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止四輪以上汽車進入</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0410.png" alt="M0410" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0410</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0410）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止大貨車及聯結車進入</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0411.png" alt="M0411" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0411</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0411）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止大型重型機車以外之機車進入</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0438.png" alt="M0438" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0438</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0438）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止大客車進入</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0441.png" alt="M0441" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0441</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0441）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止大客車、大貨車及聯結車進入</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0517.png" alt="M0517" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0517</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0517）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止行人通行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0564.png" alt="M0564" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0564</span>
+        <span>注意大型車行駛及轉彎（內輪差、視野死角、不並行）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0564）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止大貨車及聯結車進入</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0711.png" alt="M0711" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0711</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0711）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止四輪以上汽車及機車進入</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0712.png" alt="M0712" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0712</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0712）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止大型重型機車進入</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0713.png" alt="M0713" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0713</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0713）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止汽缸排氣量 550 立方公分以上大型重型機車進入</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0714.png" alt="M0714" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0714</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0714）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止自行車進入</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-prohibitory-entry" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-prohibitory-entry" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-prohibitory-action" data-gname="禁制標誌：動作禁止與管制">
+  <div class="group-header">
+    <h2 class="group-title">禁制標誌：動作禁止與管制 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(8 題)</small></h2>
+    <span class="group-id">CMP-prohibitory-action</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>圓形白底紅邊加紅斜線覆蓋動作圖案，表示禁止該項動作（禁止迴車、禁止左轉、禁止超車等）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第64條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>八角形紅底白字「停」表示車輛必須停止於停止線前，確認安全後再開。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第59條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>「禁止超車」標誌內為並行之兩輛車加紅色斜線（M0715）；「停車檢查」為白底紅圈內寫檢查類別（M0219、M0220）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第70條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>「禁止停車」（藍底紅圈紅單斜線，M0407）與「禁止臨時停車」（紅十字斜線）之線條區分。</li>
+      <li>「禁止左轉」（M0583）與「禁止左轉及直行」（M0584，箭頭一分為二）之動作組合差別。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0219.png" alt="M0219" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0219</span>
+        <span>行車檢查（設備、燈光）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0219）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>停車檢查</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0220.png" alt="M0220" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0220</span>
+        <span>行車檢查（設備、燈光）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0220）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>停車檢查</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0407.png" alt="M0407" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0407</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0407）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止停車</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0583.png" alt="M0583" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0583</span>
+        <span>轉彎（左右轉、迴轉）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0583）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止左轉</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0584.png" alt="M0584" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0584</span>
+        <span>轉彎（左右轉、迴轉）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0584）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止左轉及直行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0715.png" alt="M0715" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0715</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0715）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止超車</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0716.png" alt="M0716" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0716</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0716）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止迴車</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0719.png" alt="M0719" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0719</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0719）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>停車再開</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-prohibitory-action" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-prohibitory-action" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-limits-spec" data-gname="限制標誌：車重、寬長與最高速限">
+  <div class="group-header">
+    <h2 class="group-title">限制標誌：車重、寬長與最高速限 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(5 題)</small></h2>
+    <span class="group-id">CMP-limits-spec</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>圓形白底紅邊內黑色數字加單位（t 或無單位）表示車輛總重限制或最高速限。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第72條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>數字左右有向外箭頭為「車輛寬度限制」（M0217）；一輛車圖案前後有箭頭標數字為「車輛長度限制」（M0218）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第75條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>圓形紅圈純數字（例如 40、50）為最高速限，單位為公里/小時（M0710、M0717）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第77條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>「寬度限制」（箭頭向左右兩側水平指）與「長度限制」（整部車側影前後有箭頭標尺寸）的箭頭位置容易看漏。</li>
+      <li>總重限制標有「t」（公噸，M0009），最高速限純為數字（M0710）無單位標記。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0009.png" alt="M0009" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0009</span>
+        <span>貨物裝載</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0009）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車輛總重限制</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0217.png" alt="M0217" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0217</span>
+        <span>行車檢查（設備、燈光）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0217）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車輛寬度限制</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0218.png" alt="M0218" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0218</span>
+        <span>行車檢查（設備、燈光）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0218）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車輛長度限制</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0710.png" alt="M0710" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0710</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0710）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>最高速限</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0717.png" alt="M0717" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0717</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0717）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>最高速限</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-limits-spec" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-limits-spec" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-mandatory-turn" data-gname="遵行標誌：行車動向與兩段轉彎">
+  <div class="group-header">
+    <h2 class="group-title">遵行標誌：行車動向與兩段轉彎 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(6 題)</small></h2>
+    <span class="group-id">CMP-mandatory-turn</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>圓形藍底白色箭頭表示遵行行車方向（直行、轉彎、單行或靠右）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第40條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>藍底方形白圖之機車加轉折箭頭為「機慢車兩段左轉」（M0587）或「兩段右轉」（M0588）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第65條之一</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>箭頭斜向右下指向地面為「靠右行駛」（M0718）；長方形藍底白箭頭為「單行道」（M0594）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第41條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>「單行道」（長方形藍底）與「直行遵行方向」（圓形藍底）外框形狀不同但都是白箭頭。</li>
+      <li>「機慢車兩段左轉」（M0587）與「機慢車兩段右轉」（M0588）的箭頭折角方向相反。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0587.png" alt="M0587" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0587</span>
+        <span>轉彎（左右轉、迴轉）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0587）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>機慢車兩段左轉</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0588.png" alt="M0588" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0588</span>
+        <span>轉彎（左右轉、迴轉）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0588）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>機慢車兩段右轉</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0593.png" alt="M0593" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0593</span>
+        <span>轉彎（左右轉、迴轉）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0593）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車道遵行方向</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0594.png" alt="M0594" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0594</span>
+        <span>轉彎（左右轉、迴轉）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0594）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>單行道</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0718.png" alt="M0718" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0718</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0718）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>靠右行駛</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0744.png" alt="M0744" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0744</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0744）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>道路僅准左轉</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-mandatory-turn" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-mandatory-turn" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-dedicated-lane" data-gname="遵行標誌：專用車道與專用道路">
+  <div class="group-header">
+    <h2 class="group-title">遵行標誌：專用車道與專用道路 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(11 題)</small></h2>
+    <span class="group-id">CMP-dedicated-lane</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>圓形或長方形藍底白色圖案，指示該車道或道路僅准特定車種通行。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第48條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>標示「四輪以上汽車及大型重型機車」表示該路段排除普通機車與慢車（M0439、M0735）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第55條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>「開亮頭燈」標誌為圓形藍底白圖（大燈光束照射狀），指示行駛該路段必須開啟頭燈（M0792）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第139條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>牌面加註「550cc以上大型重型機車」（M0734、M0736）與未註明550（所有大重機均可，M0735）的適用車種差異。</li>
+      <li>車道「專行」（僅准特定車種）與道路「指定」（整條道路限制）的管制範圍不同。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0437.png" alt="M0437" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0437</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0437）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車道指定大眾捷運系統車輛專行。</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0439.png" alt="M0439" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0439</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0439）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車道指定四輪以上汽車及大型重型機車專行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0440.png" alt="M0440" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0440</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0440）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車道指定大客車專行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0518.png" alt="M0518" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0518</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0518）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>行人專用</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0733.png" alt="M0733" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0733</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">道路指定</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>自行車及大型重型機車以外之機車專行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0734.png" alt="M0734" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0734</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0734）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>指定四輪以上汽車及汽缸排氣量 550 立方公分以上大型重型機車專行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0735.png" alt="M0735" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0735</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0735）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>道路指定四輪以上汽車及大型重型機車專行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0736.png" alt="M0736" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0736</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0736）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車道指定四輪以上汽車及汽缸排氣量 550 立方公分以上大型重型機車專行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0737.png" alt="M0737" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0737</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0737）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車道指定自行車及大型重型機車以外之機車專行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0738.png" alt="M0738" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0738</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0738）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車道指定自行車專行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0792.png" alt="M0792" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0792</span>
+        <span>正確使用燈光（頭燈、霧燈、方向燈）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0792）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>開亮頭燈</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-dedicated-lane" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-dedicated-lane" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-warning-curves" data-gname="警告標誌：彎道與連續彎路">
+  <div class="group-header">
+    <h2 class="group-title">警告標誌：彎道與連續彎路 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(5 題)</small></h2>
+    <span class="group-id">CMP-warning-curves</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>正等邊三角形黃底黑邊黑圖案為警告標誌；折線曲線形狀代表前方路形走向。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第14條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>單一弧度折向右為「右彎」（M0699），折向左為「左彎」（M0700）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第14條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>連續S形折線以「第一個彎轉向」命名：第一折向右為「連續彎路先向右」（M0701），反之先向左（M0702）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第15條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>連續彎路（M0701、M0702）的名稱看「最下方起點的第一個彎」折向哪邊，而不是看終點頂端。</li>
+      <li>警告「圓環」標誌（黃底三角黑環，M0706）與遵行「圓環」標誌（藍底圓形白箭頭環）的顏色與功能完全不同。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0699.png" alt="M0699" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0699</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0699）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>右彎</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0700.png" alt="M0700" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0700</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0700）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>左彎</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0701.png" alt="M0701" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0701</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0701）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>連續彎路先向右</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0702.png" alt="M0702" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0702</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0702）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>連續彎路先向左</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0706.png" alt="M0706" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0706</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0706）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>圓環</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-warning-curves" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-warning-curves" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-warning-hazards" data-gname="警告標誌：路況險阻與路面狀況">
+  <div class="group-header">
+    <h2 class="group-title">警告標誌：路況險阻與路面狀況 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(13 題)</small></h2>
+    <span class="group-id">CMP-warning-hazards</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>正三角形黃底黑圖用以促使駕駛人提高警覺，採取減速或防護措施。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第12條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>黑色驚嘆號「！」表示「注意危險」，附牌通常說明危險性質（M0071）；波浪輪胎痕表示「路滑」（M0067）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第38條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>斜坡標示%數為「險升坡/險降坡」（M0512）；落石碎塊在左為「注意左側落石」（M0068），在右為右側（M0069）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第27條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>落石標誌（M0068、M0069）之左右側判定依據懸崖山壁位在圖案左邊或右邊。</li>
+      <li>路面「高突」（單個小山丘突起，M0708）與路面「顛簸」（兩個起伏波峰，M0707）外觀極為相似。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0067.png" alt="M0067" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0067</span>
+        <span>事故預防及處理</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0067）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>路滑</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0068.png" alt="M0068" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0068</span>
+        <span>事故預防及處理</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0068）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>注意左側落石</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0069.png" alt="M0069" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0069</span>
+        <span>事故預防及處理</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0069）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>注意右側落石</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0070.png" alt="M0070" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0070</span>
+        <span>事故預防及處理</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0070）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>右側斷崖</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0071.png" alt="M0071" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0071</span>
+        <span>事故預防及處理</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0071）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>危險</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0405.png" alt="M0405" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0405</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0405）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>碼頭、堤岸</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0406.png" alt="M0406" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0406</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0406）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>隧道</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0422.png" alt="M0422" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0422</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0422）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>安全方向導引</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0423.png" alt="M0423" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0423</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0423）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車輛故障標誌</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0512.png" alt="M0512" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0512</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0512）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>)險升坡</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0707.png" alt="M0707" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0707</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0707）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>路面顛簸</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0708.png" alt="M0708" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0708</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0708）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>路面高突</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0709.png" alt="M0709" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0709</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0709）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>慢行</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-warning-hazards" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-warning-hazards" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-warning-narrow" data-gname="警告標誌：路寬縮減與狹橋狹路">
+  <div class="group-header">
+    <h2 class="group-title">警告標誌：路寬縮減與狹橋狹路 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(4 題)</small></h2>
+    <span class="group-id">CMP-warning-narrow</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>道路兩側線條同時向內對稱內縮為「狹路」（M0703）；單側內縮代表該側車道縮減（M0704、M0705）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第20條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>兩條平行線於中間突然凹入如工字形代表「狹橋」（M0739）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第21條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>左邊直線右邊向內斜為「右側車道縮減」（M0705）；右邊直線左邊向內斜為「左側車道縮減」（M0704）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第22條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>「狹路」（M0703，路面漸次變窄）與「狹橋」（M0739，橋樑結構使寬度驟減）圖案線條轉折不同。</li>
+      <li>車道縮減的左右側看的是「傾斜靠攏的那一條邊線」位在左側還是右側。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0703.png" alt="M0703" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0703</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0703）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>狹路</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0704.png" alt="M0704" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0704</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0704）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>左側車道縮減</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0705.png" alt="M0705" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0705</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0705）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>右側車道縮減</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0739.png" alt="M0739" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0739</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0739）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>狹橋</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-warning-narrow" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-warning-narrow" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-warning-crossing-users" data-gname="警告標誌：交岔路口與用路人注意">
+  <div class="group-header">
+    <h2 class="group-title">警告標誌：交岔路口與用路人注意 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(9 題)</small></h2>
+    <span class="group-id">CMP-warning-crossing-users</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>十字、丁字、丫字交叉黑線表示交岔路口形式（岔路標誌，M0509、M0510、M0511）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第17條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>大人牽小孩背包圖案為「當心兒童」（M0514）；單人手持提袋走斑馬線為「當心行人」（M0515）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第34條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>兩人上下平行單車為「雙向道」（M0582）；紅黃綠三色圓燈排列為「注意號誌」（M0516）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第23條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>「當心兒童」（M0514，大人牽背書包學童）與「當心行人」（M0515，單一成人大步走）易混淆。</li>
+      <li>「雙向道」（黃底三角內黑箭頭一上一下，M0582）與遵行之分流箭頭意義相異。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0429.png" alt="M0429" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0429</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0429）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>當心自行車</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0509.png" alt="M0509" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0509</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0509）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>岔路</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0510.png" alt="M0510" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0510</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0510）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>岔路</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0511.png" alt="M0511" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0511</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0511）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>岔路</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0513.png" alt="M0513" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0513</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0513）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>當心台車</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0514.png" alt="M0514" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0514</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0514）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>當心兒童</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0515.png" alt="M0515" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0515</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0515）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>當心行人</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0516.png" alt="M0516" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0516</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0516）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>注意號誌</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0582.png" alt="M0582" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0582</span>
+        <span>轉彎（左右轉、迴轉）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0582）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>雙向道</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-warning-crossing-users" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-warning-crossing-users" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-construction-detour" data-gname="施工與改道管制標誌">
+  <div class="group-header">
+    <h2 class="group-title">施工與改道管制標誌 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(6 題)</small></h2>
+    <span class="group-id">CMP-construction-detour</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>施工標誌以橙色（橘色）或黃色為底色，搭配工人和路面封閉符號。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第138條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>長方形白底黑字紅反光邊或橘底黑字，標示「道路施工」（M0731）或「道路封閉」（M0586）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第142條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>斜向紅白或黑黃斑馬斜紋箭頭指示「車輛改道」（M0732）或左右道封閉（M0729、M0730）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第141條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>「道路封閉」（全路段禁止通行，M0586）與單一車道封閉（左道封閉 M0729 / 右道封閉 M0730）通行權限不同。</li>
+      <li>「指示改道方向」（M0585，藍底白字箭頭）與臨時工地之「車輛改道」（M0732，紅黑箭頭牌）適用場景不同。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0585.png" alt="M0585" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0585</span>
+        <span>轉彎（左右轉、迴轉）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0585）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>指示改道方向</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0586.png" alt="M0586" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0586</span>
+        <span>轉彎（左右轉、迴轉）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0586）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>道路封閉</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0729.png" alt="M0729" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0729</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0729）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>左道封閉</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0730.png" alt="M0730" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0730</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0730）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>右道封閉</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0731.png" alt="M0731" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0731</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0731）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>道路施工</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0732.png" alt="M0732" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0732</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0732）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車輛改道</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-construction-detour" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-construction-detour" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-railway-crossings" data-gname="鐵路平交道警告與設備標誌">
+  <div class="group-header">
+    <h2 class="group-title">鐵路平交道警告與設備標誌 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(6 題)</small></h2>
+    <span class="group-id">CMP-railway-crossings</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>柵欄柵門圖案為「有柵門鐵路平交道」（M0447）；蒸氣火車頭圖案為「無柵門鐵路平交道」（M0446）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第13條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>交叉叉形標誌下方加一閃電符號為「單線電化鐵路平交道」（M0442），加二道倒V線為「雙線以上」（M0417）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第13條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>遇平交道警鈴響起、閃光號誌閃爍或遮斷器放下，一律必須停止於停止線前，故障應按「推、按、跑」應變。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第104條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>畫有柵門圖案（M0447）是「有」柵門，畫蒸氣火車頭（M0446）是「無」柵門，常被直覺誤認。</li>
+      <li>電化鐵路平交道交叉牌下方的標線：一道尖角橫線為單線（M0442），二道尖角橫線為雙線以上（M0417）。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0417.png" alt="M0417" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0417</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0417）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>雙線以上電化鐵路平交道</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0442.png" alt="M0442" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0442</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0442）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>單線電化鐵路平交道</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0446.png" alt="M0446" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0446</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0446）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>無柵門鐵路平交道</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0447.png" alt="M0447" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0447</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0447）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>有柵門鐵路平交道</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S055.jpg" alt="S055" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S055</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛比較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>應減速並停止於平交道遮斷器前</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S089.jpg" alt="S089" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S089</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，在平交道發生車輛故障時，處理順序為何？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>C→B→A</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-railway-crossings" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-railway-crossings" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-traffic-signals" data-gname="行車號誌與特種號誌">
+  <div class="group-header">
+    <h2 class="group-title">行車號誌與特種號誌 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(11 題)</small></h2>
+    <span class="group-id">CMP-traffic-signals</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>行車管制號誌為紅、黃、綠三色；圓形綠燈得直行、左右轉，箭頭綠燈僅准依箭頭所指方向行駛。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第207條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>特種閃光紅燈表示「停車再開」，車輛應停止於停止線前確認安全後開；閃光黃燈表示「減速接近，小心通過」。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第211條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>站立紅人為禁止行人通行（M0522），行走綠人為准許行人通行；車輛遇黃燈未過停止線應減速煞停（S021）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第212條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>閃光紅燈（M0428）與閃光黃燈（M0521）在路口處的停讓義務不同：紅燈必須「煞停再開」，黃燈僅需「減速小心」。</li>
+      <li>圓形綠燈亮起時可左右轉（需讓直行車），但專用箭頭綠燈亮時不可違背箭頭動向（S090、S091）。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0428.png" alt="M0428" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0428</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0428）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>特種閃光紅燈號誌</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0520.png" alt="M0520" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0520</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0520）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>行車管制號誌</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0521.png" alt="M0521" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0521</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0521）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>特種閃光黃燈號誌</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0522.png" alt="M0522" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0522</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0522）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>行人專用號誌</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0523.png" alt="M0523" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0523</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0523）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>行人穿越道號誌</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0592.png" alt="M0592" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0592</span>
+        <span>轉彎（左右轉、迴轉）</span>
+      </div>
+      <div class="member-qtext">本號誌是：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車道管制號誌，表示本車道封閉</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S021.jpg" alt="S021" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S021</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人的行駛方式何者容易發生危險？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>雖尚未通過停止線，但仍可加速前行通過路口</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S090.jpg" alt="S090" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S090</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何安全行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>開啟頭燈，駛入Y車道</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S091.jpg" alt="S091" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S091</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">圖中A、B機車駕駛人依據號誌燈號，誰可直行或右轉行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S092.jpg" alt="S092" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S092</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何安全行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>注意汽車動向，減速通過</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S106.jpg" alt="S106" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S106</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何安全行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>減速慢行，避免因視野死角造成危險</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-traffic-signals" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-traffic-signals" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-road-longitudinal-lines" data-gname="道路標線：縱向分向線與邊線（實線 vs 虛線、黃線 vs 紅線）">
+  <div class="group-header">
+    <h2 class="group-title">道路標線：縱向分向線與邊線（實線 vs 虛線、黃線 vs 紅線） <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(9 題)</small></h2>
+    <span class="group-id">CMP-road-longitudinal-lines</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>黃色標線分隔對向車流（分向線），白色標線分隔同向車道或指示路面邊線。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第149條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>雙黃實線（分向限制線，M0724）絕對禁止跨越、迴車或超車；黃虛線（行車分向線，M0721）得超車但應注意安全。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第165條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>路面邊緣黃實線為禁止停車線（夜間可臨時停車，M0720）；紅實線為禁止臨時停車線（全天禁止停放與臨停，M0725）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第168條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>「路面邊線」（15公分寬白實線，外側為路肩）與「車道分界線」（10公分白實線）寬度不同但外觀相似（M0425）。</li>
+      <li>黃虛線可暫時超車跨越，單黃實線（禁止超車線）與雙黃實線（分向限制線）均絕對不得跨越。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0119.png" alt="M0119" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0119</span>
+        <span>禁止不當行為（酒駕、不使用手機、危險駕駛）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0119）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>匝道會車</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0120.png" alt="M0120" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0120</span>
+        <span>禁止不當行為（酒駕、不使用手機、危險駕駛）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0120）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>匝道會車</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0425.png" alt="M0425" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0425</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">圖中最外側的路面邊線與車道線中間的白色實線為何種標線？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>快慢車道分隔線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0589.png" alt="M0589" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0589</span>
+        <span>轉彎（左右轉、迴轉）</span>
+      </div>
+      <div class="member-qtext">圖中白色虛線為：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>路口行車導引線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0720.png" alt="M0720" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0720</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">圖中黃色實線是指：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止停車線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0721.png" alt="M0721" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0721</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0721）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>行車分向線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0723.png" alt="M0723" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0723</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">圖中白色虛線是指：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車道線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0724.png" alt="M0724" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0724</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">圖中黃色雙實線是指：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>雙向禁止超車線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0725.png" alt="M0725" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0725</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">圖中紅色實線是指：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止臨時停車線</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-road-longitudinal-lines" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-road-longitudinal-lines" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-road-markings-transverse" data-gname="道路標線：橫向停止線、斑馬紋與路面標記">
+  <div class="group-header">
+    <h2 class="group-title">道路標線：橫向停止線、斑馬紋與路面標記 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(12 題)</small></h2>
+    <span class="group-id">CMP-road-markings-transverse</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>路口橫向白色粗實線為「停止線」，車輛紅燈或遇停標字時應停止於線後（M0526）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第174條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>枕木紋（平行於道路行向粗白實線條）為行人穿越道線（M0728）；白色倒三角形為「讓路標線」（M0726）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第186條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>黃色網狀線指示路口或特殊出入口禁止臨時停車保持淨空（M0426）；斜紋線為槽化線（M0525）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第173條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>「讓路標線」（白色倒三角形，M0726）與「停止線」（白色長條粗實線）的停等強制程度與路權順位不同。</li>
+      <li>路口白色方框內有機車圖案為「機車停等區」（S022）或「機慢車左轉待轉區」（M0727），停等位置有別。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0418.png" alt="M0418" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0418</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0418）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車輛停放線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0424.png" alt="M0424" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0424</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">機車駕駛人如果在道路上發現圖中的橫向標線時，應該如何反應？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>減速慢行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0426.png" alt="M0426" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0426</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">圖中路口交叉型標線是？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>對角線行人穿越道線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0427.png" alt="M0427" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0427</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">圖中白色箭頭是</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車道縮減標線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0524.png" alt="M0524" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0524</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0524）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>路寬變更線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0525.png" alt="M0525" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0525</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">圖中斜紋是指：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>斑馬紋行人穿越道線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0526.png" alt="M0526" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0526</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">圖中橫向白色實線是指：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>停止線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0722.png" alt="M0722" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0722</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0722）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>近障礙物線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0726.png" alt="M0726" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0726</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">圖中白色倒三角形標線是指：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>讓路線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0727.png" alt="M0727" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0727</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">(</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>近鐵路平交道線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0728.png" alt="M0728" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0728</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0728）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>枕木紋行人穿越道線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S022.jpg" alt="S022" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S022</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應停於圖中何處？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A區</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-road-markings-transverse" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-road-markings-transverse" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-route-numbers" data-gname="指示標誌：公路編號與系統識別">
+  <div class="group-header">
+    <h2 class="group-title">指示標誌：公路編號與系統識別 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(6 題)</small></h2>
+    <span class="group-id">CMP-route-numbers</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>綠底梅花形內標數字為「國道路線編號」（M0413）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第85條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>藍底盾形為「一般省道」（M0412）；紅底藍框盾形為「快速公路之省道路線」（M0414）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第86條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>白底長方形黑框為「市道、縣道路線編號」（M0415）；白底長方形黑字標示地名簡稱加數字為「區道、鄉道」（M0416）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第88條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>一般省道（純藍盾牌，M0412）與省道快速公路（紅底藍框盾牌，M0414）牌面色彩不同、路權規定不同。</li>
+      <li>市縣道（白底純數字方牌，M0415）與區鄉道（方牌上方有中文地名簡稱如『中市41』，M0416）外框辨認。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0412.png" alt="M0412" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0412</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0412）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>省道路線編號</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0413.png" alt="M0413" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0413</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0413）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>國道路線編號</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0414.png" alt="M0414" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0414</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0414）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>快速公路之省道路線編號</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0415.png" alt="M0415" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0415</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0415）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>市、縣道路線編號</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0416.png" alt="M0416" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0416</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0416）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>區、鄉道路線編號標誌</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0747.png" alt="M0747" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0747</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0747）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>里程牌</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-route-numbers" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-route-numbers" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-guide-signs" data-gname="指示標誌：方向、里程與車道指引">
+  <div class="group-header">
+    <h2 class="group-title">指示標誌：方向、里程與車道指引 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(7 題)</small></h2>
+    <span class="group-id">CMP-guide-signs</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>綠底白字指示標誌用以指引行車動向、地名與剩餘公里數（M0591、M0745）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第118條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>車道預告標誌上方標示不同車道指引之地名或公路路線（M0421、M0443）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第121條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>藍底白圖紅色長條橫槓置於路口末端為「此路不通」（M0519）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第134條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>「地名里程指示」（綠底標示前方各地名與公里數，M0591）與路口轉彎處之「方向里程」（帶有箭頭指向，M0745）。</li>
+      <li>「車道預告」（M0421）係於接近路口前提示各車道未來行向，應提早打方向燈變換車道。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0421.png" alt="M0421" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0421</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0421）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車道預告</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0443.png" alt="M0443" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0443</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0443）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>車道指示</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0519.png" alt="M0519" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0519</span>
+        <span>路口安全（有號誌路口、無號誌路口、停讓行人）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0519）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>此路不通</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0590.png" alt="M0590" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0590</span>
+        <span>轉彎（左右轉、迴轉）</span>
+      </div>
+      <div class="member-qtext">本標誌為：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>地名方向指示</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0591.png" alt="M0591" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0591</span>
+        <span>轉彎（左右轉、迴轉）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0591）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>地名里程指示</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0745.png" alt="M0745" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0745</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0745）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>方向里程指示</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0746.png" alt="M0746" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0746</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">本標誌為高速公路指引標誌，用以指引：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>一般道路 之車輛駛往高速公路交流道</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-guide-signs" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-guide-signs" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-public-facilities" data-gname="指示標誌：服務設施與車站人行設施">
+  <div class="group-header">
+    <h2 class="group-title">指示標誌：服務設施與車站人行設施 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(9 題)</small></h2>
+    <span class="group-id">CMP-public-facilities</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>藍底正方形白色圖案指示各項公共運輸與旅客服務設施。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第125條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>正方形藍底白「P」為停車處（M0419）；白底紅十字為救護站（M0072）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第127條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>火車頭圖案為鐵路車站（M0431）；子彈型列車圖案為高鐵車站（M0748）；捷運標誌為捷運車站（M0740）。</span>
+      <span class="source-tag external">法規依據：道路交通標誌標線號誌設置規則第126條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>台鐵車站（傳統車廂/蒸汽圖案，M0431）與高鐵車站（流線型車頭，M0748）圖案車型外觀差異。</li>
+      <li>人行天橋（走在階梯橋上，M0749）與人行地下道（走在階梯往下，M0420）之行走方向箭頭。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0072.png" alt="M0072" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0072</span>
+        <span>事故預防及處理</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0072）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>救護站</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0419.png" alt="M0419" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0419</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0419）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>停車處</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0420.png" alt="M0420" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0420</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0420）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>人行地下道</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0430.png" alt="M0430" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0430</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0430）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>港埠</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0431.png" alt="M0431" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0431</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0431）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>鐵路車站</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0432.png" alt="M0432" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0432</span>
+        <span>平交道、強制險、環保駕駛、特殊天候、駕駛道德</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0432）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>公路汽車客運車站或轉運站</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0740.png" alt="M0740" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0740</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0740）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>捷運車站</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0748.png" alt="M0748" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0748</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0748）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>高速鐵路車站</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/M0749.png" alt="M0749" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">M0749</span>
+        <span>行駛中應注意事項（保持安全車距、注意前車狀況）</span>
+      </div>
+      <div class="member-qtext">標誌/號誌辨認（題號 M0749）</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>人行天橋</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-public-facilities" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-public-facilities" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-scenario-safety-gear" data-gname="情境題：安全裝備、穿著規範與乘載規定">
+  <div class="group-header">
+    <h2 class="group-title">情境題：安全裝備、穿著規範與乘載規定 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(9 題)</small></h2>
+    <span class="group-id">CMP-scenario-safety-gear</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>機車駕駛人及附載座人均應配戴合格安全帽，繫緊頤帶且帽體不可鬆脫遮蔽視線。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第88-2條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>機車後座乘客必須跨坐並抓緊駕駛人或握把，不得側坐或站立踏板；普通輕型與重型機車最多附載1人。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第88條</span>
+    </li>
+    <li class="principle-item">
+      <span>騎車時應穿著長袖長褲、包覆鞋款與防滑手套，切勿穿拖鞋、高跟鞋以防操作失靈及受傷（S003、S004）。</span>
+      <span class="source-tag">題庫出處：S003</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>安全帽「頤帶未扣緊」視同未戴安全帽，摔倒時安全帽易脫落失去保護（S001、S002）。</li>
+      <li>機車腳踏板不得載運寵物或堆疊過高貨物以致影響轉向手把靈活性（S065、S066）。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S001.jpg" alt="S001" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S001</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，哪一位駕駛人配戴機車安全帽才「正確」？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>C</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S002.jpg" alt="S002" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S002</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，違反下列哪項規定？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>附載人數規定</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S003.jpg" alt="S003" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S003</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，有關機車載物寬度A何者「正確」？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>不超過機車的左右把手外緣各10公分</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S004.jpg" alt="S004" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S004</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，有關機車載物長度C何者「正確」？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>自後輪輪軸起不超過50公分</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S064.jpg" alt="S064" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S064</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，何者為正確之乘坐方式？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S065.jpg" alt="S065" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S065</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，何者為安全載運寵物的方式？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>C</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S066.jpg" alt="S066" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S066</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">圖中何者為安全載運貨物的方式？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>B</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S079.jpg" alt="S079" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S079</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，他們要回家，應該怎麼辦？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>搭乘大眾運輸工具或親友接送</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S102.jpg" alt="S102" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S102</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，天氣寒冷時，機車駕駛人的行為何種方式安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-scenario-safety-gear" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-scenario-safety-gear" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-scenario-pretrip-tires" data-gname="情境題：出發前檢查、胎壓胎紋與燈光設備">
+  <div class="group-header">
+    <h2 class="group-title">情境題：出發前檢查、胎壓胎紋與燈光設備 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(7 題)</small></h2>
+    <span class="group-id">CMP-scenario-pretrip-tires</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>行車前應檢查機車煞車、方向燈、尾燈、照後鏡及胎紋深度（法定胎紋深度不得低於0.8mm）。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第39-2條</span>
+    </li>
+    <li class="principle-item">
+      <span>胎面磨耗指示點（對齊胎壁小三角形凸起點）若磨平應立即更換輪胎以防雨天打滑水漂（S061）。</span>
+      <span class="source-tag">題庫出處：S061</span>
+    </li>
+    <li class="principle-item">
+      <span>胎壓過低易耗油磨損胎邊，胎壓過高著地面積減小易滑倒，應維持原廠標準胎壓（S120）。</span>
+      <span class="source-tag">題庫出處：S120</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>胎紋磨損到「磨耗指示標誌」（凸起平齊處）就是法定更換時限，並非等輪胎全光才能換。</li>
+      <li>方向燈必須為橙色/黃色，尾燈與煞車燈必須為紅色，不得擅自改裝其他顏色（S067、S068）。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S061.jpg" alt="S061" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S061</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，行車前的輪胎檢查內容為何？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>以上皆是</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S062.jpg" alt="S062" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S062</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">機車駕駛人於騎乘機車前應做那些檢查？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>行車前，應檢查輪胎、燈光、喇叭、煞車及油料，以確保行車安全</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S063.jpg" alt="S063" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S063</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">機車排氣管的設備何者正確？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S067.jpg" alt="S067" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S067</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，方向燈的顏色，何者正確？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>橙色</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S068.jpg" alt="S068" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S068</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，哪輛機車尾燈的燈光符合規定？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>C</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S119.jpg" alt="S119" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S119</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，當機車故障時，駕駛人應該如何處理？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S120.jpg" alt="S120" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S120</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，哪個輪胎之胎壓是正常的？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>Ｃ</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-scenario-pretrip-tires" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-scenario-pretrip-tires" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-scenario-blindspots-inner-wheel" data-gname="情境題：大型車視野死角與內輪差防禦">
+  <div class="group-header">
+    <h2 class="group-title">情境題：大型車視野死角與內輪差防禦 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(11 題)</small></h2>
+    <span class="group-id">CMP-scenario-blindspots-inner-wheel</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>大型車轉彎時後輪軌跡較前輪更向內偏移，形成「內輪差」危險區域，機車切勿在轉彎內側鑽縫或併行。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>大型車車身四周（尤其是右前側及正後方）存在龐大視野死角，機車駕駛應與大型車保持足夠安全間隔。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第94條</span>
+    </li>
+    <li class="principle-item">
+      <span>大型車行駛中產生強大側向氣流氣壓，機車在旁易受強風吸附或吹翻，應避免與其長時間併行（S016）。</span>
+      <span class="source-tag">題庫出處：S016</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>車輛越長、軸距越大，其內輪差範圍越大，即使大型車前輪已過，後輪仍可能輾壓路肩。</li>
+      <li>機車在大型車照後鏡死角內時駕駛完全看不見，切勿誤以為對方看到自己而硬衝（S008～S015）。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S008.jpg" alt="S008" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S008</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，當騎機車並行於汽車的左側或右側時，要注意圖中哪些區域，以免因視野死角而發生事故？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A、E</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S009.jpg" alt="S009" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S009</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，當汽車要左轉時，後方的機車駕駛人要特別小心，是因為汽車駕駛人看不到圖中哪個區域?</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S010.jpg" alt="S010" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S010</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，當汽車要右轉時，後方的機車駕駛人要特別小心，是因為汽車駕駛人看不到圖中哪個區域?</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>E</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S011.jpg" alt="S011" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S011</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，大型車右轉時，機車駕駛人應避免進入的內輪差範圍為何？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>B區域</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S012.jpg" alt="S012" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S012</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，騎乘機車右轉彎時，應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>靠邊暫停於A處，待大型車轉彎後再行轉彎</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S013.jpg" alt="S013" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S013</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛較安全？
+A.大型車駕駛座較高，前方有視野死角，機車駕駛人應避免騎在前方。
+B.機車駕駛人要與大型車輛保持一段安全距離與間隔。
+C.立即煞車，等大型車通過後再行駛。
+D.搶快超前轉彎。</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A、B</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S014.jpg" alt="S014" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S014</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>放慢車速，遠離並避讓大型車先行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S015.jpg" alt="S015" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S015</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛較能確保行車安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>應先放鬆油門減速行駛，以免在轉彎時失控</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S016.jpg" alt="S016" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S016</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛較能確保行車安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>保持適當速度</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S017.jpg" alt="S017" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S017</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛較能確保行車安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>應把車頭逐漸轉正，安全確認沒問題後，即可加速前進</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S117.jpg" alt="S117" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S117</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，哪一區域對機車駕駛人潛藏道路風險？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-scenario-blindspots-inner-wheel" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-scenario-blindspots-inner-wheel" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-scenario-pedestrian-crosswalk" data-gname="情境題：斑馬線停讓行人與安全距離">
+  <div class="group-header">
+    <h2 class="group-title">情境題：斑馬線停讓行人與安全距離 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(11 題)</small></h2>
+    <span class="group-id">CMP-scenario-pedestrian-crosswalk</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>汽車行經行人穿越道有行人穿越時，無論有無號誌，均應暫停讓行人先行通過。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第103條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>車輛行近行人穿越道時，應距離行人行進方向 3 公尺（約 1 個車道寬或約 3 條枕木紋）以上完全煞停。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第103條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>遇攜帶白手杖之視障者或導盲犬穿越道路時，應全面停讓並保持耐心，不得鳴按喇叭催促（S035）。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第103條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>綠燈轉彎車輛即使號誌允許通行，面對斑馬線上的行人仍處於絕對從屬地位，必須完全停讓（S018、S019）。</li>
+      <li>停讓行人必須「完全停車」等候通過，不得以慢速滑行逼近行人試圖搶先穿過。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S018.jpg" alt="S018" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S018</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人右轉時應如何行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>停車並讓行人優先通過，待行人穿越後再行駛</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S019.jpg" alt="S019" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S019</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>仍應停於A區，讓行人優先通過</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S030.jpg" alt="S030" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S030</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人若發現前方汽車車速過慢，是否可超車？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>可以自前方車輛的左側超車</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S031.jpg" alt="S031" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S031</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人若發現前方汽車車速過慢，是否可超車？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>不可以</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S032.jpg" alt="S032" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S032</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，下列哪個敘述較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>機車應讓汽車先行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S033.jpg" alt="S033" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S033</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，為何機車應讓汽車先行？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>支道車應讓幹道車先行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S034.jpg" alt="S034" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S034</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>應先暫停並左右擺頭查看，等汽車通過後再繼續通行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S035.jpg" alt="S035" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S035</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>機車行至路口時應減速接近，並小心通過路口</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S036.jpg" alt="S036" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S036</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>減速並暫停，讓汽車先行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S037.jpg" alt="S037" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S037</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>減速慢行，應左右擺頭查看兩側是否有來車再通行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S038.jpg" alt="S038" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S038</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人在狹窄道路中，應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>機車駕駛人應停靠於路旁，讓汽車優先通行</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-scenario-pedestrian-crosswalk" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-scenario-pedestrian-crosswalk" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-scenario-overtaking-safety" data-gname="情境題：安全超車原則與禁止超車地點">
+  <div class="group-header">
+    <h2 class="group-title">情境題：安全超車原則與禁止超車地點 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(12 題)</small></h2>
+    <span class="group-id">CMP-scenario-overtaking-safety</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>超車應一律由「左側」超越，並於超車前保持安全距離打左方向燈、鳴喇叭或變換燈光預告。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第101條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>超車時與前車左側應保持半公尺（50公分）以上間隔，超越後確認安全距離再行打右方向燈駛回原車道。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第101條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>在彎道、險坡、狹橋、隧道、交岔路口及設有禁止超車標誌標線（雙黃線/單黃實線）處，絕對禁止超車。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第101條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>右側路肩或外側鑽縫超車屬於嚴重違規行為，超車法定途徑一律僅限左側（S040、S082）。</li>
+      <li>前方車輛已打方向燈顯示左轉或正在超車時，後行車輛不得強行超越（S044、S045）。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S029.jpg" alt="S029" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S029</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人若發現前方汽車車速過慢，是否可超車？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>不可以</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S039.jpg" alt="S039" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S039</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，若機車欲減速，機車駕駛人應如何操作煞車較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>以前輪煞車為主，後輪煞車為輔進行操作</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S040.jpg" alt="S040" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S040</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人遇突然迴轉之汽車，應如何操作煞車較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>應立即放鬆油門，並同時使用前後煞車，一次完成煞車動作</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S041.jpg" alt="S041" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S041</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>應讓圓環內的車輛先行通過，再進入圓環</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S042.jpg" alt="S042" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S042</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，B車與A車同時要通過路口時，B車應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>停車並讓A車優先通行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S043.jpg" alt="S043" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S043</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，汽、機車同時行經此路段時，機車駕駛人應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>減速並讓汽車優先通行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S044.jpg" alt="S044" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S044</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人在此環境中，應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>因路面濕滑，應減速慢行且要與前車保持更長的安全距離</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S045.jpg" alt="S045" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S045</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應該如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>減速並與路邊車輛保持一個車門以上的間隔</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S046.jpg" alt="S046" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S046</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>前方視野死角處，應減速慢行並隨時注意車前狀況</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S059.jpg" alt="S059" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S059</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人是否可以變換車道超車？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>不可以</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S082.jpg" alt="S082" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S082</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何正確超越前車？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>顯示左方向燈並與前車左側保持半公尺以上之間隔</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S083.jpg" alt="S083" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S083</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人在哪個區域可跨越分向線超車？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>Ｃ</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-scenario-overtaking-safety" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-scenario-overtaking-safety" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-scenario-lane-restrictions" data-gname="情境題：車道選擇與禁行機車路段">
+  <div class="group-header">
+    <h2 class="group-title">情境題：車道選擇與禁行機車路段 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(8 題)</small></h2>
+    <span class="group-id">CMP-scenario-lane-restrictions</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>機車行駛時應遵守車道管制規定，路面劃有「禁行機車」字樣之車道絕對禁止進入行駛。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第99條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>未劃分快慢車道之單行道，機車應在最外側車道或慢車道行駛，不得佔用內側快車道。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第98條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>同向劃有三車道以上之道路，最內側車道除另有規定外通常劃設禁行機車，機車應行駛於外側或中側車道。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第99條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>看路面字樣（禁行機車）判定車道權限（S023、S024、S025），不可因前方車多而騎上禁行機車道。</li>
+      <li>跨越雙白實線或分向限制線進入禁行車道超車屬於連續違規行為（S073、S074）。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S023.jpg" alt="S023" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S023</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車不可行駛在哪一個車道上？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A車道</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S024.jpg" alt="S024" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S024</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車不可行駛在哪一個車道上？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A車道</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S025.jpg" alt="S025" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S025</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車不可行駛在哪一個車道上？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>C車道</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S073.jpg" alt="S073" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S073</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示中標誌，機車駕駛人違反什麼規定？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>未依遵行之方向行駛</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S074.jpg" alt="S074" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S074</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人的行駛方式何者錯誤？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>C</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S075.jpg" alt="S075" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S075</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何安全行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>減速慢行，並做隨時停車之準備</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S076.jpg" alt="S076" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S076</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人的行為何者錯誤？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>猛按喇叭後直接搶先轉彎</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S086.jpg" alt="S086" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S086</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">機車駕駛人行經圖中路段，何者正確？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>應減速慢行，並依速限標誌指示行駛</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-scenario-lane-restrictions" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-scenario-lane-restrictions" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-scenario-turning-two-stage" data-gname="情境題：轉彎車道、方向燈預告與兩段式左轉">
+  <div class="group-header">
+    <h2 class="group-title">情境題：轉彎車道、方向燈預告與兩段式左轉 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(9 題)</small></h2>
+    <span class="group-id">CMP-scenario-turning-two-stage</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>路口設有兩段左轉標誌或最內側為禁行機車道路口，機車左轉必須依兩段式規定於待轉區待轉。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第99條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>汽車轉彎或變換車道前，應至少於交岔路口 30 公尺前顯示方向燈預告。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>在無禁行機車及兩段轉彎規定之雙向兩車道路口，機車欲左轉應提早換入內側車道至路口中心處再左轉（S027）。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>前往兩段式待轉區時，應顯示「右方向燈」順行靠外側減速進入待轉格，切勿直接從內側鬼切切入（S026）。</li>
+      <li>在待轉格內需轉向端正等待橫向綠燈再通行，待轉期間不可擅自左轉衝出（S049、S050）。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S026.jpg" alt="S026" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S026</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，普通重型機車駕駛人「Y」兩段式左轉從A區行駛至B待轉區時，該如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>需顯示右方向燈，先變換至外側車道後，再行駛至B區</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S027.jpg" alt="S027" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S027</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，「X」機車駕駛人若想要左轉，應該如何行駛較安全?</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>應距交岔路口30公尺前顯示左轉方向燈，換入內側車道，行駛到交岔路口中心處，確認對向來車安全無誤再左轉</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S028.jpg" alt="S028" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S028</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，「X」機車駕駛人若想要右轉，應該如何行駛較安全?</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>應距交岔路口30公尺前顯示右轉方向燈，慢慢換入外側車道，行駛到路口後再右轉</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S047.jpg" alt="S047" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S047</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，騎機車行經圖中巷口時，應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>減速並觀察反射鏡，以及擺頭查看左方是否有來車</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S048.jpg" alt="S048" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S048</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，圖中機車駕駛人可以左轉進入巷口嗎？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>不可以</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S049.jpg" alt="S049" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S049</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，圖中巷口裝設反射鏡的主要用意為何？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>機車駕駛人可利用反射鏡觀察巷道來車狀況</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S050.jpg" alt="S050" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S050</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>應立即靠右側避讓，讓救護車優先通行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S051.jpg" alt="S051" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S051</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>不論號誌為何，應立即避讓優先通行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S077.jpg" alt="S077" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S077</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車在前方路口欲右轉，應依哪條路線行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>C</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-scenario-turning-two-stage" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-scenario-turning-two-stage" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-scenario-intersection-priority" data-gname="情境題：路口路權順位與路口淨空">
+  <div class="group-header">
+    <h2 class="group-title">情境題：路口路權順位與路口淨空 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(6 題)</small></h2>
+    <span class="group-id">CMP-scenario-intersection-priority</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>路權判定順序：支線道車讓幹線道車先行；少線道車讓多線道車先行；轉彎車讓直行車先行。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>未劃分幹支線且車道數相同之路口，同為直行車或轉彎車時，左方車應讓右方車先行。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>前方路口車流壅塞或號誌即將變換時，即使本車道為綠燈，車輛仍不得強行駛入路口，應保持路口淨空（S020）。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第102條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>「轉彎車讓直行車」是通用鐵律，但若直行車在「支線道」面對閃紅燈/停讓標誌，則支道直行車必須讓幹道轉彎車先行。</li>
+      <li>路口壅塞時綠燈直行車不得進路口停在黃網線或路口中央，避免阻礙橫向通行（S020）。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S020.jpg" alt="S020" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S020</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人「X」直行時，應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>仍應停於A區，待前方壅堵車流疏通後，再通過路口</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S107.jpg" alt="S107" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S107</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人通過路口時，如何行駛較為安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>減速慢行，禮讓幼童專用車</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S108.jpg" alt="S108" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S108</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何安全行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>應讓外緣汽車優先通行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S109.jpg" alt="S109" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S109</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，兩車進入同一車道，何者應該先行？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A車先行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S110.jpg" alt="S110" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S110</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">機車駕駛人行經路口處如何安全行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>減速慢行，注意違規車輛之動向</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S111.jpg" alt="S111" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S111</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，請排列優先路權的順序：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>C→B→A</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-scenario-intersection-priority" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-scenario-intersection-priority" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-scenario-curves-speed-slopes" data-gname="情境題：彎道與坡道行駛安全技巧">
+  <div class="group-header">
+    <h2 class="group-title">情境題：彎道與坡道行駛安全技巧 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(6 題)</small></h2>
+    <span class="group-id">CMP-scenario-curves-speed-slopes</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>行經彎道、坡道應於「入彎前」提早減速，在彎道中切忌緊急猛煞車或劇烈傾斜以免輪胎打滑失控。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第93條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>在狹窄坡道會車時，下坡車應暫停讓上坡車先行；但下坡車已到中途而上坡車尚未上坡者，上坡車應讓下坡車先行。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第100條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>彎道行駛視線受阻，對向可能隨時有車輛侵入，應隨時靠右行駛、保持車距、禁止超車（S072、S087）。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第101條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>坡道會車「原則上上坡車優先」，但例外是「下坡車已開到中途」時上坡車應先讓行。</li>
+      <li>進彎前減速（慢進快出），切勿於彎中高速時才抓前煞車造成側摔（S053）。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S053.jpg" alt="S053" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S053</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>要先減速行駛，以免在轉彎時失控滑倒</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S072.jpg" alt="S072" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S072</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人行經彎道，何者行為正確？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>B駕駛人減速慢行，不超車，避免車速過快衝入對向車道</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S087.jpg" alt="S087" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S087</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人A，發現違規車輛，應如何安全行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>注意機車動向，減速通過</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S088.jpg" alt="S088" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S088</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">圖中哪位機車駕駛人之行為錯誤？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S104.jpg" alt="S104" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S104</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何安全行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>注意前方車輛，適當減速因應</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S105.jpg" alt="S105" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S105</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何安全行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>確認道路狀況或改道行駛</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-scenario-curves-speed-slopes" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-scenario-curves-speed-slopes" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-scenario-slippery-surfaces" data-gname="情境題：低摩擦路面防滑（人孔蓋、鐵板、油污、雨天標線）">
+  <div class="group-header">
+    <h2 class="group-title">情境題：低摩擦路面防滑（人孔蓋、鐵板、油污、雨天標線） <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(7 題)</small></h2>
+    <span class="group-id">CMP-scenario-slippery-surfaces</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>人孔蓋、金屬鐵板、路面油污及潮濕標線之摩擦係數極低，輪胎極易打滑失去抓地力。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第93條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>行經低摩擦特殊路面時，應「保持車身正直、鬆開油門順向滑過」，切忌緊急煞車、劇烈壓車或急催油門。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第94條</span>
+    </li>
+    <li class="principle-item">
+      <span>雨天行車應加大跟車安全距離一倍以上，提早減速預警，避免積水水漂現象（S057、S094）。</span>
+      <span class="source-tag">題庫出處：S057</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>看見鐵板或人孔蓋，許多人直覺在蓋上大力煞車，這反而正是摔車最主要主因，應在接觸前完成減速。</li>
+      <li>雨天標線（斑馬線、車道線）潮濕時抓地力減半，轉彎時輪胎應盡量避開油漆標線表面（S056、S058）。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S056.jpg" alt="S056" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S056</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人轉彎行經此路面時，應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>應盡量避開或減速慢行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S057.jpg" alt="S057" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S057</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，下雨天行經此標線時，應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>行駛時應盡量避開</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S058.jpg" alt="S058" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S058</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人行經此路面時，應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>應盡量避開或減速慢行</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S094.jpg" alt="S094" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S094</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>減速後顯示左方向燈，察看照後鏡，確認無來車後，變換至鄰近車道</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S095.jpg" alt="S095" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S095</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人發現人孔蓋時應如何應變？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>放鬆油門，穩握把手</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S096.jpg" alt="S096" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S096</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>顯示左方向燈，並察看有無來車再變換車道，行駛Y路線</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S097.jpg" alt="S097" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S097</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人在此環境中，應如何安全行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>B</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-scenario-slippery-surfaces" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-scenario-slippery-surfaces" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-scenario-braking-door-safety" data-gname="情境題：緊急煞車與路邊車輛開門防禦（一公尺間隔）">
+  <div class="group-header">
+    <h2 class="group-title">情境題：緊急煞車與路邊車輛開門防禦（一公尺間隔） <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(5 題)</small></h2>
+    <span class="group-id">CMP-scenario-braking-door-safety</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>機車煞車操作應前後輪同時均勻施力（前煞約7成、後煞約3成），維持車身穩定，避免單鎖死前輪後摔。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第94條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>行經路邊停放之汽車旁時，應隨時注意車內有無乘員，並保持 1 公尺以上安全間隔，以防突開車門肇事。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第112條</span>
+    </li>
+    <li class="principle-item">
+      <span>前方突遇緊急障礙物煞車之反應順序：鬆油門 -> 前後輪同時煞車 -> 抓緊龍頭保持直線平衡（S078）。</span>
+      <span class="source-tag">題庫出處：S078</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>單用前輪煞車易導致翻車（翹後輪或側滑），單用後輪煞車煞車距離過長且後輪易甩尾打滑。</li>
+      <li>路邊汽車即使未發動，乘員開車門盲區極大，機車保持一公尺距離可完全免於被車門撞擊（S005～S007）。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S005.jpg" alt="S005" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S005</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，三角形「△」標記代表何意義？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>尋找「輪胎胎面磨耗指示平台」位置的導引記號</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S006.jpg" alt="S006" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S006</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車輪胎之紅色圈選處，代表的意義為何?</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>輪胎胎面之「磨耗指示平台」，若輪胎溝紋磨耗到此點時，就應更換輪胎</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S007.jpg" alt="S007" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S007</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，當機車直行時，哪些區域是駕駛人無法利用照後鏡看見的視野範圍？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A、C、E</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S054.jpg" alt="S054" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S054</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人行駛時遇前方狀況，應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>應減速停車，不要強行超越</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S078.jpg" alt="S078" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S078</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人遇障礙物煞車時，反應順序為何？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>B→A→C</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-scenario-braking-door-safety" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-scenario-braking-door-safety" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-scenario-night-headlights" data-gname="情境題：夜間行駛、燈光切換與視線不良應對">
+  <div class="group-header">
+    <h2 class="group-title">情境題：夜間行駛、燈光切換與視線不良應對 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(5 題)</small></h2>
+    <span class="group-id">CMP-scenario-night-headlights</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>夜間、行經隧道、濃霧、雨雪或視線不清時，機車行駛應開亮頭燈。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第109條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>市區照明充足路段或與對向來車會車、跟隨前車時，應使用「近光燈」，嚴禁使用遠光燈造成眩光危險。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第109條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>遠光燈僅限於郊區無路燈或照明嚴重不足且前方無車輛時使用，遇來車應立即切換回近光燈（S085）。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第109條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>白晝正常天氣原則上不用強制開霧燈；但進入隧道或天候不良時必須強制開亮頭燈（S060、S099）。</li>
+      <li>夜間對向來車若開遠光燈造成眩光，切勿以遠光燈互照報復，應將視線移向右前方路面邊線並減速。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S060.jpg" alt="S060" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S060</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人操作方式何者「錯誤」?</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>依車道照明度，適時開亮頭燈</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S085.jpg" alt="S085" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S085</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人何時可開啟遠光燈？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>B</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S099.jpg" alt="S099" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S099</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何安全行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>依速限行駛，注意遵守標誌，並開亮頭燈</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S100.jpg" alt="S100" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S100</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人哪項行為錯誤？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>猛按鳴喇叭，加速行駛</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S101.jpg" alt="S101" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S101</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人之行為何者錯誤？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>加速繼續行駛通過</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-scenario-night-headlights" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-scenario-night-headlights" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-scenario-starting-parking" data-gname="情境題：起駛觀察、安全停車與視野車速">
+  <div class="group-header">
+    <h2 class="group-title">情境題：起駛觀察、安全停車與視野車速 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(7 題)</small></h2>
+    <span class="group-id">CMP-scenario-starting-parking</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>路邊起駛前應先打方向燈預告，轉頭觀察後方與左右來車狀況，確認安全後方可緩步起駛。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第89條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>臨時停車與停車應緊靠路邊停放，不得併排停車或在紅線、交岔路口 10 公尺內違規停放。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第111條</span>
+    </li>
+    <li class="principle-item">
+      <span>車速越快駕駛人之視野角度越狹窄（高速隧道效應），行經複雜路段應主動降低車速以擴大有效視野（S084）。</span>
+      <span class="source-tag">題庫出處：S084</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>起駛單看後照鏡存在盲區死角，必須配合「擺頭查看」才能確保無死角後方來車（S069）。</li>
+      <li>行車中手持使用行動電話通話或查看訊息屬違規行為且嚴重分心，應停妥於安全處再處理（S080、S081）。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S069.jpg" alt="S069" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S069</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何起駛才正確？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>顯示方向燈並擺頭察看前、後方，確認無行人及車輛後起駛</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S070.jpg" alt="S070" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S070</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人停車位置，何者正確？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>C</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S071.jpg" alt="S071" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S071</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車停放位置下列敘述何者正確？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>禁止臨時停車標線之左、右道路範圍內均不得停車</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S080.jpg" alt="S080" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S080</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">機車駕駛人行駛途中，手機鈴聲響起，應如何處理才正確？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S081.jpg" alt="S081" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S081</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，何種行為屬於違規？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>以上皆是</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S084.jpg" alt="S084" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S084</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，不同車速時之視野範圍，請依車速由慢至快排列：</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>B→C→A</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S093.jpg" alt="S093" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S093</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人遇到蜂群時，應如何安全行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>繞道或後退離開，避免動作過大</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-scenario-starting-parking" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-scenario-starting-parking" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<section class="group-card" data-gid="CMP-scenario-defensive-hazards" data-gname="情境題：突發路況、公車盲區與緊急避讓">
+  <div class="group-header">
+    <h2 class="group-title">情境題：突發路況、公車盲區與緊急避讓 <small style="font-size:0.9rem; font-weight:normal; color:#64748b;">(8 題)</small></h2>
+    <span class="group-id">CMP-scenario-defensive-hazards</span>
+  </div>
+
+  <div class="section-subtitle">💡 分辨原則（核心法規與出處依據）</div>
+  <ul class="principles-list">
+    <li class="principle-item is-external">
+      <span>聞消防車、救護車、警備車等特種緊急車輛警號，應立即避讓，向路側減速或停讓先行。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第101條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>行經無號誌盲點巷口或公車靠站時，應預判盲區可能突竄行人或車輛，減速慢行並備煞（S052、S113）。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第93條</span>
+    </li>
+    <li class="principle-item is-external">
+      <span>遇前方施工路段或障礙物，應提前減速循指示導引車道行駛，不強行爭道超車（S114、S118）。</span>
+      <span class="source-tag external">法規依據：道路交通安全規則第94條</span>
+    </li>
+  </ul>
+
+  <div class="section-subtitle">⚠️ 容易搞混之處（記憶對比重點）</div>
+  <div class="confusions-box">
+    <ul>
+      <li>公車剛停靠上下客時，後方機車硬從公車右側鑽車縫極度危險，易撞擊下車乘客或遭公車起步夾擊（S052）。</li>
+      <li>避讓救護車時應注意四周其他車流動向，切勿因緊急避讓反而與相鄰車輛發生碰撞。</li>
+    </ul>
+  </div>
+
+  <div class="section-subtitle">🖼️ 群組成員題目與正確答案</div>
+  <div class="members-grid">
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S052.jpg" alt="S052" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S052</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何行駛較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>等候公車駛離後再繼續行駛</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S098.jpg" alt="S098" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S098</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，何者行為較安全？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>B</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S103.jpg" alt="S103" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S103</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何安全行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>靠右行駛，避免爬坡的視野死角</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S113.jpg" alt="S113" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S113</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何安全行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>A</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S114.jpg" alt="S114" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S114</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何正確反應？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>不要強行超越，應減速慢行並做隨時停車之準備</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S115.jpg" alt="S115" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S115</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何處理？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>以上皆是</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S116.jpg" alt="S116" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S116</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，機車駕駛人應如何安全行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>注意前方車輛動態，小心變換車道，減速通過</div>
+    </div>
+    <div class="member-item">
+      <div class="member-img-wrap">
+        <img class="member-img" src="../media/images/S118.jpg" alt="S118" loading="lazy">
+      </div>
+      <div class="member-meta">
+        <span class="member-qid">S118</span>
+        <span>情境題</span>
+      </div>
+      <div class="member-qtext">依據圖示，當機車駕駛人遇此情形，應該如何行駛？</div>
+      <div class="member-answer"><strong>✓ 正確答案：</strong>應減速慢行，小心通過</div>
+    </div>
+  </div>
+
+  <div class="review-actions">
+    <label><input type="radio" name="CMP-scenario-defensive-hazards" value="ok" checked> ✓ 整組正確</label>
+    <label><input type="radio" name="CMP-scenario-defensive-hazards" value="no"> ✗ 需修改</label>
+    <input class="review-note" placeholder="修改備註（如需微調原則或調換群組請填寫）">
+  </div>
+</section>
+
+<div class="summary-box">
+  <h2 style="margin: 0 0 8px; color: var(--primary);">📝 審核結果清單（點選「需修改」將自動整理於此）</h2>
+  <textarea id="review-out" readonly></textarea>
+</div>
+
+<script>
+function updateReviewSummary() {
+  const cards = document.querySelectorAll('.group-card');
+  const needsFix = [];
+  cards.forEach(card => {
+    const isNo = card.querySelector('input[value="no"]').checked;
+    if (isNo) {
+      const gid = card.dataset.gid;
+      const gname = card.dataset.gname;
+      const note = card.querySelector('.review-note').value.trim() || '（未填寫備註）';
+      needsFix.push(`${gid} ${gname}：${note}`);
+    }
+  });
+  const out = document.getElementById('review-out');
+  out.value = needsFix.length ? needsFix.join('\n') : '全部 33 組比較卡均審核正確！';
+}
+document.addEventListener('input', updateReviewSummary);
+updateReviewSummary();
+</script>
+</body>
+</html>
