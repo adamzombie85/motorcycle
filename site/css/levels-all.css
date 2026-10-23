@@ -1,0 +1,68 @@
+/* 全部關卡頁（levels.html 沒有 ?sub=）：四大類可收合，每個小類下面列它的關卡。只用 tokens.css 的變數。 */
+.levels-category {
+  margin-top: var(--space-6);
+  border: 2px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-card);
+}
+.levels-category-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
+  min-height: var(--touch-target-min);
+  padding: var(--space-3) var(--space-5);
+  cursor: pointer;
+  list-style: none;
+  border-radius: var(--radius-lg);
+}
+.levels-category-summary::-webkit-details-marker {
+  display: none;
+}
+.levels-category-summary::after {
+  content: "";
+  align-self: center;
+  margin-left: auto;
+  width: 10px;
+  height: 10px;
+  border-right: 3px solid var(--color-slate-600);
+  border-bottom: 3px solid var(--color-slate-600);
+  transform: rotate(45deg);
+  transition: transform var(--transition-fast);
+}
+.levels-category[open] > .levels-category-summary::after {
+  transform: rotate(-135deg);
+}
+.levels-category-summary:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+.levels-category-name {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-black);
+  color: var(--color-slate-900);
+}
+.levels-category-meta,
+.levels-subcat-meta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+.levels-subcat {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  border-top: 2px solid var(--color-border-subtle);
+}
+.levels-subcat-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-3);
+}
+.levels-subcat-title {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-black);
+}
+.levels-subcat-title a {
+  color: var(--color-primary-800);
+}

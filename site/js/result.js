@@ -479,8 +479,9 @@
         if (window.Sound && Sound.badge) setTimeout(function () { Sound.badge(); }, 400);
         renderBadgeCelebration(newBadges);
       }
-    }).catch(function () {
-      showMessage('資料載入失敗，請用網址 http://localhost:8000/site/ 開啟。');
+    }).catch(function (err) {
+      console.error('載入或顯示時出錯', err);   // 真正的錯誤寫到 console，學生看到白話訊息
+      showMessage('載入時發生問題，請重新整理頁面。');
     });
   }
 

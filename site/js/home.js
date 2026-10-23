@@ -318,7 +318,7 @@
       renderFeatures(Store.getMistakeIds().length);
     }).catch(function (err) {
       console.error(err);
-      root.textContent = '資料載入失敗，請用網址 http://localhost:8000/site/ 開啟。';
+      root.textContent = '載入時發生問題，請重新整理頁面。';
     });
   }
 

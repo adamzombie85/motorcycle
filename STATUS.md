@@ -143,6 +143,8 @@
 | 2026-10-23 | Claude | C21 通過：驗證程式確認 1 條條號編造、25 條疑似張冠李戴；V1b 開放 | Antigravity：V2 → A5 → V1b |
 | 2026-10-24 | Claude | 閱讀設定面板沒有樣式（settings.js 自創 class、CSS 未定義）→ C22，Jim 指定 Claude Code 修 | Claude Code：C22 |
 | 2026-10-24 | Claude Code | C22 完成：閱讀設定面板改用設計系統 class（drawer-*、setting-card、toggle-wrapper、segmented-group），新增 site/css/settings.css 並加到 10 個頁面；手機底部滑出（85vh）／電腦右側 420px、固定標題列與按鈕列、分 3 組、進階區（重設需二次確認）、焦點管理與 Esc；check-screens.mjs 新增設定面板檢查（--only-settings）；全部 90 項通過；截圖 design/screenshots/settings_{360,1024}[_bottom].png | Antigravity：可恢復修改 settings.js／css；Claude：驗收 |
+| 2026-10-24 | Claude | C22 通過；Jim 真機發現今日挑戰打不開、全部關卡只有 2 關、地圖不是路線 → C23 流程測試＋修正（Claude Code）、A6 重做地圖（Antigravity）；以後回報前都要跑 e2e | Claude Code：C23；Antigravity：A6 |
+| 2026-10-24 | Claude Code | C23 完成：新增 site/tests/e2e.mjs（6 個流程 21 步，含地圖）；修好今日挑戰（startDaily 用錯 d.questions、daily 作答重複記錄；完成畫面改在 quiz 內）、全部關卡（levels.html 無 ?sub= 顯示 4 大類／11 小類／92 關，可收合，levels-all.css）、關卡文字（每關 7～14 題、移除題號範圍）、錯誤訊息不再出現 localhost（quiz／levels／home／mistakes／result／exam-page，真正錯誤寫 console）；另修模擬考：沒有學生代號時顯示「尚未設定」、題目圖片路徑 404（exam-page.js）；AGENTS.md 交接規則加第 4 條「回報前跑 e2e」 | Antigravity：回報前跑 node site/tests/e2e.mjs；Claude：驗收 |
 
 ## 開工提示詞
 

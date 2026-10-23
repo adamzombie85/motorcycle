@@ -194,8 +194,9 @@
       backBtn.innerHTML = ICONS.home + '<span style="margin-left: 6px;">回首頁</span>';
       nav.appendChild(backBtn);
       root.appendChild(nav);
-    }).catch(function () {
-      root.textContent = '資料載入失敗，請用網址 http://localhost:8000/site/ 開啟。';
+    }).catch(function (err) {
+      console.error('載入或顯示時出錯', err);   // 真正的錯誤寫到 console，學生看到白話訊息
+      root.textContent = '載入時發生問題，請重新整理頁面。';
     });
   }
 

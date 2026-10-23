@@ -18,7 +18,7 @@
     x: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
   };
 
-  var level, mode, questions, index = 0, results = [], answered = false, selectedOption = null, startedAt = Date.now();
+  var level, mode, dailyDate, questions, index = 0, results = [], answered = false, selectedOption = null, startedAt = Date.now();
 
   function el(tag, cls, text) {
     var e = document.createElement(tag);
@@ -75,7 +75,7 @@
     var head = el('div', 'progress-header');
     var done = results.length;
 
-    var pText = el('span', 'text-nowrap', '關卡進度：' + (index + 1) + ' / ' + questions.length);
+    var pText = el('span', 'text-nowrap', (mode === 'daily' ? '今日進度：' : '關卡進度：') + (index + 1) + ' / ' + questions.length);
     head.appendChild(pText);
 
     var pct = Math.round(done / questions.length * 100);
@@ -249,8 +249,8 @@
 
     var mistake;
     if (mode === 'daily' && typeof Game !== 'undefined' && Game.dailyAnswer) {
-      Game.dailyAnswer(q.id, correct, choice);
-      mistake = Store.recordAnswer(q.id, correct, { choice: choice, src: 'daily' });
+      // dailyAnswer 已經把這題記進作答紀錄（含錯題庫），不要再記一次
+      mistake = Game.dailyAnswer(q.id, correct, choice, dailyDate).result;
     } else {
       mistake = Store.recordAnswer(q.id, correct, { choice: choice, src: mode });
     }
@@ -330,7 +330,26 @@
     return box;
   }
 
+  // 每日挑戰：不用結算頁，直接在這裡顯示完成畫面（作答已經記在 Game.dailyAnswer 裡）
+  function finishDaily() {
+    var correctCount = results.filter(function (r) { return r.correct; }).length;
+    var wrong = results.length - correctCount;
+    if (window.Game && Game.checkBadges) Game.checkBadges();
+    root.textContent = '';
+    var box = el('div', 'quiz-message');
+    box.appendChild(el('h1', 'quiz-done-title', '今日挑戰完成！'));
+    box.appendChild(el('p', null, '答對 ' + correctCount + ' / ' + results.length + ' 題。' +
+      (wrong ? '答錯的題目已經放進錯題庫，之後會再出現。' : '全部答對，太棒了！')));
+    var acts = el('div', 'quiz-done-actions');
+    var home = el('a', 'btn btn-primary btn-lg', '回首頁'); home.href = 'index.html'; acts.appendChild(home);
+    if (wrong) { var mk = el('a', 'btn btn-outline btn-lg', '看錯題庫'); mk.href = 'mistakes.html'; acts.appendChild(mk); }
+    box.appendChild(acts);
+    root.appendChild(box);
+    window.scrollTo(0, 0);
+  }
+
   function finish() {
+    if (mode === 'daily') return finishDaily();
     var correctCount = results.filter(function (r) { return r.correct; }).length;
     var score = Math.round(correctCount / questions.length * 100);
 
@@ -368,17 +387,17 @@
   }
 
   function startDaily() {
-    if (typeof Game !== 'undefined' && Game.getDaily) {
-      var d = Game.getDaily();
-      level = { id: 'daily', category: '每日挑戰', subcategory: '3 分鐘挑戰', index: 1 };
-      questions = d.questions;
-      renderQuestion();
-    } else {
-      // 隨機挑 5 題 fallback
-      level = { id: 'daily', category: '每日挑戰', subcategory: '3 分鐘挑戰', index: 1 };
-      questions = Data.getQuestions().slice(0, 5);
-      renderQuestion();
+    if (typeof Game === 'undefined' || !Game.getDaily) {
+      return message('載入時發生問題，請重新整理頁面。', '回首頁', 'index.html');
     }
+    var d = Game.getDaily();
+    dailyDate = d.date;
+    level = { id: 'daily', category: '每日挑戰', subcategory: '3 分鐘挑戰', index: 1 };
+    // 做到一半回來，只出還沒做的；已經全部做完還想再練，就把同一組再做一次
+    var ids = d.remaining.length ? d.remaining : d.ids;
+    questions = ids.map(function (id) { return Data.getQuestion(id); }).filter(Boolean);
+    if (!questions.length) return message('今天的挑戰題目準備不起來，請回首頁再試一次。', '回首頁', 'index.html');
+    renderQuestion();
   }
 
   function init() {
@@ -408,8 +427,9 @@
       if (!level) return message('找不到這個關卡。', '回首頁', 'index.html');
       questions = Data.getLevelQuestions(levelId);
       renderQuestion();
-    }).catch(function () {
-      message('題庫載入失敗，請用網址 http://localhost:8000/site/ 開啟（不要直接點檔案）。');
+    }).catch(function (err) {
+      console.error('quiz 載入或顯示題目時出錯', err);   // 真正的錯誤只寫到 console，學生看到的是白話訊息
+      message('載入時發生問題，請重新整理頁面。', '回首頁', 'index.html');
     });
   }
 

@@ -137,8 +137,8 @@
     } catch (err) {
       root.textContent = '';
       var errBox = el('div', 'empty-state-card');
-      errBox.appendChild(el('div', 'empty-state-title', '模擬考建立失敗'));
-      errBox.appendChild(el('p', null, err.message));
+      console.error('模擬考建立失敗', err);   // 真正的錯誤寫到 console
+      errBox.appendChild(el('div', 'empty-state-title', '載入時發生問題，請重新整理頁面。'));
       var btnBack = el('button', 'btn btn-primary', '回模擬考首頁');
       btnBack.onclick = renderIntroScreen;
       errBox.appendChild(btnBack);
@@ -259,7 +259,7 @@
     if (q.image) {
       var imgWrap = el('div', 'question-image-wrapper');
       var qImg = el('img');
-      qImg.src = q.image;
+      qImg.src = Data.assetUrl(q.image);
       qImg.alt = '題目配圖';
       imgWrap.appendChild(qImg);
       card.appendChild(imgWrap);
@@ -527,7 +527,7 @@
 
         if (q.image) {
           var mImg = el('img');
-          mImg.src = q.image;
+          mImg.src = Data.assetUrl(q.image);
           mImg.alt = '題目圖示';
           mImg.style.cssText = 'max-width: 240px; border-radius: var(--radius-md); margin-bottom: var(--space-3);';
           mCard.appendChild(mImg);
@@ -578,14 +578,18 @@
 
   // 6. 初始化
   function init() {
+    // 其他頁面都會在沒有學生代號時先用「訪客」；模擬考也一樣，不然第一次進來會顯示「尚未設定學生代號」
+    if (!Store.getStudent()) Store.setStudent('guest');
+    var chip = document.getElementById('user-chip');
+    if (chip) chip.textContent = Store.getStudent() === 'guest' ? '訪客' : Store.getStudent();
     if (typeof Data !== 'undefined' && Data.load) {
       Data.load().then(function () {
         renderIntroScreen();
       }).catch(function (err) {
+        console.error('模擬考載入失敗', err);
         root.textContent = '';
         var errBox = el('div', 'empty-state-card');
-        errBox.appendChild(el('div', 'empty-state-title', '資料載入失敗'));
-        errBox.appendChild(el('p', null, err.message));
+        errBox.appendChild(el('div', 'empty-state-title', '載入時發生問題，請重新整理頁面。'));
         root.appendChild(errBox);
       });
     } else {

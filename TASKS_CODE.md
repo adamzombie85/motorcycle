@@ -235,6 +235,44 @@
   4. 先對現在的 compare-draft.json 跑一次（現在都沒有 quote，應該全部不通過），回報結果
 - 回報要精簡
 
+### C22｜閱讀設定面板修正（Jim 指定由 Claude Code 做）
+- 狀態：✅ 已完成（2026-10-24，commit 20c8c88，已部署）。等 Jim 真機確認
+- **檔案歸屬例外**：這次 Claude Code 可以改 `site/js/settings.js`，並新增 `site/css/settings.css`、在各頁 html 加上這個 css 連結。Antigravity 這段時間不要動這些檔案
+- 問題（Jim 2026-10-24 截圖）：按「閱讀設定」後，設定變成沒有排版的一長串文字接在網頁最下面
+- 原因（Claude 查過）：settings.js 自己發明了 class（`settings-drawer*`、`toggle-btn`、`toggle-label-text`），**CSS 裡完全沒有定義**；設計系統用的是 `setting-card`、`toggle-wrapper`／`toggle-input`／`toggle-track`／`toggle-thumb`／`toggle-label-on`／`toggle-label-off`、`segmented-group`／`segmented-btn`（見 `design/screen-settings.html`、`site/css/components.css`）
+- 做什麼：
+  1. **標記照設計系統**：開關、三段選擇、設定卡片全部改用 `design/screen-settings.html` 的 class 與結構，不自己發明
+  2. **面板**：手機（<768px）從下方滑出，`max-height: 85vh`，內容在面板內捲動；平板／電腦從右側滑出，寬 420px。半透明遮罩，點遮罩或按 Esc 關閉；開啟時鎖住背後頁面捲動
+  3. **固定的上下列**：上方標題列（「閱讀設定」＋關閉按鈕）與下方按鈕列（「恢復預設」「完成」）固定，中間捲動
+  4. **分成 3 組**，組名用小標題：**閱讀**（字級、注音）、**聲音**（自動朗讀、語速、音效）、**作答**（反向題提醒、確認作答、動畫）
+  5. **即時生效**：每改一項，背後頁面立刻套用（字級、注音馬上看得到）
+  6. **紀錄管理**移到最下方可收合的「進階」區：下載紀錄、重設紀錄（重設要二次確認，按鈕用警示色）
+  7. **無障礙**：`role="dialog"`、`aria-modal="true"`、`aria-labelledby`；開啟時焦點移到標題，Tab 不會跑出面板；關閉後焦點回到「閱讀設定」按鈕；`prefers-reduced-motion` 時不做滑動動畫
+  8. 樣式全部用 tokens 變數，寫在 `site/css/settings.css`
+  9. `design/check-screens.mjs` 加一項：打開閱讀設定後截圖（360、1024px），並檢查面板 `position` 是 fixed、高度不超過視窗、背景頁面不能捲動
+- 驗收：在 360px 和 1024px 打開設定的截圖；所有頁面都正常；存檔寫出檔案路徑，push 並確認部署
+- 回報要精簡
+
+### C23｜流程測試＋修正走不通的流程（Jim 真機測試 2026-10-24）
+- 狀態：**待執行**
+- **檔案歸屬例外**：這次可以改 `site/js/quiz.js`、`site/js/levels.js`、`site/levels.html`、`site/js/home.js`。Antigravity 這段時間只改地圖（A6）
+- 問題：
+  1. **今日挑戰打不開**：首頁「開始今日練習」→ `quiz.html?mode=daily` 顯示「題庫載入失敗，請用網址 http://localhost:8000/site/ 開啟」。實際原因不是題庫，是 `startDaily()` 那一段出錯被 catch 吃掉
+  2. **全部關卡只有兩關**：首頁「92 關全部關卡」連到 `levels.html`（沒有 `?sub=`），只顯示貨物裝載 2 關
+  3. 關卡清單頁的文字：「每關 10 題以內」不對（實際 7～14 題）；不要顯示「題號 M0001～M0010」
+- 做什麼：
+  1. **先寫流程測試** `site/tests/e2e.mjs`（用電腦上的 Chrome 無頭模式＋CDP，跟 check-screens 一樣），模擬學生**一路點下去**，每一步都檢查畫面上有預期的東西、沒有 console error、沒有「失敗／錯誤」字樣：
+     - 首頁 → 開始今日練習 → 答完 5 題 → 看到完成畫面 → 回首頁顯示「今日挑戰完成」
+     - 首頁 → 全部關卡 → 看得到 **11 個小類、92 關** → 點任一關 → 答完 → 結算頁
+     - 地圖 → 點一站 → 進到答題（A6 改完地圖後這一項要能過）
+     - 答錯 1 題 → 錯題庫有 1 題 → 重練
+     - 模擬考 → 交卷 → 看到分數
+     - 打開閱讀設定 → 改字級 → 關閉
+  2. 修好上面 3 個問題：`levels.html` 沒有 `sub` 參數時，顯示**全部 11 個小類**（依四大類分組，可以收合），每個小類下面列它的關卡
+  3. **錯誤訊息改成學生看得懂的**，不要出現 localhost：「載入時發生問題，請重新整理頁面。」；真正的錯誤寫到 console
+  4. 把「回報前要跑 `node site/tests/e2e.mjs`」寫進 AGENTS.md 交接規則（兩邊都要）
+- 驗收：e2e 全部通過（地圖那一項可以先標「等 A6」）；push 並確認部署；回報要精簡
+
 ## 階段 1 後續（學生試玩之後）
 
 ### C10｜Firebase 登入與學習紀錄同步
