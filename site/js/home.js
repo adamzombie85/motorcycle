@@ -272,26 +272,19 @@
     cReport.appendChild(bReport);
     grid.appendChild(cReport);
 
-    // 6. 50 題全真模擬考 (即將推出)
-    var cExam = el('div', 'feature-item-card');
-    cExam.style.cssText = 'border-left: 6px solid var(--color-slate-300); background-color: var(--color-slate-50); opacity: 0.85;';
+    // 6. 50 題全真模擬考
+    var cExam = link('feature-item-card', '', 'exam.html');
+    cExam.style.borderLeft = '6px solid var(--color-accent)';
     var iExam = el('div', 'feature-icon-wrapper');
-    iExam.style.cssText = 'background-color: var(--color-slate-200); color: var(--color-slate-600);';
+    iExam.style.cssText = 'background-color: var(--color-accent-100); color: var(--color-accent-700);';
     iExam.innerHTML = ICONS.exam;
     cExam.appendChild(iExam);
     var bExam = el('div');
-    var h3Wrap = el('div');
-    h3Wrap.style.cssText = 'display: flex; align-items: center; gap: 8px; margin-bottom: 4px;';
-    var h3 = el('h3', 'feature-title', '50 題全真模擬考');
-    h3.style.marginBottom = '0';
-    h3Wrap.appendChild(h3);
-    var badgeSoon = el('span', 'badge text-nowrap', '即將推出');
-    badgeSoon.style.cssText = 'background-color: var(--color-slate-200); color: var(--color-slate-700); font-size: 0.85rem;';
-    h3Wrap.appendChild(badgeSoon);
-    bExam.appendChild(h3Wrap);
-    bExam.appendChild(el('p', 'feature-desc', '比照正式新制：50 題，含 15 題危險感知影片題。'));
+    bExam.appendChild(el('h3', 'feature-title', '50 題全真模擬考'));
+    bExam.appendChild(el('p', 'feature-desc', '比照新制規格：50 題、85 分合格，無倒數計時。'));
     cExam.appendChild(bExam);
     grid.appendChild(cExam);
+
 
     sec.appendChild(grid);
     root.appendChild(sec);

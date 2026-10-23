@@ -1,0 +1,254 @@
+/* 50 題全真模擬考專屬樣式 (exam.css)
+ * 嚴格遵循 tokens.css 變數與通用設計原則 (Universal Design)
+ */
+
+.exam-container {
+  max-width: var(--container-max-tablet);
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: var(--space-8);
+}
+
+/* 測驗說明卡 */
+.exam-intro-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6) var(--space-5);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.exam-intro-title {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: var(--font-weight-black);
+  color: var(--color-text-main);
+  margin-bottom: var(--space-2);
+}
+
+.exam-intro-desc {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-6);
+  line-height: var(--line-height-relaxed);
+}
+
+.exam-features-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  text-align: left;
+  margin: 0 auto var(--space-6);
+  max-width: 540px;
+}
+
+@media (min-width: 640px) {
+  .exam-features-list {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+}
+
+.exam-feature-item {
+  background-color: var(--color-bg-page);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.exam-feature-icon {
+  color: var(--color-primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.exam-feature-label {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-base);
+  color: var(--color-text-main);
+  margin-bottom: 2px;
+}
+
+.exam-feature-sub {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-normal);
+}
+
+/* 題號跳轉選單（50 題網格） */
+.exam-grid-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-main);
+  cursor: pointer;
+  margin-top: var(--space-3);
+  min-height: 44px;
+}
+
+.exam-question-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 6px;
+  background-color: var(--color-bg-page);
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-3);
+  border: 1px solid var(--color-border-subtle);
+}
+
+@media (max-width: 480px) {
+  .exam-question-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+}
+
+.exam-grid-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  border: 1px solid var(--color-border-card);
+  background-color: var(--color-bg-card);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 38px;
+}
+
+.exam-grid-cell:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.exam-grid-cell.is-answered {
+  background-color: var(--color-primary-100);
+  border-color: var(--color-primary);
+  color: var(--color-primary-800);
+}
+
+.exam-grid-cell.is-current {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 1px;
+  font-weight: var(--font-weight-black);
+}
+
+/* 底部導覽按鈕列 */
+.exam-actions-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+@media (min-width: 600px) {
+  .exam-actions-bar {
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  }
+}
+
+.exam-submit-btn {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .exam-submit-btn {
+    grid-column: auto;
+    width: auto;
+  }
+}
+
+/* 分類診斷卡 */
+.exam-category-breakdown {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  margin: var(--space-5) 0;
+}
+
+@media (min-width: 640px) {
+  .exam-category-breakdown {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+}
+
+.exam-cat-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-card);
+}
+
+.exam-cat-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-2);
+}
+
+.exam-cat-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-main);
+}
+
+.exam-cat-score {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-black);
+  color: var(--color-primary);
+}
+
+.exam-cat-bar-bg {
+  width: 100%;
+  height: 10px;
+  background-color: var(--color-bg-page);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 1px solid var(--color-border-subtle);
+  margin-bottom: var(--space-2);
+}
+
+.exam-cat-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+.exam-cat-bar-fill.is-high {
+  background-color: var(--color-success);
+}
+
+.exam-cat-bar-fill.is-mid {
+  background-color: var(--color-accent);
+}
+
+.exam-cat-bar-fill.is-low {
+  background-color: var(--color-danger);
+}
+
+.exam-cat-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
