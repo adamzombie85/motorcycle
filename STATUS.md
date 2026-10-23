@@ -71,7 +71,7 @@
 | ★ 學生試玩 | 3～5 位學生（含資源班學生）試玩，Claude 準備觀察表 | Jim | ⬜ |
 | 2 閱讀與學習設定 | 朗讀、注音、字級、反向題提醒、音效、動畫、確認作答 | Antigravity D3 ✅ → Claude Code C14 | ⏳ |
 | 3 概念卡 | 概念歸類、概念卡、數字記憶卡 | Claude（內容）＋ Claude Code（介面） | ⬜ |
-| 4 危險感知與模擬考 | 影片模式、50 題模擬考、趨勢分析 | Claude Code | ⬜ |
+| 4 危險感知與模擬考 | 影片模式、50 題模擬考、趨勢分析 | 引擎 Claude Code ✅（截圖表、exam.js）；Antigravity V2 標註、A5 畫面 | 🔄 |
 
 ## 交接紀錄
 | 日期 | 誰 | 做了什麼 | 下一棒 |
@@ -137,6 +137,9 @@
 | 2026-10-23 | Claude Code | C10a 完成（預設 local、未啟用）：Store.setBackend／applyRemote／訪客匯入、config.js、store-firebase.js、firestore.rules、firebase-tests（需 Java，沒跑）、docs/Firebase建置步驟.md、docs/Firestore規則測試清單.md；game-test 58/58、firebase-sync-test 15/15 | Jim：試玩後照建置步驟建專案；Antigravity：登入頁、班級座號、訪客匯入詢問（C10 畫面） |
 | 2026-10-23 | Claude | C10a 通過（Firebase 預備，預設 local）；Claude Code 誤存 Antigravity 半成品（c49a5dd），不改歷史，CLAUDE.md 加規則禁止 git add -A；開 A4（試玩後） | Antigravity：A2b → V1 |
 | 2026-10-23 | Claude Code | 階段 4 引擎前置：scripts/make_contact_sheets.py（109 張截圖表在 assets-src/contact-sheets/，不上 GitHub；data/video_tasks.json 109 支影片／126 題）；site/js/exam.js 模擬考出題引擎（50 題、危險感知 15、其餘 21／10／4、不重複、同影片一題；exam-test 23/23）；Data.getAllQuestions | Claude：用截圖表請 Gemini 標危險秒數；Antigravity：模擬考畫面 |
+| 2026-10-23 | Claude | 階段 4 引擎完成（109 張截圖表、video_tasks.json、exam.js 23/23）；開 V2 危險標註、A5 模擬考畫面 | Antigravity：A2b → V1 → V2 → A5 |
+| 2026-10-23 | Claude | A2b 通過；V1 抽查發現法規條號編造（第 7 條≠手勢）→ C21 下載法規全文＋驗證程式、V1b 補逐字引用；V2 先做 | Claude Code：C21；Antigravity：V2 → A5 → V1b |
+| 2026-10-23 | Claude Code | C21 完成：兩部法規全文（全國法規資料庫，設置規則 273 條／安全規則 185 條）存 assets-src/laws/（不上 GitHub）；scripts/parse_laws.py、scripts/verify_citations.py；對 compare-draft.json 跑：90 條外部依據 0 通過（89 條缺 quote、1 條條號不存在：安全規則第 88-2 條）；25 條疑似張冠李戴（--hint） | Claude：請 Gemini 補 quote 後重跑；Antigravity：比較卡 |
 
 ## 開工提示詞
 
