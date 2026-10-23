@@ -15,12 +15,12 @@
   };
 
   var CHARACTERS_META = {
-    'rider-1': { name: '藍色安全帽騎士', desc: '穩健出發的實力搭檔。' },
-    'rider-2': { name: '粉色安全帽騎士', desc: '細心觀察的敏銳搭檔。' },
-    'rider-3': { name: '黃色安全帽騎士', desc: '充滿活力的專注搭檔。' },
-    'rider-4': { name: '紅色安全帽騎士', desc: '勇敢前行的果決搭檔。' },
-    'rider-5': { name: '綠色安全帽騎士', desc: '堅持一週不懈的騎士榮譽。', lockDesc: '取得「一週騎士」解鎖' },
-    'rider-6': { name: '金色安全帽騎士', desc: '象徵全方位精熟的最高榮譽。', lockDesc: '取得「月度車神」解鎖' }
+    'rider-1': { name: '淺藍安全帽男生', desc: '穩健出發的實力搭檔。' },
+    'rider-2': { name: '黃色安全帽綁馬尾女生', desc: '充滿活力的專注搭檔。' },
+    'rider-3': { name: '綠色安全帽短髮男生', desc: '沈著冷靜的敏銳搭檔。' },
+    'rider-4': { name: '粉紅安全帽戴眼鏡女生', desc: '細心觀察的聰穎搭檔。' },
+    'rider-5': { name: '紅色安全帽火焰', desc: '堅持一週不懈的騎士榮譽。', lockDesc: '取得「一週騎士」解鎖' },
+    'rider-6': { name: '金色安全帽', desc: '象徵全方位精熟的最高榮譽。', lockDesc: '取得「月度車神」解鎖' }
   };
 
   function el(tag, cls, text) {

@@ -345,4 +345,27 @@ design/
      - 禁用詞彙掃描 0 筆。
 - **下一棒：** 提交 commit 並產出交接提示詞供 Claude Cowork 接手。
 
+### 角色名稱依真實圖片校正（2026-10-24）
+- **執行角色：** Antigravity（Gemini）
+- **完成項目與設計決策：**
+  1. **實檢 6 張角色插畫：**
+     - 逐一實物檢視 `site/assets/illustrations/rider-1.png` 至 `rider-6.png`。
+     - rider-1：白上衣、淺藍安全帽男生、淺藍速克達。
+     - rider-2：白上衣、黃色安全帽綁馬尾女生、黃色速克達。
+     - rider-3：白上衣、綠色安全帽短髮男生、綠色速克達。
+     - rider-4：白上衣、粉紅安全帽戴眼鏡女生、白色速克達。
+     - rider-5：紅色安全帽男生、身後火焰特效（一週騎士解鎖）。
+     - rider-6：金色安全帽男生、周圍金色光芒與星芒（月度車神解鎖）。
+  2. **修正 site/js/character.js 與 design/screen-character.html：**
+     - 修正 `CHARACTERS_META`，嚴格對齊圖片真實特徵：
+       - `rider-1`：淺藍安全帽男生
+       - `rider-2`：黃色安全帽綁馬尾女生
+       - `rider-3`：綠色安全帽短髮男生
+       - `rider-4`：粉紅安全帽戴眼鏡女生
+       - `rider-5`：紅色安全帽火焰（一週騎士解鎖）
+       - `rider-6`：金色安全帽（月度車神解鎖）
+  3. **自動化驗證：**
+     - `node design/check-screens.mjs` 88 項測試 100% 通過。
+     - 禁用詞彙掃描 0 筆。
+
 
