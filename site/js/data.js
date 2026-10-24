@@ -2,7 +2,7 @@
 (function () {
   var LEVEL_SIZE = 10;
   var MIN_LAST_LEVEL = 5; // 最後一關少於 5 題，併進前一關
-  var EXCLUDED_SOURCES = ['影片']; // 影片題階段 4 才做
+  var EXCLUDED_SOURCES = [];     // 影片題已納入（C24）；之後要暫時排除某種題型，把 source 名稱放進來
   // 題庫更新時改這個版本號，瀏覽器才不會繼續用舊的快取（Claude 會在 STATUS.md 提醒）
   var DATA_VERSION = '2026-10-22';
   var PREFIXES = ['../', '']; // 頁面在 site/ 裡，資料在上一層；找不到再試同層

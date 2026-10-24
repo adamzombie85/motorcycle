@@ -241,34 +241,7 @@
     var sub = params.get('sub');
 
     Data.load().then(function () {
-      var levels = Data.getLevels().slice();
-      // 若查詢特定小類為「影片題」且引擎尚未原生包含，動態補充 13 關
-      var hasVideo = levels.some(function (l) { return l.subcategory === '影片題'; });
-      if (!hasVideo && sub === '影片題' && Data.getAllQuestions) {
-        var videoQs = Data.getAllQuestions().filter(function (q) {
-          return q.source === '影片' || q.subcategory === '影片題';
-        });
-        if (videoQs.length > 0) {
-          var chunks = [];
-          for (var i = 0; i < videoQs.length; i += Data.LEVEL_SIZE) {
-            chunks.push(videoQs.slice(i, i + Data.LEVEL_SIZE));
-          }
-          if (chunks.length > 1 && chunks[chunks.length - 1].length < 5) {
-            var tail = chunks.pop();
-            chunks[chunks.length - 1] = chunks[chunks.length - 1].concat(tail);
-          }
-          chunks.forEach(function (c, k) {
-            levels.push({
-              id: '影片題-' + (k + 1),
-              category: '危險感知',
-              subcategory: '影片題',
-              index: k + 1,
-              questionIds: c.map(function (q) { return q.id; })
-            });
-          });
-        }
-      }
-
+      var levels = Data.getLevels();
       var best = (typeof Stats.bestScores === 'function' ? Stats.bestScores() : {});
       root.textContent = '';
       if (!sub) return renderAll(levels, best);

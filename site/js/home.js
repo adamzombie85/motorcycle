@@ -198,6 +198,7 @@
 
   // 3. 快捷功能卡 (照 D4 screen-home.html 排版)
   function renderFeatures(mistakesCount) {
+    var total = Data.getLevels().length;   // 全部關卡數（含影片題）
     var sec = el('section', 'page-block');
     var head = el('div', 'section-heading');
     var h2 = el('h2', 'section-heading-title');
@@ -215,8 +216,8 @@
     iLevels.innerHTML = ICONS.levels;
     cLevels.appendChild(iLevels);
     var bLevels = el('div');
-    bLevels.appendChild(el('h3', 'feature-title', '92 關全部關卡'));
-    bLevels.appendChild(el('p', 'feature-desc', '92 關，可以從任何一關開始。'));
+    bLevels.appendChild(el('h3', 'feature-title', total + ' 關全部關卡'));
+    bLevels.appendChild(el('p', 'feature-desc', total + ' 關，可以從任何一關開始。'));
     cLevels.appendChild(bLevels);
     grid.appendChild(cLevels);
 
@@ -242,7 +243,7 @@
     cMap.appendChild(iMap);
     var bMap = el('div');
     bMap.appendChild(el('h3', 'feature-title', '考照之路地圖'));
-    bMap.appendChild(el('p', 'feature-desc', '5 大路段、92 關路線圖，自主前進。'));
+    bMap.appendChild(el('p', 'feature-desc', '5 大路段、' + total + ' 關路線圖，自主前進。'));
     cMap.appendChild(bMap);
     grid.appendChild(cMap);
 

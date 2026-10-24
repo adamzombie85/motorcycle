@@ -5,6 +5,7 @@
   var DAILY_SIZE = 5;
   var DAILY_DUE_MISTAKES = 2;   // 每日挑戰最多放幾題「今天到期」的錯題
   var DAILY_DUE_GRAD = 1;       // 最多放幾題「畢業檢查」
+  var DAILY_MAX_VIDEO = 1;      // 每日挑戰最多放幾題影片題（影片比較吃流量）
   var CHECKIN_ANSWERS = 5;      // 當天累計作答滿幾題算打卡
 
   /* ---------- 路段（地圖） ---------- */
@@ -13,7 +14,7 @@
     { id: 2, key: 'map-2-city', name: '市區路口', subs: ['路口安全', '轉彎', '注意大型車'] },
     { id: 3, key: 'map-3-road', name: '一般道路', subs: ['行駛中應注意事項', '正確使用燈光'] },
     { id: 4, key: 'map-4-special', name: '特殊路況', subs: ['平交道', '禁止不當行為'] },
-    { id: 5, key: 'map-5-goal', name: '終點考場', subs: ['事故預防及處理', '情境題'] }
+    { id: 5, key: 'map-5-goal', name: '終點考場', subs: ['事故預防及處理', '情境題', '影片題'] }
   ];
 
   /* ---------- 徽章 ---------- */
@@ -48,7 +49,7 @@
     return set;
   }
 
-  function pickNewQuestions(need, exclude) {
+  function pickNewQuestions(need, exclude, videoLeft) {
     var latest = Stats.latestByQuestion(), answered = answeredIds();
     var subStats = Stats.bySubcategory();
     var subs = Data.getSubcategories();
@@ -60,7 +61,9 @@
     var picked = [];
     function take(list) {
       list.forEach(function (q) {
-        if (picked.length < need && !exclude[q.id]) { picked.push(q.id); exclude[q.id] = true; }
+        if (picked.length >= need || exclude[q.id]) return;
+        if (q.video) { if (videoLeft <= 0) return; videoLeft--; }   // 影片題一天最多 DAILY_MAX_VIDEO 題
+        picked.push(q.id); exclude[q.id] = true;
       });
     }
     var inSub = function (s) { return byId.filter(function (q) { return q.subcategory === s; }); };
@@ -113,12 +116,16 @@
     var all = Store.getDoc('daily', {});
     var day = date && date <= today && all[date] ? date : activeDailyDate(today, all);
     if (!all[day]) {
-      var ids = [], seen = {};
-      dueIds('mistake', DAILY_DUE_MISTAKES, day).forEach(function (id) { ids.push(id); seen[id] = true; });
-      dueIds('grad', DAILY_DUE_GRAD, day).forEach(function (id) {
-        if (!seen[id]) { ids.push(id); seen[id] = true; }
-      });
-      pickNewQuestions(DAILY_SIZE - ids.length, seen).forEach(function (id) { ids.push(id); });
+      var ids = [], seen = {}, videoLeft = DAILY_MAX_VIDEO;
+      function addDue(id) {
+        if (seen[id]) return;
+        var q = Data.getQuestion(id);
+        if (q && q.video) { if (videoLeft <= 0) return; videoLeft--; }
+        ids.push(id); seen[id] = true;
+      }
+      dueIds('mistake', DAILY_DUE_MISTAKES, day).forEach(addDue);
+      dueIds('grad', DAILY_DUE_GRAD, day).forEach(addDue);
+      pickNewQuestions(DAILY_SIZE - ids.length, seen, videoLeft).forEach(function (id) { ids.push(id); });
       all[day] = ids.slice(0, DAILY_SIZE);
       Store.setDoc('daily', all);
     }

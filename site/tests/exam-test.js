@@ -16,10 +16,10 @@ const danger = q => q.category === '危險感知';
 
 (async () => {
   await Data.load();
-  console.log('預設設定（50 題、危險感知 15 題、不含影片）');
+  console.log('預設設定（50 題、危險感知 15 題、含影片題）');
   t('50 題，其中危險感知 15 題', () => { const e = Exam.generate({ seed: 1 }); eq(e.ids.length, 50); eq(count(e.ids, danger), 15); eq(e.plan.shortfall, 0); });
   t('其餘三大類照題庫比例：21／10／4', () => { const e = Exam.generate({ seed: 2 }); eq(count(e.ids, q => q.category === '正確觀念與態度'), 21); eq(count(e.ids, q => q.category === '安全駕駛能力'), 10); eq(count(e.ids, q => q.category === '主動停讓文化'), 4); });
-  t('預設不出影片題，危險感知全是情境題', () => { const e = Exam.generate({ seed: 3 }); eq(count(e.ids, q => q.source === '影片'), 0); eq(count(e.ids, q => q.source === '情境'), 15); });
+  t('預設含影片題：危險感知 15 題 = 情境 7～8 ＋ 影片 7～8；includeVideo:false 才全是情境題', () => { const e = Exam.generate({ seed: 3 }); const v = count(e.ids, q => q.source === '影片'); eq(v >= 7 && v <= 8, true, '影片 ' + v); eq(Exam.CONFIG.includeVideo, true); const n = Exam.generate({ seed: 3, includeVideo: false }); eq(count(n.ids, q => q.source === '影片'), 0); eq(count(n.ids, q => q.source === '情境'), 15); });
   t('同一次考試不重複（跑 300 次）', () => { for (let i = 0; i < 300; i++) { const e = Exam.generate({ seed: i }); eq(new Set(e.ids).size, 50, 'seed ' + i); } });
   t('每次出的題目不一樣', () => { const a = Exam.generate({ seed: 10 }).ids, b = Exam.generate({ seed: 11 }).ids; eq(a.join() === b.join(), false); });
   t('同一個 seed 出一樣的題（可重現）', () => { eq(Exam.generate({ seed: 7 }).ids, Exam.generate({ seed: 7 }).ids); });

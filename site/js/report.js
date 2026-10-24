@@ -181,7 +181,7 @@
         ICONS.calendar + '<span>統計日期：' + todayStr + '</span>' +
       '</span>' +
       '<span style="display: inline-flex; align-items: center; gap: 4px;">' +
-        ICONS.target + '<span>總關數：92 關</span>' +
+        ICONS.target + '<span>總關數：' + levels.length + ' 關</span>' +
       '</span>';
     headerBanner.appendChild(studentMeta);
     sheet.appendChild(headerBanner);
@@ -190,7 +190,7 @@
     var statGrid = el('div', 'report-stat-grid');
     var statsData = [
       { val: totalAnswersCount + ' 題', desc: '累計練習題數', color: 'var(--color-primary-600)' },
-      { val: passedLevelsCount + ' / 92', desc: '過關關卡數 (85分及格)', color: 'var(--color-success-600)' },
+      { val: passedLevelsCount + ' / ' + levels.length, desc: '過關關卡數 (85分及格)', color: 'var(--color-success-600)' },
       { val: overallRate + '%', desc: '累計平均答對率', color: 'var(--color-primary-700)' },
       { val: mistakesCount + ' 題', desc: '待複習錯題庫', color: 'var(--color-danger-600)' }
     ];

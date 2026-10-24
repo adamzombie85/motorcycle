@@ -1,111 +1,907 @@
 [
-  { "video_id": "4142", "start": 0.5, "area": "左側", "what": "左側白車切入本車道", "confidence": "高" },
-  { "video_id": "4143", "start": 6.0, "area": "前方", "what": "對向白車左轉穿越", "confidence": "高" },
-  { "video_id": "4144", "start": 4.0, "area": "左側", "what": "路口左側橫向車駛出", "confidence": "高" },
-  { "video_id": "4145", "start": 4.5, "area": "右側", "what": "停車場車輛駛出入路", "confidence": "高" },
-  { "video_id": "4146", "start": 4.0, "area": "左側", "what": "左側白車突然向右切換", "confidence": "高" },
-  { "video_id": "4147", "start": 5.0, "area": "右側", "what": "右方非號誌路口黑車駛出", "confidence": "高" },
-  { "video_id": "4149", "start": 5.5, "area": "前方", "what": "暗處行人跨越枕木紋", "confidence": "高" },
-  { "video_id": "4150", "start": 6.5, "area": "前方", "what": "對向車跨雙黃線逆向超車", "confidence": "高" },
-  { "video_id": "4152", "start": 3.0, "area": "右側", "what": "路旁白車起駛切入車道", "confidence": "高" },
-  { "video_id": "4153", "start": 4.5, "area": "前方", "what": "路面放置故障標誌", "confidence": "高" },
-  { "video_id": "4154", "start": 7.0, "area": "右側", "what": "右側孩童追球衝入車道", "confidence": "高" },
-  { "video_id": "4155", "start": 7.0, "area": "右側", "what": "右側機車閃避違停左切", "confidence": "高" },
-  { "video_id": "4156", "start": 2.5, "area": "前方", "what": "進入涵洞光線劇烈變化", "confidence": "高" },
-  { "video_id": "4157", "start": 5.0, "area": "右側", "what": "右方白車匯入本車道", "confidence": "高" },
-  { "video_id": "4158", "start": 3.0, "area": "前方", "what": "前方公車打右燈靠站停靠", "confidence": "高" },
-  { "video_id": "4160", "start": 5.0, "area": "右側", "what": "巷弄右側孩童突衝出門", "confidence": "高" },
-  { "video_id": "4162", "start": 4.0, "area": "右側", "what": "路旁白車突然開啟車門", "confidence": "高" },
-  { "video_id": "4163", "start": 6.0, "area": "左側", "what": "左方救護車閃燈穿越路口", "confidence": "高" },
-  { "video_id": "4164", "start": 6.5, "area": "前方", "what": "行人在公車後方突穿越", "confidence": "高" },
-  { "video_id": "4165", "start": 4.0, "area": "前方", "what": "前車煞車燈亮遮蔽路口", "confidence": "高" },
-  { "video_id": "4166", "start": 5.5, "area": "右側", "what": "遊覽車旁行人突然走出", "confidence": "高" },
-  { "video_id": "4167", "start": 4.0, "area": "前方", "what": "山區彎道對向來車駛出", "confidence": "高" },
-  { "video_id": "4168", "start": 4.5, "area": "右側", "what": "前方施工右側車輛左切", "confidence": "高" },
-  { "video_id": "4169", "start": 5.5, "area": "前方", "what": "前車倒車切入路旁停車格", "confidence": "高" },
-  { "video_id": "4170", "start": 3.5, "area": "前方", "what": "公車未打方向燈向右變換", "confidence": "高" },
-  { "video_id": "4172", "start": 5.0, "area": "前方", "what": "對向機車路口違規直接左轉", "confidence": "高" },
-  { "video_id": "4173", "start": 6.0, "area": "前方", "what": "前車違規行駛斑馬線", "confidence": "高" },
-  { "video_id": "4176", "start": 6.5, "area": "右側", "what": "路口機車待轉區有車停等", "confidence": "高" },
-  { "video_id": "4177", "start": 3.5, "area": "右側", "what": "彎道濕滑鐵板與施工錐", "confidence": "高" },
-  { "video_id": "4179", "start": 4.0, "area": "前方", "what": "行駛中電話響起需停路邊", "confidence": "高" },
-  { "video_id": "4181", "start": 4.5, "area": "前方", "what": "左前方汽車煞車燈亮起", "confidence": "高" },
-  { "video_id": "4183", "start": 3.0, "area": "左側", "what": "左方機車超車切入前方", "confidence": "高" },
-  { "video_id": "4184", "start": 5.0, "area": "前方", "what": "前車煞車燈亮起減速", "confidence": "高" },
-  { "video_id": "4185", "start": 8.5, "area": "前方", "what": "前車打右方向燈隨即右轉", "confidence": "高" },
-  { "video_id": "4186", "start": 5.5, "area": "前方", "what": "對向機車違規左轉跨越", "confidence": "高" },
-  { "video_id": "4187", "start": 4.5, "area": "前方", "what": "前方機車煞車燈亮起", "confidence": "高" },
-  { "video_id": "4188", "start": 3.5, "area": "左側", "what": "路口左方機車橫向駛出", "confidence": "高" },
-  { "video_id": "4190", "start": 5.5, "area": "前方", "what": "前車煞車且橫向貨車穿過", "confidence": "高" },
-  { "video_id": "4192", "start": 5.0, "area": "右側", "what": "右側機車無燈切入本車道", "confidence": "高" },
-  { "video_id": "4193", "start": 3.5, "area": "右側", "what": "右前方汽車煞車燈亮起", "confidence": "高" },
-  { "video_id": "4194", "start": 7.0, "area": "左側", "what": "左側白車右轉切入路口", "confidence": "高" },
-  { "video_id": "4195", "start": 5.5, "area": "左側", "what": "內側黑車打右燈右轉切入", "confidence": "高" },
-  { "video_id": "4196", "start": 7.0, "area": "左側", "what": "起步時左側橫向白車闖紅燈", "confidence": "高" },
-  { "video_id": "4198", "start": 7.0, "area": "左側", "what": "對向休旅車違規搶先左轉", "confidence": "高" },
-  { "video_id": "4199", "start": 4.5, "area": "右側", "what": "橫向機車紅燈右轉竄出", "confidence": "高" },
-  { "video_id": "4200", "start": 6.5, "area": "左側", "what": "機車從缺口逆向竄出跨線", "confidence": "高" },
-  { "video_id": "4201", "start": 6.5, "area": "左側", "what": "左轉時左後方機車加速超越", "confidence": "高" },
-  { "video_id": "4202", "start": 6.5, "area": "前方", "what": "對向機車違規跨雙黃線", "confidence": "高" },
-  { "video_id": "4203", "start": 9.0, "area": "左側", "what": "左側機車未打燈近距離超車", "confidence": "高" },
-  { "video_id": "4204", "start": 7.5, "area": "左側", "what": "左側巷口黑車突然橫越駛出", "confidence": "高" },
-  { "video_id": "4205", "start": 4.5, "area": "前方", "what": "行人低頭看手機橫跨車道", "confidence": "高" },
-  { "video_id": "4206", "start": 5.0, "area": "前方", "what": "行人任意橫越馬路穿越車道", "confidence": "高" },
-  { "video_id": "4207", "start": 3.0, "area": "前方", "what": "公車旁行人持傘橫越馬路", "confidence": "高" },
-  { "video_id": "4208", "start": 16.5, "area": "前方", "what": "窄巷右側低頭族步入車道", "confidence": "高" },
-  { "video_id": "4209", "start": 7.5, "area": "前方", "what": "前方機車未待轉逕自左轉", "confidence": "高" },
-  { "video_id": "4210", "start": 7.5, "area": "前方", "what": "前方大貨車打燈跨線左轉", "confidence": "高" },
-  { "video_id": "4211", "start": 10.5, "area": "左側", "what": "大車視線遮蔽處機車竄出", "confidence": "高" },
-  { "video_id": "4212", "start": 7.0, "area": "前方", "what": "大型車轉彎大迴轉橫跨車道", "confidence": "高" },
-  { "video_id": "4213", "start": 7.5, "area": "前方", "what": "同車道前方故障車輛停等", "confidence": "高" },
-  { "video_id": "4214", "start": 7.0, "area": "前方", "what": "對向黑車右轉進入同車道", "confidence": "高" },
-  { "video_id": "4215", "start": 6.5, "area": "前方", "what": "前方車道有停等故障車輛", "confidence": "高" },
-  { "video_id": "4216", "start": 6.0, "area": "前方", "what": "岔路白車突然左轉駛入車道", "confidence": "高" },
-  { "video_id": "4217", "start": 6.5, "area": "前方", "what": "對向機車違規跨雙黃線左轉", "confidence": "高" },
-  { "video_id": "4218", "start": 6.5, "area": "左側", "what": "內側車道黑車違規右轉切入", "confidence": "高" },
-  { "video_id": "4219", "start": 9.5, "area": "左側", "what": "路寬縮減左車打燈切入本道", "confidence": "高" },
-  { "video_id": "4220", "start": 8.0, "area": "左側", "what": "起步時橫向黑車闖紅燈搶行", "confidence": "高" },
-  { "video_id": "4221", "start": 5.0, "area": "左側", "what": "橫向車輛闖紅燈穿越路口", "confidence": "高" },
-  { "video_id": "4222", "start": 8.5, "area": "前方", "what": "對向來車會車侵入我方路幅", "confidence": "高" },
-  { "video_id": "4223", "start": 8.0, "area": "前方", "what": "前方門口黑車倒車橫越路面", "confidence": "高" },
-  { "video_id": "4224", "start": 8.5, "area": "前方", "what": "前方大貨車煞車減速", "confidence": "高" },
-  { "video_id": "4225", "start": 8.5, "area": "前方", "what": "橫向大貨車橫越路口阻擋", "confidence": "高" },
-  { "video_id": "4226", "start": 7.0, "area": "右側", "what": "路邊白車起駛違規大迴轉", "confidence": "高" },
-  { "video_id": "4227", "start": 7.5, "area": "前方", "what": "前車減速準備路口左轉", "confidence": "高" },
-  { "video_id": "4228", "start": 8.5, "area": "左側", "what": "大貨車右轉產生內輪差逼近", "confidence": "高" },
-  { "video_id": "4229", "start": 8.0, "area": "左側", "what": "併行大貨車右轉侵入內輪差", "confidence": "高" },
-  { "video_id": "4230", "start": 6.5, "area": "前方", "what": "夜間對向來車強光會車", "confidence": "高" },
-  { "video_id": "4231", "start": 7.0, "area": "前方", "what": "前方右側單車騎士同向行駛", "confidence": "高" },
-  { "video_id": "4232", "start": 7.5, "area": "右側", "what": "會車後右前方單車騎士騎行", "confidence": "高" },
-  { "video_id": "4233", "start": 7.5, "area": "前方", "what": "狹窄巷弄前方行人通行", "confidence": "高" },
-  { "video_id": "4234", "start": 6.0, "area": "前方", "what": "前方行人自右側橫跨道路", "confidence": "高" },
-  { "video_id": "4235", "start": 2.5, "area": "前方", "what": "行人違規擅越中央分隔島", "confidence": "高" },
-  { "video_id": "4236", "start": 7.0, "area": "右側", "what": "路側停放車輛防開門死角", "confidence": "高" },
-  { "video_id": "4237", "start": 3.5, "area": "前方", "what": "前方行人行走於車道中間", "confidence": "高" },
-  { "video_id": "4238", "start": 3.0, "area": "左側", "what": "匝道左側機車突切換車道", "confidence": "高" },
-  { "video_id": "4239", "start": 3.5, "area": "左側", "what": "橋梁上左側機車超車切入", "confidence": "高" },
-  { "video_id": "4241", "start": 2.5, "area": "前方", "what": "狹窄單行道對向汽車會車", "confidence": "高" },
-  { "video_id": "4242", "start": 5.5, "area": "右側", "what": "右側白車切入本道上交流道", "confidence": "高" },
-  { "video_id": "4243", "start": 6.5, "area": "前方", "what": "狹窄道路對向大貨車駛近", "confidence": "高" },
-  { "video_id": "4244", "start": 5.5, "area": "前方", "what": "路口白車缺口迴轉橫跨車道", "confidence": "高" },
-  { "video_id": "4245", "start": 6.0, "area": "前方", "what": "對向大車繞越障礙侵入本道", "confidence": "高" },
-  { "video_id": "4247", "start": 5.5, "area": "左側", "what": "隧道內左側黑車違規切入", "confidence": "高" },
-  { "video_id": "4248", "start": 8.5, "area": "前方", "what": "加油站旁黑車由路外駛入", "confidence": "高" },
-  { "video_id": "4249", "start": 7.0, "area": "前方", "what": "機車違規行駛行穿線橫越", "confidence": "高" },
-  { "video_id": "4250", "start": 5.0, "area": "前方", "what": "左前方休旅車突減速遮蔽死角", "confidence": "高" },
-  { "video_id": "4251", "start": 9.0, "area": "前方", "what": "對向車輛路口搶先左轉", "confidence": "高" },
-  { "video_id": "4252", "start": 5.0, "area": "前方", "what": "路口對向來車搶先右轉", "confidence": "高" },
-  { "video_id": "4254", "start": 6.0, "area": "前方", "what": "夜間無照明路段前方障礙", "confidence": "高" },
-  { "video_id": "4256", "start": 6.0, "area": "左側", "what": "無號誌路口橫向紅車駛出", "confidence": "高" },
-  { "video_id": "4257", "start": 3.5, "area": "前方", "what": "圓環內側車道車輛匯出", "confidence": "高" },
-  { "video_id": "4258", "start": 6.5, "area": "前方", "what": "前行車輛無預警減速", "confidence": "高" },
-  { "video_id": "4259", "start": 6.5, "area": "左側", "what": "車道縮減換入內側應讓行", "confidence": "高" },
-  { "video_id": "4260", "start": 4.0, "area": "前方", "what": "彎道前方自行車禁止超車", "confidence": "高" },
-  { "video_id": "4261", "start": 7.0, "area": "前方", "what": "號誌變換路口違規車輛穿梭", "confidence": "高" },
-  { "video_id": "4262", "start": 8.5, "area": "前方", "what": "平交道前車駛離前暫停等候", "confidence": "高" },
-  { "video_id": "4263", "start": 4.5, "area": "前方", "what": "行經隧道出入口應開頭燈", "confidence": "高" },
-  { "video_id": "4264", "start": 1.0, "area": "前方", "what": "辨識快慢車道與路肩範圍", "confidence": "高" },
-  { "video_id": "4265", "start": 5.5, "area": "前方", "what": "路口行人穿越行穿線應停讓", "confidence": "高" },
-  { "video_id": "4266", "start": 5.5, "area": "左側", "what": "左前車頭死角防行人竄出", "confidence": "高" },
-  { "video_id": "4267", "start": 7.5, "area": "前方", "what": "前方路面不明髒汙應減速", "confidence": "高" }
+ {
+  "video_id": "4142",
+  "start": 0.5,
+  "area": "左側",
+  "what": "左側白車切入本車道",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4143",
+  "start": 6.0,
+  "area": "前方",
+  "what": "對向白車左轉穿越",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4144",
+  "start": 4.5,
+  "area": "左側",
+  "what": "路口左側橫向車駛出",
+  "confidence": "高",
+  "gemini_start": 4.0,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4145",
+  "start": 3.0,
+  "area": "右側",
+  "what": "停車場車輛駛出入路",
+  "confidence": "高",
+  "gemini_start": 4.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4146",
+  "start": 4.0,
+  "area": "左側",
+  "what": "左側白車突然向右切換",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4147",
+  "start": 5.0,
+  "area": "右側",
+  "what": "右方非號誌路口黑車駛出",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4149",
+  "start": 5.5,
+  "area": "前方",
+  "what": "暗處行人跨越枕木紋",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4150",
+  "start": 6.5,
+  "area": "前方",
+  "what": "對向車跨雙黃線逆向超車",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4152",
+  "start": 3.0,
+  "area": "右側",
+  "what": "路旁白車起駛切入車道",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4153",
+  "start": 4.5,
+  "area": "前方",
+  "what": "路面放置故障標誌",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4154",
+  "start": 6.5,
+  "area": "右側",
+  "what": "右側孩童追球衝入車道",
+  "confidence": "高",
+  "gemini_start": 7.0,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4155",
+  "start": 6.5,
+  "area": "右側",
+  "what": "右側機車閃避違停左切",
+  "confidence": "高",
+  "gemini_start": 7.0,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4156",
+  "start": 3.0,
+  "area": "前方",
+  "what": "進入涵洞光線劇烈變化",
+  "confidence": "高",
+  "gemini_start": 2.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4157",
+  "start": 5.0,
+  "area": "右側",
+  "what": "右方白車匯入本車道",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4158",
+  "start": 4.0,
+  "area": "前方",
+  "what": "前方公車打右燈靠站停靠",
+  "confidence": "高",
+  "gemini_start": 3.0,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4160",
+  "start": 5.0,
+  "area": "右側",
+  "what": "巷弄右側孩童突衝出門",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4162",
+  "start": 3.5,
+  "area": "右側",
+  "what": "路旁白車突然開啟車門",
+  "confidence": "高",
+  "gemini_start": 4.0,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4163",
+  "start": 6.0,
+  "area": "左側",
+  "what": "左方救護車閃燈穿越路口",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4164",
+  "start": 5.5,
+  "area": "前方",
+  "what": "行人在公車後方突穿越",
+  "confidence": "高",
+  "gemini_start": 6.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4165",
+  "start": 1.5,
+  "area": "前方",
+  "what": "前車煞車燈亮遮蔽路口",
+  "confidence": "高",
+  "gemini_start": 4.0,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4166",
+  "start": 5.5,
+  "area": "右側",
+  "what": "遊覽車旁行人突然走出",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4167",
+  "start": 4.0,
+  "area": "前方",
+  "what": "山區彎道對向來車駛出",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4168",
+  "start": 4.0,
+  "area": "右側",
+  "what": "前方施工右側車輛左切",
+  "confidence": "高",
+  "gemini_start": 4.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4169",
+  "start": 3.5,
+  "area": "前方",
+  "what": "前車倒車切入路旁停車格",
+  "confidence": "高",
+  "gemini_start": 5.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4170",
+  "start": 3.5,
+  "area": "前方",
+  "what": "公車未打方向燈向右變換",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4172",
+  "start": 4.5,
+  "area": "前方",
+  "what": "對向機車路口違規直接左轉",
+  "confidence": "高",
+  "gemini_start": 5.0,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4173",
+  "start": 2.5,
+  "area": "前方",
+  "what": "前車違規行駛斑馬線",
+  "confidence": "高",
+  "gemini_start": 6.0,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4176",
+  "start": 6.0,
+  "area": "右側",
+  "what": "路口機車待轉區有車停等",
+  "confidence": "高",
+  "gemini_start": 6.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4177",
+  "start": 3.5,
+  "area": "右側",
+  "what": "彎道濕滑鐵板與施工錐",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4179",
+  "start": 4.0,
+  "area": "前方",
+  "what": "行駛中電話響起需停路邊",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4181",
+  "start": 4.5,
+  "area": "前方",
+  "what": "左前方汽車煞車燈亮起",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4183",
+  "start": 3.0,
+  "area": "左側",
+  "what": "左方機車超車切入前方",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4184",
+  "start": 6.0,
+  "area": "前方",
+  "what": "前車煞車燈亮起減速",
+  "confidence": "高",
+  "gemini_start": 5.0,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4185",
+  "start": 8.5,
+  "area": "前方",
+  "what": "前車打右方向燈隨即右轉",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4186",
+  "start": 5.5,
+  "area": "前方",
+  "what": "對向機車違規左轉跨越",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4187",
+  "start": 4.5,
+  "area": "前方",
+  "what": "前方機車煞車燈亮起",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4188",
+  "start": 3.5,
+  "area": "左側",
+  "what": "路口左方機車橫向駛出",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4190",
+  "start": 2.0,
+  "area": "前方",
+  "what": "前車煞車且橫向貨車穿過",
+  "confidence": "高",
+  "gemini_start": 5.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4192",
+  "start": 5.0,
+  "area": "右側",
+  "what": "右側機車無燈切入本車道",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4193",
+  "start": 3.5,
+  "area": "右側",
+  "what": "右前方汽車煞車燈亮起",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4194",
+  "start": 7.5,
+  "area": "左側",
+  "what": "左側白車右轉切入路口",
+  "confidence": "高",
+  "gemini_start": 7.0,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4195",
+  "start": 5.5,
+  "area": "左側",
+  "what": "內側黑車打右燈右轉切入",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4196",
+  "start": 4.5,
+  "area": "左側",
+  "what": "起步時左側橫向白車闖紅燈",
+  "confidence": "高",
+  "gemini_start": 7.0,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4198",
+  "start": 6.0,
+  "area": "左側",
+  "what": "對向休旅車違規搶先左轉",
+  "confidence": "高",
+  "gemini_start": 7.0,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4199",
+  "start": 4.0,
+  "area": "右側",
+  "what": "橫向機車紅燈右轉竄出",
+  "confidence": "高",
+  "gemini_start": 4.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4200",
+  "start": 5.5,
+  "area": "左側",
+  "what": "機車從缺口逆向竄出跨線",
+  "confidence": "高",
+  "gemini_start": 6.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4201",
+  "start": 6.5,
+  "area": "左側",
+  "what": "左轉時左後方機車加速超越",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4202",
+  "start": 6.5,
+  "area": "前方",
+  "what": "對向機車違規跨雙黃線",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4203",
+  "start": 9.0,
+  "area": "左側",
+  "what": "左側機車未打燈近距離超車",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4204",
+  "start": 7.5,
+  "area": "左側",
+  "what": "左側巷口黑車突然橫越駛出",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4205",
+  "start": 4.0,
+  "area": "前方",
+  "what": "行人低頭看手機橫跨車道",
+  "confidence": "高",
+  "gemini_start": 4.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4206",
+  "start": 5.0,
+  "area": "前方",
+  "what": "行人任意橫越馬路穿越車道",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4207",
+  "start": 3.0,
+  "area": "前方",
+  "what": "公車旁行人持傘橫越馬路",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4208",
+  "start": 16.5,
+  "area": "前方",
+  "what": "窄巷右側低頭族步入車道",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4209",
+  "start": 7.5,
+  "area": "前方",
+  "what": "前方機車未待轉逕自左轉",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4210",
+  "start": 7.5,
+  "area": "前方",
+  "what": "前方大貨車打燈跨線左轉",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4211",
+  "start": 12.5,
+  "area": "左側",
+  "what": "大車視線遮蔽處機車竄出",
+  "confidence": "高",
+  "gemini_start": 10.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4212",
+  "start": 7.0,
+  "area": "前方",
+  "what": "大型車轉彎大迴轉橫跨車道",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4213",
+  "start": 7.5,
+  "area": "前方",
+  "what": "同車道前方故障車輛停等",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4214",
+  "start": 7.0,
+  "area": "前方",
+  "what": "對向黑車右轉進入同車道",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4215",
+  "start": 6.5,
+  "area": "前方",
+  "what": "前方車道有停等故障車輛",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4216",
+  "start": 6.0,
+  "area": "前方",
+  "what": "岔路白車突然左轉駛入車道",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4217",
+  "start": 5.5,
+  "area": "前方",
+  "what": "對向機車違規跨雙黃線左轉",
+  "confidence": "高",
+  "gemini_start": 6.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4218",
+  "start": 6.5,
+  "area": "左側",
+  "what": "內側車道黑車違規右轉切入",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4219",
+  "start": 9.5,
+  "area": "左側",
+  "what": "路寬縮減左車打燈切入本道",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4220",
+  "start": 8.0,
+  "area": "左側",
+  "what": "起步時橫向黑車闖紅燈搶行",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4221",
+  "start": 5.0,
+  "area": "左側",
+  "what": "橫向車輛闖紅燈穿越路口",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4222",
+  "start": 8.5,
+  "area": "前方",
+  "what": "對向來車會車侵入我方路幅",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4223",
+  "start": 8.0,
+  "area": "前方",
+  "what": "前方門口黑車倒車橫越路面",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4224",
+  "start": 8.5,
+  "area": "前方",
+  "what": "前方大貨車煞車減速",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4225",
+  "start": 9.5,
+  "area": "前方",
+  "what": "橫向大貨車橫越路口阻擋",
+  "confidence": "高",
+  "gemini_start": 8.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4226",
+  "start": 7.0,
+  "area": "右側",
+  "what": "路邊白車起駛違規大迴轉",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4227",
+  "start": 7.5,
+  "area": "前方",
+  "what": "前車減速準備路口左轉",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4228",
+  "start": 8.5,
+  "area": "左側",
+  "what": "大貨車右轉產生內輪差逼近",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4229",
+  "start": 8.0,
+  "area": "左側",
+  "what": "併行大貨車右轉侵入內輪差",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4230",
+  "start": 6.5,
+  "area": "前方",
+  "what": "夜間對向來車強光會車",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4231",
+  "start": 7.0,
+  "area": "前方",
+  "what": "前方右側單車騎士同向行駛",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4232",
+  "start": 7.5,
+  "area": "右側",
+  "what": "會車後右前方單車騎士騎行",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4233",
+  "start": 7.0,
+  "area": "前方",
+  "what": "狹窄巷弄前方行人通行",
+  "confidence": "高",
+  "gemini_start": 7.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4234",
+  "start": 6.0,
+  "area": "前方",
+  "what": "前方行人自右側橫跨道路",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4235",
+  "start": 2.5,
+  "area": "前方",
+  "what": "行人違規擅越中央分隔島",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4236",
+  "start": 7.0,
+  "area": "右側",
+  "what": "路側停放車輛防開門死角",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4237",
+  "start": 3.5,
+  "area": "前方",
+  "what": "前方行人行走於車道中間",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4238",
+  "start": 3.0,
+  "area": "左側",
+  "what": "匝道左側機車突切換車道",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4239",
+  "start": 3.5,
+  "area": "左側",
+  "what": "橋梁上左側機車超車切入",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4241",
+  "start": 2.5,
+  "area": "前方",
+  "what": "狹窄單行道對向汽車會車",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4242",
+  "start": 5.5,
+  "area": "右側",
+  "what": "右側白車切入本道上交流道",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4243",
+  "start": 3.5,
+  "area": "前方",
+  "what": "狹窄道路對向大貨車駛近",
+  "confidence": "高",
+  "gemini_start": 6.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4244",
+  "start": 4.5,
+  "area": "前方",
+  "what": "路口白車缺口迴轉橫跨車道",
+  "confidence": "高",
+  "gemini_start": 5.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4245",
+  "start": 5.0,
+  "area": "前方",
+  "what": "對向大車繞越障礙侵入本道",
+  "confidence": "高",
+  "gemini_start": 6.0,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4247",
+  "start": 6.5,
+  "area": "左側",
+  "what": "隧道內左側黑車違規切入",
+  "confidence": "高",
+  "gemini_start": 5.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4248",
+  "start": 7.5,
+  "area": "前方",
+  "what": "加油站旁黑車由路外駛入",
+  "confidence": "高",
+  "gemini_start": 8.5,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4249",
+  "start": 5.5,
+  "area": "前方",
+  "what": "機車違規行駛行穿線橫越",
+  "confidence": "高",
+  "gemini_start": 7.0,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4250",
+  "start": 5.0,
+  "area": "前方",
+  "what": "左前方休旅車突減速遮蔽死角",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4251",
+  "start": 9.0,
+  "area": "前方",
+  "what": "對向車輛路口搶先左轉",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4252",
+  "start": 4.5,
+  "area": "前方",
+  "what": "路口對向來車搶先右轉",
+  "confidence": "高",
+  "gemini_start": 5.0,
+  "reviewed": "jim-corrected"
+ },
+ {
+  "video_id": "4254",
+  "start": 6.0,
+  "area": "前方",
+  "what": "夜間無照明路段前方障礙",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4256",
+  "start": 6.0,
+  "area": "左側",
+  "what": "無號誌路口橫向紅車駛出",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4257",
+  "start": 3.5,
+  "area": "前方",
+  "what": "圓環內側車道車輛匯出",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4258",
+  "start": 6.5,
+  "area": "前方",
+  "what": "前行車輛無預警減速",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4259",
+  "start": 6.5,
+  "area": "左側",
+  "what": "車道縮減換入內側應讓行",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4260",
+  "start": 4.0,
+  "area": "前方",
+  "what": "彎道前方自行車禁止超車",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4261",
+  "start": 7.0,
+  "area": "前方",
+  "what": "號誌變換路口違規車輛穿梭",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4262",
+  "start": 8.5,
+  "area": "前方",
+  "what": "平交道前車駛離前暫停等候",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4263",
+  "start": 4.5,
+  "area": "前方",
+  "what": "行經隧道出入口應開頭燈",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4264",
+  "start": 1.0,
+  "area": "前方",
+  "what": "辨識快慢車道與路肩範圍",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4265",
+  "start": 5.5,
+  "area": "前方",
+  "what": "路口行人穿越行穿線應停讓",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4266",
+  "start": 5.5,
+  "area": "左側",
+  "what": "左前車頭死角防行人竄出",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ },
+ {
+  "video_id": "4267",
+  "start": 7.5,
+  "area": "前方",
+  "what": "前方路面不明髒汙應減速",
+  "confidence": "高",
+  "reviewed": "jim-ok"
+ }
 ]

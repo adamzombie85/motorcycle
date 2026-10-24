@@ -31,6 +31,7 @@ jobs:
           cp -r site _site/site
           cp design/tokens.css design/components.css _site/design/
           cp data/questions.json _site/data/
+          cp data/video_hazards.json _site/data/   # 影片題的危險秒數（A8 讀取）
           cp -r media _site/media
           rm -rf _site/site/tests
           touch _site/.nojekyll

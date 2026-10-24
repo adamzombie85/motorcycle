@@ -191,11 +191,11 @@ async function main() {
     await ev(`const a = [...document.querySelectorAll('a')].find(x => /全部關卡/.test(x.textContent)); if (!a) throw new Error('首頁找不到「全部關卡」連結'); a.click(); return 1`);
     await waitFor(`return location.pathname.endsWith('levels.html')`, 6000, '關卡清單頁');
   });
-  await step('全部關卡', '看得到 4 大類、11 個小類、92 關', async () => {
+  await step('全部關卡', '看得到 4 大類、12 個小類、105 關', async () => {
     await waitFor(`return document.querySelectorAll('.level-item-card').length > 0`, 6000, '關卡卡片');
     const r = await ev(`return { cards: document.querySelectorAll('.level-item-card').length, subs: document.querySelectorAll('[data-sub]').length, cats: document.querySelectorAll('details[data-category]').length }`);
-    must(r.cards === 92, '關卡應該有 92 個，實際 ' + r.cards);
-    must(r.subs === 11, '小類應該有 11 個，實際 ' + r.subs);
+    must(r.cards === 105, '關卡應該有 105 個，實際 ' + r.cards);
+    must(r.subs === 12, '小類應該有 12 個，實際 ' + r.subs);
     must(r.cats === 4, '大類應該有 4 個，實際 ' + r.cats);
   });
   await step('全部關卡', '大類可以收合', async () => {
@@ -488,6 +488,51 @@ async function main() {
       return true;
     `);
     must(hasVideoInExam, '模擬考已啟動');
+  });
+
+  // ===== 流程 10：各頁顯示的總關卡數要一致（C24）=====
+  console.log('\n流程 10：首頁、全部關卡、地圖、報告頁的總關卡數一致');
+  await resetStorage();
+  const totals = {};
+  await step('關卡總數', '引擎的關卡數是 105（含影片題 13 關）', async () => {
+    await go('site/index.html');
+    totals.engine = await ev(`return Data.getLevels().length`);
+    const v = await ev(`return Data.getLevels().filter(l => l.subcategory === '影片題').length`);
+    must(totals.engine === 105, '引擎關卡數應該 105，實際 ' + totals.engine);
+    must(v === 13, '影片題應該 13 關，實際 ' + v);
+  });
+  await step('關卡總數', '首頁寫的關數', async () => {
+    const t = await text();
+    const m1 = t.match(/(\d+) 關全部關卡/), m2 = t.match(/(\d+) 關路線圖/);
+    must(m1 && m2, '首頁找不到「N 關全部關卡」或「N 關路線圖」');
+    totals.home = [Number(m1[1]), Number(m2[1])];
+    must(totals.home.every(n => n === totals.engine), '首頁寫 ' + totals.home.join('、') + '，引擎是 ' + totals.engine);
+  });
+  await step('關卡總數', '全部關卡頁：卡片數與文字', async () => {
+    await go('site/levels.html');
+    const r = await ev(`return { cards: document.querySelectorAll('.level-item-card').length, text: document.body.innerText }`);
+    const m = r.text.match(/共 \d+ 個小類、(\d+) 個關卡/), p = r.text.match(/已過關 \d+ \/ (\d+) 關/);
+    must(m && p, '找不到「共 N 個小類、N 個關卡」或「已過關 x / N 關」');
+    totals.levels = [r.cards, Number(m[1]), Number(p[1])];
+    must(totals.levels.every(n => n === totals.engine), '全部關卡頁：' + totals.levels.join('、') + '，引擎是 ' + totals.engine);
+  });
+  await step('關卡總數', '地圖：站點數與文字', async () => {
+    await go('site/map.html');
+    const r = await ev(`return { stations: document.querySelectorAll('a[href^="quiz.html?level="]').length, text: document.body.innerText }`);
+    const m = r.text.match(/(\d+) 關，可以從任何一關開始/);
+    must(m, '地圖找不到「N 關，可以從任何一關開始」');
+    totals.map = [r.stations, Number(m[1])];
+    must(totals.map.every(n => n === totals.engine), '地圖：' + totals.map.join('、') + '，引擎是 ' + totals.engine);
+  });
+  await step('關卡總數', '報告頁：總關數與過關數分母', async () => {
+    await ev(`Store.recordAnswer(Data.getQuestions()[0].id, true); return 1`);   // 報告頁要有一點紀錄才會顯示成績單
+    await go('site/report.html');
+    await waitFor(`return document.body.innerText.includes('總關數')`, 6000, '報告頁的「總關數」');
+    const t = await text();
+    const m = t.match(/總關數：(\d+) 關/), p = t.match(/\d+ \/ (\d+)\s*\n?\s*過關關卡數/);
+    must(m, '報告頁找不到「總關數：N 關」');
+    totals.report = [Number(m[1])].concat(p ? [Number(p[1])] : []);
+    must(totals.report.every(n => n === totals.engine), '報告頁：' + totals.report.join('、') + '，引擎是 ' + totals.engine);
   });
 
   /* ---------- 總結 ---------- */

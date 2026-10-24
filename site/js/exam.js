@@ -4,7 +4,7 @@
  *   - 總題數 total（預設 50）；危險感知 dangerCount 題（預設 15）
  *   - 其餘（total - dangerCount 題）分給「危險感知以外」的各大類，預設照題庫裡各類題數的比例分配
  *     （最大餘數法，加起來剛好等於題數）；也可以用 categoryCounts 直接指定每類題數
- *   - 危險感知從「情境題」和「影片題」出，預設按兩者題數比例分；includeVideo 預設 false（影片模式做好才打開）
+ *   - 危險感知從「情境題」和「影片題」出，預設按兩者題數比例分；includeVideo 預設 true（C24 起影片題納入）
  *   - 同一次考試不重複出題；同一支影片也最多出一題
  *   - order：'sections' = 先筆試題、再危險感知（預設）；'mixed' = 全部打散
  *
@@ -18,7 +18,7 @@
     total: 50,
     dangerCount: 15,
     dangerCategory: '危險感知',
-    includeVideo: false,
+    includeVideo: true,
     categoryCounts: null,     // 例如 { '正確觀念與態度': 21, '安全駕駛能力': 10, '主動停讓文化': 4 }；null = 照題庫比例
     order: 'sections',
     passScore: 85             // 及格分（滿分 100）

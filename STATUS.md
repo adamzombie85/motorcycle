@@ -44,7 +44,7 @@
 - ✅ Jim 抽查（二）20 題全部正確（2026-10-22）
 - 📝 修正先前分析：筆試題庫是 806 題（不是 804），反向題約 54 題（先前估計 148 題偏高）
 
-## 待決事項（Jim 決定）
+## 待決事項（Jim 決定 / 給 Claude Code 引擎調整）
 1. ✅ 學習紀錄：(b) 學生用代號登入，教師頁可以看全班分析（2026-10-21 決定）。後端暫定 GAS ＋ Google 試算表，階段 1 再確認
 2. ✅ 及格分數 85 分（題庫 M0329 也寫「交通規則 85 分」）；上線前再查證新制標準
 3. ✅ 概念卡等核心功能穩定後再做
@@ -60,6 +60,10 @@
 12. 📌 網址：https://adamzombie85.github.io/motorcycle/
 7. ✅ 拿掉校名，頁尾改成「© 2026 41 研究室｜版權所有」。✅ 頁首保留網站名稱和使用者，閱讀輔助改成一個「⚙️ 閱讀設定」按鈕（Jim 2026-10-22 同意）→ D3
 8. ⏳ 階段 1 規則（上方）有沒有要改的？
+13. ⏳ **（A8 待決事項／給 Claude Code 引擎調整）**：
+    - `site/js/data.js`：目前 `EXCLUDED_SOURCES = ['影片']` 預設排除影片題。建議移除 `'影片'` 排除或提供原生影片題分關支援，使 `Data.getLevels()` 原生輸出 105 關（含 13 個影片關卡）。
+    - `site/js/game.js`：`SEGMENTS[4].subs` 目前為 `['情境式題目']`，請將 `'影片題'` 加入第 5 路段子類別，使全地圖站點統一為 105 站。
+    - `site/js/exam.js`：模擬考預設設定建議調整為 `includeVideo: true`，讓 15 題危險感知自然含情境題與影片題。
 
 ## 階段進度
 | 階段 | 內容 | 主要負責 | 狀態 |
@@ -145,6 +149,10 @@
 | 2026-10-24 | Claude Code | C22 完成：閱讀設定面板改用設計系統 class（drawer-*、setting-card、toggle-wrapper、segmented-group），新增 site/css/settings.css 並加到 10 個頁面；手機底部滑出（85vh）／電腦右側 420px、固定標題列與按鈕列、分 3 組、進階區（重設需二次確認）、焦點管理與 Esc；check-screens.mjs 新增設定面板檢查（--only-settings）；全部 90 項通過；截圖 design/screenshots/settings_{360,1024}[_bottom].png | Antigravity：可恢復修改 settings.js／css；Claude：驗收 |
 | 2026-10-24 | Claude | C22 通過；Jim 真機發現今日挑戰打不開、全部關卡只有 2 關、地圖不是路線 → C23 流程測試＋修正（Claude Code）、A6 重做地圖（Antigravity）；以後回報前都要跑 e2e | Claude Code：C23；Antigravity：A6 |
 | 2026-10-24 | Claude Code | C23 完成：新增 site/tests/e2e.mjs（6 個流程 21 步，含地圖）；修好今日挑戰（startDaily 用錯 d.questions、daily 作答重複記錄；完成畫面改在 quiz 內）、全部關卡（levels.html 無 ?sub= 顯示 4 大類／11 小類／92 關，可收合，levels-all.css）、關卡文字（每關 7～14 題、移除題號範圍）、錯誤訊息不再出現 localhost（quiz／levels／home／mistakes／result／exam-page，真正錯誤寫 console）；另修模擬考：沒有學生代號時顯示「尚未設定」、題目圖片路徑 404（exam-page.js）；AGENTS.md 交接規則加第 4 條「回報前跑 e2e」 | Antigravity：回報前跑 node site/tests/e2e.mjs；Claude：驗收 |
+| 2026-10-24 | Claude | Jim 真機：朗讀不讀選項、自動朗讀 iPhone 無效；學習成果報告頁從未實作（首頁連到不存在的關卡）→ A7 | Antigravity：A7 |
+| 2026-10-24 | Claude | Jim 審完 109 支影片標註（修正 33 支，Gemini 多數標太晚）→ 定稿 data/video_hazards.json；開 A8 影片模式 | Antigravity：A8 |
+| 2026-10-24 | Claude | 審查 A8 通過（解析內容來自 Jim 審核的標註）；畫面端自拼 13 關 → C24 引擎支援影片題（105 關） | Claude Code：C24＋push |
+| 2026-10-24 | Claude Code | C24 完成：data.js 納入影片題（105 關，影片題 13 關）；game.js 第 5 路段加影片題、每日挑戰最多 1 題影片題（含到期錯題）；exam.js includeVideo 預設 true；刪除 levels.js／map.js 臨時補關卡；home／report／map 的「92」改成引擎的關數；deploy workflow 補複製 data/video_hazards.json（否則線上讀不到危險秒數）；e2e 34 步全過（新增「總關卡數一致」流程）、game-test 59、exam-test 23、check-screens 94 項 | Claude：驗收 |
 
 ## 開工提示詞
 
