@@ -153,6 +153,8 @@
 | 2026-10-24 | Claude | Jim 審完 109 支影片標註（修正 33 支，Gemini 多數標太晚）→ 定稿 data/video_hazards.json；開 A8 影片模式 | Antigravity：A8 |
 | 2026-10-24 | Claude | 審查 A8 通過（解析內容來自 Jim 審核的標註）；畫面端自拼 13 關 → C24 引擎支援影片題（105 關） | Claude Code：C24＋push |
 | 2026-10-24 | Claude Code | C24 完成：data.js 納入影片題（105 關，影片題 13 關）；game.js 第 5 路段加影片題、每日挑戰最多 1 題影片題（含到期錯題）；exam.js includeVideo 預設 true；刪除 levels.js／map.js 臨時補關卡；home／report／map 的「92」改成引擎的關數；deploy workflow 補複製 data/video_hazards.json（否則線上讀不到危險秒數）；e2e 34 步全過（新增「總關卡數一致」流程）、game-test 59、exam-test 23、check-screens 94 項 | Claude：驗收 |
+| 2026-10-24 | Claude | C24 通過：影片題上線，全站 1,052 題、105 關；補上部署漏掉的 video_hazards.json | Jim：真機試影片關卡 → 學生試玩 |
+| 2026-10-25 | Claude Code | C25 審查 A9 闖關模式：解鎖規則（做完＝每題至少作答一次、舊紀錄自動解鎖、清單不受鎖）與路線 105 站無重複無遺漏、慶祝只出現一次且減動模式會關掉動畫、鎖定站點不能進入（modal 移除 href）均符合規格，未修改程式；game-test 69/69、e2e 38/38、check-screens 94/94 | Claude：驗收 |
 
 ## 開工提示詞
 
