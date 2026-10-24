@@ -44,6 +44,7 @@
     if (sub.indexOf('轉彎') === 0) return '轉彎';
     if (sub.indexOf('貨物裝載') === 0) return '貨物裝載';
     if (sub.indexOf('情境題') === 0) return '情境題';
+    if (sub.indexOf('影片題') === 0) return '影片題';
     return sub.replace(/（[^）]+）/g, '').trim();
   }
 
@@ -187,6 +188,50 @@
       var mapData = Game.getMap();
       var currentAvatar = (typeof Game !== 'undefined' && Game.getAvatar) ? Game.getAvatar() : 'rider-1';
 
+      // 確保第 5 路段包含 13 個影片題關卡
+      var seg5 = mapData.segments.filter(function (s) { return s.id === 5 || s.key === 'map-5-goal'; })[0];
+      if (seg5) {
+        var hasVideoSeg = seg5.levels.some(function (l) { return (l.id && l.id.indexOf('影片題-') === 0) || l.subcategory === '影片題'; });
+        if (!hasVideoSeg && Data.getAllQuestions) {
+          var videoQs = Data.getAllQuestions().filter(function (q) {
+            return q.source === '影片' || q.subcategory === '影片題';
+          });
+          if (videoQs.length > 0) {
+            var chunks = [];
+            for (var i = 0; i < videoQs.length; i += Data.LEVEL_SIZE) {
+              chunks.push(videoQs.slice(i, i + Data.LEVEL_SIZE));
+            }
+            if (chunks.length > 1 && chunks[chunks.length - 1].length < 5) {
+              var tail = chunks.pop();
+              chunks[chunks.length - 1] = chunks[chunks.length - 1].concat(tail);
+            }
+            var attempts = Store.getAttempts ? Store.getAttempts() : [];
+            var bestMap = {};
+            attempts.forEach(function (a) {
+              if (a.levelId && (bestMap[a.levelId] === undefined || a.score > bestMap[a.levelId])) {
+                bestMap[a.levelId] = a.score;
+              }
+            });
+
+            chunks.forEach(function (c, k) {
+              var lid = '影片題-' + (k + 1);
+              var best = bestMap[lid];
+              var state = best === undefined ? 'untouched' : (best >= 85 ? 'passed' : 'practiced');
+              seg5.levels.push({
+                id: lid,
+                category: '危險感知',
+                subcategory: '影片題',
+                index: k + 1,
+                name: '影片題 ' + (k + 1),
+                total: c.length,
+                best: best !== undefined ? best : null,
+                state: state
+              });
+            });
+          }
+        }
+      }
+
       // 若尚未練習過任何關卡，預設停在第一段第一站
       var currentLevelId = mapData.currentLevelId;
       if (!currentLevelId && mapData.segments.length && mapData.segments[0].levels.length) {
@@ -195,9 +240,10 @@
 
       root.textContent = '';
 
-      // 計算統計
-      var passedTotal = 0, practicedTotal = 0, untouchedTotal = 0;
+      // 計算統計與總關數
+      var passedTotal = 0, practicedTotal = 0, untouchedTotal = 0, totalLevelsCount = 0;
       mapData.segments.forEach(function (seg) {
+        totalLevelsCount += seg.levels.length;
         seg.levels.forEach(function (l) {
           if (l.state === 'passed') passedTotal++;
           else if (l.state === 'practiced') practicedTotal++;
@@ -222,7 +268,7 @@
       h1.style.cssText = 'font-size: var(--font-size-2xl); font-weight: var(--font-weight-black); color: var(--color-slate-900);';
       titleCol.appendChild(h1);
 
-      var desc = el('p', '', '92 關，可以從任何一關開始。');
+      var desc = el('p', '', totalLevelsCount + ' 關，可以從任何一關開始。');
       desc.style.cssText = 'font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: 4px;';
       titleCol.appendChild(desc);
       headerBar.appendChild(titleCol);

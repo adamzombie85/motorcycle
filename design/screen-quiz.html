@@ -139,6 +139,9 @@
         <button type="button" class="sample-switch-btn" id="show-q67-btn" onclick="showQuestion('q67')">
           官方圖片題 (M0067)
         </button>
+        <button type="button" class="sample-switch-btn" id="show-video-btn" onclick="showQuestion('video')">
+          危險感知影片題 (V001)
+        </button>
         <button type="button" class="sample-switch-btn" id="toggle-confirm-mode-btn" onclick="toggleConfirmModePreview()">
           切換「確認作答」按鈕預覽
         </button>
@@ -345,6 +348,120 @@
         </div>
       </div>
 
+      <!-- ====================================================================
+           題目展示 3：危險感知影片題 (真實題目 V001 車輛切入)
+           ==================================================================== -->
+      <div id="question-block-video" style="display: none;">
+        <div class="question-card">
+          <div class="question-meta-row">
+            <div class="tag-list">
+              <span class="tag tag-category">危險感知</span>
+              <span class="tag tag-sub">影片題</span>
+              <span class="tag" style="background-color: var(--color-slate-100); color: var(--color-slate-700);">情境影片</span>
+            </div>
+
+            <!-- 單題朗讀按鈕 -->
+            <button type="button" class="btn btn-outline" style="min-height: 40px; padding: 4px 12px; font-size: var(--font-size-sm); gap: 6px;" title="朗讀題目與選項" aria-label="朗讀本題" onclick="alert('朗讀語音：身為騎士的您，當左側車輛顯示方向燈欲變換車道或轉彎時，應如何行駛較為安全？')">
+              <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+              <span>朗讀本題</span>
+            </button>
+          </div>
+
+          <div class="question-title-wrapper">
+            <h2 class="question-title">
+              身為騎士的您，當左側車輛顯示方向燈欲變換車道或轉彎時，應如何行駛較為安全？
+            </h2>
+          </div>
+
+          <!-- 影片播放器外框 -->
+          <div class="question-video-frame">
+            <div class="video-container">
+              <video class="quiz-video" preload="none" playsinline webkit-playsinline src="../media/videos/4142.mp4" poster="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='640' height='360' viewBox='0 0 640 360'><rect width='640' height='360' fill='%230f172a'/><text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-size='20' font-family='sans-serif'>🎬 危險感知情境影片 (4142.mp4)</text></svg>"></video>
+
+              <!-- 危險標記覆蓋層 (慢速重播展示) -->
+              <div class="video-hazard-overlay is-visible" id="preview-hazard-overlay">
+                <div class="hazard-pointer hazard-pointer-left">
+                  <span class="hazard-arrow-icon">⬅</span>
+                  <span>左側危險</span>
+                </div>
+                <div class="hazard-caption-bar">
+                  <span>⚠️ 危險發生時間：約第 0.5 秒（0.5 倍速慢速重播中）</span>
+                  <span>重點：左側白車切入本車道</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 影片下方控制列 -->
+            <div class="video-controls-bar">
+              <div class="video-ctrl-group">
+                <button type="button" class="video-btn btn-video-play" aria-label="播放影片">
+                  <span>▶</span> <span>播放</span>
+                </button>
+                <button type="button" class="video-btn btn-video-replay" aria-label="重播影片">
+                  <span>↺</span> <span>重播</span>
+                </button>
+                <button type="button" class="video-btn btn-video-speed is-active" aria-label="切換播放倍速">
+                  <span>0.5x (慢速)</span>
+                </button>
+              </div>
+
+              <div class="video-progress-wrap">
+                <div class="video-progress-track">
+                  <div class="video-progress-fill" style="width: 25%;"></div>
+                </div>
+                <span class="video-time-display">0:01 / 0:08</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 選項清單 -->
+          <div class="options-list">
+            <button type="button" class="option-card is-correct">
+              <span class="option-badge">1</span>
+              <span class="option-label">注意相鄰車輛狀況，預作煞車或減速的準備</span>
+              <span class="option-indicator" style="display: inline-flex;">正確解答</span>
+            </button>
+            <button type="button" class="option-card is-wrong">
+              <span class="option-badge">2</span>
+              <span class="option-label">按鳴喇叭，促使對方避讓，讓自己前進</span>
+              <span class="option-indicator" style="display: inline-flex;">你的選擇</span>
+            </button>
+            <button type="button" class="option-card is-dimmed">
+              <span class="option-badge">3</span>
+              <span class="option-label">只要自己安全無虞，不用理會其他的用路人</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 答錯時之危害回饋卡片 -->
+        <div class="feedback-card is-danger" style="margin-top: var(--space-4);">
+          <div class="feedback-header">
+            <div class="feedback-icon">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+            </div>
+            <div class="feedback-title">這題選錯囉，沒關係！</div>
+          </div>
+          <div class="feedback-body">
+            正確答案是第 <strong>1</strong> 個選項：<strong>注意相鄰車輛狀況，預作煞車或減速的準備</strong>
+          </div>
+
+          <!-- 危險感知重點解析方塊 -->
+          <div class="hazard-feedback-card">
+            <div class="hazard-feedback-head">
+              <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+              <strong style="margin-left: 4px;">危險感知重點解析（上方已為您以 0.5 倍速慢速重播）：</strong>
+            </div>
+            <div class="hazard-feedback-body">
+              <strong>【左側危險】</strong>發生於約第 <strong>0.5</strong> 秒：左側白車切入本車道
+            </div>
+          </div>
+
+          <a href="screen-result.html" class="btn btn-secondary btn-lg" style="width: 100%; margin-top: var(--space-4);">
+            <span>下一題 ➔（2 / 10）</span>
+          </a>
+        </div>
+      </div>
+
     </div>
   </main>
 
@@ -355,19 +472,27 @@
     function showQuestion(type) {
       const q6Block = document.getElementById('question-block-q6');
       const q67Block = document.getElementById('question-block-q67');
+      const videoBlock = document.getElementById('question-block-video');
       const q6Btn = document.getElementById('show-q6-btn');
       const q67Btn = document.getElementById('show-q67-btn');
+      const videoBtn = document.getElementById('show-video-btn');
+
+      q6Block.style.display = 'none';
+      q67Block.style.display = 'none';
+      if (videoBlock) videoBlock.style.display = 'none';
+      q6Btn.classList.remove('is-active');
+      q67Btn.classList.remove('is-active');
+      if (videoBtn) videoBtn.classList.remove('is-active');
 
       if (type === 'q6') {
         q6Block.style.display = 'block';
-        q67Block.style.display = 'none';
         q6Btn.classList.add('is-active');
-        q67Btn.classList.remove('is-active');
-      } else {
-        q6Block.style.display = 'none';
+      } else if (type === 'q67') {
         q67Block.style.display = 'block';
-        q6Btn.classList.remove('is-active');
         q67Btn.classList.add('is-active');
+      } else if (type === 'video') {
+        if (videoBlock) videoBlock.style.display = 'block';
+        if (videoBtn) videoBtn.classList.add('is-active');
       }
     }
 

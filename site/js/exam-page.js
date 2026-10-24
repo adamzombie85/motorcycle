@@ -35,6 +35,37 @@
   var questions = [];
   var CHINESE_NUMS = ['一', '二', '三', '四', '五'];
 
+  var hazardMap = {};
+  var hazardPromise = null;
+
+  function loadHazards() {
+    if (hazardPromise) return hazardPromise;
+    var url = (typeof Data !== 'undefined' && Data.assetUrl) ? Data.assetUrl('data/video_hazards.json') : '../data/video_hazards.json';
+    if (!url) url = '../data/video_hazards.json';
+    hazardPromise = fetch(url).then(function (res) {
+      if (!res.ok) throw new Error(res.status);
+      return res.json();
+    }).then(function (list) {
+      if (Array.isArray(list)) {
+        list.forEach(function (h) {
+          if (h && h.video_id) hazardMap[String(h.video_id)] = h;
+        });
+      }
+      return hazardMap;
+    }).catch(function (err) {
+      console.warn('載入 video_hazards.json 失敗', err);
+      return hazardMap;
+    });
+    return hazardPromise;
+  }
+
+  function formatTime(sec) {
+    if (isNaN(sec) || sec < 0) sec = 0;
+    var m = Math.floor(sec / 60);
+    var s = Math.floor(sec % 60);
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
   function getExamQuestionSpeechText(q) {
     var raw = (q.question || '').trim();
     var qText = raw || BLANK_PROMPT;
@@ -133,10 +164,10 @@
     root.appendChild(loadingP);
 
     try {
-      // 依規範 includeVideo: false，等影片模式做好才開啟
-      examData = Exam.generate({ includeVideo: false });
+      // 依 A8 規範開啟 includeVideo: true，危險感知 15 題包含影片題
+      examData = Exam.generate({ includeVideo: true });
       questions = examData.ids.map(function (id) {
-        return Data.getQuestion(id);
+        return Data.getQuestion(id) || (Data.getAllQuestions ? Data.getAllQuestions().find(function (q) { return q.id === id; }) : null);
       }).filter(Boolean);
 
       if (questions.length < 50) {
@@ -280,8 +311,114 @@
       card.appendChild(imgWrap);
     }
 
+    // 影片題支援
+    var hasAnsweredThis = (userAnswers[q.id] !== undefined);
+    if (q.video) {
+      var vFrame = el('div', 'question-video-frame');
+      var vContainer = el('div', 'video-container');
+
+      var video = el('video', 'quiz-video');
+      video.src = Data.assetUrl(q.video);
+      video.controls = false;
+      video.preload = 'none';
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      vContainer.appendChild(video);
+
+      // 自訂影片控制列
+      var ctrlBar = el('div', 'video-controls-bar');
+      var btnGroup = el('div', 'video-ctrl-group');
+
+      var playBtn = el('button', 'video-btn btn-video-play');
+      playBtn.type = 'button';
+      playBtn.setAttribute('aria-label', '播放影片');
+      playBtn.innerHTML = '<span>▶</span> <span>播放</span>';
+      playBtn.addEventListener('click', function () {
+        if (video.paused || video.ended) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      });
+      btnGroup.appendChild(playBtn);
+
+      var replayBtn = el('button', 'video-btn btn-video-replay');
+      replayBtn.type = 'button';
+      replayBtn.setAttribute('aria-label', '重播影片');
+      replayBtn.innerHTML = '<span>↺</span> <span>重播</span>';
+      replayBtn.addEventListener('click', function () {
+        video.currentTime = 0;
+        video.play();
+      });
+      btnGroup.appendChild(replayBtn);
+
+      var speedBtn = el('button', 'video-btn btn-video-speed');
+      speedBtn.type = 'button';
+      speedBtn.setAttribute('aria-label', '切換播放倍速');
+      speedBtn.innerHTML = '<span>1.0x</span>';
+      speedBtn.addEventListener('click', function () {
+        if (video.playbackRate === 0.5) {
+          video.playbackRate = 1.0;
+          speedBtn.innerHTML = '<span>1.0x</span>';
+          speedBtn.classList.remove('is-active');
+        } else {
+          video.playbackRate = 0.5;
+          speedBtn.innerHTML = '<span>0.5x (慢速)</span>';
+          speedBtn.classList.add('is-active');
+        }
+      });
+      btnGroup.appendChild(speedBtn);
+      ctrlBar.appendChild(btnGroup);
+
+      var progWrap = el('div', 'video-progress-wrap');
+      var progTrack = el('div', 'video-progress-track');
+      var progFill = el('div', 'video-progress-fill');
+      progTrack.appendChild(progFill);
+      progWrap.appendChild(progTrack);
+
+      var timeText = el('span', 'video-time-display', '0:00 / 0:00');
+      progWrap.appendChild(timeText);
+      ctrlBar.appendChild(progWrap);
+
+      vFrame.appendChild(vContainer);
+      vFrame.appendChild(ctrlBar);
+      card.appendChild(vFrame);
+
+      video.addEventListener('timeupdate', function () {
+        var cur = video.currentTime || 0;
+        var dur = video.duration || 0;
+        var pct = dur > 0 ? (cur / dur * 100) : 0;
+        progFill.style.width = pct + '%';
+        timeText.textContent = formatTime(cur) + ' / ' + formatTime(dur);
+      });
+
+      video.addEventListener('play', function () {
+        playBtn.innerHTML = '<span>⏸</span> <span>暫停</span>';
+      });
+
+      video.addEventListener('pause', function () {
+        playBtn.innerHTML = '<span>▶</span> <span>播放</span>';
+      });
+
+      if (!hasAnsweredThis) {
+        var lockedPrompt = el('div', 'video-locked-prompt');
+        lockedPrompt.innerHTML = '<span>🎬</span> <span>請先觀看上方情境影片，影片播完後將出現作答選項</span>';
+        card.appendChild(lockedPrompt);
+
+        video.addEventListener('ended', function () {
+          playBtn.innerHTML = '<span>▶</span> <span>播放</span>';
+          lockedPrompt.style.display = 'none';
+          optionsList.style.display = '';
+        });
+      }
+    }
+
     // 選項列表
     var optionsList = el('div', 'options-list');
+    if (q.video && !hasAnsweredThis) {
+      optionsList.style.display = 'none';
+    }
     var optLabels = ['1', '2', '3'];
 
     q.options.forEach(function (optText, optIdx) {
@@ -548,6 +685,18 @@
           mCard.appendChild(mImg);
         }
 
+        if (q.video) {
+          var vid = q.video_id || (q.video ? q.video.replace(/.*\/([0-9a-zA-Z_-]+)\.mp4$/, '$1') : null);
+          var hazard = hazardMap[String(vid)];
+          if (hazard) {
+            var hBox = el('div', 'hazard-feedback-card');
+            hBox.style.cssText = 'margin: var(--space-2) 0;';
+            hBox.innerHTML = '<div class="hazard-feedback-head">' + ICONS.alert + '<span>危險感知重點解析：</span></div>' +
+              '<div class="hazard-feedback-body"><strong>【' + hazard.area + '危險】</strong>發生於約第 <strong>' + hazard.start + '</strong> 秒：' + hazard.what + '</div>';
+            mCard.appendChild(hBox);
+          }
+        }
+
         var reviewBox = el('div', 'mistake-review-box');
         var userChoiceIdx = userAnswers[q.id];
         var userChoiceText = userChoiceIdx !== undefined ? q.options[userChoiceIdx] : '（未作答）';
@@ -599,6 +748,8 @@
     if (chip) chip.textContent = Store.getStudent() === 'guest' ? '訪客' : Store.getStudent();
     if (typeof Data !== 'undefined' && Data.load) {
       Data.load().then(function () {
+        return loadHazards();
+      }).then(function () {
         renderIntroScreen();
       }).catch(function (err) {
         console.error('模擬考載入失敗', err);

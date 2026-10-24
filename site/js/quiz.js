@@ -23,6 +23,41 @@
   var hasStartedSpeechSession = false;
   var justSpokeNextInClick = false;
 
+  // 危險感知影片相關狀態
+  var hazardMap = {};
+  var hazardPromise = null;
+  var currentVideo = null;
+  var currentHazardOverlay = null;
+  var currentSpeedBtn = null;
+
+  function loadHazards() {
+    if (hazardPromise) return hazardPromise;
+    var url = (typeof Data !== 'undefined' && Data.assetUrl) ? Data.assetUrl('data/video_hazards.json') : '../data/video_hazards.json';
+    if (!url) url = '../data/video_hazards.json';
+    hazardPromise = fetch(url).then(function (res) {
+      if (!res.ok) throw new Error(res.status);
+      return res.json();
+    }).then(function (list) {
+      if (Array.isArray(list)) {
+        list.forEach(function (h) {
+          if (h && h.video_id) hazardMap[String(h.video_id)] = h;
+        });
+      }
+      return hazardMap;
+    }).catch(function (err) {
+      console.warn('載入 video_hazards.json 失敗', err);
+      return hazardMap;
+    });
+    return hazardPromise;
+  }
+
+  function formatTime(sec) {
+    if (isNaN(sec) || sec < 0) sec = 0;
+    var m = Math.floor(sec / 60);
+    var s = Math.floor(sec % 60);
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
   function getQuestionSpeechText(q) {
     var raw = (q.question || '').trim();
     var qText = raw || '請看圖，選出正確的答案。';
@@ -182,20 +217,134 @@
 
     if (q.video) {
       var vFrame = el('div', 'question-video-frame');
-      var video = el('video');
+      var vContainer = el('div', 'video-container');
+
+      var video = el('video', 'quiz-video');
       video.src = Data.assetUrl(q.video);
-      video.controls = true;
-      video.preload = 'metadata';
-      video.style.cssText = 'width: 100%; max-height: 320px; border-radius: var(--radius-md); background: #000;';
-      vFrame.appendChild(video);
+      video.controls = false;
+      video.preload = 'none';
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      vContainer.appendChild(video);
+      currentVideo = video;
+
+      // 危險標記覆蓋層 (平時隱藏，答錯時顯示)
+      var hazardOverlay = el('div', 'video-hazard-overlay');
+      var hazardPointer = el('div', 'hazard-pointer');
+      hazardOverlay.appendChild(hazardPointer);
+
+      var hazardCaption = el('div', 'hazard-caption-bar');
+      hazardOverlay.appendChild(hazardCaption);
+      vContainer.appendChild(hazardOverlay);
+      currentHazardOverlay = hazardOverlay;
+
+      vFrame.appendChild(vContainer);
+
+      // 自訂影片控制列
+      var ctrlBar = el('div', 'video-controls-bar');
+      var btnGroup = el('div', 'video-ctrl-group');
+
+      // 播放 / 暫停按鈕
+      var playBtn = el('button', 'video-btn btn-video-play');
+      playBtn.type = 'button';
+      playBtn.setAttribute('aria-label', '播放影片');
+      playBtn.innerHTML = '<span>▶</span> <span>播放</span>';
+      playBtn.addEventListener('click', function () {
+        if (video.paused || video.ended) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      });
+      btnGroup.appendChild(playBtn);
+
+      // 重播按鈕
+      var replayBtn = el('button', 'video-btn btn-video-replay');
+      replayBtn.type = 'button';
+      replayBtn.setAttribute('aria-label', '重播影片');
+      replayBtn.innerHTML = '<span>↺</span> <span>重播</span>';
+      replayBtn.addEventListener('click', function () {
+        video.currentTime = 0;
+        video.play();
+      });
+      btnGroup.appendChild(replayBtn);
+
+      // 0.5 倍速切換按鈕
+      var speedBtn = el('button', 'video-btn btn-video-speed');
+      speedBtn.type = 'button';
+      speedBtn.setAttribute('aria-label', '切換播放倍速');
+      speedBtn.innerHTML = '<span>1.0x</span>';
+      speedBtn.addEventListener('click', function () {
+        if (video.playbackRate === 0.5) {
+          video.playbackRate = 1.0;
+          speedBtn.innerHTML = '<span>1.0x</span>';
+          speedBtn.classList.remove('is-active');
+        } else {
+          video.playbackRate = 0.5;
+          speedBtn.innerHTML = '<span>0.5x (慢速)</span>';
+          speedBtn.classList.add('is-active');
+        }
+      });
+      btnGroup.appendChild(speedBtn);
+      currentSpeedBtn = speedBtn;
+
+      ctrlBar.appendChild(btnGroup);
+
+      // 進度條與時間指示
+      var progWrap = el('div', 'video-progress-wrap');
+      var progTrack = el('div', 'video-progress-track');
+      var progFill = el('div', 'video-progress-fill');
+      progTrack.appendChild(progFill);
+      progWrap.appendChild(progTrack);
+
+      var timeText = el('span', 'video-time-display', '0:00 / 0:00');
+      progWrap.appendChild(timeText);
+      ctrlBar.appendChild(progWrap);
+
+      vFrame.appendChild(ctrlBar);
       card.appendChild(vFrame);
+
+      // 監聽播放進度更新
+      video.addEventListener('timeupdate', function () {
+        var cur = video.currentTime || 0;
+        var dur = video.duration || 0;
+        var pct = dur > 0 ? (cur / dur * 100) : 0;
+        progFill.style.width = pct + '%';
+        timeText.textContent = formatTime(cur) + ' / ' + formatTime(dur);
+      });
+
+      video.addEventListener('play', function () {
+        playBtn.innerHTML = '<span>⏸</span> <span>暫停</span>';
+        playBtn.setAttribute('aria-label', '暫停影片');
+      });
+
+      video.addEventListener('pause', function () {
+        playBtn.innerHTML = '<span>▶</span> <span>播放</span>';
+        playBtn.setAttribute('aria-label', '播放影片');
+      });
+
+      // 播完前提示
+      var lockedPrompt = el('div', 'video-locked-prompt');
+      lockedPrompt.innerHTML = '<span>🎬</span> <span>請先觀看上方情境影片，影片播完後將出現作答選項</span>';
+      card.appendChild(lockedPrompt);
+
+      video.addEventListener('ended', function () {
+        playBtn.innerHTML = '<span>▶</span> <span>播放</span>';
+        lockedPrompt.style.display = 'none';
+        list.style.display = '';
+
+        // 若開啟自動朗讀且播完影片才出現選項，這時觸發朗讀
+        if (settings.speechAuto && window.Settings && window.Settings.speak && !justSpokeNextInClick) {
+          window.Settings.speak(getQuestionSpeechText(q));
+        }
+      });
     }
 
     var settings = window.Settings ? window.Settings.get() : { confirmAnswer: false, speechAuto: false };
 
-    // 自動朗讀（iPhone Safari 規定要有使用者點擊才能發聲）：
-    // 第一題先顯示「點一下開始」按鈕，點下去才朗讀；之後在按「下一題」的點擊裡直接朗讀下一題
-    if (settings.speechAuto && window.Settings && window.Settings.speak) {
+    // 自動朗讀（非影片題時直接在題目載入時啟動）：
+    if (!q.video && settings.speechAuto && window.Settings && window.Settings.speak) {
       if (index === 0 && !hasStartedSpeechSession) {
         var startSpeechBox = el('div', 'speech-start-banner');
         startSpeechBox.style.cssText = 'background: var(--color-primary-50); border: 2px solid var(--color-primary-300); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); margin-bottom: var(--space-4); display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);';
@@ -220,6 +369,9 @@
     justSpokeNextInClick = false;
 
     var list = el('div', 'options-list');
+    if (q.video) {
+      list.style.display = 'none'; // 影片播完才出現選項
+    }
     var confirmBtn = null;
 
     if (settings.confirmAnswer) {
@@ -332,6 +484,73 @@
       body.appendChild(document.createTextNode(' 個選項：'));
       body.appendChild(el('strong', null, q.options[q.answer]));
       fb.appendChild(body);
+
+      // 影片題答錯時：影片跳到 start 前 1 秒，用 0.5 倍速播放，並在畫面上用文字＋箭頭標出 area 與 what
+      if (q.video && currentVideo) {
+        var vid = q.video_id || (q.video ? q.video.replace(/.*\/([0-9a-zA-Z_-]+)\.mp4$/, '$1') : null);
+        var hazard = hazardMap[String(vid)];
+        if (hazard) {
+          var startSec = typeof hazard.start === 'number' ? hazard.start : (parseFloat(hazard.start) || 0);
+          var rewindTime = Math.max(0, startSec - 1.0);
+          currentVideo.currentTime = rewindTime;
+          currentVideo.playbackRate = 0.5;
+          if (currentSpeedBtn) {
+            currentSpeedBtn.innerHTML = '<span>0.5x (慢速)</span>';
+            currentSpeedBtn.classList.add('is-active');
+          }
+          try {
+            var playPromise = currentVideo.play();
+            if (playPromise && playPromise.catch) playPromise.catch(function () {});
+          } catch (e) {}
+
+          if (currentHazardOverlay) {
+            var pointer = currentHazardOverlay.querySelector('.hazard-pointer');
+            var caption = currentHazardOverlay.querySelector('.hazard-caption-bar');
+            var area = hazard.area || '前方';
+            pointer.className = 'hazard-pointer';
+
+            var arrow = '⬇';
+            if (area.indexOf('左') !== -1) {
+              pointer.classList.add('hazard-pointer-left');
+              arrow = '⬅';
+              pointer.innerHTML = '<span class="hazard-arrow-icon">' + arrow + '</span> <span>左側危險</span>';
+            } else if (area.indexOf('右') !== -1) {
+              pointer.classList.add('hazard-pointer-right');
+              arrow = '➡';
+              pointer.innerHTML = '<span>右側危險</span> <span class="hazard-arrow-icon">' + arrow + '</span>';
+            } else if (area.indexOf('後') !== -1) {
+              pointer.classList.add('hazard-pointer-back');
+              arrow = '⬆';
+              pointer.innerHTML = '<span class="hazard-arrow-icon">' + arrow + '</span> <span>後方危險</span>';
+            } else {
+              pointer.classList.add('hazard-pointer-front');
+              arrow = '⬇';
+              pointer.innerHTML = '<span class="hazard-arrow-icon">' + arrow + '</span> <span>前方危險</span>';
+            }
+
+            if (caption) {
+              caption.innerHTML = '<span>⚠️ 危險發生時間：約第 ' + startSec + ' 秒（0.5 倍速慢速重播中）</span><span>重點：' + (hazard.what || '') + '</span>';
+            }
+            currentHazardOverlay.classList.add('is-visible');
+          }
+
+          // 在 feedback-card 裡加入危害說明方塊
+          var hCard = el('div', 'hazard-feedback-card');
+          var hHead = el('div', 'hazard-feedback-head');
+          hHead.innerHTML = ICONS.alert + '<strong style="margin-left: 4px;">危險感知重點解析（上方已為您以 0.5 倍速慢速重播）：</strong>';
+          hCard.appendChild(hHead);
+
+          var hBody = el('div', 'hazard-feedback-body');
+          hBody.innerHTML = '<strong>【' + hazard.area + '危險】</strong>發生於約第 <strong>' + startSec + '</strong> 秒：' + hazard.what;
+          hCard.appendChild(hBody);
+          fb.appendChild(hCard);
+
+          // 滾動讓學生看清影片與標記
+          try {
+            currentVideo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } catch (e) {}
+        }
+      }
     }
 
     var notice = mistakeNotice(mistake, correct);
@@ -475,12 +694,41 @@
     else mode = 'level';
 
     Data.load().then(function () {
+      return loadHazards();
+    }).then(function () {
       if (mode === 'mistakes') return startMistakes();
       if (mode === 'daily') return startDaily();
       if (!levelId) return message('請從首頁選擇一個關卡。', '回首頁', 'index.html');
+
       level = Data.getLevel(levelId);
+      // 若引擎尚未原生包含影片題關卡，從 getAllQuestions 建立 fallback 關卡
+      if (!level && levelId && levelId.indexOf('影片題-') === 0) {
+        var all = Data.getAllQuestions ? Data.getAllQuestions() : [];
+        var videoQs = all.filter(function (q) { return q.source === '影片' || q.subcategory === '影片題'; });
+        var idx = parseInt(levelId.replace('影片題-', ''), 10);
+        if (idx >= 1) {
+          var chunks = [];
+          for (var i = 0; i < videoQs.length; i += Data.LEVEL_SIZE) chunks.push(videoQs.slice(i, i + Data.LEVEL_SIZE));
+          if (chunks.length > 1 && chunks[chunks.length - 1].length < 5) {
+            var tail = chunks.pop();
+            chunks[chunks.length - 1] = chunks[chunks.length - 1].concat(tail);
+          }
+          if (idx <= chunks.length) {
+            var c = chunks[idx - 1];
+            level = {
+              id: levelId,
+              category: '危險感知',
+              subcategory: '影片題',
+              index: idx,
+              questionIds: c.map(function (q) { return q.id; })
+            };
+            questions = c;
+          }
+        }
+      }
+
       if (!level) return message('找不到這個關卡。', '回首頁', 'index.html');
-      questions = Data.getLevelQuestions(levelId);
+      if (!questions) questions = Data.getLevelQuestions(levelId);
       renderQuestion();
     }).catch(function (err) {
       console.error('quiz 載入或顯示題目時出錯', err);   // 真正的錯誤只寫到 console，學生看到的是白話訊息

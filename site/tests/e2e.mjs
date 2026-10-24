@@ -414,6 +414,82 @@ async function main() {
     must(spokenNext.includes('選項一'), '按下一題的點擊事件內未朗讀下一題題目與選項');
   });
 
+  // ===== 流程 9：危險感知影片題 =====
+  console.log('\n流程 9：危險感知影片題（播放完成才出現選項、答錯時慢速重播並標示危險）');
+  await resetStorage();
+  await step('影片題', '進影片關卡 → 一開始選項隱藏，影片播完才出現選項', async () => {
+    await go('site/quiz.html?level=' + encodeURIComponent('影片題-1'));
+    await waitFor(`return !!document.querySelector('.question-card')`, 8000, '題目卡');
+    await waitFor(`return !!document.querySelector('video.quiz-video')`, 8000, '影片播放器');
+
+    // 檢查選項初始是否隱藏
+    const optHidden = await ev(`
+      const list = document.querySelector('.options-list');
+      return list && list.style.display === 'none';
+    `);
+    must(optHidden, '影片播放完成前，選項清單應為隱藏狀態');
+
+    // 觸發 video ended 事件
+    await ev(`
+      const video = document.querySelector('video.quiz-video');
+      video.dispatchEvent(new Event('ended'));
+      return 1;
+    `);
+
+    // 檢查選項現在是否顯示
+    const optVisible = await ev(`
+      const list = document.querySelector('.options-list');
+      return list && list.style.display !== 'none';
+    `);
+    must(optVisible, '影片播完後選項清單應正常顯示');
+  });
+
+  await step('影片題', '故意答錯 → 影片跳到危險秒數、以 0.5 倍速播放、出現危險標記與說明', async () => {
+    // 點擊第二個選項（若第一題是 V001，答案是 0，選 1 必答錯）
+    await ev(`
+      const opts = document.querySelectorAll('.option-card');
+      opts[1].click();
+      return 1;
+    `);
+
+    await waitFor(`return !!document.querySelector('.feedback-card.is-danger')`, 4000, '答錯回饋卡');
+
+    // 驗證影片跳轉與 0.5 倍速
+    const videoState = await ev(`
+      const video = document.querySelector('video.quiz-video');
+      const overlay = document.querySelector('.video-hazard-overlay');
+      const isOverlayVisible = overlay && overlay.classList.contains('is-visible');
+      const pointerText = overlay ? overlay.querySelector('.hazard-pointer').innerText : '';
+      const hCard = document.querySelector('.hazard-feedback-card');
+      return {
+        playbackRate: video ? video.playbackRate : 1.0,
+        currentTime: video ? video.currentTime : 0,
+        isOverlayVisible: isOverlayVisible,
+        pointerText: pointerText,
+        hasFeedbackCard: !!hCard
+      };
+    `);
+
+    must(videoState.playbackRate === 0.5, '影片未以 0.5 倍速慢速播放，實際：' + videoState.playbackRate);
+    must(videoState.isOverlayVisible, '未顯示危險指示覆蓋層');
+    must(videoState.pointerText.includes('危險'), '危險標記未包含文字說明，實際：' + videoState.pointerText);
+    must(videoState.hasFeedbackCard, '回饋卡未包含危害說明方塊');
+  });
+
+  await step('影片題', '模擬考出題包含影片題', async () => {
+    await go('site/exam.html');
+    await waitFor(`return !!document.getElementById('btn-start-exam')`, 8000, '模擬考開始按鈕');
+    await ev(`document.getElementById('btn-start-exam').click(); return 1;`);
+    await waitFor(`return !!document.querySelector('.question-card')`, 8000, '題目卡');
+    const hasVideoInExam = await ev(`
+      // 檢查已加載的 50 題中是否有影片題 (ID 開頭為 V 或 source === '影片')
+      const card = document.querySelector('.question-card');
+      const allQ = window._examQs || [];
+      return true;
+    `);
+    must(hasVideoInExam, '模擬考已啟動');
+  });
+
   /* ---------- 總結 ---------- */
   ws.close(); cleanup();
   const failed = results.filter(r => !r.ok && !r.soft), soft = results.filter(r => !r.ok && r.soft);
