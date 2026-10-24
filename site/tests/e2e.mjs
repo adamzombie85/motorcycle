@@ -224,15 +224,64 @@ async function main() {
     const n = await ev(`return document.querySelectorAll('.level-item-card').length`);
     must(n === 2, '貨物裝載應該 2 關，實際 ' + n);
   });
+  await step('全部關卡', '清單上方有一行「自由練習：可以練任何一關」', async () => {
+    await go('site/levels.html');
+    const t = await text();
+    must(t.includes('自由練習：可以練任何一關'), '清單沒有出現「自由練習：可以練任何一關」');
+  });
+  await step('全部關卡', '清單可以直接點第 50 關進到答題', async () => {
+    await go('site/levels.html');
+    await ev(`
+      const cards = document.querySelectorAll('a.level-item-card');
+      if (cards.length < 50) throw new Error('關卡數不足 50 關，實際 ' + cards.length);
+      cards[49].click();
+      return 1;
+    `);
+    await waitFor(`return location.pathname.endsWith('quiz.html') && !!document.querySelector('.question-card')`, 8000, '從清單點第 50 關進到答題');
+  });
 
   // ===== 流程 3：地圖 =====
-  console.log('\n流程 3：地圖 → 點一站 → 答題');
+  console.log('\n流程 3：地圖（闖關模式：照順序解鎖）');
   await resetStorage();
-  await step('地圖', '地圖 → 點一站 → 進到答題', async () => {
+  await step('地圖', '地圖上第 1 站解鎖，第 2 站一開始是鎖的（點了不能進入）', async () => {
     await go('site/map.html');
-    await ev(`const a = document.querySelector('a[href^="quiz.html?level="]'); if (!a) throw new Error('地圖上找不到可以點的關卡'); a.click(); return 1`);
-    await waitFor(`return location.pathname.endsWith('quiz.html') && !!document.querySelector('.question-card')`, 8000, '從地圖進到答題畫面');
-  }, { softWait: '等 A6' });
+    const s = await ev(`
+      const stations = document.querySelectorAll('.map-road-station');
+      if (stations.length < 2) throw new Error('站點數小於 2');
+      const s1Unlocked = stations[0].getAttribute('data-unlocked') === 'true';
+      const s2Unlocked = stations[1].getAttribute('data-unlocked') === 'true';
+      stations[1].click();
+      return { s1Unlocked, s2Unlocked, stillOnMap: location.pathname.endsWith('map.html') };
+    `);
+    must(s.s1Unlocked, '第 1 站應該解鎖');
+    must(!s.s2Unlocked, '第 2 站一開始應該是鎖的');
+    must(s.stillOnMap, '點了鎖住的第 2 站不應該跳轉');
+  });
+  await step('地圖', '點第 1 站 → 進到答題 → 做完第 1 站', async () => {
+    await ev(`
+      const stations = document.querySelectorAll('.map-road-station');
+      stations[0].click();
+      return 1;
+    `);
+    await waitFor(`return location.pathname.endsWith('quiz.html') && !!document.querySelector('.question-card')`, 8000, '從地圖第 1 站進到答題');
+    const r = await ev(ANSWER_LOOP({}));
+    must(!r.error, r.error);
+    await waitFor(`return location.pathname.endsWith('result.html')`, 8000, '結算頁');
+  });
+  await step('地圖', '做完第 1 站後回地圖 → 第 2 站打開（可點進答題）', async () => {
+    await go('site/map.html');
+    const s2Unlocked = await ev(`
+      const stations = document.querySelectorAll('.map-road-station');
+      return stations[1].getAttribute('data-unlocked') === 'true';
+    `);
+    must(s2Unlocked, '做完第 1 站後，第 2 站應該解鎖');
+    await ev(`
+      const stations = document.querySelectorAll('.map-road-station');
+      stations[1].click();
+      return 1;
+    `);
+    await waitFor(`return location.pathname.endsWith('quiz.html') && !!document.querySelector('.question-card')`, 8000, '從解鎖後的第 2 站進到答題');
+  });
 
   // ===== 流程 4：錯題庫 =====
   console.log('\n流程 4：答錯 1 題 → 錯題庫 → 重練');
@@ -518,7 +567,7 @@ async function main() {
   });
   await step('關卡總數', '地圖：站點數與文字', async () => {
     await go('site/map.html');
-    const r = await ev(`return { stations: document.querySelectorAll('a[href^="quiz.html?level="]').length, text: document.body.innerText }`);
+    const r = await ev(`return { stations: document.querySelectorAll('.map-road-station').length, text: document.body.innerText }`);
     const m = r.text.match(/(\d+) 關，可以從任何一關開始/);
     must(m, '地圖找不到「N 關，可以從任何一關開始」');
     totals.map = [r.stations, Number(m[1])];

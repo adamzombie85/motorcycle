@@ -15,7 +15,8 @@
     list: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>',
     back: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>',
     close: '<svg class="icon icon-md" viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
-    play: '<svg class="icon icon-md" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>'
+    play: '<svg class="icon icon-md" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>',
+    lock: '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>'
   };
 
   function el(tag, cls, text) {
@@ -46,6 +47,144 @@
     if (sub.indexOf('情境題') === 0) return '情境題';
     if (sub.indexOf('影片題') === 0) return '影片題';
     return sub.replace(/（[^）]+）/g, '').trim();
+  }
+
+  function getCelebratedSegmentsKey(studentCode) {
+    return 'moto:celebrated-segments-' + (studentCode || 'guest');
+  }
+
+  function getCelebratedSegments(studentCode) {
+    try {
+      var raw = localStorage.getItem(getCelebratedSegmentsKey(studentCode));
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function markSegmentCelebrated(studentCode, segId) {
+    try {
+      var list = getCelebratedSegments(studentCode);
+      if (list.indexOf(segId) === -1) {
+        list.push(segId);
+        localStorage.setItem(getCelebratedSegmentsKey(studentCode), JSON.stringify(list));
+      }
+    } catch (e) {}
+  }
+
+  function showCelebrationModal(seg, nextSeg, studentCode) {
+    var modal = el('div', 'celebration-modal');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', '路段過關慶祝');
+
+    var box = el('div', 'celebration-box');
+
+    // 判斷是否需要放彩帶 (若未關閉動效)
+    var animEnabled = true;
+    if (document.body.classList.contains('mode-no-motion')) animEnabled = false;
+    if (window.Settings && window.Settings.get && window.Settings.get().animation === false) animEnabled = false;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) animEnabled = false;
+
+    if (animEnabled) {
+      var confettiContainer = el('div', 'confetti-container');
+      var colors = ['#2563EB', '#16A34A', '#EAB308', '#DC2626', '#9333EA', '#06B6D4'];
+      for (var i = 0; i < 24; i++) {
+        var piece = el('div', 'confetti-piece');
+        piece.style.left = (Math.random() * 100) + '%';
+        piece.style.backgroundColor = colors[i % colors.length];
+        piece.style.animationDelay = (Math.random() * 1.5) + 's';
+        piece.style.animationDuration = (1.8 + Math.random() * 1.5) + 's';
+        confettiContainer.appendChild(piece);
+      }
+      box.appendChild(confettiContainer);
+    }
+
+    // 關閉按鈕
+    var closeBtn = el('button', 'map-station-modal-close');
+    closeBtn.setAttribute('aria-label', '關閉慶祝視窗');
+    closeBtn.innerHTML = ICONS.close;
+    closeBtn.addEventListener('click', function () {
+      if (modal.parentNode) modal.parentNode.removeChild(modal);
+    });
+    box.appendChild(closeBtn);
+
+    // 插圖或解鎖標章
+    var iconRow = el('div', '', '🎉');
+    iconRow.style.cssText = 'font-size: 3rem; margin-bottom: var(--space-2);';
+    box.appendChild(iconRow);
+
+    var title = el('h2', '', '恭喜完成路段 ' + seg.id + '：' + seg.name + '！');
+    title.style.cssText = 'font-size: var(--font-size-xl); font-weight: var(--font-weight-black); color: var(--color-slate-900); margin-bottom: var(--space-2);';
+    box.appendChild(title);
+
+    var msg = el('p');
+    msg.style.cssText = 'font-size: var(--font-size-base); color: var(--color-slate-600); margin-bottom: var(--space-5); line-height: 1.6;';
+    if (nextSeg) {
+      msg.textContent = '太棒了！你已經完成路段 ' + seg.id + ' 的所有關卡，下一路段「路段 ' + nextSeg.id + '：' + nextSeg.name + '」已正式解鎖！';
+    } else {
+      msg.textContent = '太厲害了！你已經完成全地圖所有路線與關卡，具備充分的實戰實力！';
+    }
+    box.appendChild(msg);
+
+    // 下一路段預覽橫幅 (若有)
+    if (nextSeg) {
+      var previewCard = el('div');
+      previewCard.style.cssText = 'border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--space-5); border: 2px solid var(--color-primary-500); position: relative; box-shadow: var(--shadow-sm);';
+      var nextImg = el('img');
+      nextImg.src = 'assets/illustrations/' + nextSeg.key + '.jpg';
+      nextImg.alt = nextSeg.name;
+      nextImg.style.cssText = 'width: 100%; height: 110px; object-fit: cover; display: block;';
+      previewCard.appendChild(nextImg);
+
+      var nextPill = el('div', 'text-nowrap', '🔓 新解鎖：' + nextSeg.name);
+      nextPill.style.cssText = 'position: absolute; bottom: 8px; left: 8px; background: rgba(15, 23, 42, 0.85); color: #FFF; padding: 4px 10px; border-radius: var(--radius-full); font-size: var(--font-size-xs); font-weight: bold;';
+      previewCard.appendChild(nextPill);
+      box.appendChild(previewCard);
+    }
+
+    // 確定按鈕
+    var okBtn = el('button', 'btn btn-primary btn-lg', nextSeg ? '前往挑戰新路段' : '我知道了');
+    okBtn.style.cssText = 'width: 100%; justify-content: center;';
+    okBtn.addEventListener('click', function () {
+      if (modal.parentNode) modal.parentNode.removeChild(modal);
+      if (nextSeg) {
+        var nextSec = document.querySelector('section[aria-label^="路段 ' + nextSeg.id + '"]');
+        if (nextSec) {
+          nextSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+    box.appendChild(okBtn);
+
+    modal.appendChild(box);
+
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal && modal.parentNode) {
+        modal.parentNode.removeChild(modal);
+      }
+    });
+
+    document.body.appendChild(modal);
+    okBtn.focus();
+
+    if (window.Sound && Sound.badge) {
+      Sound.badge();
+    }
+
+    markSegmentCelebrated(studentCode, seg.id);
+  }
+
+  function checkSegmentCelebration(segments, studentCode) {
+    var celebrated = getCelebratedSegments(studentCode);
+    for (var i = 0; i < segments.length; i++) {
+      var seg = segments[i];
+      if (seg.allDone && celebrated.indexOf(seg.id) === -1) {
+        var nextSeg = segments[i + 1] || null;
+        showCelebrationModal(seg, nextSeg, studentCode);
+        break;
+      }
+    }
   }
 
   // 站點彈出小卡片元件
@@ -139,27 +278,44 @@
     var qCount = levelDetail ? levelDetail.questionIds.length : 10;
     modalQuestionsCount.textContent = qCount + ' 題';
 
-    if (level.state === 'passed') {
-      modalBadge.className = 'map-station-modal-badge';
-      modalBadge.style.cssText = 'background: #DCFCE7; color: #15803D;';
-      modalBadge.innerHTML = ICONS.check + '<span>已過關</span>';
-      modalBestScore.textContent = (level.best !== null ? level.best + ' 分' : '100 分');
-      modalStatusText.textContent = '已達成及格標準 ✔';
-    } else if (level.state === 'practiced') {
-      modalBadge.className = 'map-station-modal-badge';
-      modalBadge.style.cssText = 'background: #FEF3C7; color: #B45309;';
-      modalBadge.innerHTML = ICONS.circle + '<span>練習中</span>';
-      modalBestScore.textContent = level.best + ' 分';
-      modalStatusText.textContent = '最高得分 ' + level.best + ' 分（差 ' + (85 - level.best) + ' 分及格）';
-    } else {
+    if (level.unlocked === false) {
       modalBadge.className = 'map-station-modal-badge';
       modalBadge.style.cssText = 'background: #F1F5F9; color: #64748B;';
-      modalBadge.innerHTML = ICONS.circle + '<span>未練習</span>';
+      modalBadge.innerHTML = ICONS.lock + '<span>尚未解鎖</span>';
       modalBestScore.textContent = '—';
-      modalStatusText.textContent = '尚未開始練習';
-    }
+      modalStatusText.textContent = '完成上一站就能開啟';
+      modalStartBtn.removeAttribute('href');
+      modalStartBtn.setAttribute('aria-disabled', 'true');
+      modalStartBtn.style.cssText = 'width: 100%; justify-content: center; opacity: 0.65; cursor: not-allowed; background-color: var(--color-slate-400); border-color: var(--color-slate-400); pointer-events: none;';
+      modalStartBtn.innerHTML = ICONS.lock + '<span style="margin-left: 6px;">完成上一站就能開啟</span>';
+    } else {
+      modalStartBtn.removeAttribute('aria-disabled');
+      modalStartBtn.style.cssText = 'width: 100%; justify-content: center; pointer-events: auto;';
+      modalStartBtn.href = 'quiz.html?level=' + encodeURIComponent(level.id);
 
-    modalStartBtn.href = 'quiz.html?level=' + encodeURIComponent(level.id);
+      if (level.state === 'passed') {
+        modalBadge.className = 'map-station-modal-badge';
+        modalBadge.style.cssText = 'background: #DCFCE7; color: #15803D;';
+        modalBadge.innerHTML = ICONS.check + '<span>已過關</span>';
+        modalBestScore.textContent = (level.best !== null ? level.best + ' 分' : '100 分');
+        modalStatusText.textContent = '已達成及格標準 ✔';
+        modalStartBtn.innerHTML = ICONS.play + '<span style="margin-left: 6px;">再練一次</span>';
+      } else if (level.state === 'practiced') {
+        modalBadge.className = 'map-station-modal-badge';
+        modalBadge.style.cssText = 'background: #FEF3C7; color: #B45309;';
+        modalBadge.innerHTML = ICONS.circle + '<span>練習中</span>';
+        modalBestScore.textContent = level.best + ' 分';
+        modalStatusText.textContent = '最高得分 ' + level.best + ' 分（差 ' + (85 - level.best) + ' 分及格）';
+        modalStartBtn.innerHTML = ICONS.play + '<span style="margin-left: 6px;">繼續挑戰</span>';
+      } else {
+        modalBadge.className = 'map-station-modal-badge';
+        modalBadge.style.cssText = 'background: #F1F5F9; color: #64748B;';
+        modalBadge.innerHTML = ICONS.circle + '<span>未練習</span>';
+        modalBestScore.textContent = '—';
+        modalStatusText.textContent = '尚未開始練習';
+        modalStartBtn.innerHTML = ICONS.play + '<span style="margin-left: 6px;">開始練習本關</span>';
+      }
+    }
 
     modalBackdrop.classList.add('is-open');
     modalBackdrop.setAttribute('aria-hidden', 'false');
@@ -266,8 +422,10 @@
         var sec = el('section', 'map-road-section');
         sec.setAttribute('aria-label', '路段 ' + seg.id + '：' + seg.name);
 
+        var isSegUnlocked = (seg.unlocked !== false);
+
         // (1) 場景圖橫幅 (Banner)
-        var banner = el('div', 'map-scene-banner');
+        var banner = el('div', 'map-scene-banner' + (!isSegUnlocked ? ' is-locked' : ''));
         var img = el('img', 'map-scene-banner-img');
         img.src = 'assets/illustrations/' + seg.key + '.jpg';
         img.alt = '場景：' + seg.name;
@@ -275,7 +433,7 @@
         banner.appendChild(img);
 
         var overlay = el('div', 'map-scene-overlay');
-        var badge = el('span', 'map-scene-badge', '路段 ' + seg.id);
+        var badge = el('span', 'map-scene-badge' + (!isSegUnlocked ? ' is-locked' : ''), (!isSegUnlocked ? '🔒 路段 ' + seg.id + '（未解鎖）' : '路段 ' + seg.id));
         overlay.appendChild(badge);
 
         var title = el('h2', 'map-scene-title', seg.name);
@@ -289,7 +447,10 @@
 
         var subtitle = el('div', 'map-scene-subtitle');
         var namesSpan = el('span', 'text-nowrap', subNames.join('、'));
-        var progSpan = el('span', 'map-scene-progress-pill text-nowrap', seg.passedCount + ' / ' + seg.levels.length + ' 關過關');
+        var progText = !isSegUnlocked
+          ? '完成上一路段解鎖'
+          : seg.passedCount + ' / ' + seg.levels.length + ' 關過關';
+        var progSpan = el('span', 'map-scene-progress-pill text-nowrap', progText);
         subtitle.appendChild(namesSpan);
         subtitle.appendChild(progSpan);
         overlay.appendChild(subtitle);
@@ -367,16 +528,27 @@
           var isCurrent = (currentLevelId === l.id);
           var shortSub = getShortSubcategory(l.subcategory);
           var stationLabel = shortSub + ' ' + l.index;
+          var isStationUnlocked = (l.unlocked !== false);
 
-          var station = link('map-road-station is-' + l.state + (isCurrent ? ' is-current' : ''), '', 'quiz.html?level=' + encodeURIComponent(l.id));
+          var stationCls = 'map-road-station is-' + l.state + (isCurrent ? ' is-current' : '') + (!isStationUnlocked ? ' is-locked' : '');
+          var href = isStationUnlocked ? 'quiz.html?level=' + encodeURIComponent(l.id) : '#';
+          var station = link(stationCls, '', href);
           station.style.left = pt.xPct.toFixed(1) + '%';
           station.style.top = pt.yPx + 'px';
           station.setAttribute('data-level-id', l.id);
-          station.setAttribute('aria-label', stationLabel + '，狀態：' + (l.state === 'passed' ? '已過關' : l.state === 'practiced' ? '練習中' : '未練習'));
+          station.setAttribute('data-unlocked', isStationUnlocked ? 'true' : 'false');
+          if (!isStationUnlocked) {
+            station.setAttribute('aria-disabled', 'true');
+            station.setAttribute('aria-label', stationLabel + '，狀態：鎖定中（完成上一站就能開啟）');
+          } else {
+            station.setAttribute('aria-label', stationLabel + '，狀態：' + (l.state === 'passed' ? '已過關' : l.state === 'practiced' ? '練習中' : '未練習'));
+          }
 
           // 站點圓形本體
           var circle = el('div', 'station-node-circle');
-          if (l.state === 'passed') {
+          if (!isStationUnlocked) {
+            circle.innerHTML = ICONS.lock;
+          } else if (l.state === 'passed') {
             circle.innerHTML = ICONS.check;
           } else if (l.state === 'practiced') {
             circle.innerHTML = '<span class="station-score-badge">' + (l.best !== null ? l.best : '80') + '</span><span class="station-score-label">分</span>';
@@ -386,7 +558,12 @@
           station.appendChild(circle);
 
           // 站名標籤 pill (小類簡稱＋第幾關)
-          var pill = el('span', 'station-name-pill text-nowrap', stationLabel);
+          var pill = el('span', 'station-name-pill text-nowrap');
+          if (!isStationUnlocked) {
+            pill.innerHTML = '<span class="pill-lock-icon" aria-hidden="true">🔒</span> ' + stationLabel;
+          } else {
+            pill.textContent = stationLabel;
+          }
           station.appendChild(pill);
 
           // 主角騎士停靠位置（你在這裡 📍）
@@ -399,8 +576,13 @@
             station.appendChild(marker);
           }
 
-          // 點擊彈出站點資訊卡片（若為程式自動化腳本 a.click()，則直接跳轉）
+          // 點擊彈出站點資訊卡片（若為程式自動化腳本 a.click()，且已解鎖，則直接跳轉）
           station.addEventListener('click', function (e) {
+            if (!isStationUnlocked) {
+              e.preventDefault();
+              openModal(l, seg, stationLabel);
+              return;
+            }
             if (!e.isTrusted) {
               return;
             }
@@ -427,6 +609,9 @@
       });
 
       root.appendChild(mapContainer);
+
+      // 檢查是否有剛全部做完的路段需要跳出慶祝彈窗
+      checkSegmentCelebration(mapData.segments, studentCode);
 
       // 3. 自動捲動至主角騎士所在位置
       setTimeout(function () {

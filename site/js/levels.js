@@ -65,6 +65,10 @@
     desc.appendChild(document.createTextNode('。'));
     card.appendChild(desc);
 
+    var freeNotice = el('div', 'free-practice-notice');
+    freeNotice.innerHTML = '<span class="free-practice-icon" aria-hidden="true">💡</span> <span class="text-nowrap">自由練習：可以練任何一關</span>';
+    card.appendChild(freeNotice);
+
     var rules = el('div', 'rules-banner');
     var rIcon = el('span', 'rules-banner-icon');
     rIcon.innerHTML = ICONS.target;
@@ -143,6 +147,11 @@
     desc.appendChild(el('strong', null, Stats.PASS_SCORE + ' 分以上算過關'));
     desc.appendChild(document.createTextNode('。'));
     card.appendChild(desc);
+
+    var freeNotice = el('div', 'free-practice-notice');
+    freeNotice.innerHTML = '<span class="free-practice-icon" aria-hidden="true">💡</span> <span class="text-nowrap">自由練習：可以練任何一關</span>';
+    card.appendChild(freeNotice);
+
     var wrap = el('div', 'levels-progress-wrap');
     var head = el('div', 'levels-progress-head');
     head.appendChild(el('span', 'text-nowrap', '通關進度：已過關 ' + passedAll + ' / ' + levels.length + ' 關'));

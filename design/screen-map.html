@@ -289,18 +289,18 @@
         </section>
 
         <!-- ==================================================================
-             路段 5：終點考場
+             路段 5：終點考場（展示未解鎖狀態）
              場景圖：map-5-goal.jpg
              ================================================================== -->
         <section class="map-road-section" aria-label="路段 5：終點考場">
-          <div class="map-scene-banner">
+          <div class="map-scene-banner is-locked">
             <img src="../site/assets/illustrations/map-5-goal.jpg" alt="場景：終點考場" class="map-scene-banner-img">
             <div class="map-scene-overlay">
-              <span class="map-scene-badge">路段 5</span>
+              <span class="map-scene-badge is-locked">🔒 路段 5（未解鎖）</span>
               <h2 class="map-scene-title">終點考場</h2>
               <div class="map-scene-subtitle">
                 <span class="text-nowrap">事故預防處理、情境題</span>
-                <span class="map-scene-progress-pill text-nowrap">0 / 18 關過關</span>
+                <span class="map-scene-progress-pill text-nowrap">完成上一路段解鎖</span>
               </div>
             </div>
           </div>
@@ -310,13 +310,18 @@
               <path d="M 180.0 55.0 C 180.0 99.0, 260.0 55.0, 260.0 143.0" class="road-path-surface"></path>
               <path d="M 180.0 55.0 C 180.0 99.0, 260.0 55.0, 260.0 143.0" class="road-path-centerline"></path>
             </svg>
-            <a href="screen-quiz.html" class="map-road-station is-untouched" style="left: 50.0%; top: 55px;" aria-label="事故預防 1">
-              <div class="station-node-circle"><span class="station-empty-dot"></span></div>
-              <span class="station-name-pill text-nowrap">事故預防 1</span>
+            <!-- 示範鎖定站點 -->
+            <a href="#" class="map-road-station is-locked" style="left: 50.0%; top: 55px;" aria-disabled="true" aria-label="事故預防 1，狀態：鎖定中（完成上一站就能開啟）">
+              <div class="station-node-circle">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </div>
+              <span class="station-name-pill text-nowrap"><span class="pill-lock-icon" aria-hidden="true">🔒</span> 事故預防 1</span>
             </a>
-            <a href="screen-quiz.html" class="map-road-station is-untouched" style="left: 72.2%; top: 143px;" aria-label="情境題 1">
-              <div class="station-node-circle"><span class="station-empty-dot"></span></div>
-              <span class="station-name-pill text-nowrap">情境題 1</span>
+            <a href="#" class="map-road-station is-locked" style="left: 72.2%; top: 143px;" aria-disabled="true" aria-label="情境題 1，狀態：鎖定中（完成上一站就能開啟）">
+              <div class="station-node-circle">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </div>
+              <span class="station-name-pill text-nowrap"><span class="pill-lock-icon" aria-hidden="true">🔒</span> 情境題 1</span>
             </a>
           </div>
           <div class="map-goal-banner">

@@ -278,6 +278,88 @@
     };
   }
 
+  /* ---------- 闖關路線與解鎖規則 ---------- */
+  function getRouteLevels() {
+    dataReady();
+    var levels = Data.getLevels();
+    var list = [];
+    SEGMENTS.forEach(function (seg) {
+      seg.subs.forEach(function (key) {
+        levels.forEach(function (l) {
+          if (l.subcategory.indexOf(key) === 0) {
+            list.push(l);
+          }
+        });
+      });
+    });
+    return list;
+  }
+
+  function isLevelDone(levelId) {
+    dataReady();
+    var lvl = Data.getLevel(levelId);
+    if (!lvl) return false;
+    if (!Store.getStudent()) return false;
+    // 1. 已有該關的完成紀錄（attempts 包含舊紀錄）
+    var attempts = Store.getAttempts(levelId).filter(function (a) { return a.mode !== 'mistakes'; });
+    if (attempts.length > 0) return true;
+    // 2. 作答紀錄中，該關每一題都至少作答過一次（關卡模式）
+    var qids = lvl.questionIds || [];
+    if (!qids.length) return false;
+    var answered = {};
+    Store.getAnswerLog().forEach(function (r) {
+      if (r.src === 'level' || r.src === 'legacy' || !r.src) {
+        answered[r.qid] = true;
+      }
+    });
+    return qids.every(function (qid) { return !!answered[qid]; });
+  }
+
+  function isUnlocked(levelId) {
+    var route = getRouteLevels();
+    var idx = -1;
+    for (var i = 0; i < route.length; i++) {
+      if (route[i].id === levelId) { idx = i; break; }
+    }
+    if (idx === -1) return false;
+    // 第 1 站一開始就開
+    if (idx === 0) return true;
+    // 舊紀錄裡做完的關卡，自動算解鎖
+    if (isLevelDone(levelId)) return true;
+    // 上一站做完就打開下一站
+    return isLevelDone(route[idx - 1].id);
+  }
+
+  function nextStation(levelId) {
+    var route = getRouteLevels();
+    var target = null;
+    if (levelId) {
+      for (var i = 0; i < route.length; i++) {
+        if (route[i].id === levelId) {
+          target = (i + 1 < route.length) ? route[i + 1] : null;
+          break;
+        }
+      }
+    } else {
+      for (var j = 0; j < route.length; j++) {
+        if (!isLevelDone(route[j].id)) {
+          target = route[j];
+          break;
+        }
+      }
+    }
+    if (!target) return null;
+    return {
+      id: target.id,
+      category: target.category,
+      subcategory: target.subcategory,
+      index: target.index,
+      questionIds: target.questionIds,
+      toString: function () { return this.id; },
+      valueOf: function () { return this.id; }
+    };
+  }
+
   /* ---------- 地圖 ---------- */
   function getMap() {
     dataReady();
@@ -289,17 +371,25 @@
         levels.forEach(function (l) {
           if (l.subcategory.indexOf(key) === 0) {
             var b = best[l.id];
+            var unlocked = isUnlocked(l.id);
+            var done = isLevelDone(l.id);
             list.push({
               id: l.id, subcategory: l.subcategory, index: l.index, best: b === undefined ? null : b,
-              state: b === undefined ? 'untouched' : b >= Stats.PASS_SCORE ? 'passed' : 'practiced'
+              state: b === undefined ? 'untouched' : b >= Stats.PASS_SCORE ? 'passed' : 'practiced',
+              unlocked: unlocked,
+              done: done
             });
           }
         });
       });
+      var allDone = list.length > 0 && list.every(function (x) { return x.done; });
       return {
         id: seg.id, key: seg.key, name: seg.name, levels: list,
         passedCount: list.filter(function (x) { return x.state === 'passed'; }).length,
-        allPassed: list.length > 0 && list.every(function (x) { return x.state === 'passed'; })
+        allPassed: list.length > 0 && list.every(function (x) { return x.state === 'passed'; }),
+        doneCount: list.filter(function (x) { return x.done; }).length,
+        allDone: allDone,
+        unlocked: (seg.id === 1) || list.some(function (x) { return x.unlocked; })
       };
     });
     var attempts = Store.getAttempts().filter(function (a) { return a.mode !== 'mistakes'; });
@@ -385,6 +475,7 @@
     getStreak: getStreak,
     getDueMistakes: getDueMistakes, getDueGraduation: getDueGraduation,
     getMap: getMap,
+    isUnlocked: isUnlocked, nextStation: nextStation,
     checkBadges: checkBadges, getBadges: getBadges,
     getAvatars: getAvatars, getAvatar: getAvatar, setAvatar: setAvatar,
     summary: summary

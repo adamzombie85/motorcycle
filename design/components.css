@@ -2737,6 +2737,43 @@
   background-color: #CBD5E1;
 }
 
+/* 站點狀態：鎖定中 (灰底 + 鎖頭圖示 + 半透明) */
+.map-road-station.is-locked {
+  cursor: not-allowed;
+  opacity: 0.88;
+}
+
+.map-road-station.is-locked .station-node-circle {
+  background-color: #F1F5F9;
+  border: 3.5px solid #CBD5E1;
+  color: #64748B;
+  box-shadow: none;
+}
+
+.map-road-station.is-locked .station-name-pill {
+  color: #64748B;
+  background-color: rgba(241, 245, 249, 0.95);
+  border-color: #E2E8F0;
+}
+
+.map-road-station.is-locked .pill-lock-icon {
+  font-size: 0.75rem;
+  margin-right: 2px;
+}
+
+/* 鎖定路段橫幅 (Locked Segment Banner) */
+.map-scene-banner.is-locked .map-scene-banner-img {
+  filter: grayscale(85%) brightness(0.65);
+}
+
+.map-scene-banner.is-locked .map-scene-overlay {
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.6) 100%);
+}
+
+.map-scene-badge.is-locked {
+  background: rgba(239, 68, 68, 0.9);
+}
+
 /* 站點名稱標籤 (Station Name Pill) */
 .station-name-pill {
   margin-top: 6px;

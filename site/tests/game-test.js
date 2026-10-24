@@ -135,6 +135,80 @@ function answer(date, n, correct) {
   t('Game.summary：空紀錄不報錯、沒開閱讀設定', () => { const m = Game.summary(Store.importRecord({ format: 'moto-record', data: {} })); eq(m.totalAnswers, 0); eq(m.accuracy, 0); eq(m.reading.used, false); eq(m.badges, []); });
   t('Game.summary 不依賴目前使用者（不需登入）', () => { Store.logout(); eq(Game.summary(sample).totalAnswers, 25); });
 
+  console.log('闖關模式與解鎖規則（A9）');
+  t('第 1 站一開始就解鎖，第 2 站一開始鎖住', () => {
+    fresh();
+    const [s1, s2, s3] = Game.getMap().segments[0].levels.map(l => l.id);
+    eq(Game.isUnlocked(s1), true);
+    eq(Game.isUnlocked(s2), false);
+    eq(Game.isUnlocked(s3), false);
+  });
+  t('第 1 站做完（不管幾分，如 50 分）→ 第 2 站解鎖', () => {
+    fresh();
+    const [s1, s2, s3] = Game.getMap().segments[0].levels.map(l => l.id);
+    Store.addAttempt({ levelId: s1, mode: 'level', answers: [], score: 50 });
+    eq(Game.isUnlocked(s1), true);
+    eq(Game.isUnlocked(s2), true);
+    eq(Game.isUnlocked(s3), false);
+  });
+  t('Game.nextStation() 在全新狀態下回傳第 1 站', () => {
+    fresh();
+    const s1 = Game.getMap().segments[0].levels[0].id;
+    eq(Game.nextStation().id, s1);
+  });
+  t('做完第 1 站後，Game.nextStation() 回傳第 2 站', () => {
+    fresh();
+    const [s1, s2] = Game.getMap().segments[0].levels.map(l => l.id);
+    Store.addAttempt({ levelId: s1, mode: 'level', answers: [], score: 70 });
+    eq(Game.nextStation().id, s2);
+  });
+  t('指定 levelId 時，Game.nextStation(levelId) 回傳路線上的下一站', () => {
+    const [s1, s2] = Game.getMap().segments[0].levels.map(l => l.id);
+    eq(Game.nextStation(s1).id, s2);
+    eq(Game.nextStation('影片題-13'), null);
+  });
+  t('「做完」定義：關卡每一題在關卡模式至少作答過一次（中途只答部分題目不算做完）', () => {
+    fresh();
+    const [s1, s2] = Game.getMap().segments[0].levels.map(l => l.id);
+    const l1 = Data.getLevel(s1);
+    l1.questionIds.slice(0, 3).forEach(id => Store.recordAnswer(id, true, { src: 'level' }));
+    eq(Game.isUnlocked(s2), false, '未答完所有題，下一站不可解鎖');
+    l1.questionIds.slice(3).forEach(id => Store.recordAnswer(id, false, { src: 'level' }));
+    eq(Game.isUnlocked(s2), true, '全部答完，下一站解鎖');
+  });
+  t('非關卡模式（如 daily 作答）不算做完關卡', () => {
+    fresh();
+    const [s1, s2] = Game.getMap().segments[0].levels.map(l => l.id);
+    const l1 = Data.getLevel(s1);
+    l1.questionIds.forEach(id => Store.recordAnswer(id, true, { src: 'daily' }));
+    eq(Game.isUnlocked(s2), false);
+  });
+  t('舊紀錄已做完的關卡，自動算解鎖', () => {
+    fresh();
+    const [s1, s2, s3] = Game.getMap().segments[0].levels.map(l => l.id);
+    Store.addAttempt({ levelId: s1, mode: 'level', answers: [], score: 90 });
+    Store.addAttempt({ levelId: s2, mode: 'level', answers: [], score: 90 });
+    eq(Game.isUnlocked(s1), true);
+    eq(Game.isUnlocked(s2), true);
+    eq(Game.isUnlocked(s3), true);
+  });
+  t('getMap 回傳的 segments 與 levels 包含 unlocked 與 done 狀態', () => {
+    fresh();
+    const m = Game.getMap();
+    eq(m.segments[0].unlocked, true);
+    eq(m.segments[0].levels[0].unlocked, true);
+    eq(m.segments[0].levels[1].unlocked, false);
+    eq(m.segments[1].unlocked, false);
+  });
+  t('一個路段全部做完 → 下一路段場景解鎖（seg.unlocked 為 true）', () => {
+    fresh();
+    const seg0 = Game.getMap().segments[0];
+    seg0.levels.forEach(l => Store.addAttempt({ levelId: l.id, mode: 'level', answers: [], score: 60 }));
+    const m2 = Game.getMap();
+    eq(m2.segments[0].allDone, true);
+    eq(m2.segments[1].unlocked, true);
+  });
+
   console.log('\n通過 ' + pass + '，失敗 ' + fail);
   process.exit(fail ? 1 : 0);
 })();
